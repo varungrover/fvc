@@ -30,7 +30,7 @@ export default async function CoachTrialsPage() {
 
   // Get parent details for the trials
   const parentIds = [...new Set(trials.map((t: any) => t.students?.parent_id).filter(Boolean))];
-  let parents = [];
+  let parents: any[] = [];
   if (parentIds.length > 0) {
     const { data } = await supabase
       .from("profiles")
