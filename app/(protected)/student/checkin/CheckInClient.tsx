@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-
-const LATE_THRESHOLD_MINUTES = 10;
+import { checkInAction } from "@/app/actions/checkin";
 
 const TYPE_COLORS: Record<string, string> = {
   lesson: "bg-primary/15 text-primary",
@@ -42,7 +39,6 @@ export default function CheckInClient({
   sessions: SessionEntry[];
   existingAttendance: AttendanceRecord[];
 }) {
-  const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
   const [checkedIn, setCheckedIn] = useState<Record<string, AttendanceRecord>>(
     () => {
@@ -76,51 +72,17 @@ export default function CheckInClient({
     const key = getKey(session.sessionId, session.studentId);
     setLoading(key);
 
-    const now = new Date();
-    const minutesLate = getMinutesLate(session.startAt);
-    const isLate = minutesLate > LATE_THRESHOLD_MINUTES;
-    const status = isLate ? "late" : "present";
+    const result = await checkInAction(session.sessionId, session.studentId);
 
-    const supabase = createClient();
-    const { error } = await supabase.from("attendance").upsert(
-      {
-        session_id: session.sessionId,
-        student_id: session.studentId,
-        checked_in_at: now.toISOString(),
-        status,
-        is_late: isLate,
-        updated_at: now.toISOString(),
-      },
-      { onConflict: "session_id,student_id" }
-    );
-
-    if (!error) {
-      // If late, trigger notification edge function
-      if (isLate) {
-        supabase.functions
-          .invoke("notify-late-attendance", {
-            body: {
-              sessionId: session.sessionId,
-              studentId: session.studentId,
-              studentName: session.studentName,
-              courseTitle: session.courseTitle,
-              minutesLate,
-              checkedInAt: now.toISOString(),
-            },
-          })
-          .catch(() => {
-            // Silently fail if edge function not deployed yet
-          });
-      }
-
+    if (result.ok && result.status && result.checkedInAt) {
       setCheckedIn((prev) => ({
         ...prev,
         [key]: {
           session_id: session.sessionId,
           student_id: session.studentId,
-          status,
-          checked_in_at: now.toISOString(),
-          is_late: isLate,
+          status: result.status!,
+          checked_in_at: result.checkedInAt!,
+          is_late: result.isLate ?? false,
           coach_confirmed: false,
         },
       }));
@@ -302,8 +264,9 @@ export default function CheckInClient({
       })}
 
       <p className="text-xs text-slate-500 text-center pt-2">
-        Check-in window opens 2 hours before each session starts.
-        Arrivals more than {LATE_THRESHOLD_MINUTES} minutes after start are marked late.
+        Check-in earns <span className="text-success font-semibold">10 pts</span> (on time) or{" "}
+        <span className="text-warning font-semibold">5 pts</span> (late).
+        Arrivals more than 10 minutes after start are marked late.
       </p>
     </div>
   );
