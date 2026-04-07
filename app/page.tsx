@@ -8,7 +8,7 @@ export default function Home() {
           </div>
           <h1 className="text-2xl font-bold text-white">Fraser Valley Chess Academy</h1>
         </div>
-        <p className="text-slate-400 text-sm">LMS — coming soon</p>
+        <p className="text-slate-400 text-sm">Learning Management System — coming soon</p>
       </div>
     </div>
   );
