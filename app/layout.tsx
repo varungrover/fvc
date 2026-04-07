@@ -20,6 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} dark h-full antialiased`}>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full bg-background-dark text-slate-100 font-sans">
         {children}
       </body>
