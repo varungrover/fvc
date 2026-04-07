@@ -29,6 +29,7 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
   student: [
     { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
     { label: "My Lessons", href: "/student/lessons", icon: "menu_book" },
+    { label: "Check-In", href: "/student/checkin", icon: "how_to_reg" },
     { label: "Achievements", href: "/student/achievements", icon: "emoji_events" },
     { label: "Leaderboard", href: "/student/leaderboard", icon: "leaderboard" },
   ],
@@ -37,10 +38,12 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "My Schedule", href: "/coach/schedule", icon: "calendar_month" },
     { label: "Attendance", href: "/coach/attendance", icon: "how_to_reg" },
     { label: "Students", href: "/coach/students", icon: "groups" },
+    { label: "Leave Request", href: "/coach/leave", icon: "event_busy" },
   ],
   admin: [
     { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
     { label: "Students", href: "/admin/students", icon: "groups" },
+    { label: "Attendance", href: "/admin/attendance", icon: "how_to_reg" },
     { label: "Courses", href: "/admin/courses", icon: "school" },
     { label: "Sessions", href: "/admin/sessions", icon: "calendar_month" },
     { label: "Staff", href: "/admin/staff", icon: "badge" },
