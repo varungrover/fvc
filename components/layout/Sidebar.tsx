@@ -22,6 +22,7 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
     { label: "My Children", href: "/parent/children", icon: "family_restroom" },
     { label: "Courses", href: "/courses", icon: "school" },
+    { label: "My Enrollments", href: "/parent/enrollments", icon: "assignment_turned_in" },
     { label: "Events", href: "/events", icon: "event" },
     { label: "Payments", href: "/parent/payments", icon: "payments" },
   ],
