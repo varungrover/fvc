@@ -48,6 +48,7 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
     { label: "Sessions", href: "/admin/sessions", icon: "calendar_month" },
     { label: "Staff", href: "/admin/staff", icon: "badge" },
     { label: "Coupons", href: "/admin/coupons", icon: "local_offer" },
+    { label: "Loyalty", href: "/admin/loyalty", icon: "card_giftcard" },
     { label: "Merchandise", href: "/admin/merchandise", icon: "inventory_2" },
     { label: "Revenue", href: "/admin/revenue", icon: "bar_chart" },
     { label: "Events", href: "/admin/events", icon: "event" },
@@ -59,7 +60,9 @@ const NAV_ITEMS: Record<string, NavItem[]> = {
   marketing: [
     { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
     { label: "Leads", href: "/marketing/leads", icon: "person_add" },
+    { label: "Lists", href: "/marketing/lists", icon: "segment" },
     { label: "Campaigns", href: "/marketing/campaigns", icon: "campaign" },
+    { label: "Do Not Contact", href: "/marketing/dnc", icon: "block" },
   ],
 };
 
