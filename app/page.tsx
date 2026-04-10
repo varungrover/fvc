@@ -5,7 +5,7 @@ export default function LandingPage() {
     <div className="bg-white text-[#1d1d1f] font-sans overflow-x-hidden">
 
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-xl border-b border-black/[0.06]">
+      <header className="fixed top-0 inset-x-0 z-50 bg-white backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-[980px] mx-auto h-12 px-4 flex items-center justify-between">
           <Link href="/" className="text-[#1d1d1f] opacity-80 hover:opacity-100 transition-opacity">
             <span className="text-2xl leading-none">♟</span>
@@ -32,18 +32,18 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* ── Hero (dark — Apple keeps product heroes dark) ─────────────────── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-12 bg-[#000] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(43,108,238,0.15),transparent)] pointer-events-none" />
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-12 bg-white">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_40%_at_50%_0%,rgba(0,113,227,0.07),transparent)] pointer-events-none" />
 
         <div className="relative max-w-[700px] mx-auto">
-          <p className="text-[17px] font-semibold text-[#6ba0ff] mb-4">
+          <p className="text-[17px] font-semibold text-[#0071e3] mb-4">
             Fraser Valley Chess Academy
           </p>
-          <h1 className="text-[56px] md:text-[80px] font-bold leading-[1.05] tracking-tight mb-6">
+          <h1 className="text-[56px] md:text-[80px] font-bold leading-[1.05] tracking-tight text-[#1d1d1f] mb-6">
             The game that<br />changes everything.
           </h1>
-          <p className="text-[19px] md:text-[21px] text-white/60 leading-relaxed mb-10 font-light">
+          <p className="text-[19px] md:text-[21px] text-[#6e6e73] leading-relaxed mb-10 font-light">
             Strategic thinking. Unshakeable focus.<br className="hidden md:block" />
             Lifelong skills. Starting here.
           </p>
@@ -56,7 +56,7 @@ export default function LandingPage() {
             </Link>
             <a
               href="#programs"
-              className="text-[#6ba0ff] hover:text-[#9dc0ff] text-[17px] font-medium transition-colors flex items-center gap-1"
+              className="text-[#0071e3] hover:underline text-[17px] font-medium transition-colors flex items-center gap-1"
             >
               Explore programs <span>›</span>
             </a>
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
         {/* Chess board */}
         <div className="relative mt-20 w-full max-w-[440px] mx-auto select-none pointer-events-none">
-          <div className="grid grid-cols-8 rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
+          <div className="grid grid-cols-8 rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.15)]">
             {Array.from({ length: 64 }).map((_, i) => {
               const row = Math.floor(i / 8);
               const col = i % 8;
@@ -97,12 +97,12 @@ export default function LandingPage() {
               );
             })}
           </div>
-          <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#000] to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-white to-transparent" />
         </div>
       </section>
 
       {/* ── Tagline strip ─────────────────────────────────────────────────── */}
-      <section className="py-5 bg-[#f5f5f7] border-b border-black/[0.06]">
+      <section className="py-5 bg-white border-y border-black/[0.06]">
         <p className="text-center text-[14px] text-[#6e6e73] tracking-wide">
           Inspire &nbsp;·&nbsp; Empower &nbsp;·&nbsp; Educate &nbsp;·&nbsp; Fraser Valley, BC
         </p>
