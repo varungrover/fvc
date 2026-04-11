@@ -39,9 +39,13 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
-  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    pathname.startsWith(route)
-  );
+
+  // "/" must be an exact match — startsWith("/") would match every route
+  const isPublicRoute =
+    pathname === "/" ||
+    PUBLIC_ROUTES.filter((r) => r !== "/").some((route) =>
+      pathname.startsWith(route)
+    );
 
   // Unauthenticated user hitting a protected route → login
   if (!user && !isPublicRoute) {
@@ -51,7 +55,11 @@ export async function proxy(request: NextRequest) {
   }
 
   // Authenticated user hitting an auth page → dashboard
-  if (user && isPublicRoute && pathname !== "/auth/callback") {
+  // (but not the landing page — let logged-in users see it too)
+  const isAuthRoute = ["/login", "/register", "/forgot-password", "/reset-password"].some(
+    (route) => pathname.startsWith(route)
+  );
+  if (user && isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
