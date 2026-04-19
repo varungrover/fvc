@@ -67,8 +67,8 @@ export default async function CoachAttendancePage({
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Attendance</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Attendance</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Mark and confirm student attendance for sessions.
         </p>
       </div>

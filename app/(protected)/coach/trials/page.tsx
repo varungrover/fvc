@@ -47,26 +47,26 @@ export default async function CoachTrialsPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Trial Management</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Trial Management</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Review active trial students in your courses and follow up with parents.
         </p>
       </div>
 
       {trialsWithParents.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center text-slate-400">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center text-slate-500">
           No active trial students in your courses.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {trialsWithParents.map((t) => (
-            <div key={t.id} className="bg-card-dark border border-border-dark rounded-xl p-5 relative">
+            <div key={t.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 relative">
               <span className="absolute top-4 right-4 bg-warning/10 text-warning px-2 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider border border-warning/20">
                 ACTIVE TRIAL
               </span>
               
-              <h3 className="text-lg font-bold text-white mb-0.5">{t.students?.full_name}</h3>
-              <p className="text-sm font-medium text-slate-300">{t.courses?.title}</p>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">{t.students?.full_name}</h3>
+              <p className="text-sm font-medium text-slate-700">{t.courses?.title}</p>
               {t.students?.grade && <p className="text-xs text-slate-500 mt-1">Grade {t.students.grade}</p>}
 
               <div className="mt-4 pt-4 border-t border-border-dark space-y-2">
@@ -74,9 +74,9 @@ export default async function CoachTrialsPage() {
                 {t.parent ? (
                   <>
                     <p className="text-sm text-slate-200 font-medium">{t.parent.full_name}</p>
-                    <p className="text-xs text-slate-400 flex items-center gap-1.5"><span className="material-icons-round text-sm">email</span> {t.parent.email}</p>
+                    <p className="text-xs text-slate-500 flex items-center gap-1.5"><span className="material-icons-round text-sm">email</span> {t.parent.email}</p>
                     {t.parent.phone && (
-                      <p className="text-xs text-slate-400 flex items-center gap-1.5"><span className="material-icons-round text-sm">phone</span> {t.parent.phone}</p>
+                      <p className="text-xs text-slate-500 flex items-center gap-1.5"><span className="material-icons-round text-sm">phone</span> {t.parent.phone}</p>
                     )}
                   </>
                 ) : (

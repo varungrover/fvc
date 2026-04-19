@@ -79,17 +79,11 @@ export default async function DashboardPage() {
       },
     ];
 
-    const colorMap: Record<string, string> = {
-      primary: "bg-primary/15 text-primary",
-      success: "bg-success/15 text-success",
-      indigo: "bg-indigo/15 text-indigo",
-      purple: "bg-purple/15 text-purple",
-    };
-    const borderMap: Record<string, string> = {
-      primary: "hover:border-primary/40",
-      success: "hover:border-emerald-500/40",
-      indigo: "hover:border-indigo/40",
-      purple: "hover:border-purple/40",
+    const gradientMap: Record<string, string> = {
+      primary: "linear-gradient(135deg, #7c3aed, #a78bfa)",
+      success: "linear-gradient(135deg, #059669, #34d399)",
+      indigo: "linear-gradient(135deg, #f59e0b, #fbbf24)",
+      purple: "linear-gradient(135deg, #ec4899, #f9a8d4)",
     };
 
     const statusStyles: Record<string, string> = {
@@ -110,8 +104,8 @@ export default async function DashboardPage() {
       <div className="p-8 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">
             Welcome back, {name}. Here&apos;s your overview.
           </p>
         </div>
@@ -122,16 +116,15 @@ export default async function DashboardPage() {
             <Link
               key={stat.label}
               href={stat.href}
-              className={`bg-card-dark rounded-xl border border-border-dark p-5 flex items-start gap-4 ${borderMap[stat.color]} hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+              className="rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-xl"
+              style={{ background: gradientMap[stat.color] }}
             >
-              <div
-                className={`w-10 h-10 rounded-xl ${colorMap[stat.color]} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-              >
-                <span className="material-icons-round text-xl">{stat.icon}</span>
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <span className="material-icons-round text-white text-xl">{stat.icon}</span>
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-medium">{stat.label}</p>
-                <p className="text-2xl font-bold text-white mt-0.5">{stat.value}</p>
+                <p className="text-3xl font-bold text-white leading-none">{stat.value}</p>
+                <p className="text-sm text-white/80 mt-1 font-medium">{stat.label}</p>
               </div>
             </Link>
           ))}
@@ -142,7 +135,7 @@ export default async function DashboardPage() {
           {/* Recent enrollments */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold text-white">Recent Enrollments</h2>
+              <h2 className="text-base font-bold text-gray-900">Recent Enrollments</h2>
               <Link
                 href="/admin/students"
                 className="text-xs text-primary hover:text-purple-300 font-medium transition-colors"
@@ -150,15 +143,15 @@ export default async function DashboardPage() {
                 View all →
               </Link>
             </div>
-            <div className="bg-card-dark border border-border-dark rounded-xl divide-y divide-border-dark overflow-hidden">
+            <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm divide-y divide-gray-100 overflow-hidden">
               {recentEnrollments && recentEnrollments.length > 0 ? (
                 recentEnrollments.map((e: any) => (
                   <div
                     key={e.id}
-                    className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover transition-colors"
+                    className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover hover:shadow-md transition-colors"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">
+                      <p className="text-sm font-medium text-gray-800 truncate">
                         {e.students?.full_name}
                       </p>
                       <p className="text-xs text-slate-500 mt-0.5">
@@ -166,7 +159,7 @@ export default async function DashboardPage() {
                       </p>
                     </div>
                     <span
-                      className={`text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${statusStyles[e.status] ?? "bg-slate-700 text-slate-400"}`}
+                      className={`text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${statusStyles[e.status] ?? "bg-slate-700 text-slate-500"}`}
                     >
                       {e.status?.replace("_", " ")}
                     </span>
@@ -183,7 +176,7 @@ export default async function DashboardPage() {
           {/* Active courses */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold text-white">Active Courses</h2>
+              <h2 className="text-base font-bold text-gray-900">Active Courses</h2>
               <Link
                 href="/admin/courses"
                 className="text-xs text-primary hover:text-purple-300 font-medium transition-colors"
@@ -191,15 +184,15 @@ export default async function DashboardPage() {
                 Manage →
               </Link>
             </div>
-            <div className="bg-card-dark border border-border-dark rounded-xl divide-y divide-border-dark overflow-hidden">
+            <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm divide-y divide-gray-100 overflow-hidden">
               {courses && courses.length > 0 ? (
                 courses.map((c: any) => (
                   <div
                     key={c.id}
-                    className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover transition-colors"
+                    className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover hover:shadow-md transition-colors"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">
+                      <p className="text-sm font-medium text-gray-800 truncate">
                         {c.title}
                       </p>
                       <p className="text-xs text-slate-500 mt-0.5">
@@ -207,7 +200,7 @@ export default async function DashboardPage() {
                       </p>
                     </div>
                     {c.price_monthly && (
-                      <span className="text-sm text-slate-300 font-medium flex-shrink-0">
+                      <span className="text-sm text-slate-700 font-medium flex-shrink-0">
                         ${c.price_monthly}/mo
                       </span>
                     )}
@@ -224,11 +217,12 @@ export default async function DashboardPage() {
 
         {/* Quick actions */}
         <div>
-          <h2 className="text-base font-bold text-white mb-4">Quick Actions</h2>
+          <h2 className="text-base font-bold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <Link
               href="/admin/courses"
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary hover:bg-purple-600 text-white text-sm font-medium transition-all duration-200 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-white text-sm font-medium transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+              style={{ background: "linear-gradient(135deg, #7c3aed, #ec4899)" }}
             >
               <span className="material-icons-round text-xl">add_circle</span>
               Create Course
@@ -237,21 +231,21 @@ export default async function DashboardPage() {
               href="/admin/sessions"
               className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-200 text-sm font-medium transition-all"
             >
-              <span className="material-icons-round text-slate-400 text-xl">calendar_month</span>
+              <span className="material-icons-round text-slate-500 text-xl">calendar_month</span>
               Schedule Sessions
             </Link>
             <Link
               href="/admin/coupons"
               className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-200 text-sm font-medium transition-all"
             >
-              <span className="material-icons-round text-slate-400 text-xl">local_offer</span>
+              <span className="material-icons-round text-slate-500 text-xl">local_offer</span>
               Manage Coupons
             </Link>
             <Link
               href="/admin/merchandise"
               className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-200 text-sm font-medium transition-all"
             >
-              <span className="material-icons-round text-slate-400 text-xl">inventory_2</span>
+              <span className="material-icons-round text-slate-500 text-xl">inventory_2</span>
               Merchandise Orders
             </Link>
           </div>
@@ -314,44 +308,44 @@ export default async function DashboardPage() {
     return (
       <div className="p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">Good morning, {name} 👋</h1>
-          <p className="text-slate-400 text-sm mt-1">Here&apos;s what&apos;s happening today.</p>
+          <h1 className="text-2xl font-bold text-gray-900">Good morning, {name} 👋</h1>
+          <p className="text-slate-500 text-sm mt-1">Here&apos;s what&apos;s happening today.</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {[
-            { label: "Today's sessions", value: todaySessions?.length ?? 0, icon: "event", color: "primary" },
-            { label: "This week", value: upcomingSessions?.length ?? 0, icon: "calendar_month", color: "success" },
-            { label: "Attendance rate (30d)", value: `${attRate}%`, icon: "how_to_reg", color: "warning" },
+            { label: "Today's sessions", value: todaySessions?.length ?? 0, icon: "event", gradient: "linear-gradient(135deg, #7c3aed, #a78bfa)" },
+            { label: "This week", value: upcomingSessions?.length ?? 0, icon: "calendar_month", gradient: "linear-gradient(135deg, #059669, #34d399)" },
+            { label: "Attendance rate (30d)", value: `${attRate}%`, icon: "how_to_reg", gradient: "linear-gradient(135deg, #f59e0b, #fbbf24)" },
           ].map((s) => (
-            <div key={s.label} className="bg-card-dark border border-border-dark rounded-xl p-5">
-              <div className={`w-10 h-10 rounded-xl bg-${s.color}/15 flex items-center justify-center mb-3`}>
-                <span className={`material-icons-round text-${s.color} text-xl`}>{s.icon}</span>
+            <div key={s.label} className="rounded-2xl p-6 flex flex-col gap-3 hover:scale-[1.02] transition-all duration-300" style={{ background: s.gradient }}>
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                <span className="material-icons-round text-white text-xl">{s.icon}</span>
               </div>
-              <p className="text-3xl font-bold text-white">{s.value}</p>
-              <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+              <p className="text-3xl font-bold text-white leading-none">{s.value}</p>
+              <p className="text-sm text-white/80 font-medium">{s.label}</p>
             </div>
           ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Today's Sessions */}
-          <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
-              <h2 className="text-base font-bold text-white">Today&apos;s Sessions</h2>
+              <h2 className="text-base font-bold text-gray-900">Today&apos;s Sessions</h2>
               <Link href="/coach/schedule" className="text-xs text-primary hover:text-purple-300">View schedule →</Link>
             </div>
             {!todaySessions || todaySessions.length === 0 ? (
               <div className="px-5 py-10 text-center text-slate-500 text-sm">No sessions today</div>
             ) : (
-              <div className="divide-y divide-border-dark">
+              <div className="divide-y divide-gray-100">
                 {todaySessions.map((s: any) => (
                   <div key={s.id} className="px-5 py-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-semibold text-white">{s.courses?.title}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">{fmt(s.start_at)} – {fmt(s.end_at)}</p>
+                        <p className="text-sm font-semibold text-gray-900">{s.courses?.title}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">{fmt(s.start_at)} – {fmt(s.end_at)}</p>
                       </div>
                       <Link
                         href={`/coach/attendance?session=${s.id}`}
@@ -374,21 +368,21 @@ export default async function DashboardPage() {
           </div>
 
           {/* Upcoming this week */}
-          <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark">
-              <h2 className="text-base font-bold text-white">Upcoming This Week</h2>
+              <h2 className="text-base font-bold text-gray-900">Upcoming This Week</h2>
             </div>
             {!upcomingSessions || upcomingSessions.length === 0 ? (
               <div className="px-5 py-10 text-center text-slate-500 text-sm">No upcoming sessions</div>
             ) : (
-              <div className="divide-y divide-border-dark">
+              <div className="divide-y divide-gray-100">
                 {upcomingSessions.map((s: any) => (
                   <div key={s.id} className="px-5 py-3.5 flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
                       <span className="material-icons-round text-primary text-sm">school</span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{s.courses?.title}</p>
+                      <p className="text-sm font-medium text-gray-800">{s.courses?.title}</p>
                       <p className="text-xs text-slate-500">{fmtDate(s.start_at)} · {fmt(s.start_at)}</p>
                     </div>
                   </div>
@@ -409,9 +403,9 @@ export default async function DashboardPage() {
             <Link
               key={l.href}
               href={l.href}
-              className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-300 text-sm font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-700 text-sm font-medium transition-all"
             >
-              <span className="material-icons-round text-slate-400 text-lg">{l.icon}</span>
+              <span className="material-icons-round text-slate-500 text-lg">{l.icon}</span>
               {l.label}
             </Link>
           ))}
@@ -492,17 +486,17 @@ export default async function DashboardPage() {
     return (
       <div className="p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">Hi, {name} 👋</h1>
-          <p className="text-slate-400 text-sm mt-1">Here&apos;s everything for your family.</p>
+          <h1 className="text-2xl font-bold text-gray-900">Hi, {name} 👋</h1>
+          <p className="text-slate-500 text-sm mt-1">Here&apos;s everything for your family.</p>
         </div>
 
         {/* Notifications */}
         {notifications.length > 0 && (
           <div className="mb-6 space-y-2">
             {notifications.map((n, i) => (
-              <div key={i} className="bg-card-dark border border-border-dark rounded-xl px-4 py-3 flex items-center gap-3">
+              <div key={i} className="bg-card-dark border border-border-dark rounded-xl shadow-sm px-4 py-3 flex items-center gap-3">
                 <span className={`material-icons-round ${n.color} text-lg`}>{n.icon}</span>
-                <p className="text-sm text-slate-300">{n.text}</p>
+                <p className="text-sm text-slate-700">{n.text}</p>
               </div>
             ))}
           </div>
@@ -511,7 +505,7 @@ export default async function DashboardPage() {
         {/* Children cards */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-bold text-white">Children</h2>
+            <h2 className="text-base font-bold text-gray-900">Children</h2>
             <Link href="/parent/children" className="text-xs text-primary hover:text-purple-300">Manage →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -521,13 +515,13 @@ export default async function DashboardPage() {
               const trial = childEnrollments.filter((e: any) => e.status === "trial").length;
               const initials = child.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
               return (
-                <div key={child.id} className="bg-card-dark border border-border-dark rounded-xl p-5">
+                <div key={child.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-indigo-600 flex items-center justify-center">
                       <span className="text-white text-sm font-bold">{initials}</span>
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-white">{child.full_name}</p>
+                      <p className="text-sm font-semibold text-gray-900">{child.full_name}</p>
                       {child.grade && <p className="text-xs text-slate-500">Grade {child.grade}</p>}
                     </div>
                   </div>
@@ -558,20 +552,20 @@ export default async function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Upcoming sessions */}
-          <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
-              <h2 className="text-base font-bold text-white">Upcoming Sessions</h2>
+              <h2 className="text-base font-bold text-gray-900">Upcoming Sessions</h2>
               <Link href="/parent/enrollments" className="text-xs text-primary hover:text-purple-300">All →</Link>
             </div>
             {!upcomingSessions || upcomingSessions.length === 0 ? (
               <div className="px-5 py-8 text-center text-slate-500 text-sm">No sessions this week</div>
             ) : (
-              <div className="divide-y divide-border-dark">
+              <div className="divide-y divide-gray-100">
                 {upcomingSessions.map((s: any) => (
                   <div key={s.id} className="px-5 py-3.5">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-sm font-medium text-white">{s.courses?.title}</p>
+                        <p className="text-sm font-medium text-gray-800">{s.courses?.title}</p>
                         <p className="text-xs text-slate-500 mt-0.5">{fmtDate(s.start_at)} · {fmt(s.start_at)}</p>
                       </div>
                       <Link
@@ -589,22 +583,22 @@ export default async function DashboardPage() {
           </div>
 
           {/* Events */}
-          <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
-              <h2 className="text-base font-bold text-white">Upcoming Events</h2>
+              <h2 className="text-base font-bold text-gray-900">Upcoming Events</h2>
               <Link href="/events" className="text-xs text-primary hover:text-purple-300">See all →</Link>
             </div>
             {!events || events.length === 0 ? (
               <div className="px-5 py-8 text-center text-slate-500 text-sm">No upcoming events</div>
             ) : (
-              <div className="divide-y divide-border-dark">
+              <div className="divide-y divide-gray-100">
                 {events.map((e: any) => (
                   <div key={e.id} className="px-5 py-3.5 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-500/15 flex items-center justify-center flex-shrink-0 text-center">
                       <span className="text-purple-400 text-xs font-bold leading-none">{fmtEventDate(e.event_date)}</span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{e.title}</p>
+                      <p className="text-sm font-medium text-gray-800">{e.title}</p>
                       <p className="text-xs text-slate-500 capitalize">{e.type.replace("_", " ")} · {e.price > 0 ? `$${e.price}` : "Free"}</p>
                     </div>
                     <Link href="/events" className="text-xs text-primary hover:text-purple-300">RSVP</Link>
@@ -626,9 +620,9 @@ export default async function DashboardPage() {
             <Link
               key={l.href}
               href={l.href}
-              className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-300 text-sm font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border-dark bg-surface-dark hover:bg-surface-hover text-slate-700 text-sm font-medium transition-all"
             >
-              <span className="material-icons-round text-slate-400 text-lg">{l.icon}</span>
+              <span className="material-icons-round text-slate-500 text-lg">{l.icon}</span>
               {l.label}
             </Link>
           ))}
@@ -641,17 +635,17 @@ export default async function DashboardPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Hi, {name} 👋</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Hi, {name} 👋</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Welcome to your {role.replace("_", " ")} dashboard.
         </p>
       </div>
 
-      <div className="bg-card-dark border border-border-dark rounded-xl p-6 text-center max-w-md">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 text-center max-w-md">
         <span className="material-icons-round text-4xl text-slate-600 mb-3 block">
           construction
         </span>
-        <p className="text-slate-300 font-medium">Dashboard coming soon</p>
+        <p className="text-slate-700 font-medium">Dashboard coming soon</p>
         <p className="text-slate-500 text-sm mt-1">
           This section will be built in the next stage.
         </p>

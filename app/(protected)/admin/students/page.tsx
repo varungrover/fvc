@@ -7,7 +7,7 @@ const STATUS_STYLES: Record<string, { label: string; classes: string }> = {
   active: { label: "Active", classes: "bg-success/10 text-success" },
   pending_payment: { label: "Pending", classes: "bg-warning/10 text-warning" },
   cancelled: { label: "Cancelled", classes: "bg-error/10 text-error" },
-  completed: { label: "Completed", classes: "bg-slate-700 text-slate-400" },
+  completed: { label: "Completed", classes: "bg-slate-700 text-slate-500" },
 };
 
 export default async function AdminStudentsPage({
@@ -43,8 +43,8 @@ export default async function AdminStudentsPage({
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Student Management</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Student Management</h1>
+          <p className="text-slate-500 text-sm mt-1">
             View and manage all students across locations.
           </p>
         </div>
@@ -71,42 +71,42 @@ export default async function AdminStudentsPage({
 
       {/* Students list */}
       {!students || students.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
             person_off
           </span>
-          <p className="text-slate-400 font-medium">
+          <p className="text-slate-500 font-medium">
             {q ? "No students match your search" : "No students registered yet"}
           </p>
         </div>
       ) : (
-        <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
           {/* Desktop table */}
           <div className="hidden lg:block">
             <table className="w-full">
               <thead>
                 <tr className="bg-[#151c2b] border-b border-border-dark">
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Student
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Parent
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Grade
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     CFC ID
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Enrollments
                   </th>
-                  <th className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-right text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {students.map((student: any) => {
                   const parent = student.profiles;
                   const enrollments = student.enrollments ?? [];
@@ -123,7 +123,7 @@ export default async function AdminStudentsPage({
                   return (
                     <tr
                       key={student.id}
-                      className="hover:bg-card-hover transition-colors duration-150"
+                      className="hover:bg-card-hover hover:shadow-md transition-colors duration-150"
                     >
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export default async function AdminStudentsPage({
                             <span className="text-white text-xs font-bold">{initials}</span>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">
+                            <p className="text-sm font-medium text-gray-800">
                               {student.full_name}
                             </p>
                             {student.date_of_birth && (
@@ -143,13 +143,13 @@ export default async function AdminStudentsPage({
                         </div>
                       </td>
                       <td className="px-5 py-3.5">
-                        <p className="text-sm text-slate-300">{parent?.full_name ?? "—"}</p>
+                        <p className="text-sm text-slate-700">{parent?.full_name ?? "—"}</p>
                         <p className="text-xs text-slate-500">{parent?.email ?? ""}</p>
                       </td>
-                      <td className="px-5 py-3.5 text-sm text-slate-300">
+                      <td className="px-5 py-3.5 text-sm text-slate-700">
                         {student.grade ?? "—"}
                       </td>
-                      <td className="px-5 py-3.5 text-sm text-slate-400 font-mono">
+                      <td className="px-5 py-3.5 text-sm text-slate-500 font-mono">
                         {student.cfc_id ?? "—"}
                       </td>
                       <td className="px-5 py-3.5">
@@ -161,7 +161,7 @@ export default async function AdminStudentsPage({
                               const style =
                                 STATUS_STYLES[e.status] ?? {
                                   label: e.status,
-                                  classes: "bg-slate-700 text-slate-400",
+                                  classes: "bg-slate-700 text-slate-500",
                                 };
                               return (
                                 <span
@@ -192,7 +192,7 @@ export default async function AdminStudentsPage({
           </div>
 
           {/* Mobile cards */}
-          <div className="lg:hidden divide-y divide-border-dark">
+          <div className="lg:hidden divide-y divide-gray-100">
             {students.map((student: any) => {
               const parent = student.profiles;
               const initials = student.full_name
@@ -209,7 +209,7 @@ export default async function AdminStudentsPage({
                       <span className="text-white text-xs font-bold">{initials}</span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{student.full_name}</p>
+                      <p className="text-sm font-medium text-gray-800">{student.full_name}</p>
                       <p className="text-xs text-slate-500">
                         Grade: {student.grade ?? "—"} · Parent: {parent?.full_name ?? "—"}
                       </p>

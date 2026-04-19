@@ -7,7 +7,7 @@ const STATUS_STYLES: Record<string, { label: string; classes: string }> = {
   active: { label: "Active", classes: "bg-success/10 text-success" },
   pending_payment: { label: "Pending payment", classes: "bg-warning/10 text-warning" },
   cancelled: { label: "Cancelled", classes: "bg-error/10 text-error" },
-  completed: { label: "Completed", classes: "bg-slate-700 text-slate-400" },
+  completed: { label: "Completed", classes: "bg-slate-700 text-slate-500" },
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -47,8 +47,8 @@ export default async function MyEnrollmentsPage() {
     <div className="p-8 max-w-3xl">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">My Enrollments</h1>
-          <p className="text-slate-400 text-sm mt-1">Manage your children's course enrollments.</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Enrollments</h1>
+          <p className="text-slate-500 text-sm mt-1">Manage your children's course enrollments.</p>
         </div>
         <Link
           href="/courses"
@@ -60,9 +60,9 @@ export default async function MyEnrollmentsPage() {
       </div>
 
       {!enrollments || enrollments.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 mb-3 block">school</span>
-          <p className="text-slate-400 font-medium">No enrollments yet</p>
+          <p className="text-slate-500 font-medium">No enrollments yet</p>
           <p className="text-slate-500 text-sm mt-1 mb-5">Browse available courses and enroll your children.</p>
           <Link
             href="/courses"
@@ -76,13 +76,13 @@ export default async function MyEnrollmentsPage() {
           {enrollments.map((enrollment: any) => {
             const course = enrollment.courses;
             const student = enrollment.students;
-            const status = STATUS_STYLES[enrollment.status] ?? { label: enrollment.status, classes: "bg-slate-700 text-slate-400" };
+            const status = STATUS_STYLES[enrollment.status] ?? { label: enrollment.status, classes: "bg-slate-700 text-slate-500" };
             const loc = course?.locations;
 
             return (
               <div
                 key={enrollment.id}
-                className="bg-card-dark border border-border-dark rounded-xl p-5"
+                className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -97,13 +97,13 @@ export default async function MyEnrollmentsPage() {
                       )}
                     </div>
 
-                    <h3 className="text-white font-bold text-base leading-snug">
+                    <h3 className="text-gray-900 font-bold text-base leading-snug">
                       {course?.title ?? "Unknown course"}
                     </h3>
 
                     <div className="flex items-center gap-1.5 mt-1">
                       <span className="material-icons-round text-[14px] text-slate-500">person</span>
-                      <span className="text-slate-400 text-sm">{student?.full_name}</span>
+                      <span className="text-slate-500 text-sm">{student?.full_name}</span>
                     </div>
 
                     <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-slate-500">
@@ -125,7 +125,7 @@ export default async function MyEnrollmentsPage() {
                   {/* Actions */}
                   <div className="flex flex-col items-end gap-2 flex-shrink-0">
                     {course?.price_monthly && (
-                      <span className="text-slate-300 text-sm font-semibold">
+                      <span className="text-slate-700 text-sm font-semibold">
                         ${course.price_monthly}<span className="text-slate-500 font-normal">/mo</span>
                       </span>
                     )}

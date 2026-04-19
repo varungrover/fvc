@@ -48,16 +48,16 @@ export default function CoachScheduleClient({ sessions }: { sessions: any[] }) {
       <div className="flex items-center gap-3">
         <button
           onClick={() => setWeekOffset((w) => w - 1)}
-          className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-400 hover:text-white transition-all"
+          className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-500 hover:text-white transition-all"
         >
           <span className="material-icons-round text-xl">chevron_left</span>
         </button>
-        <span className="text-sm font-semibold text-white min-w-[200px] text-center">
+        <span className="text-sm font-semibold text-gray-900 min-w-[200px] text-center">
           {weekLabel}
         </span>
         <button
           onClick={() => setWeekOffset((w) => w + 1)}
-          className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-400 hover:text-white transition-all"
+          className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-500 hover:text-white transition-all"
         >
           <span className="material-icons-round text-xl">chevron_right</span>
         </button>
@@ -69,7 +69,7 @@ export default function CoachScheduleClient({ sessions }: { sessions: any[] }) {
         </button>
       </div>
 
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <div className="min-w-[800px]">
             {/* Day headers */}
@@ -82,7 +82,7 @@ export default function CoachScheduleClient({ sessions }: { sessions: any[] }) {
                     key={i}
                     className={`px-3 py-3 text-center ${isToday ? "bg-primary/5" : ""}`}
                   >
-                    <p className="text-xs font-semibold text-slate-400 uppercase">{DAYS[i]}</p>
+                    <p className="text-xs font-semibold text-slate-500 uppercase">{DAYS[i]}</p>
                     <p className={`text-lg font-bold ${isToday ? "text-primary" : "text-white"}`}>
                       {d.getDate()}
                     </p>

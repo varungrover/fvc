@@ -71,9 +71,9 @@ export default function EditChildForm({ student }: { student: Student }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card-dark border border-border-dark rounded-xl p-6 space-y-5">
+    <form onSubmit={handleSubmit} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 space-y-5">
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1.5">Full name <span className="text-error">*</span></label>
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">Full name <span className="text-error">*</span></label>
         <input
           name="full_name" required value={form.full_name} onChange={handleChange}
           className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
@@ -82,14 +82,14 @@ export default function EditChildForm({ student }: { student: Student }) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Date of birth</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Date of birth</label>
           <input
             type="date" name="date_of_birth" value={form.date_of_birth} onChange={handleChange}
             className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Grade</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Grade</label>
           <input
             name="grade" value={form.grade} onChange={handleChange}
             placeholder="e.g. 5"
@@ -99,17 +99,17 @@ export default function EditChildForm({ student }: { student: Student }) {
       </div>
 
       <div className="border-t border-border-dark pt-5">
-        <p className="text-sm font-semibold text-slate-300 mb-4">Emergency Contact</p>
+        <p className="text-sm font-semibold text-slate-700 mb-4">Emergency Contact</p>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1.5">Contact name</label>
+            <label className="block text-sm font-medium text-slate-500 mb-1.5">Contact name</label>
             <input
               name="emergency_contact_name" value={form.emergency_contact_name} onChange={handleChange}
               className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1.5">Contact phone</label>
+            <label className="block text-sm font-medium text-slate-500 mb-1.5">Contact phone</label>
             <input
               name="emergency_contact_phone" value={form.emergency_contact_phone} onChange={handleChange}
               className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
@@ -119,7 +119,7 @@ export default function EditChildForm({ student }: { student: Student }) {
       </div>
 
       <div className="border-t border-border-dark pt-5">
-        <label className="block text-sm font-medium text-slate-300 mb-1.5">CFC ID <span className="text-slate-500">(optional)</span></label>
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">CFC ID <span className="text-slate-500">(optional)</span></label>
         <input
           name="cfc_id" value={form.cfc_id} onChange={handleChange}
           placeholder="Chess Federation of Canada ID"
@@ -140,7 +140,7 @@ export default function EditChildForm({ student }: { student: Student }) {
         </button>
         <Link
           href="/parent/children"
-          className="px-5 py-3 border border-border-dark rounded-lg text-slate-300 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all duration-200 flex items-center"
+          className="px-5 py-3 border border-border-dark rounded-lg text-slate-700 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all duration-200 flex items-center"
         >
           Cancel
         </Link>

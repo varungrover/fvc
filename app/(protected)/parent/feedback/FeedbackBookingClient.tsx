@@ -55,14 +55,14 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
       case "confirmed": return "bg-primary/10 text-primary border-primary/20";
       case "completed": return "bg-success/10 text-success border-success/20";
       case "cancelled": return "bg-error/10 text-error border-error/20";
-      default: return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+      default: return "bg-slate-500/10 text-slate-500 border-slate-500/20";
     }
   }
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-white font-bold">Your Requests</h2>
+        <h2 className="text-gray-900 font-bold">Your Requests</h2>
         <button
           onClick={() => setIsOpen(true)}
           className="px-4 py-2 bg-primary hover:bg-purple-600 text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors"
@@ -73,29 +73,29 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
       </div>
 
       {bookings.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center">
           <span className="material-icons-round text-4xl text-slate-600 mb-3">forum</span>
           <p className="text-white font-medium">No requests yet</p>
-          <p className="text-slate-400 text-sm mt-1">You haven't requested any feedback meetings.</p>
+          <p className="text-slate-500 text-sm mt-1">You haven't requested any feedback meetings.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {bookings.map((b) => (
-            <div key={b.id} className="bg-card-dark border border-border-dark rounded-xl p-5 flex flex-col">
+            <div key={b.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex flex-col">
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="text-white font-semibold text-sm">{b.students?.full_name}</h3>
-                  <p className="text-slate-400 text-xs mt-0.5">{b.locations?.name || "Online"}</p>
+                  <h3 className="text-gray-900 font-semibold text-sm">{b.students?.full_name}</h3>
+                  <p className="text-slate-500 text-xs mt-0.5">{b.locations?.name || "Online"}</p>
                 </div>
                 <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border ${getStatusStyle(b.status)}`}>
                   {b.status}
                 </span>
               </div>
-              <p className="text-slate-300 text-sm flex-1">{b.message}</p>
+              <p className="text-slate-700 text-sm flex-1">{b.message}</p>
               
               <div className="mt-4 pt-4 border-t border-border-dark space-y-1">
                 {(b.preferred_date || b.preferred_time) && (
-                  <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <p className="text-xs text-slate-500 flex items-center gap-1.5">
                     <span className="material-icons-round text-[14px]">schedule</span>
                     Prefers: {b.preferred_date ? new Date(b.preferred_date).toLocaleDateString() : ""} {b.preferred_time}
                   </p>
@@ -109,7 +109,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
                 {b.admin_note && (
                   <div className="mt-2 bg-surface-dark p-2 rounded-lg border border-border-dark">
                     <p className="text-[11px] text-slate-500 uppercase font-bold mb-0.5">Admin Note</p>
-                    <p className="text-xs text-slate-300">{b.admin_note}</p>
+                    <p className="text-xs text-slate-700">{b.admin_note}</p>
                   </div>
                 )}
               </div>
@@ -121,10 +121,10 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
       {/* Modal form */}
       {isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-card-dark border border-border-dark rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
+          <div className="bg-card-dark border border-border-dark rounded-2xl shadow-sm w-full max-w-lg overflow-hidden shadow-2xl">
             <div className="px-6 py-4 border-b border-border-dark flex justify-between items-center bg-surface-dark">
-              <h2 className="text-lg font-bold text-white">Request Feedback Meeting</h2>
-              <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-gray-900">Request Feedback Meeting</h2>
+              <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white transition-colors">
                 <span className="material-icons-round">close</span>
               </button>
             </div>
@@ -139,7 +139,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Child</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1.5">Child</label>
                   <select 
                     value={formData.studentId}
                     onChange={(e) => setFormData({...formData, studentId: e.target.value})}
@@ -155,7 +155,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Preferred Date</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1.5">Preferred Date</label>
                     <input 
                       type="date"
                       value={formData.preferredDate}
@@ -166,7 +166,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Preferred Time</label>
+                    <label className="block text-xs font-medium text-slate-500 mb-1.5">Preferred Time</label>
                     <select 
                       value={formData.preferredTime}
                       onChange={(e) => setFormData({...formData, preferredTime: e.target.value})}
@@ -180,7 +180,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1.5">What would you like to discuss?</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1.5">What would you like to discuss?</label>
                   <textarea 
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}

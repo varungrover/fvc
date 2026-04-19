@@ -39,8 +39,8 @@ export default async function EventsPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Events & Workshops</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Events & Workshops</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Register for upcoming tournaments, camps, and workshops.
         </p>
       </div>

@@ -6,7 +6,7 @@ const LEVEL_NAMES = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"];
 
 const RANK_STYLES: Record<number, { bg: string; text: string; icon: string }> = {
   1: { bg: "bg-yellow-500/20 border-yellow-500/30", text: "text-yellow-400", icon: "🥇" },
-  2: { bg: "bg-slate-400/10 border-slate-400/20", text: "text-slate-300", icon: "🥈" },
+  2: { bg: "bg-slate-400/10 border-slate-400/20", text: "text-slate-700", icon: "🥈" },
   3: { bg: "bg-orange-600/15 border-orange-600/25", text: "text-orange-400", icon: "🥉" },
 };
 
@@ -133,8 +133,8 @@ function renderPage(
   return (
     <div className="p-8 max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Leaderboard</h1>
-        <p className="text-slate-400 text-sm mt-1">Top students ranked by total points earned.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Leaderboard</h1>
+        <p className="text-slate-500 text-sm mt-1">Top students ranked by total points earned.</p>
       </div>
 
       {/* Filters */}
@@ -147,7 +147,7 @@ function renderPage(
             className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
               !locationFilter
                 ? "bg-primary/15 border-primary/30 text-primary"
-                : "border-border-dark text-slate-400 hover:border-slate-600"
+                : "border-border-dark text-slate-500 hover:border-slate-600"
             }`}
           >
             All
@@ -159,7 +159,7 @@ function renderPage(
               className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
                 locationFilter === loc.id
                   ? "bg-primary/15 border-primary/30 text-primary"
-                  : "border-border-dark text-slate-400 hover:border-slate-600"
+                  : "border-border-dark text-slate-500 hover:border-slate-600"
               }`}
             >
               {loc.name}
@@ -175,7 +175,7 @@ function renderPage(
             className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
               !ageFilter
                 ? "bg-primary/15 border-primary/30 text-primary"
-                : "border-border-dark text-slate-400 hover:border-slate-600"
+                : "border-border-dark text-slate-500 hover:border-slate-600"
             }`}
           >
             All
@@ -187,7 +187,7 @@ function renderPage(
               className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
                 ageFilter === g.value
                   ? "bg-primary/15 border-primary/30 text-primary"
-                  : "border-border-dark text-slate-400 hover:border-slate-600"
+                  : "border-border-dark text-slate-500 hover:border-slate-600"
               }`}
             >
               {g.label}
@@ -197,9 +197,9 @@ function renderPage(
       </div>
 
       {ranked.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">leaderboard</span>
-          <p className="text-slate-400 font-medium">No students found</p>
+          <p className="text-slate-500 font-medium">No students found</p>
           <p className="text-slate-500 text-sm mt-1">Try adjusting the filters, or earn points by attending classes!</p>
         </div>
       ) : (
@@ -242,7 +242,7 @@ function renderPage(
                     isMe ? "bg-primary/30" : "bg-gradient-to-br from-primary/20 to-purple/10"
                   }`}
                 >
-                  <span className={`font-bold text-sm ${isMe ? "text-primary" : "text-slate-300"}`}>
+                  <span className={`font-bold text-sm ${isMe ? "text-primary" : "text-slate-700"}`}>
                     {initials}
                   </span>
                 </div>

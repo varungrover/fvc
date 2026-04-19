@@ -5,15 +5,15 @@
 
 /* Custom color tokens */
 @theme {
-  --color-primary: #a855f7;
-  --color-background-dark: #0f0c29;
-  --color-card-dark: #1a1640;
-  --color-card-hover: #221e50;
-  --color-surface-dark: #181440;
-  --color-surface-hover: #201c4a;
-  --color-border-dark: #302b63;
+  --color-primary: #7c3aed;
+  --color-background-dark: #f4f6ff;
+  --color-card-dark: #ffffff;
+  --color-card-hover: #f8f6ff;
+  --color-surface-dark: #f0edff;
+  --color-surface-hover: #e8e4ff;
+  --color-border-dark: #e2deff;
   --color-sidebar-dark: #0b0924;
-  --color-background-light: #f6f6f8;
+  --color-background-light: #f4f6ff;
 
   /* Semantic */
   --color-success: #10b981;
@@ -36,19 +36,19 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #302b63;
+  background: #c4b5fd;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4a3f80;
+  background: #a78bfa;
 }
 
 /* Glass panel */
 .glass-panel {
-  background: rgba(26, 22, 64, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(48, 43, 99, 0.6);
+  border: 1px solid rgba(226, 222, 255, 0.6);
 }
 
 /* Pulse dot animation */

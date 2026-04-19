@@ -94,31 +94,31 @@ export default function MerchandiseOrderList({
     <div className="space-y-6">
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4 flex items-center gap-3">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4 flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center">
             <span className="material-icons-round text-warning text-lg">schedule</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400">Pending</p>
-            <p className="text-xl font-bold text-white">{pendingCount}</p>
+            <p className="text-xs text-slate-500">Pending</p>
+            <p className="text-xl font-bold text-gray-900">{pendingCount}</p>
           </div>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4 flex items-center gap-3">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4 flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center">
             <span className="material-icons-round text-primary text-lg">inventory</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400">Ready for Pickup</p>
-            <p className="text-xl font-bold text-white">{readyCount}</p>
+            <p className="text-xs text-slate-500">Ready for Pickup</p>
+            <p className="text-xl font-bold text-gray-900">{readyCount}</p>
           </div>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4 flex items-center gap-3">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4 flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-success/15 flex items-center justify-center">
             <span className="material-icons-round text-success text-lg">check_circle</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400">Fulfilled</p>
-            <p className="text-xl font-bold text-white">{fulfilledCount}</p>
+            <p className="text-xs text-slate-500">Fulfilled</p>
+            <p className="text-xl font-bold text-gray-900">{fulfilledCount}</p>
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ export default function MerchandiseOrderList({
             className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all capitalize ${
               filterStatus === s
                 ? "bg-primary text-white"
-                : "bg-surface-dark text-slate-400 hover:text-white border border-border-dark"
+                : "bg-surface-dark text-slate-500 hover:text-white border border-border-dark"
             }`}
           >
             {s === "all" ? "All" : s}
@@ -142,11 +142,11 @@ export default function MerchandiseOrderList({
 
       {/* Orders list */}
       {filtered.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
             inventory_2
           </span>
-          <p className="text-slate-400 font-medium">No orders found</p>
+          <p className="text-slate-500 font-medium">No orders found</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -159,12 +159,12 @@ export default function MerchandiseOrderList({
             return (
               <div
                 key={order.id}
-                className="bg-card-dark border border-border-dark rounded-xl p-5 hover:border-border-dark/80 transition-all"
+                className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 hover:border-border-dark/80 transition-all"
               >
                 <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
                   {/* Parent + date */}
                   <div>
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-sm font-semibold text-gray-900">
                       {order.profiles?.full_name ?? "Unknown"}
                     </p>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -175,7 +175,7 @@ export default function MerchandiseOrderList({
 
                   {/* Status + amount */}
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-bold text-white">${order.total_amount}</span>
+                    <span className="text-sm font-bold text-gray-900">${order.total_amount}</span>
                     <span
                       className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${statusCfg.classes}`}
                     >
@@ -190,13 +190,13 @@ export default function MerchandiseOrderList({
                   <div className="space-y-1.5">
                     {items.map((item, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-300">
+                        <span className="text-slate-700">
                           {item.name}
                           {item.qty > 1 && (
                             <span className="text-slate-500 ml-1">×{item.qty}</span>
                           )}
                         </span>
-                        <span className="text-slate-400">${item.price * item.qty}</span>
+                        <span className="text-slate-500">${item.price * item.qty}</span>
                       </div>
                     ))}
                   </div>

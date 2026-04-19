@@ -81,12 +81,12 @@ export default function EnrollForm({
 
   if (done) {
     return (
-      <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center space-y-4">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center space-y-4">
         <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
           <span className="material-icons-round text-success text-[32px]">check_circle</span>
         </div>
-        <h2 className="text-xl font-bold text-white">Trial booked!</h2>
-        <p className="text-slate-400 text-sm max-w-sm mx-auto">
+        <h2 className="text-xl font-bold text-gray-900">Trial booked!</h2>
+        <p className="text-slate-500 text-sm max-w-sm mx-auto">
           {students.find((s) => s.id === studentId)?.full_name} has been registered for a trial class in{" "}
           <span className="text-white font-medium">{course.title}</span>. We'll be in touch with the details.
         </p>
@@ -99,7 +99,7 @@ export default function EnrollForm({
           </Link>
           <Link
             href="/courses"
-            className="border border-border-dark text-slate-300 hover:text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
+            className="border border-border-dark text-slate-700 hover:text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
           >
             Browse more courses
           </Link>
@@ -109,10 +109,10 @@ export default function EnrollForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card-dark border border-border-dark rounded-xl p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 space-y-6">
       {/* Child selection */}
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">Enroll which child?</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Enroll which child?</label>
         {students.length === 0 ? (
           <div className="bg-warning/10 border border-warning/30 rounded-lg px-4 py-3 text-warning text-sm">
             You need to add a child profile first.{" "}
@@ -153,7 +153,7 @@ export default function EnrollForm({
 
       {/* Enrollment type */}
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">Enrollment type</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Enrollment type</label>
         <div className="space-y-2">
           <label
             className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-all ${
@@ -171,7 +171,7 @@ export default function EnrollForm({
               className="accent-primary mt-0.5"
             />
             <div>
-              <p className="text-white font-semibold text-sm">
+              <p className="text-gray-900 font-semibold text-sm">
                 Trial class
                 <span className="ml-2 text-success font-semibold">
                   {Number(course.price_trial) === 0 ? "Free" : `$${course.price_trial}`}
@@ -200,7 +200,7 @@ export default function EnrollForm({
                 className="accent-primary mt-0.5"
               />
               <div>
-                <p className="text-white font-semibold text-sm">
+                <p className="text-gray-900 font-semibold text-sm">
                   Full enrollment
                   <span className="ml-2 text-primary font-semibold">${course.price_monthly}/month</span>
                 </p>
@@ -231,7 +231,7 @@ export default function EnrollForm({
         </button>
         <Link
           href={`/courses/${course.id}`}
-          className="px-5 py-3 border border-border-dark rounded-lg text-slate-300 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all duration-200 flex items-center"
+          className="px-5 py-3 border border-border-dark rounded-lg text-slate-700 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all duration-200 flex items-center"
         >
           Cancel
         </Link>

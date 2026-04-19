@@ -12,7 +12,7 @@ const LIST_OPTIONS = [
 ];
 
 const STATUS_STYLES: Record<string, string> = {
-  draft: "bg-slate-700 text-slate-300",
+  draft: "bg-slate-700 text-slate-700",
   sent: "bg-success/10 text-success",
 };
 
@@ -122,7 +122,7 @@ export default function CampaignClient({
           className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-4"
         >
           <div className="flex items-center justify-between mb-1">
-            <h2 className="text-base font-bold text-white">New Campaign</h2>
+            <h2 className="text-base font-bold text-gray-900">New Campaign</h2>
             <button type="button" onClick={() => setShowForm(false)} className="text-slate-500 hover:text-white">
               <span className="material-icons-round text-[20px]">close</span>
             </button>
@@ -130,28 +130,28 @@ export default function CampaignClient({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Campaign title *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Campaign title *</label>
               <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} placeholder="e.g. Spring Enrollment Reminder" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Email subject *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Email subject *</label>
               <input required value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className={inputClass} placeholder="e.g. Don't miss spring classes!" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Send to *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Send to *</label>
               <select value={form.list_type} onChange={(e) => setForm({ ...form, list_type: e.target.value })} className={inputClass}>
                 {LIST_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Location (optional)</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Location (optional)</label>
               <select value={form.location_id} onChange={(e) => setForm({ ...form, location_id: e.target.value })} className={inputClass}>
                 <option value="">All locations</option>
                 {locations.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Email body *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Email body *</label>
               <textarea
                 required
                 rows={6}
@@ -169,7 +169,7 @@ export default function CampaignClient({
             <button type="submit" disabled={loading} className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm">
               {loading ? "Saving…" : "Save as draft"}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-300 hover:text-white py-2.5 px-5 rounded-lg text-sm">
+            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-700 hover:text-white py-2.5 px-5 rounded-lg text-sm">
               Cancel
             </button>
           </div>
@@ -177,9 +177,9 @@ export default function CampaignClient({
       )}
 
       {/* Campaigns list */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark">
-          <h2 className="text-base font-bold text-white">All Campaigns ({campaigns.length})</h2>
+          <h2 className="text-base font-bold text-gray-900">All Campaigns ({campaigns.length})</h2>
         </div>
 
         {campaigns.length === 0 ? (
@@ -187,18 +187,18 @@ export default function CampaignClient({
             No campaigns yet — create your first one.
           </div>
         ) : (
-          <div className="divide-y divide-border-dark">
+          <div className="divide-y divide-gray-100">
             {campaigns.map((c) => (
               <div key={c.id} className="px-5 py-4">
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <p className="text-sm font-semibold text-white">{c.title}</p>
+                      <p className="text-sm font-semibold text-gray-900">{c.title}</p>
                       <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${STATUS_STYLES[c.status] ?? ""}`}>
                         {c.status}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 mb-1">Subject: {c.subject}</p>
+                    <p className="text-xs text-slate-500 mb-1">Subject: {c.subject}</p>
                     <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
                       <span className="flex items-center gap-1">
                         <span className="material-icons-round text-[12px]">group</span>
@@ -244,7 +244,7 @@ export default function CampaignClient({
 
                 {/* Body preview */}
                 <div className="mt-3 bg-surface-dark border border-border-dark rounded-lg px-4 py-3">
-                  <p className="text-xs text-slate-400 line-clamp-2">{c.body}</p>
+                  <p className="text-xs text-slate-500 line-clamp-2">{c.body}</p>
                 </div>
               </div>
             ))}

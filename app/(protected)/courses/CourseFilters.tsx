@@ -27,7 +27,7 @@ export default function CourseFilters({ locations }: { locations: Location[] }) 
   const location = searchParams.get("location") ?? "";
 
   const selectClass =
-    "bg-surface-dark border border-border-dark text-sm text-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all";
+    "bg-surface-dark border border-border-dark text-sm text-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all";
 
   return (
     <div className="flex flex-wrap gap-3">
@@ -71,7 +71,7 @@ export default function CourseFilters({ locations }: { locations: Location[] }) 
       {(type || skill || location) && (
         <button
           onClick={() => router.push("/courses")}
-          className="text-sm text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors"
+          className="text-sm text-slate-500 hover:text-white flex items-center gap-1.5 transition-colors"
         >
           <span className="material-icons-round text-[16px]">close</span>
           Clear filters

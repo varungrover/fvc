@@ -19,10 +19,10 @@ export default async function CheckoutPage({
   if (!enrollmentId) {
     return (
       <div className="p-8 max-w-xl">
-        <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center space-y-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center space-y-4">
           <span className="material-icons-round text-[48px] text-slate-600 block">shopping_cart</span>
-          <h2 className="text-lg font-bold text-white">No items to checkout</h2>
-          <p className="text-slate-400 text-sm">
+          <h2 className="text-lg font-bold text-gray-900">No items to checkout</h2>
+          <p className="text-slate-500 text-sm">
             Browse courses and enroll your child to get started.
           </p>
           <a
@@ -56,20 +56,20 @@ export default async function CheckoutPage({
     <div className="p-8 max-w-4xl mx-auto">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
-        <a href="/parent/enrollments" className="text-slate-400 hover:text-white transition-colors">
+        <a href="/parent/enrollments" className="text-slate-500 hover:text-white transition-colors">
           <span className="material-icons-round text-[20px]">arrow_back</span>
         </a>
         <div>
-          <h1 className="text-2xl font-bold text-white">Checkout</h1>
-          <p className="text-slate-400 text-sm mt-0.5">Complete your enrollment payment</p>
+          <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
+          <p className="text-slate-500 text-sm mt-0.5">Complete your enrollment payment</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Order Summary — right on desktop, top on mobile */}
         <div className="lg:col-span-2 lg:order-2">
-          <div className="bg-card-dark border border-border-dark rounded-xl p-6 sticky top-24">
-            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 sticky top-24">
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
               Order Summary
             </h2>
 
@@ -80,7 +80,7 @@ export default async function CheckoutPage({
                   <span className="material-icons-round text-primary text-xl">school</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-sm">{course?.title}</p>
+                  <p className="text-gray-900 font-semibold text-sm">{course?.title}</p>
                   <p className="text-slate-500 text-xs mt-0.5 capitalize">{course?.type}</p>
                 </div>
               </div>
@@ -112,18 +112,18 @@ export default async function CheckoutPage({
 
             <div className="border-t border-border-dark pt-4 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Monthly fee</span>
+                <span className="text-slate-500">Monthly fee</span>
                 <span className="text-white font-medium">
                   ${course?.price_monthly ?? "0.00"}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Tax</span>
+                <span className="text-slate-500">Tax</span>
                 <span className="text-slate-500">$0.00</span>
               </div>
               <div className="border-t border-border-dark pt-3 flex justify-between">
-                <span className="text-white font-semibold">Total due today</span>
-                <span className="text-white font-bold text-lg">
+                <span className="text-gray-900 font-semibold">Total due today</span>
+                <span className="text-gray-900 font-bold text-lg">
                   ${course?.price_monthly ?? "0.00"}
                 </span>
               </div>

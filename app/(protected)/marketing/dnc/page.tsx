@@ -17,8 +17,8 @@ export default async function DNCPage() {
   return (
     <div className="p-8 max-w-3xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Do-Not-Contact List</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Do-Not-Contact List</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Email addresses excluded from all campaign sends.
         </p>
       </div>

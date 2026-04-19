@@ -32,7 +32,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full bg-background-dark text-slate-100 font-sans">
+      <body className="min-h-full bg-background-dark text-gray-900 font-sans">
         {children}
       </body>
     </html>

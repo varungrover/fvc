@@ -97,7 +97,7 @@ export default function CourseCreateForm({ locations }: { locations: Location[] 
 
   const inputClass =
     "w-full border border-border-dark rounded-lg py-2.5 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm";
-  const labelClass = "block text-sm font-medium text-slate-300 mb-1.5";
+  const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
 
   return (
     <form
@@ -105,7 +105,7 @@ export default function CourseCreateForm({ locations }: { locations: Location[] 
       className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-5"
     >
       <div className="flex items-center justify-between mb-1">
-        <h2 className="text-base font-bold text-white">Create New Course</h2>
+        <h2 className="text-base font-bold text-gray-900">Create New Course</h2>
         <button
           type="button"
           onClick={() => setOpen(false)}
@@ -317,7 +317,7 @@ export default function CourseCreateForm({ locations }: { locations: Location[] 
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="border border-border-dark text-slate-300 hover:text-white hover:bg-surface-hover font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
+          className="border border-border-dark text-slate-700 hover:text-white hover:bg-surface-hover font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
         >
           Cancel
         </button>

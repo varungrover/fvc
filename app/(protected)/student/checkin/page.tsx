@@ -18,12 +18,12 @@ export default async function StudentCheckInPage() {
   if (!students || students.length === 0) {
     return (
       <div className="p-8 max-w-xl">
-        <h1 className="text-2xl font-bold text-white mb-6">Class Check-In</h1>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Class Check-In</h1>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
             person_off
           </span>
-          <p className="text-slate-400 font-medium">No student profiles found</p>
+          <p className="text-slate-500 font-medium">No student profiles found</p>
           <p className="text-slate-500 text-sm mt-1">
             Add a child profile first to enable check-in.
           </p>
@@ -115,8 +115,8 @@ export default async function StudentCheckInPage() {
   return (
     <div className="p-8 max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Class Check-In</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Class Check-In</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Mark your child present for today&apos;s sessions.
         </p>
       </div>

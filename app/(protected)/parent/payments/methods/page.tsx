@@ -96,12 +96,12 @@ export default function PaymentMethodsPage() {
     <div className="p-8 max-w-2xl">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
-        <Link href="/parent/payments" className="text-slate-400 hover:text-white transition-colors">
+        <Link href="/parent/payments" className="text-slate-500 hover:text-white transition-colors">
           <span className="material-icons-round text-[20px]">arrow_back</span>
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-white">Payment Methods</h1>
-          <p className="text-slate-400 text-sm mt-0.5">
+          <h1 className="text-2xl font-bold text-gray-900">Payment Methods</h1>
+          <p className="text-slate-500 text-sm mt-0.5">
             Manage your saved cards for payments.
           </p>
         </div>
@@ -154,7 +154,7 @@ export default function PaymentMethodsPage() {
                   {!card.isDefault && (
                     <button
                       onClick={() => handleSetDefault(card.id)}
-                      className="text-xs text-slate-400 hover:text-primary font-medium transition-colors px-2 py-1"
+                      className="text-xs text-slate-500 hover:text-primary font-medium transition-colors px-2 py-1"
                     >
                       Set default
                     </button>
@@ -169,7 +169,7 @@ export default function PaymentMethodsPage() {
                       </button>
                       <button
                         onClick={() => setDeleteConfirm(null)}
-                        className="text-xs text-slate-500 hover:text-slate-300 font-medium transition-colors px-2 py-1"
+                        className="text-xs text-slate-500 hover:text-slate-700 font-medium transition-colors px-2 py-1"
                       >
                         Cancel
                       </button>
@@ -190,11 +190,11 @@ export default function PaymentMethodsPage() {
         })}
 
         {cards.length === 0 && !showAddForm && (
-          <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
             <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
               credit_card_off
             </span>
-            <p className="text-slate-400 font-medium">No payment methods saved</p>
+            <p className="text-slate-500 font-medium">No payment methods saved</p>
             <p className="text-slate-500 text-sm mt-1">Add a card to get started.</p>
           </div>
         )}
@@ -207,7 +207,7 @@ export default function PaymentMethodsPage() {
           className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-4"
         >
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-base font-bold text-white">Add new card</h2>
+            <h2 className="text-base font-bold text-gray-900">Add new card</h2>
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
@@ -222,7 +222,7 @@ export default function PaymentMethodsPage() {
           </p>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Cardholder name
             </label>
             <input
@@ -236,7 +236,7 @@ export default function PaymentMethodsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Card number
             </label>
             <input
@@ -254,7 +254,7 @@ export default function PaymentMethodsPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Expiry date
               </label>
               <input
@@ -270,7 +270,7 @@ export default function PaymentMethodsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">CVC</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">CVC</label>
               <input
                 type="text"
                 required
@@ -298,7 +298,7 @@ export default function PaymentMethodsPage() {
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="px-5 py-3 border border-border-dark rounded-lg text-slate-300 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all"
+              className="px-5 py-3 border border-border-dark rounded-lg text-slate-700 hover:text-white hover:bg-surface-hover font-medium text-sm transition-all"
             >
               Cancel
             </button>
@@ -307,7 +307,7 @@ export default function PaymentMethodsPage() {
       ) : (
         <button
           onClick={() => setShowAddForm(true)}
-          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-dashed border-border-dark text-slate-400 text-sm font-medium hover:border-primary/50 hover:text-primary transition-all duration-200"
+          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-dashed border-border-dark text-slate-500 text-sm font-medium hover:border-primary/50 hover:text-primary transition-all duration-200"
         >
           <span className="material-icons-round text-base">add_circle_outline</span>
           Add a new card

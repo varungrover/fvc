@@ -62,8 +62,8 @@ export default async function CoachStudentsPage({
     <div className="p-8">
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">My Students</h1>
-          <p className="text-slate-400 text-sm mt-1">Students enrolled in courses you teach.</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Students</h1>
+          <p className="text-slate-500 text-sm mt-1">Students enrolled in courses you teach.</p>
         </div>
         <span className="text-xs text-slate-500 bg-surface-dark border border-border-dark rounded-lg px-3 py-2 font-medium">
           {students.length} student{students.length !== 1 ? "s" : ""}
@@ -85,54 +85,54 @@ export default async function CoachStudentsPage({
       </form>
 
       {courseIds.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">groups</span>
-          <p className="text-slate-400 font-medium">No sessions assigned yet</p>
+          <p className="text-slate-500 font-medium">No sessions assigned yet</p>
           <p className="text-slate-500 text-sm mt-1">Students will appear here once you are assigned to sessions.</p>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">person_off</span>
-          <p className="text-slate-400 font-medium">{q ? "No students match your search" : "No students enrolled yet"}</p>
+          <p className="text-slate-500 font-medium">{q ? "No students match your search" : "No students enrolled yet"}</p>
         </div>
       ) : (
-        <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
           {/* Desktop table */}
           <div className="hidden lg:block">
             <table className="w-full">
               <thead>
                 <tr className="bg-[#151c2b] border-b border-border-dark">
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Student</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Grade</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">CFC ID</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Enrolled In</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Student</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Grade</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">CFC ID</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Enrolled In</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {filtered.map((student: any) => {
                   const initials = student.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
                   const age = student.date_of_birth
                     ? Math.floor((Date.now() - new Date(student.date_of_birth).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
                     : null;
                   return (
-                    <tr key={student.id} className="hover:bg-card-hover transition-colors duration-150">
+                    <tr key={student.id} className="hover:bg-card-hover hover:shadow-md transition-colors duration-150">
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-indigo-600 flex items-center justify-center flex-shrink-0">
                             <span className="text-white text-xs font-bold">{initials}</span>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">{student.full_name}</p>
+                            <p className="text-sm font-medium text-gray-800">{student.full_name}</p>
                             {age && <p className="text-xs text-slate-500">{age} years old</p>}
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 text-sm text-slate-300">{student.grade ?? "—"}</td>
-                      <td className="px-5 py-3.5 text-sm text-slate-400 font-mono">{student.cfc_id ?? "—"}</td>
+                      <td className="px-5 py-3.5 text-sm text-slate-700">{student.grade ?? "—"}</td>
+                      <td className="px-5 py-3.5 text-sm text-slate-500 font-mono">{student.cfc_id ?? "—"}</td>
                       <td className="px-5 py-3.5">
                         <div className="flex flex-wrap gap-1.5">
                           {student.enrollments.map((e: any, i: number) => {
-                            const s = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-400" };
+                            const s = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-500" };
                             return (
                               <span key={i} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${s.classes}`} title={e.course?.title}>
                                 {e.course?.title?.slice(0, 22) ?? "Course"} — {s.label}
@@ -149,7 +149,7 @@ export default async function CoachStudentsPage({
           </div>
 
           {/* Mobile cards */}
-          <div className="lg:hidden divide-y divide-border-dark">
+          <div className="lg:hidden divide-y divide-gray-100">
             {filtered.map((student: any) => {
               const initials = student.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
               return (
@@ -159,13 +159,13 @@ export default async function CoachStudentsPage({
                       <span className="text-white text-xs font-bold">{initials}</span>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">{student.full_name}</p>
+                      <p className="text-sm font-medium text-gray-800">{student.full_name}</p>
                       <p className="text-xs text-slate-500">Grade: {student.grade ?? "—"}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1.5 ml-11">
                     {student.enrollments.map((e: any, i: number) => {
-                      const s = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-400" };
+                      const s = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-500" };
                       return (
                         <span key={i} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${s.classes}`}>
                           {e.course?.title?.slice(0, 20) ?? "Course"} — {s.label}

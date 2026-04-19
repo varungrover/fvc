@@ -77,11 +77,11 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
   return (
     <div className="space-y-6">
       {/* Profile Info */}
-      <form onSubmit={handleProfileSave} className="bg-card-dark border border-border-dark rounded-xl p-6 space-y-5">
-        <h2 className="text-lg font-bold text-white">Profile Information</h2>
+      <form onSubmit={handleProfileSave} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 space-y-5">
+        <h2 className="text-lg font-bold text-gray-900">Profile Information</h2>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Full name</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Full name</label>
           <input
             type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
             className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
@@ -89,7 +89,7 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Email address</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
           <input
             type="email" value={profile.email} disabled
             className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark/50 text-slate-500 cursor-not-allowed"
@@ -98,7 +98,7 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Phone <span className="text-slate-500">(optional)</span></label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Phone <span className="text-slate-500">(optional)</span></label>
           <input
             type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 604 000 0000"
@@ -107,10 +107,10 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Role</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Role</label>
           <div className="flex items-center gap-2 px-3 py-3 bg-surface-dark/50 border border-border-dark rounded-lg">
             <span className="material-icons-round text-[18px] text-slate-500">badge</span>
-            <span className="text-slate-400 text-sm capitalize">{profile.role.replace("_", " ")}</span>
+            <span className="text-slate-500 text-sm capitalize">{profile.role.replace("_", " ")}</span>
           </div>
         </div>
 
@@ -133,11 +133,11 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
       </form>
 
       {/* Change Password */}
-      <form onSubmit={handlePasswordChange} className="bg-card-dark border border-border-dark rounded-xl p-6 space-y-5">
-        <h2 className="text-lg font-bold text-white">Change Password</h2>
+      <form onSubmit={handlePasswordChange} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 space-y-5">
+        <h2 className="text-lg font-bold text-gray-900">Change Password</h2>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">New password</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">New password</label>
           <input
             type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
             placeholder="Min. 8 characters"
@@ -146,7 +146,7 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirm new password</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirm new password</label>
           <input
             type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"

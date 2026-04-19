@@ -47,12 +47,12 @@ export default async function StudentLessonsPage() {
     return (
       <div className="p-8 max-w-xl">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">My Lessons</h1>
-          <p className="text-slate-400 text-sm mt-1">Your enrolled courses and schedule.</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Lessons</h1>
+          <p className="text-slate-500 text-sm mt-1">Your enrolled courses and schedule.</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">menu_book</span>
-          <p className="text-slate-300 font-medium">Account not linked yet</p>
+          <p className="text-slate-700 font-medium">Account not linked yet</p>
           <p className="text-slate-500 text-sm mt-2 max-w-sm mx-auto">
             Your parent needs to complete the student login setup from their account. Ask them to go to My Children and set up your login.
           </p>
@@ -64,23 +64,23 @@ export default async function StudentLessonsPage() {
   return (
     <div className="p-8 max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">My Lessons</h1>
-        <p className="text-slate-400 text-sm mt-1">Your enrolled courses and schedule.</p>
+        <h1 className="text-2xl font-bold text-gray-900">My Lessons</h1>
+        <p className="text-slate-500 text-sm mt-1">Your enrolled courses and schedule.</p>
       </div>
 
       {enrollments.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">menu_book</span>
-          <p className="text-slate-400 font-medium">No active lessons</p>
+          <p className="text-slate-500 font-medium">No active lessons</p>
           <p className="text-slate-500 text-sm mt-1">Ask your parent to enroll you in a course.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {enrollments.map((e: any) => {
             const course = e.courses;
-            const status = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-400" };
+            const status = STATUS_STYLES[e.status] ?? { label: e.status, classes: "bg-slate-700 text-slate-500" };
             return (
-              <div key={e.id} className="bg-card-dark border border-border-dark rounded-xl p-5">
+              <div key={e.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -88,7 +88,7 @@ export default async function StudentLessonsPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-0.5">
-                        <p className="text-white font-semibold">{course?.title ?? "Course"}</p>
+                        <p className="text-gray-900 font-semibold">{course?.title ?? "Course"}</p>
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${status.classes}`}>{status.label}</span>
                       </div>
                       <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-500">

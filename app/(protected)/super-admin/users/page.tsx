@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 const ROLE_STYLES: Record<string, { label: string; classes: string }> = {
-  parent: { label: "Parent", classes: "bg-slate-700 text-slate-300" },
+  parent: { label: "Parent", classes: "bg-slate-700 text-slate-700" },
   student: { label: "Student", classes: "bg-indigo/10 text-indigo" },
   coach: { label: "Coach", classes: "bg-primary/10 text-primary" },
   admin: { label: "Admin", classes: "bg-purple/10 text-purple" },
@@ -41,8 +41,8 @@ export default async function SuperAdminUsersPage({
     <div className="p-8">
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">User Management</h1>
-          <p className="text-slate-400 text-sm mt-1">All users across all locations.</p>
+          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
+          <p className="text-slate-500 text-sm mt-1">All users across all locations.</p>
         </div>
         <span className="text-xs text-slate-500 bg-surface-dark border border-border-dark rounded-lg px-3 py-2 font-medium">
           {profiles?.length ?? 0} users
@@ -75,7 +75,7 @@ export default async function SuperAdminUsersPage({
                 className={`text-xs font-semibold px-3 py-2 rounded-lg border transition-all ${
                   isActive
                     ? "bg-primary/10 border-primary/30 text-primary"
-                    : "bg-surface-dark border-border-dark text-slate-400 hover:text-white"
+                    : "bg-surface-dark border-border-dark text-slate-500 hover:text-white"
                 }`}
               >
                 {label}
@@ -86,44 +86,44 @@ export default async function SuperAdminUsersPage({
       </div>
 
       {!profiles || profiles.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">manage_accounts</span>
-          <p className="text-slate-400 font-medium">No users found</p>
+          <p className="text-slate-500 font-medium">No users found</p>
         </div>
       ) : (
-        <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
           {/* Desktop table */}
           <div className="hidden lg:block">
             <table className="w-full">
               <thead>
                 <tr className="bg-[#151c2b] border-b border-border-dark">
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">User</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Role</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Email</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Phone</th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">Joined</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">User</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Role</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Email</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Phone</th>
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Joined</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {profiles.map((profile: any) => {
-                  const roleStyle = ROLE_STYLES[profile.role] ?? { label: profile.role, classes: "bg-slate-700 text-slate-400" };
+                  const roleStyle = ROLE_STYLES[profile.role] ?? { label: profile.role, classes: "bg-slate-700 text-slate-500" };
                   const initials = profile.full_name?.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) ?? "?";
                   const joined = new Date(profile.created_at).toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
                   return (
-                    <tr key={profile.id} className="hover:bg-card-hover transition-colors duration-150">
+                    <tr key={profile.id} className="hover:bg-card-hover hover:shadow-md transition-colors duration-150">
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-indigo/10 flex items-center justify-center flex-shrink-0">
                             <span className="text-primary text-xs font-bold">{initials}</span>
                           </div>
-                          <p className="text-sm font-medium text-white">{profile.full_name}</p>
+                          <p className="text-sm font-medium text-gray-800">{profile.full_name}</p>
                         </div>
                       </td>
                       <td className="px-5 py-3.5">
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${roleStyle.classes}`}>{roleStyle.label}</span>
                       </td>
-                      <td className="px-5 py-3.5 text-sm text-slate-300">{profile.email}</td>
-                      <td className="px-5 py-3.5 text-sm text-slate-400">{profile.phone ?? "—"}</td>
+                      <td className="px-5 py-3.5 text-sm text-slate-700">{profile.email}</td>
+                      <td className="px-5 py-3.5 text-sm text-slate-500">{profile.phone ?? "—"}</td>
                       <td className="px-5 py-3.5 text-sm text-slate-500">{joined}</td>
                     </tr>
                   );
@@ -133,9 +133,9 @@ export default async function SuperAdminUsersPage({
           </div>
 
           {/* Mobile cards */}
-          <div className="lg:hidden divide-y divide-border-dark">
+          <div className="lg:hidden divide-y divide-gray-100">
             {profiles.map((profile: any) => {
-              const roleStyle = ROLE_STYLES[profile.role] ?? { label: profile.role, classes: "bg-slate-700 text-slate-400" };
+              const roleStyle = ROLE_STYLES[profile.role] ?? { label: profile.role, classes: "bg-slate-700 text-slate-500" };
               const initials = profile.full_name?.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) ?? "?";
               return (
                 <div key={profile.id} className="px-5 py-4">
@@ -144,7 +144,7 @@ export default async function SuperAdminUsersPage({
                       <span className="text-primary text-xs font-bold">{initials}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white">{profile.full_name}</p>
+                      <p className="text-sm font-medium text-gray-800">{profile.full_name}</p>
                       <p className="text-xs text-slate-500 truncate">{profile.email}</p>
                     </div>
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${roleStyle.classes}`}>{roleStyle.label}</span>

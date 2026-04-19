@@ -15,7 +15,7 @@ export default function ProgressClient({ attendance }: { attendance: any[] }) {
 
   const getStatusStyle = (s: string, l: boolean) => {
     if (s === "absent") return "bg-error/10 text-error border-error/20";
-    if (s === "excused") return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+    if (s === "excused") return "bg-slate-500/10 text-slate-500 border-slate-500/20";
     if (l) return "bg-warning/10 text-warning border-warning/20";
     return "bg-success/10 text-success border-success/20";
   };
@@ -31,37 +31,37 @@ export default function ProgressClient({ attendance }: { attendance: any[] }) {
     <>
       {/* Overview Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4">
           <p className="text-xs text-slate-500 mb-1">Attendance Rate</p>
-          <p className="text-2xl font-bold text-white">{stats.rate}%</p>
+          <p className="text-2xl font-bold text-gray-900">{stats.rate}%</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4">
           <p className="text-xs text-slate-500 mb-1">Classes Attended</p>
-          <p className="text-2xl font-bold text-white">{stats.present}</p>
+          <p className="text-2xl font-bold text-gray-900">{stats.present}</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4">
           <p className="text-xs text-slate-500 mb-1">Late Arrivals</p>
           <p className={`text-2xl font-bold ${stats.late > 0 ? "text-warning" : "text-white"}`}>{stats.late}</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-4">
           <p className="text-xs text-slate-500 mb-1">Absences</p>
           <p className={`text-2xl font-bold ${stats.absent > 0 ? "text-error" : "text-white"}`}>{stats.absent}</p>
         </div>
       </div>
 
       {/* Attendance History */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden mt-6">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden mt-6">
         <div className="px-5 py-4 border-b border-border-dark">
-          <h2 className="text-lg font-bold text-white">Recent Attendance & Notes</h2>
+          <h2 className="text-lg font-bold text-gray-900">Recent Attendance & Notes</h2>
         </div>
         
         {attendance.length === 0 ? (
           <div className="p-8 text-center">
             <span className="material-icons-round text-3xl text-slate-600 mb-2">history</span>
-            <p className="text-slate-400 text-sm">No recent attendance records found.</p>
+            <p className="text-slate-500 text-sm">No recent attendance records found.</p>
           </div>
         ) : (
-          <div className="divide-y divide-border-dark">
+          <div className="divide-y divide-gray-100">
             {attendance.map((record, i) => (
               <div key={i} className="p-5">
                 <div className="flex items-start justify-between mb-2">
@@ -83,7 +83,7 @@ export default function ProgressClient({ attendance }: { attendance: any[] }) {
                 {record.notes ? (
                   <div className="mt-3 bg-surface-dark border border-border-dark rounded-lg p-3">
                     <p className="text-xs text-slate-500 font-bold uppercase mb-1">Coach Note</p>
-                    <p className="text-sm text-slate-300 italic">"{record.notes}"</p>
+                    <p className="text-sm text-slate-700 italic">"{record.notes}"</p>
                   </div>
                 ) : (
                   <p className="text-xs text-slate-500 mt-2 italic">No notes for this session.</p>

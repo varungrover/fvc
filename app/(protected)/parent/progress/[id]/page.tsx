@@ -64,12 +64,12 @@ export default async function StudentProgressPage({
       <div className="mb-6 flex space-x-2 text-sm text-slate-500">
         <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
         <span>/</span>
-        <span className="text-slate-300">Progress Report</span>
+        <span className="text-slate-700">Progress Report</span>
       </div>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">{student.full_name}'s Progress</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">{student.full_name}'s Progress</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Review attendance, current courses, and recent feedback.
         </p>
       </div>
@@ -77,41 +77,41 @@ export default async function StudentProgressPage({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Left Column: Student Details & Enrollments */}
         <div className="md:col-span-1 space-y-6">
-          <div className="bg-card-dark border border-border-dark rounded-xl p-6">
-            <h2 className="text-lg font-bold text-white mb-4">Student Profile</h2>
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Student Profile</h2>
             <div className="space-y-3">
               <div>
                 <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Location</p>
-                <p className="text-sm text-slate-300">{student.locations?.name || "N/A"}</p>
+                <p className="text-sm text-slate-700">{student.locations?.name || "N/A"}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Grade</p>
-                <p className="text-sm text-slate-300">{student.grade || "N/A"}</p>
+                <p className="text-sm text-slate-700">{student.grade || "N/A"}</p>
               </div>
               {student.medical_notes && (
                 <div>
                   <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Medical Notes</p>
-                  <p className="text-sm text-slate-300">{student.medical_notes}</p>
+                  <p className="text-sm text-slate-700">{student.medical_notes}</p>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-card-dark border border-border-dark rounded-xl p-6">
-            <h2 className="text-lg font-bold text-white mb-4">Current Enrollments</h2>
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Current Enrollments</h2>
             {!enrollments || enrollments.length === 0 ? (
               <p className="text-sm text-slate-500">No active enrollments.</p>
             ) : (
               <div className="space-y-4">
                 {enrollments.map((enr: any) => (
                   <div key={enr.id} className="pb-4 border-b border-border-dark last:border-0 last:pb-0">
-                    <p className="text-sm font-semibold text-white">{enr.courses?.title}</p>
+                    <p className="text-sm font-semibold text-gray-900">{enr.courses?.title}</p>
                     <div className="flex items-center gap-2 mt-1.5">
                       <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border ${enr.status === 'active' ? 'bg-success/10 text-success border-success/20' : 'bg-warning/10 text-warning border-warning/20'}`}>
                         {enr.status}
                       </span>
                       {enr.courses?.level && (
-                        <span className="text-[10px] bg-surface-dark text-slate-400 border border-border-dark px-2 py-0.5 rounded-full">
+                        <span className="text-[10px] bg-surface-dark text-slate-500 border border-border-dark px-2 py-0.5 rounded-full">
                           {enr.courses.level}
                         </span>
                       )}
@@ -141,17 +141,17 @@ export default async function StudentProgressPage({
 
         return (
           <div className="mt-8">
-            <h2 className="text-lg font-bold text-white mb-4">Achievements</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Achievements</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Level + points */}
-              <div className="bg-card-dark border border-border-dark rounded-xl p-6">
+              <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/30 to-purple/20 flex items-center justify-center flex-shrink-0">
                     <span className="material-icons-round text-primary text-[28px]">military_tech</span>
                   </div>
                   <div>
-                    <p className="text-white font-bold text-lg">{levelName}</p>
-                    <p className="text-slate-400 text-sm">Level {level + 1} · {totalPoints} pts total</p>
+                    <p className="text-gray-900 font-bold text-lg">{levelName}</p>
+                    <p className="text-slate-500 text-sm">Level {level + 1} · {totalPoints} pts total</p>
                   </div>
                 </div>
                 {level < LEVEL_NAMES.length - 1 ? (
@@ -177,7 +177,7 @@ export default async function StudentProgressPage({
                     <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Recent</p>
                     {(recentPoints ?? []).map((tx: any, i: number) => (
                       <div key={i} className="flex justify-between items-center">
-                        <p className="text-xs text-slate-400 capitalize">{tx.reason?.replace(/_/g, " ")}</p>
+                        <p className="text-xs text-slate-500 capitalize">{tx.reason?.replace(/_/g, " ")}</p>
                         <span className="text-xs font-bold text-success">+{tx.points}</span>
                       </div>
                     ))}
@@ -186,7 +186,7 @@ export default async function StudentProgressPage({
               </div>
 
               {/* Badges */}
-              <div className="bg-card-dark border border-border-dark rounded-xl p-6">
+              <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
                 <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-4">Badges</p>
                 {(allBadges ?? []).length === 0 ? (
                   <p className="text-sm text-slate-500">No badges defined yet.</p>
@@ -207,7 +207,7 @@ export default async function StudentProgressPage({
                           <span className={`material-icons-round text-[22px] ${earned ? "text-primary" : "text-slate-600"}`}>
                             {badge.icon ?? "emoji_events"}
                           </span>
-                          <p className="text-[10px] font-semibold text-center text-slate-300 leading-tight">
+                          <p className="text-[10px] font-semibold text-center text-slate-700 leading-tight">
                             {badge.name}
                           </p>
                         </div>

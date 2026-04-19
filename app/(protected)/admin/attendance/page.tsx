@@ -51,46 +51,46 @@ export default async function AdminAttendancePage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Attendance Analytics</h1>
-        <p className="text-slate-400 text-sm mt-1">Last 30 days across all sessions.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Attendance Analytics</h1>
+        <p className="text-slate-500 text-sm mt-1">Last 30 days across all sessions.</p>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
           <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center mb-3">
             <span className="material-icons-round text-primary text-xl">bar_chart</span>
           </div>
-          <p className="text-3xl font-bold text-white">{attendanceRate}%</p>
-          <p className="text-xs text-slate-400 mt-1">Overall attendance rate</p>
+          <p className="text-3xl font-bold text-gray-900">{attendanceRate}%</p>
+          <p className="text-xs text-slate-500 mt-1">Overall attendance rate</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
           <div className="w-10 h-10 rounded-xl bg-success/15 flex items-center justify-center mb-3">
             <span className="material-icons-round text-success text-xl">check_circle</span>
           </div>
-          <p className="text-3xl font-bold text-white">{presentCount}</p>
-          <p className="text-xs text-slate-400 mt-1">Present (incl. late)</p>
+          <p className="text-3xl font-bold text-gray-900">{presentCount}</p>
+          <p className="text-xs text-slate-500 mt-1">Present (incl. late)</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
           <div className="w-10 h-10 rounded-xl bg-warning/15 flex items-center justify-center mb-3">
             <span className="material-icons-round text-warning text-xl">schedule</span>
           </div>
-          <p className="text-3xl font-bold text-white">{lateCount}</p>
-          <p className="text-xs text-slate-400 mt-1">Late arrivals</p>
+          <p className="text-3xl font-bold text-gray-900">{lateCount}</p>
+          <p className="text-xs text-slate-500 mt-1">Late arrivals</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
           <div className="w-10 h-10 rounded-xl bg-error/15 flex items-center justify-center mb-3">
             <span className="material-icons-round text-error text-xl">cancel</span>
           </div>
-          <p className="text-3xl font-bold text-white">{absentCount}</p>
-          <p className="text-xs text-slate-400 mt-1">Absences</p>
+          <p className="text-3xl font-bold text-gray-900">{absentCount}</p>
+          <p className="text-xs text-slate-500 mt-1">Absences</p>
         </div>
       </div>
 
       {/* Sessions breakdown */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark">
-          <h2 className="text-base font-bold text-white">
+          <h2 className="text-base font-bold text-gray-900">
             Session Breakdown ({sessions?.length ?? 0} sessions)
           </h2>
         </div>
@@ -103,30 +103,30 @@ export default async function AdminAttendancePage() {
           <table className="w-full">
             <thead>
               <tr className="bg-[#151c2b] border-b border-border-dark">
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Session
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
                   Date & Time
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">
                   Location
                 </th>
-                <th className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Present
                 </th>
-                <th className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
+                <th className="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
                   Late
                 </th>
-                <th className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
+                <th className="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
                   Absent
                 </th>
-                <th className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-right text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Rate
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-dark">
+            <tbody className="divide-y divide-gray-100">
               {sessions.map((session: any) => {
                 const att = session.attendance ?? [];
                 const present = att.filter(
@@ -141,19 +141,19 @@ export default async function AdminAttendancePage() {
                 return (
                   <tr
                     key={session.id}
-                    className="hover:bg-card-hover transition-colors duration-150"
+                    className="hover:bg-card-hover hover:shadow-md transition-colors duration-150"
                   >
                     <td className="px-5 py-3.5">
-                      <p className="text-sm font-medium text-white">{course?.title}</p>
+                      <p className="text-sm font-medium text-gray-800">{course?.title}</p>
                       <p className="text-xs text-slate-500 capitalize mt-0.5">{course?.type}</p>
                     </td>
                     <td className="px-5 py-3.5 hidden md:table-cell">
-                      <p className="text-sm text-slate-300">{formatDate(session.start_at)}</p>
+                      <p className="text-sm text-slate-700">{formatDate(session.start_at)}</p>
                       <p className="text-xs text-slate-500">
                         {formatTime(session.start_at)}–{formatTime(session.end_at)}
                       </p>
                     </td>
-                    <td className="px-5 py-3.5 text-sm text-slate-300 hidden lg:table-cell">
+                    <td className="px-5 py-3.5 text-sm text-slate-700 hidden lg:table-cell">
                       {course?.locations?.name ?? "—"}
                     </td>
                     <td className="px-5 py-3.5 text-center">

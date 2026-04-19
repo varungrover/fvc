@@ -19,8 +19,8 @@ export default async function CoachLeavePage() {
     <div className="p-8">
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Leave Requests</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Leave Requests</h1>
+          <p className="text-slate-500 text-sm mt-1">
             Submit dates when you are unavailable so admin can find covers.
           </p>
         </div>

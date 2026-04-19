@@ -127,16 +127,16 @@ export default function SessionSchedulerClient({
         <div className="flex items-center gap-3">
           <button
             onClick={() => setWeekOffset((w) => w - 1)}
-            className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-400 hover:text-white transition-all"
+            className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-500 hover:text-white transition-all"
           >
             <span className="material-icons-round text-xl">chevron_left</span>
           </button>
-          <span className="text-sm font-semibold text-white min-w-[200px] text-center">
+          <span className="text-sm font-semibold text-gray-900 min-w-[200px] text-center">
             {weekLabel}
           </span>
           <button
             onClick={() => setWeekOffset((w) => w + 1)}
-            className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-400 hover:text-white transition-all"
+            className="p-2 rounded-lg border border-border-dark hover:bg-surface-hover text-slate-500 hover:text-white transition-all"
           >
             <span className="material-icons-round text-xl">chevron_right</span>
           </button>
@@ -163,10 +163,10 @@ export default function SessionSchedulerClient({
           onSubmit={handleCreate}
           className="bg-card-dark border border-primary/30 rounded-xl p-5 space-y-4"
         >
-          <h3 className="text-sm font-bold text-white">Schedule a Session</h3>
+          <h3 className="text-sm font-bold text-gray-900">Schedule a Session</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Course *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Course *</label>
               <select
                 required
                 value={form.course_id}
@@ -181,7 +181,7 @@ export default function SessionSchedulerClient({
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Coach</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Coach</label>
               <select
                 value={form.coach_id}
                 onChange={(e) => setForm({ ...form, coach_id: e.target.value })}
@@ -196,7 +196,7 @@ export default function SessionSchedulerClient({
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Date *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Date *</label>
               <input
                 type="date"
                 required
@@ -206,7 +206,7 @@ export default function SessionSchedulerClient({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Start time *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Start time *</label>
               <input
                 type="time"
                 required
@@ -216,7 +216,7 @@ export default function SessionSchedulerClient({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">End time *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">End time *</label>
               <input
                 type="time"
                 required
@@ -226,7 +226,7 @@ export default function SessionSchedulerClient({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Notes</label>
               <input
                 type="text"
                 value={form.notes}
@@ -250,7 +250,7 @@ export default function SessionSchedulerClient({
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="border border-border-dark text-slate-300 hover:text-white py-2 px-4 rounded-lg text-sm transition-all"
+              className="border border-border-dark text-slate-700 hover:text-white py-2 px-4 rounded-lg text-sm transition-all"
             >
               Cancel
             </button>
@@ -259,7 +259,7 @@ export default function SessionSchedulerClient({
       )}
 
       {/* Weekly grid */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <div className="min-w-[800px]">
             {/* Day headers */}
@@ -272,7 +272,7 @@ export default function SessionSchedulerClient({
                     key={i}
                     className={`px-3 py-3 text-center ${isToday ? "bg-primary/5" : ""}`}
                   >
-                    <p className="text-xs font-semibold text-slate-400 uppercase">{DAYS[i]}</p>
+                    <p className="text-xs font-semibold text-slate-500 uppercase">{DAYS[i]}</p>
                     <p className={`text-lg font-bold ${isToday ? "text-primary" : "text-white"}`}>
                       {d.getDate()}
                     </p>

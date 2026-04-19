@@ -11,7 +11,20 @@
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
       "Bash(npm run:*)",
-      "mcp__supabase__execute_sql"
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__list_tables",
+      "Bash(npx tsc:*)",
+      "mcp__supabase__apply_migration",
+      "WebFetch(domain:thelearningplanet.org)",
+      "Bash(node -e ':*)",
+      "WebFetch(domain:www.apple.com)",
+      "Bash(ls /Users/varun/projects/LMS/.env*)",
+      "Bash(pkill -f \"next dev\")",
+      "WebFetch(domain:github.com)",
+      "mcp__vercel__web_fetch_vercel_url",
+      "Bash(find 'app/\\(protected\\)' components -name '*.tsx' -exec perl -pi -e ':*)",
+      "WebFetch(domain:eduspark-live-25047.azurewebsites.net)",
+      "Bash(grep -E \"\\\\.\\(css|html|js\\)$\")"
     ]
   }
 }

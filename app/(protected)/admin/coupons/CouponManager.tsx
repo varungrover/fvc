@@ -95,7 +95,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
           className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-4"
         >
           <div className="flex items-center justify-between mb-1">
-            <h2 className="text-base font-bold text-white">Create Coupon</h2>
+            <h2 className="text-base font-bold text-gray-900">Create Coupon</h2>
             <button
               type="button"
               onClick={() => setShowForm(false)}
@@ -107,7 +107,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Code *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Code *</label>
               <input
                 required
                 value={form.code}
@@ -117,7 +117,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Description</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Description</label>
               <input
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -126,7 +126,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-500 mb-1">
                 Discount type *
               </label>
               <select
@@ -139,7 +139,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-500 mb-1">
                 Value * ({form.discount_type === "percentage" ? "%" : "$"})
               </label>
               <input
@@ -154,7 +154,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Max uses</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Max uses</label>
               <input
                 type="number"
                 value={form.max_uses}
@@ -165,7 +165,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Applies to</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Applies to</label>
               <select
                 value={form.applicable_to}
                 onChange={(e) => setForm({ ...form, applicable_to: e.target.value })}
@@ -179,7 +179,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Valid from</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Valid from</label>
               <input
                 type="date"
                 value={form.valid_from}
@@ -188,7 +188,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Valid until</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Valid until</label>
               <input
                 type="date"
                 value={form.valid_until}
@@ -215,7 +215,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="border border-border-dark text-slate-300 hover:text-white py-2.5 px-5 rounded-lg text-sm transition-all"
+              className="border border-border-dark text-slate-700 hover:text-white py-2.5 px-5 rounded-lg text-sm transition-all"
             >
               Cancel
             </button>
@@ -232,9 +232,9 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
       )}
 
       {/* Coupons list */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark">
-          <h2 className="text-base font-bold text-white">
+          <h2 className="text-base font-bold text-gray-900">
             All Coupons ({initialCoupons.length})
           </h2>
         </div>
@@ -244,7 +244,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
             No coupons created yet
           </div>
         ) : (
-          <div className="divide-y divide-border-dark">
+          <div className="divide-y divide-gray-100">
             {initialCoupons.map((coupon) => {
               const isExpired =
                 coupon.valid_until && new Date(coupon.valid_until) < new Date();
@@ -294,7 +294,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
                         Expired
                       </span>
                     ) : usedUp ? (
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-400">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-500">
                         Used up
                       </span>
                     ) : coupon.is_active ? (
@@ -302,7 +302,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
                         Active
                       </span>
                     ) : (
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-400">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-500">
                         Disabled
                       </span>
                     )}

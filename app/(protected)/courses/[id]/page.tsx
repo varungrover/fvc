@@ -74,7 +74,7 @@ export default async function CourseDetailPage({
   return (
     <div className="p-8 max-w-3xl">
       {/* Back */}
-      <Link href="/courses" className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
+      <Link href="/courses" className="inline-flex items-center gap-2 text-slate-500 hover:text-white text-sm mb-6 transition-colors">
         <span className="material-icons-round text-[18px]">arrow_back</span>
         Back to courses
       </Link>
@@ -82,23 +82,23 @@ export default async function CourseDetailPage({
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${TYPE_COLORS[course.type] ?? "bg-slate-700 text-slate-300"}`}>
+          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${TYPE_COLORS[course.type] ?? "bg-slate-700 text-slate-700"}`}>
             {TYPE_LABELS[course.type] ?? course.type}
           </span>
           {course.skill_level && (
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-700 text-slate-300 capitalize">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-700 text-slate-700 capitalize">
               {SKILL_LABELS[course.skill_level] ?? course.skill_level}
             </span>
           )}
         </div>
-        <h1 className="text-2xl font-bold text-white mb-3">{course.title}</h1>
-        <p className="text-slate-400 leading-relaxed">{course.description}</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">{course.title}</h1>
+        <p className="text-slate-500 leading-relaxed">{course.description}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
         {/* Details card */}
-        <div className="md:col-span-2 bg-card-dark border border-border-dark rounded-xl p-5 space-y-4">
-          <h2 className="text-base font-bold text-white">Course Details</h2>
+        <div className="md:col-span-2 bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 space-y-4">
+          <h2 className="text-base font-bold text-gray-900">Course Details</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -135,18 +135,18 @@ export default async function CourseDetailPage({
               <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Location</p>
               <p className="text-sm text-white font-medium">{loc.name}</p>
               {loc.address && (
-                <p className="text-sm text-slate-400">{loc.address}, {loc.city}, {loc.province}</p>
+                <p className="text-sm text-slate-500">{loc.address}, {loc.city}, {loc.province}</p>
               )}
               {loc.phone && (
-                <p className="text-sm text-slate-400 mt-0.5">{loc.phone}</p>
+                <p className="text-sm text-slate-500 mt-0.5">{loc.phone}</p>
               )}
             </div>
           )}
         </div>
 
         {/* Pricing + CTA */}
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5 flex flex-col">
-          <h2 className="text-base font-bold text-white mb-4">Pricing</h2>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex flex-col">
+          <h2 className="text-base font-bold text-gray-900 mb-4">Pricing</h2>
 
           <div className="space-y-3 flex-1">
             <div className="bg-success/5 border border-success/20 rounded-lg p-3">

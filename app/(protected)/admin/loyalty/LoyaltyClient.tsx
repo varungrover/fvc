@@ -111,7 +111,7 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
       {showForm && (
         <form onSubmit={handleCreate} className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-4">
           <div className="flex items-center justify-between mb-1">
-            <h2 className="text-base font-bold text-white">New Loyalty Rule</h2>
+            <h2 className="text-base font-bold text-gray-900">New Loyalty Rule</h2>
             <button type="button" onClick={() => setShowForm(false)} className="text-slate-500 hover:text-white">
               <span className="material-icons-round text-[20px]">close</span>
             </button>
@@ -119,37 +119,37 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Rule name *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Rule name *</label>
               <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} placeholder="e.g. 10-Class Milestone" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Description</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Description</label>
               <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputClass} placeholder="What triggers this reward?" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Trigger *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Trigger *</label>
               <select value={form.trigger_type} onChange={(e) => setForm({ ...form, trigger_type: e.target.value })} className={inputClass}>
                 {TRIGGER_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Threshold (count)</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Threshold (count)</label>
               <input type="number" min={1} value={form.trigger_threshold} onChange={(e) => setForm({ ...form, trigger_threshold: e.target.value })} className={inputClass} placeholder="e.g. 10 classes" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Reward type *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Reward type *</label>
               <select value={form.reward_type} onChange={(e) => setForm({ ...form, reward_type: e.target.value })} className={inputClass}>
                 {REWARD_TYPES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-500 mb-1">
                 Reward value {form.reward_type === "points" ? "(pts)" : form.reward_type === "credit" ? "($)" : "(qty)"}
               </label>
               <input type="number" min={0} step="0.01" value={form.reward_value} onChange={(e) => setForm({ ...form, reward_value: e.target.value })} className={inputClass} placeholder="e.g. 500" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Reward label (shown to students)</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Reward label (shown to students)</label>
               <input value={form.reward_label} onChange={(e) => setForm({ ...form, reward_label: e.target.value })} className={inputClass} placeholder="e.g. $20 account credit" />
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
             <button type="submit" disabled={loading} className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm">
               {loading ? "Saving…" : "Create rule"}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-300 hover:text-white py-2.5 px-5 rounded-lg text-sm">
+            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-700 hover:text-white py-2.5 px-5 rounded-lg text-sm">
               Cancel
             </button>
           </div>
@@ -177,19 +177,19 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4 flex-1 min-w-0">
                 <div className="w-10 h-10 rounded-lg bg-surface-dark border border-border-dark flex items-center justify-center flex-shrink-0">
-                  <span className="material-icons-round text-slate-400 text-[20px]">
+                  <span className="material-icons-round text-slate-500 text-[20px]">
                     {TRIGGER_ICONS[rule.trigger_type] ?? "stars"}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="text-white font-semibold text-sm">{rule.name}</p>
+                    <p className="text-gray-900 font-semibold text-sm">{rule.name}</p>
                     {!rule.is_active && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-400">Inactive</span>
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-500">Inactive</span>
                     )}
                   </div>
                   {rule.description && (
-                    <p className="text-xs text-slate-400 mt-0.5">{rule.description}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{rule.description}</p>
                   )}
                   <div className="flex items-center gap-3 mt-2 flex-wrap">
                     <span className="text-xs text-slate-500 flex items-center gap-1">
@@ -219,9 +219,9 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
       </div>
 
       {rules.length === 0 && (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
           <span className="material-icons-round text-[40px] text-slate-600 block mb-3">card_giftcard</span>
-          <p className="text-slate-400 font-medium">No loyalty rules yet</p>
+          <p className="text-slate-500 font-medium">No loyalty rules yet</p>
           <p className="text-slate-500 text-sm mt-1">Create rules to automatically reward students for attendance, referrals, and wins.</p>
         </div>
       )}

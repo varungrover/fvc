@@ -81,8 +81,8 @@ export default function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Payment method selection */}
-      <div className="bg-card-dark border border-border-dark rounded-xl p-6">
-        <h2 className="text-base font-bold text-white mb-4">Payment method</h2>
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-900 mb-4">Payment method</h2>
 
         {/* Saved card option */}
         <label
@@ -128,7 +128,7 @@ export default function CheckoutForm({
           />
           <div className="flex items-center gap-3">
             <div className="w-12 h-8 bg-surface-dark border border-border-dark rounded-md flex items-center justify-center">
-              <span className="material-icons-round text-slate-400 text-base">add_card</span>
+              <span className="material-icons-round text-slate-500 text-base">add_card</span>
             </div>
             <p className="text-white text-sm font-medium">Use a new card</p>
           </div>
@@ -137,15 +137,15 @@ export default function CheckoutForm({
 
       {/* New card form */}
       {payMethod === "new" && (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white mb-1">Card details</h2>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 space-y-4">
+          <h2 className="text-base font-bold text-gray-900 mb-1">Card details</h2>
           <p className="text-slate-500 text-xs mb-3">
             This is a demo — no real payment will be processed.
           </p>
 
           {/* Cardholder name */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Cardholder name
             </label>
             <input
@@ -159,7 +159,7 @@ export default function CheckoutForm({
 
           {/* Card number */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Card number
             </label>
             <div className="relative">
@@ -180,7 +180,7 @@ export default function CheckoutForm({
           {/* Expiry + CVC */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Expiry date
               </label>
               <input
@@ -193,7 +193,7 @@ export default function CheckoutForm({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">CVC</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">CVC</label>
               <div className="relative">
                 <input
                   type="text"
@@ -218,7 +218,7 @@ export default function CheckoutForm({
               onChange={(e) => setSaveCard(e.target.checked)}
               className="accent-primary rounded"
             />
-            <span className="text-sm text-slate-300">Save this card for future payments</span>
+            <span className="text-sm text-slate-700">Save this card for future payments</span>
           </label>
         </div>
       )}

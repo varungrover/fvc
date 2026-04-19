@@ -35,7 +35,7 @@ const STATUS_CONFIG: Record<string, { label: string; classes: string; icon: stri
   present: { label: "Present", classes: "bg-success/10 text-success", icon: "check_circle" },
   late: { label: "Late", classes: "bg-warning/10 text-warning", icon: "schedule" },
   absent: { label: "Absent", classes: "bg-error/10 text-error", icon: "cancel" },
-  excused: { label: "Excused", classes: "bg-slate-700 text-slate-400", icon: "info" },
+  excused: { label: "Excused", classes: "bg-slate-700 text-slate-500", icon: "info" },
 };
 
 export default function CoachAttendanceClient({
@@ -150,7 +150,7 @@ export default function CoachAttendanceClient({
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       {/* Session selector */}
       <div className="lg:col-span-1">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+        <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
           Sessions
         </h2>
         <div className="space-y-2">
@@ -167,7 +167,7 @@ export default function CoachAttendanceClient({
                   className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 ${
                     isActive
                       ? "border-primary/40 bg-primary/5 shadow-[0_0_8px_rgba(168,85,247,0.1)]"
-                      : "border-border-dark bg-card-dark hover:bg-card-hover"
+                      : "border-border-dark bg-card-dark hover:bg-card-hover hover:shadow-md"
                   }`}
                 >
                   <p className={`text-sm font-semibold ${isActive ? "text-primary" : "text-white"}`}>
@@ -186,21 +186,21 @@ export default function CoachAttendanceClient({
       {/* Attendance panel */}
       <div className="lg:col-span-3">
         {!activeSession ? (
-          <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
             <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
               calendar_today
             </span>
-            <p className="text-slate-400 font-medium">Select a session to mark attendance</p>
+            <p className="text-slate-500 font-medium">Select a session to mark attendance</p>
           </div>
         ) : (
           <div className="space-y-4">
             {/* Session header */}
-            <div className="bg-card-dark border border-border-dark rounded-xl p-5 flex items-start justify-between gap-4 flex-wrap">
+            <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex items-start justify-between gap-4 flex-wrap">
               <div>
-                <h2 className="text-lg font-bold text-white">
+                <h2 className="text-lg font-bold text-gray-900">
                   {(activeSession.courses as any)?.title}
                 </h2>
-                <p className="text-slate-400 text-sm mt-1">
+                <p className="text-slate-500 text-sm mt-1">
                   {formatDate(activeSession.start_at)} · {formatTime(activeSession.start_at)}–
                   {formatTime(activeSession.end_at)}
                   {(activeSession.courses as any)?.locations?.name &&
@@ -213,7 +213,7 @@ export default function CoachAttendanceClient({
                   <p className="text-xs text-slate-500">Present</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-400">
+                  <p className="text-2xl font-bold text-slate-500">
                     {enrolledStudents.length - presentCount}
                   </p>
                   <p className="text-xs text-slate-500">Absent</p>
@@ -227,12 +227,12 @@ export default function CoachAttendanceClient({
 
             {/* Student list */}
             {enrolledStudents.length === 0 ? (
-              <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
-                <p className="text-slate-400 text-sm">No enrolled students for this course</p>
+              <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
+                <p className="text-slate-500 text-sm">No enrolled students for this course</p>
               </div>
             ) : (
-              <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
-                <div className="divide-y divide-border-dark">
+              <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
+                <div className="divide-y divide-gray-100">
                   {enrolledStudents.map((student) => {
                     const record = localAttendance[student.studentId];
                     const statusCfg = record
@@ -252,7 +252,7 @@ export default function CoachAttendanceClient({
                     return (
                       <div
                         key={student.studentId}
-                        className="flex items-center gap-4 px-5 py-4 flex-wrap hover:bg-card-hover transition-colors"
+                        className="flex items-center gap-4 px-5 py-4 flex-wrap hover:bg-card-hover hover:shadow-md transition-colors"
                       >
                         {/* Avatar */}
                         <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-indigo-600 flex items-center justify-center flex-shrink-0">
@@ -261,7 +261,7 @@ export default function CoachAttendanceClient({
 
                         {/* Name */}
                         <div className="flex-1 min-w-[120px]">
-                          <p className="text-sm font-semibold text-white">{student.studentName}</p>
+                          <p className="text-sm font-semibold text-gray-900">{student.studentName}</p>
                           <p className="text-xs text-slate-500 capitalize">
                             {student.enrollmentStatus}
                           </p>
@@ -307,7 +307,7 @@ export default function CoachAttendanceClient({
                             className={`p-1.5 rounded-lg transition-all text-sm ${
                               record?.status === "present" && !record?.is_late
                                 ? "bg-success text-white"
-                                : "text-slate-400 hover:text-success hover:bg-success/10"
+                                : "text-slate-500 hover:text-success hover:bg-success/10"
                             }`}
                           >
                             <span className="material-icons-round text-[18px]">check_circle</span>
@@ -319,7 +319,7 @@ export default function CoachAttendanceClient({
                             className={`p-1.5 rounded-lg transition-all ${
                               record?.status === "late"
                                 ? "bg-warning text-white"
-                                : "text-slate-400 hover:text-warning hover:bg-warning/10"
+                                : "text-slate-500 hover:text-warning hover:bg-warning/10"
                             }`}
                           >
                             <span className="material-icons-round text-[18px]">schedule</span>
@@ -331,7 +331,7 @@ export default function CoachAttendanceClient({
                             className={`p-1.5 rounded-lg transition-all ${
                               record?.status === "absent"
                                 ? "bg-error text-white"
-                                : "text-slate-400 hover:text-error hover:bg-error/10"
+                                : "text-slate-500 hover:text-error hover:bg-error/10"
                             }`}
                           >
                             <span className="material-icons-round text-[18px]">cancel</span>
@@ -343,7 +343,7 @@ export default function CoachAttendanceClient({
                             className={`p-1.5 rounded-lg transition-all ${
                               record?.status === "excused"
                                 ? "bg-slate-600 text-white"
-                                : "text-slate-400 hover:text-slate-300 hover:bg-slate-700"
+                                : "text-slate-500 hover:text-slate-700 hover:bg-slate-700"
                             }`}
                           >
                             <span className="material-icons-round text-[18px]">info</span>

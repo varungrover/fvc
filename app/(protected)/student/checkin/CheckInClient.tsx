@@ -108,11 +108,11 @@ export default function CheckInClient({
 
   if (sessions.length === 0) {
     return (
-      <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
         <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
           event_busy
         </span>
-        <p className="text-slate-400 font-medium">No sessions available for check-in</p>
+        <p className="text-slate-500 font-medium">No sessions available for check-in</p>
         <p className="text-slate-500 text-sm mt-1">
           Sessions appear here up to 2 hours before they start.
         </p>
@@ -149,7 +149,7 @@ export default function CheckInClient({
                   <span className="material-icons-round text-lg">school</span>
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">{session.courseTitle}</p>
+                  <p className="text-gray-900 font-semibold text-sm">{session.courseTitle}</p>
                   <p className="text-slate-500 text-xs mt-0.5">
                     {formatDate(session.startAt)} · {formatTime(session.startAt)}–
                     {formatTime(session.endAt)}
@@ -169,7 +169,7 @@ export default function CheckInClient({
                 </span>
               )}
               {sessionStatus === "ended" && !attendance && (
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-400">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-700 text-slate-500">
                   Ended
                 </span>
               )}
@@ -223,7 +223,7 @@ export default function CheckInClient({
                   >
                     {attendance.is_late ? "Checked in — Late" : "Checked in — Present"}
                   </p>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     at {formatTime(attendance.checked_in_at!)}
                     {attendance.coach_confirmed && " · Confirmed by coach ✓"}
                   </p>

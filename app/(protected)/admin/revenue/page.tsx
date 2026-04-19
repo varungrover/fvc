@@ -57,27 +57,27 @@ export default async function AdminRevenuePage() {
   return (
     <div className="p-8 max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Revenue</h1>
-        <p className="text-slate-400 text-sm mt-1">Enrollment revenue overview across all courses.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Revenue</h1>
+        <p className="text-slate-500 text-sm mt-1">Enrollment revenue overview across all courses.</p>
       </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((s) => (
-          <div key={s.label} className="bg-card-dark border border-border-dark rounded-xl p-5">
+          <div key={s.label} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5">
             <div className={`w-10 h-10 rounded-lg ${s.bg} flex items-center justify-center mb-3`}>
               <span className={`material-icons-round text-xl ${s.color}`}>{s.icon}</span>
             </div>
-            <p className="text-2xl font-bold text-white">{s.value}</p>
-            <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+            <p className="text-2xl font-bold text-gray-900">{s.value}</p>
+            <p className="text-xs text-slate-500 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Enrollment status breakdown */}
-        <div className="bg-card-dark border border-border-dark rounded-xl p-6">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Enrollment Breakdown</h2>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Enrollment Breakdown</h2>
           <div className="space-y-3">
             {[
               { label: "Active", count: active.length, classes: "bg-success/10 text-success" },
@@ -96,7 +96,7 @@ export default async function AdminRevenuePage() {
                       style={{ width: all.length ? `${(row.count / all.length) * 100}%` : "0%" }}
                     />
                   </div>
-                  <span className="text-sm font-semibold text-white w-6 text-right">{row.count}</span>
+                  <span className="text-sm font-semibold text-gray-900 w-6 text-right">{row.count}</span>
                 </div>
               </div>
             ))}
@@ -104,8 +104,8 @@ export default async function AdminRevenuePage() {
         </div>
 
         {/* Revenue by course */}
-        <div className="bg-card-dark border border-border-dark rounded-xl p-6">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Revenue by Course</h2>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Revenue by Course</h2>
           {courseBreakdown.length === 0 ? (
             <p className="text-slate-500 text-sm text-center py-6">No active enrollments yet</p>
           ) : (
@@ -113,7 +113,7 @@ export default async function AdminRevenuePage() {
               {courseBreakdown.map((c) => (
                 <div key={c.title} className="flex items-center justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{c.title}</p>
+                    <p className="text-sm font-medium text-gray-800 truncate">{c.title}</p>
                     <p className="text-xs text-slate-500 capitalize">{c.type} · {c.count} active</p>
                   </div>
                   <span className="text-sm font-semibold text-success flex-shrink-0">{fmt(c.revenue)}/mo</span>
@@ -125,14 +125,14 @@ export default async function AdminRevenuePage() {
       </div>
 
       {/* Recent enrollments */}
-      <div className="mt-6 bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="mt-6 bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Recent Enrollments</h2>
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Recent Enrollments</h2>
         </div>
         {all.length === 0 ? (
           <p className="text-slate-500 text-sm text-center py-8">No enrollments yet</p>
         ) : (
-          <div className="divide-y divide-border-dark">
+          <div className="divide-y divide-gray-100">
             {all.slice(0, 10).map((e: any) => {
               const course = e.courses as any;
               const STATUS: Record<string, string> = {
@@ -140,21 +140,21 @@ export default async function AdminRevenuePage() {
                 trial: "bg-caution/10 text-caution",
                 pending_payment: "bg-warning/10 text-warning",
                 cancelled: "bg-error/10 text-error",
-                completed: "bg-slate-700 text-slate-400",
+                completed: "bg-slate-700 text-slate-500",
               };
               return (
-                <div key={e.id} className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover transition-colors">
+                <div key={e.id} className="flex items-center justify-between px-5 py-3.5 hover:bg-card-hover hover:shadow-md transition-colors">
                   <div>
-                    <p className="text-sm font-medium text-white">{course?.title ?? "Unknown course"}</p>
+                    <p className="text-sm font-medium text-gray-800">{course?.title ?? "Unknown course"}</p>
                     <p className="text-xs text-slate-500">
                       {new Date(e.enrolled_at).toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     {course?.price_monthly && (
-                      <span className="text-sm text-slate-300">${course.price_monthly}/mo</span>
+                      <span className="text-sm text-slate-700">${course.price_monthly}/mo</span>
                     )}
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${STATUS[e.status] ?? "bg-slate-700 text-slate-400"}`}>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${STATUS[e.status] ?? "bg-slate-700 text-slate-500"}`}>
                       {e.status.replace("_", " ")}
                     </span>
                   </div>

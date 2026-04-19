@@ -38,7 +38,7 @@ export default async function ConfirmationPage({
   if (isSuccess) {
     return (
       <div className="p-8 max-w-lg mx-auto">
-        <div className="bg-card-dark border border-border-dark rounded-2xl p-8 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-2xl shadow-sm p-8 text-center">
           {/* Success icon with glow */}
           <div className="mb-6">
             <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(16,185,129,0.15)]">
@@ -46,8 +46,8 @@ export default async function ConfirmationPage({
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-white mb-2">Payment successful!</h1>
-          <p className="text-slate-400 text-sm mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment successful!</h1>
+          <p className="text-slate-500 text-sm mb-8">
             {student?.full_name} is now enrolled in{" "}
             <span className="text-white font-medium">{course?.title}</span>.
           </p>
@@ -63,27 +63,27 @@ export default async function ConfirmationPage({
 
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-400">Date</span>
+                <span className="text-slate-500">Date</span>
                 <span className="text-white">{today}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Course</span>
+                <span className="text-slate-500">Course</span>
                 <span className="text-white">{course?.title}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Student</span>
+                <span className="text-slate-500">Student</span>
                 <span className="text-white">{student?.full_name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Location</span>
+                <span className="text-slate-500">Location</span>
                 <span className="text-white">{course?.locations?.name ?? "—"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Payment method</span>
+                <span className="text-slate-500">Payment method</span>
                 <span className="text-white">Visa •••• 4242</span>
               </div>
               <div className="border-t border-border-dark pt-3 flex justify-between">
-                <span className="text-white font-semibold">Amount paid</span>
+                <span className="text-gray-900 font-semibold">Amount paid</span>
                 <span className="text-success font-bold">${course?.price_monthly ?? "0.00"}</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default async function ConfirmationPage({
             </Link>
             <Link
               href="/parent/payments"
-              className="w-full border border-border-dark text-slate-300 hover:text-white hover:bg-surface-hover font-medium py-3 px-4 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
+              className="w-full border border-border-dark text-slate-700 hover:text-white hover:bg-surface-hover font-medium py-3 px-4 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
             >
               <span className="material-icons-round text-lg">receipt_long</span>
               Payment history
@@ -120,7 +120,7 @@ export default async function ConfirmationPage({
   // Failed state
   return (
     <div className="p-8 max-w-lg mx-auto">
-      <div className="bg-card-dark border border-border-dark rounded-2xl p-8 text-center">
+      <div className="bg-card-dark border border-border-dark rounded-2xl shadow-sm p-8 text-center">
         {/* Error icon */}
         <div className="mb-6">
           <div className="w-20 h-20 bg-error/10 rounded-full flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(239,68,68,0.15)]">
@@ -128,8 +128,8 @@ export default async function ConfirmationPage({
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-white mb-2">Payment failed</h1>
-        <p className="text-slate-400 text-sm mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment failed</h1>
+        <p className="text-slate-500 text-sm mb-6">
           We couldn&apos;t process your payment. Please check your card details and try again.
         </p>
 
@@ -139,7 +139,7 @@ export default async function ConfirmationPage({
             <span className="material-icons-round text-error text-base mt-0.5">info</span>
             <div>
               <p className="text-sm font-medium text-error">Transaction declined</p>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Your bank declined the transaction. This may be due to insufficient funds,
                 incorrect card details, or a security hold. Please contact your bank or try a
                 different card.
@@ -159,14 +159,14 @@ export default async function ConfirmationPage({
           </Link>
           <Link
             href="/parent/payments/methods"
-            className="w-full border border-border-dark text-slate-300 hover:text-white hover:bg-surface-hover font-medium py-3 px-4 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
+            className="w-full border border-border-dark text-slate-700 hover:text-white hover:bg-surface-hover font-medium py-3 px-4 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
           >
             <span className="material-icons-round text-lg">credit_card</span>
             Use a different card
           </Link>
           <Link
             href="/parent/enrollments"
-            className="text-sm text-slate-400 hover:text-white font-medium transition-colors mt-1"
+            className="text-sm text-slate-500 hover:text-white font-medium transition-colors mt-1"
           >
             ← Back to enrollments
           </Link>

@@ -54,11 +54,11 @@ export default function DNCClient({ initialEntries }: { initialEntries: DNCEntry
   return (
     <div className="space-y-6">
       {/* Add form */}
-      <form onSubmit={handleAdd} className="bg-card-dark border border-border-dark rounded-xl p-6">
-        <h2 className="text-base font-bold text-white mb-4">Add to DNC List</h2>
+      <form onSubmit={handleAdd} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-900 mb-4">Add to DNC List</h2>
         <div className="flex flex-wrap gap-3 items-end">
           <div className="flex-1 min-w-[220px]">
-            <label className="block text-xs font-medium text-slate-400 mb-1">Email address *</label>
+            <label className="block text-xs font-medium text-slate-500 mb-1">Email address *</label>
             <input
               required
               type="email"
@@ -69,7 +69,7 @@ export default function DNCClient({ initialEntries }: { initialEntries: DNCEntry
             />
           </div>
           <div className="flex-1 min-w-[180px]">
-            <label className="block text-xs font-medium text-slate-400 mb-1">Reason</label>
+            <label className="block text-xs font-medium text-slate-500 mb-1">Reason</label>
             <input
               value={reason}
               onChange={(e) => setReason(e.target.value)}
@@ -90,10 +90,10 @@ export default function DNCClient({ initialEntries }: { initialEntries: DNCEntry
       </form>
 
       {/* DNC table */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-white">Do-Not-Contact List</h2>
+            <h2 className="text-base font-bold text-gray-900">Do-Not-Contact List</h2>
             <p className="text-xs text-slate-500 mt-0.5">These addresses are excluded from all campaign sends.</p>
           </div>
           <span className="text-sm font-bold text-error">{entries.length}</span>
@@ -109,20 +109,20 @@ export default function DNCClient({ initialEntries }: { initialEntries: DNCEntry
             <table className="w-full">
               <thead>
                 <tr className="bg-slate-900/50 border-b border-border-dark">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Email</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Reason</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Added</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Reason</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Added</th>
                   <th className="px-5 py-3" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {entries.map((entry) => (
-                  <tr key={entry.id} className="hover:bg-card-hover transition-colors">
+                  <tr key={entry.id} className="hover:bg-card-hover hover:shadow-md transition-colors">
                     <td className="px-5 py-3.5">
                       <span className="text-sm text-white font-mono">{entry.email}</span>
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="text-sm text-slate-400">{entry.reason ?? "—"}</span>
+                      <span className="text-sm text-slate-500">{entry.reason ?? "—"}</span>
                     </td>
                     <td className="px-5 py-3.5">
                       <span className="text-xs text-slate-500">

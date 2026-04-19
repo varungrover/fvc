@@ -129,21 +129,21 @@ export default async function MarketingListsPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Marketing Lists</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Marketing Lists</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Segmented audiences for targeted campaigns.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {segments.map((seg) => (
-          <div key={seg.key} className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div key={seg.key} className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             {/* Header */}
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className={`material-icons-round text-[22px] ${seg.color}`}>{seg.icon}</span>
                 <div>
-                  <p className="text-white font-semibold text-sm">{seg.label}</p>
+                  <p className="text-gray-900 font-semibold text-sm">{seg.label}</p>
                   <p className="text-slate-500 text-xs">{seg.description}</p>
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default async function MarketingListsPage() {
             </div>
 
             {/* Member preview */}
-            <div className="divide-y divide-border-dark max-h-48 overflow-y-auto">
+            <div className="divide-y divide-gray-100 max-h-48 overflow-y-auto">
               {seg.members.length === 0 ? (
                 <p className="px-5 py-4 text-sm text-slate-500">No contacts in this segment.</p>
               ) : (

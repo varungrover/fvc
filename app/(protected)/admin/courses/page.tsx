@@ -12,7 +12,7 @@ const TYPE_COLORS: Record<string, string> = {
 
 const STATUS_COLORS: Record<string, string> = {
   active: "bg-success/10 text-success",
-  draft: "bg-slate-700 text-slate-400",
+  draft: "bg-slate-700 text-slate-500",
   archived: "bg-error/10 text-error",
 };
 
@@ -44,8 +44,8 @@ export default async function AdminCoursesPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Course Management</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Course Management</h1>
+          <p className="text-slate-500 text-sm mt-1">
             Create, edit, and manage courses.
           </p>
         </div>
@@ -59,62 +59,62 @@ export default async function AdminCoursesPage() {
       {/* Courses list */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-white">
+          <h2 className="text-base font-bold text-gray-900">
             All Courses ({courses?.length ?? 0})
           </h2>
         </div>
 
         {!courses || courses.length === 0 ? (
-          <div className="bg-card-dark border border-border-dark rounded-xl p-12 text-center">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-12 text-center">
             <span className="material-icons-round text-[48px] text-slate-600 block mb-3">
               school
             </span>
-            <p className="text-slate-400 font-medium">No courses created yet</p>
+            <p className="text-slate-500 font-medium">No courses created yet</p>
           </div>
         ) : (
-          <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+          <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
             <table className="w-full">
               <thead>
                 <tr className="bg-[#151c2b] border-b border-border-dark">
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Course
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
                     Schedule
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">
                     Location
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">
                     Price
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Enrolled
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {courses.map((course: any) => (
                   <tr
                     key={course.id}
-                    className="hover:bg-card-hover transition-colors duration-150"
+                    className="hover:bg-card-hover hover:shadow-md transition-colors duration-150"
                   >
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <span
-                          className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${TYPE_COLORS[course.type] ?? "bg-slate-700 text-slate-400"}`}
+                          className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${TYPE_COLORS[course.type] ?? "bg-slate-700 text-slate-500"}`}
                         >
                           {course.type}
                         </span>
-                        <p className="text-sm font-medium text-white">{course.title}</p>
+                        <p className="text-sm font-medium text-gray-800">{course.title}</p>
                       </div>
                     </td>
                     <td className="px-5 py-3.5 hidden md:table-cell">
                       {course.day_of_week ? (
-                        <p className="text-sm text-slate-300">
+                        <p className="text-sm text-slate-700">
                           {course.day_of_week}s · {formatTime(course.start_time)}–
                           {formatTime(course.end_time)}
                         </p>
@@ -122,7 +122,7 @@ export default async function AdminCoursesPage() {
                         <span className="text-sm text-slate-600">—</span>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 text-sm text-slate-300 hidden md:table-cell">
+                    <td className="px-5 py-3.5 text-sm text-slate-700 hidden md:table-cell">
                       {(course.locations as any)?.name ?? "—"}
                     </td>
                     <td className="px-5 py-3.5 hidden lg:table-cell">
@@ -131,7 +131,7 @@ export default async function AdminCoursesPage() {
                       </span>
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="text-sm text-slate-300 font-medium">
+                      <span className="text-sm text-slate-700 font-medium">
                         {course.enrollments?.length ?? 0}
                         {course.max_students && (
                           <span className="text-slate-500">/{course.max_students}</span>
@@ -140,7 +140,7 @@ export default async function AdminCoursesPage() {
                     </td>
                     <td className="px-5 py-3.5">
                       <span
-                        className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[course.status] ?? "bg-slate-700 text-slate-400"}`}
+                        className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[course.status] ?? "bg-slate-700 text-slate-500"}`}
                       >
                         {course.status}
                       </span>

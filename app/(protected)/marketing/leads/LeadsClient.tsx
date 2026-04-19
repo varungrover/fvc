@@ -12,7 +12,7 @@ const STATUS_STYLES: Record<string, string> = {
   contacted: "bg-warning/10 text-warning border-warning/20",
   trial_booked: "bg-purple/10 text-purple border-purple/20",
   enrolled: "bg-success/10 text-success border-success/20",
-  lost: "bg-slate-700 text-slate-400 border-slate-600",
+  lost: "bg-slate-700 text-slate-500 border-slate-600",
 };
 
 type Lead = {
@@ -165,45 +165,45 @@ export default function LeadsClient({
           className="bg-card-dark border border-primary/30 rounded-xl p-6 space-y-4"
         >
           <div className="flex items-center justify-between mb-1">
-            <h2 className="text-base font-bold text-white">{editId ? "Edit Lead" : "Add Lead"}</h2>
+            <h2 className="text-base font-bold text-gray-900">{editId ? "Edit Lead" : "Add Lead"}</h2>
             <button type="button" onClick={() => setShowForm(false)} className="text-slate-500 hover:text-white">
               <span className="material-icons-round text-[20px]">close</span>
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Full name *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Full name *</label>
               <input required value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} className={inputClass} placeholder="Jane Smith" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Email *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Email *</label>
               <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass} placeholder="jane@example.com" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Phone</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Phone</label>
               <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} placeholder="+1 604 555 0100" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Source</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Source</label>
               <select value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })} className={inputClass}>
                 {SOURCES.map((s) => <option key={s} value={s}>{s.replace(/_/g, " ")}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Status</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Status</label>
               <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className={inputClass}>
                 {STATUSES.map((s) => <option key={s} value={s}>{s.replace(/_/g, " ")}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Location</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Location</label>
               <select value={form.location_id} onChange={(e) => setForm({ ...form, location_id: e.target.value })} className={inputClass}>
                 <option value="">Any / unknown</option>
                 {locations.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-400 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Notes</label>
               <textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={inputClass} placeholder="Any additional context…" />
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function LeadsClient({
             <button type="submit" disabled={loading} className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm">
               {loading ? "Saving…" : editId ? "Save changes" : "Add lead"}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-300 hover:text-white py-2.5 px-5 rounded-lg text-sm">
+            <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-700 hover:text-white py-2.5 px-5 rounded-lg text-sm">
               Cancel
             </button>
           </div>
@@ -220,9 +220,9 @@ export default function LeadsClient({
       )}
 
       {/* Table */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
-          <h2 className="text-base font-bold text-white">Leads ({filtered.length})</h2>
+          <h2 className="text-base font-bold text-gray-900">Leads ({filtered.length})</h2>
         </div>
         {filtered.length === 0 ? (
           <div className="px-5 py-12 text-center text-slate-500 text-sm">
@@ -233,23 +233,23 @@ export default function LeadsClient({
             <table className="w-full">
               <thead>
                 <tr className="bg-slate-900/50 border-b border-border-dark">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Name</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Source</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Added</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Source</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Added</th>
                   <th className="px-5 py-3" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-dark">
+              <tbody className="divide-y divide-gray-100">
                 {filtered.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-card-hover transition-colors">
+                  <tr key={lead.id} className="hover:bg-card-hover hover:shadow-md transition-colors">
                     <td className="px-5 py-3.5">
-                      <p className="text-sm font-medium text-white">{lead.full_name}</p>
+                      <p className="text-sm font-medium text-gray-800">{lead.full_name}</p>
                       <p className="text-xs text-slate-500">{lead.email}</p>
                       {lead.phone && <p className="text-xs text-slate-600">{lead.phone}</p>}
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="text-xs text-slate-400 capitalize">{lead.source.replace(/_/g, " ")}</span>
+                      <span className="text-xs text-slate-500 capitalize">{lead.source.replace(/_/g, " ")}</span>
                     </td>
                     <td className="px-5 py-3.5">
                       <select

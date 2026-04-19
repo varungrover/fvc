@@ -26,8 +26,8 @@ export default async function ParentFeedbackPage() {
     <div className="p-8">
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Coach Feedback & Meeting</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Coach Feedback & Meeting</h1>
+          <p className="text-slate-500 text-sm mt-1">
             Request a 1-on-1 meeting or written feedback for your child.
           </p>
         </div>

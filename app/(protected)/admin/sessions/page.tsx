@@ -29,8 +29,8 @@ export default async function AdminSessionsPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Session Scheduler</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Session Scheduler</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Schedule and manage individual class sessions.
         </p>
       </div>

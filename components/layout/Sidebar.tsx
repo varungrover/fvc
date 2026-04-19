@@ -86,15 +86,21 @@ export default function Sidebar({ profile }: { profile: Profile }) {
     .slice(0, 2);
 
   return (
-    <aside className="w-64 bg-sidebar-dark border-r border-border-dark flex flex-col flex-shrink-0">
+    <aside
+      className="w-64 flex flex-col flex-shrink-0"
+      style={{ background: "linear-gradient(180deg, #0b0924 0%, #1a1040 100%)" }}
+    >
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-border-dark">
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center shadow-[0_0_12px_rgba(168,85,247,0.35)] flex-shrink-0" style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-white/[0.06]">
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: "linear-gradient(135deg, #7c3aed, #ec4899)", boxShadow: "0 0 12px rgba(124,58,237,0.4)" }}
+        >
           <span className="text-white text-lg">♟</span>
         </div>
         <div>
           <p className="text-white font-bold text-sm leading-tight">Fraser Valley</p>
-          <p className="text-slate-500 text-xs">Chess Academy</p>
+          <p className="text-white/40 text-xs">Chess Academy</p>
         </div>
       </div>
 
@@ -106,13 +112,29 @@ export default function Sidebar({ profile }: { profile: Profile }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group border-l-[3px] pl-[9px]"
+              style={
                 isActive
-                  ? "bg-primary/10 text-primary border-l-[3px] border-primary pl-[9px]"
-                  : "text-slate-400 hover:text-white hover:bg-surface-hover border-l-[3px] border-transparent pl-[9px]"
-              }`}
+                  ? { background: "rgba(124,58,237,0.25)", borderLeftColor: "#a78bfa", color: "#ffffff" }
+                  : { borderLeftColor: "transparent", color: "rgba(255,255,255,0.6)" }
+              }
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLElement).style.color = "#ffffff";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
+                }
+              }}
             >
-              <span className={`material-icons-round text-[20px] ${isActive ? "text-primary" : "text-slate-500 group-hover:text-slate-300"}`}>
+              <span
+                className="material-icons-round text-[20px]"
+                style={{ color: isActive ? "#a78bfa" : "rgba(255,255,255,0.4)" }}
+              >
                 {item.icon}
               </span>
               {item.label}
@@ -122,31 +144,38 @@ export default function Sidebar({ profile }: { profile: Profile }) {
       </nav>
 
       {/* Settings + User */}
-      <div className="border-t border-border-dark px-3 py-3 space-y-0.5">
+      <div className="border-t border-white/[0.06] px-3 py-3 space-y-0.5">
         <Link
           href="/settings"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 border-l-[3px] pl-[9px]"
+          style={
             pathname === "/settings"
-              ? "bg-primary/10 text-primary border-l-[3px] border-primary pl-[9px]"
-              : "text-slate-400 hover:text-white hover:bg-surface-hover border-l-[3px] border-transparent pl-[9px]"
-          }`}
+              ? { background: "rgba(124,58,237,0.25)", borderLeftColor: "#a78bfa", color: "#ffffff" }
+              : { borderLeftColor: "transparent", color: "rgba(255,255,255,0.6)" }
+          }
         >
-          <span className="material-icons-round text-[20px] text-slate-500 group-hover:text-slate-300">settings</span>
+          <span className="material-icons-round text-[20px]" style={{ color: "rgba(255,255,255,0.4)" }}>settings</span>
           Settings
         </Link>
 
         <div className="flex items-center gap-3 px-3 py-2.5 mt-1">
-          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-            <span className="text-primary text-xs font-bold">{initials}</span>
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ background: "linear-gradient(135deg, #7c3aed, #ec4899)" }}
+          >
+            <span className="text-white text-xs font-bold">{initials}</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white text-xs font-semibold truncate">{profile.full_name}</p>
-            <p className="text-slate-500 text-xs capitalize">{profile.role.replace("_", " ")}</p>
+            <p className="text-white/40 text-xs capitalize">{profile.role.replace("_", " ")}</p>
           </div>
           <button
             onClick={handleSignOut}
             title="Sign out"
-            className="text-slate-500 hover:text-error transition-colors"
+            className="transition-colors"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#f87171")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)")}
           >
             <span className="material-icons-round text-[20px]">logout</span>
           </button>

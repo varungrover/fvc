@@ -41,12 +41,12 @@ export default async function StudentAchievementsPage() {
     return (
       <div className="p-8 max-w-xl">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">Achievements</h1>
-          <p className="text-slate-400 text-sm mt-1">Your points, badges, and progress.</p>
+          <h1 className="text-2xl font-bold text-gray-900">Achievements</h1>
+          <p className="text-slate-500 text-sm mt-1">Your points, badges, and progress.</p>
         </div>
-        <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center">
           <span className="material-icons-round text-[48px] text-slate-600 block mb-3">emoji_events</span>
-          <p className="text-slate-300 font-medium">Account not linked yet</p>
+          <p className="text-slate-700 font-medium">Account not linked yet</p>
           <p className="text-slate-500 text-sm mt-2 max-w-sm mx-auto">
             Ask your parent to complete the student login setup from their account.
           </p>
@@ -58,19 +58,19 @@ export default async function StudentAchievementsPage() {
   return (
     <div className="p-8 max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Achievements</h1>
-        <p className="text-slate-400 text-sm mt-1">Your points, badges, and progress.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Achievements</h1>
+        <p className="text-slate-500 text-sm mt-1">Your points, badges, and progress.</p>
       </div>
 
       {/* Level + points card */}
-      <div className="bg-card-dark border border-border-dark rounded-xl p-6 mb-6">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 mb-6">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-purple/20 flex items-center justify-center flex-shrink-0">
             <span className="material-icons-round text-primary text-[32px]">military_tech</span>
           </div>
           <div>
-            <p className="text-white font-bold text-xl">{levelName}</p>
-            <p className="text-slate-400 text-sm">Level {level + 1} · {totalPoints} total points</p>
+            <p className="text-gray-900 font-bold text-xl">{levelName}</p>
+            <p className="text-slate-500 text-sm">Level {level + 1} · {totalPoints} total points</p>
           </div>
         </div>
         {level < LEVEL_NAMES.length - 1 && (
@@ -94,8 +94,8 @@ export default async function StudentAchievementsPage() {
 
       {/* Badges */}
       {(allBadges ?? []).length > 0 && (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-6 mb-6">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Badges</h2>
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-6 mb-6">
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Badges</h2>
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
             {(allBadges ?? []).map((badge: any) => {
               const earned = earnedIds.has(badge.id);
@@ -112,7 +112,7 @@ export default async function StudentAchievementsPage() {
                   <span className={`material-icons-round text-[28px] ${earned ? "text-primary" : "text-slate-600"}`}>
                     {badge.icon ?? "emoji_events"}
                   </span>
-                  <p className="text-xs font-semibold text-center text-slate-300 leading-tight">{badge.name}</p>
+                  <p className="text-xs font-semibold text-center text-slate-700 leading-tight">{badge.name}</p>
                   <p className="text-[10px] text-slate-500">{badge.points_threshold} pts</p>
                 </div>
               );
@@ -123,11 +123,11 @@ export default async function StudentAchievementsPage() {
 
       {/* Recent point transactions */}
       {(recentPoints ?? []).length > 0 && (
-        <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-border-dark">
-            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Recent Points</h2>
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Recent Points</h2>
           </div>
-          <div className="divide-y divide-border-dark">
+          <div className="divide-y divide-gray-100">
             {(recentPoints ?? []).map((tx: any) => (
               <div key={tx.id} className="flex items-center justify-between px-5 py-3">
                 <div>
@@ -144,9 +144,9 @@ export default async function StudentAchievementsPage() {
       )}
 
       {totalPoints === 0 && (earnedBadges ?? []).length === 0 && (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center">
           <span className="material-icons-round text-[40px] text-slate-600 block mb-2">stars</span>
-          <p className="text-slate-400 text-sm">Attend classes and complete lessons to earn points and badges!</p>
+          <p className="text-slate-500 text-sm">Attend classes and complete lessons to earn points and badges!</p>
         </div>
       )}
     </div>

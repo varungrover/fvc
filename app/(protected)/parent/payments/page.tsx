@@ -74,7 +74,7 @@ const STATUS_CONFIG: Record<string, { label: string; classes: string; icon: stri
   },
   refunded: {
     label: "Refunded",
-    classes: "bg-slate-700 text-slate-400",
+    classes: "bg-slate-700 text-slate-500",
     icon: "undo",
   },
   upcoming: {
@@ -114,8 +114,8 @@ export default async function PaymentHistoryPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Payment History</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Payment History</h1>
+          <p className="text-slate-500 text-sm mt-1">
             View your transactions, invoices, and receipts.
           </p>
         </div>
@@ -130,35 +130,35 @@ export default async function PaymentHistoryPage() {
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5 flex items-start gap-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex items-start gap-4">
           <div className="w-10 h-10 rounded-xl bg-success/15 flex items-center justify-center flex-shrink-0">
             <span className="material-icons-round text-success text-xl">account_balance_wallet</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Total Paid</p>
-            <p className="text-2xl font-bold text-white mt-0.5">${totalPaid}</p>
+            <p className="text-xs text-slate-500 font-medium">Total Paid</p>
+            <p className="text-2xl font-bold text-gray-900 mt-0.5">${totalPaid}</p>
             <p className="text-xs text-slate-500 mt-0.5">All time</p>
           </div>
         </div>
 
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5 flex items-start gap-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex items-start gap-4">
           <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center flex-shrink-0">
             <span className="material-icons-round text-primary text-xl">event_upcoming</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Next Payment</p>
-            <p className="text-2xl font-bold text-white mt-0.5">${upcomingAmount}</p>
+            <p className="text-xs text-slate-500 font-medium">Next Payment</p>
+            <p className="text-2xl font-bold text-gray-900 mt-0.5">${upcomingAmount}</p>
             <p className="text-xs text-slate-500 mt-0.5">Due Apr 15</p>
           </div>
         </div>
 
-        <div className="bg-card-dark border border-border-dark rounded-xl p-5 flex items-start gap-4">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 flex items-start gap-4">
           <div className="w-10 h-10 rounded-xl bg-purple/15 flex items-center justify-center flex-shrink-0">
             <span className="material-icons-round text-purple text-xl">receipt_long</span>
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Invoices</p>
-            <p className="text-2xl font-bold text-white mt-0.5">
+            <p className="text-xs text-slate-500 font-medium">Invoices</p>
+            <p className="text-2xl font-bold text-gray-900 mt-0.5">
               {MOCK_PAYMENTS.filter((p) => p.status === "paid").length}
             </p>
             <p className="text-xs text-slate-500 mt-0.5">Total receipts</p>
@@ -167,9 +167,9 @@ export default async function PaymentHistoryPage() {
       </div>
 
       {/* Transactions table */}
-      <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+      <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
-          <h2 className="text-base font-bold text-white">Transactions</h2>
+          <h2 className="text-base font-bold text-gray-900">Transactions</h2>
           <span className="text-xs text-slate-500">{MOCK_PAYMENTS.length} total</span>
         </div>
 
@@ -178,44 +178,44 @@ export default async function PaymentHistoryPage() {
           <table className="w-full">
             <thead>
               <tr className="bg-[#151c2b] border-b border-border-dark">
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Date
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Description
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Student
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Amount
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Status
                 </th>
-                <th className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider px-5 py-3">
+                <th className="text-right text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                   Receipt
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-dark">
+            <tbody className="divide-y divide-gray-100">
               {MOCK_PAYMENTS.map((payment) => {
                 const statusCfg = STATUS_CONFIG[payment.status] ?? STATUS_CONFIG.pending;
                 return (
                   <tr
                     key={payment.id}
-                    className="hover:bg-card-hover transition-colors duration-150"
+                    className="hover:bg-card-hover hover:shadow-md transition-colors duration-150"
                   >
-                    <td className="px-5 py-3.5 text-sm text-slate-300 whitespace-nowrap">
+                    <td className="px-5 py-3.5 text-sm text-slate-700 whitespace-nowrap">
                       {formatDate(payment.date)}
                     </td>
                     <td className="px-5 py-3.5">
                       <p className="text-sm text-white font-medium">{payment.description}</p>
                       <p className="text-xs text-slate-500 mt-0.5">{payment.method}</p>
                     </td>
-                    <td className="px-5 py-3.5 text-sm text-slate-300">{payment.student}</td>
+                    <td className="px-5 py-3.5 text-sm text-slate-700">{payment.student}</td>
                     <td className="px-5 py-3.5">
-                      <span className="text-sm text-white font-semibold">
+                      <span className="text-sm text-gray-900 font-semibold">
                         {payment.amount === 0 ? "Free" : `$${payment.amount}`}
                       </span>
                     </td>
@@ -245,7 +245,7 @@ export default async function PaymentHistoryPage() {
         </div>
 
         {/* Mobile list */}
-        <div className="md:hidden divide-y divide-border-dark">
+        <div className="md:hidden divide-y divide-gray-100">
           {MOCK_PAYMENTS.map((payment) => {
             const statusCfg = STATUS_CONFIG[payment.status] ?? STATUS_CONFIG.pending;
             return (
@@ -257,7 +257,7 @@ export default async function PaymentHistoryPage() {
                       {formatDate(payment.date)} · {payment.student}
                     </p>
                   </div>
-                  <span className="text-sm text-white font-semibold flex-shrink-0">
+                  <span className="text-sm text-gray-900 font-semibold flex-shrink-0">
                     {payment.amount === 0 ? "Free" : `$${payment.amount}`}
                   </span>
                 </div>

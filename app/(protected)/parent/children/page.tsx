@@ -17,8 +17,8 @@ export default async function ChildrenPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">My Children</h1>
-          <p className="text-slate-400 text-sm mt-1">Manage your children&apos;s profiles</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Children</h1>
+          <p className="text-slate-500 text-sm mt-1">Manage your children&apos;s profiles</p>
         </div>
         <Link
           href="/parent/children/add"
@@ -30,9 +30,9 @@ export default async function ChildrenPage() {
       </div>
 
       {!students || students.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-10 text-center max-w-md">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-10 text-center max-w-md">
           <span className="material-icons-round text-4xl text-slate-600 mb-3 block">family_restroom</span>
-          <p className="text-slate-300 font-medium">No children added yet</p>
+          <p className="text-slate-700 font-medium">No children added yet</p>
           <p className="text-slate-500 text-sm mt-1 mb-5">Add a child profile to get started with enrollments.</p>
           <Link
             href="/parent/children/add"
@@ -51,20 +51,20 @@ export default async function ChildrenPage() {
             const initials = student.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
 
             return (
-              <div key={student.id} className="bg-card-dark border border-border-dark rounded-xl p-5 hover:border-primary/40 transition-all duration-200 group">
+              <div key={student.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-5 hover:border-primary/40 transition-all duration-200 group">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-indigo/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-primary font-bold text-sm">{initials}</span>
                   </div>
                   <div>
-                    <p className="text-white font-semibold">{student.full_name}</p>
+                    <p className="text-gray-900 font-semibold">{student.full_name}</p>
                     <p className="text-slate-500 text-xs">
                       {age ? `${age} years old` : "Age not set"}{student.grade ? ` · Grade ${student.grade}` : ""}
                     </p>
                   </div>
                 </div>
                 {student.cfc_id && (
-                  <p className="text-xs text-slate-500 mb-4">CFC ID: <span className="text-slate-300">{student.cfc_id}</span></p>
+                  <p className="text-xs text-slate-500 mb-4">CFC ID: <span className="text-slate-700">{student.cfc_id}</span></p>
                 )}
                 <Link
                   href={`/parent/children/${student.id}`}

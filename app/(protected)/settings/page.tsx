@@ -18,8 +18,8 @@ export default async function SettingsPage() {
   return (
     <div className="p-8 max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Account Settings</h1>
-        <p className="text-slate-400 text-sm mt-1">Manage your profile and password</p>
+        <h1 className="text-2xl font-bold text-gray-900">Account Settings</h1>
+        <p className="text-slate-500 text-sm mt-1">Manage your profile and password</p>
       </div>
       <SettingsForm profile={profile} />
     </div>

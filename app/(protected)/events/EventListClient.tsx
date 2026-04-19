@@ -128,10 +128,10 @@ export default function EventListClient({
   return (
     <div>
       {events.length === 0 ? (
-        <div className="bg-card-dark border border-border-dark rounded-xl p-8 text-center mt-6">
+        <div className="bg-card-dark border border-border-dark rounded-xl shadow-sm p-8 text-center mt-6">
           <span className="material-icons-round text-4xl text-slate-600 mb-3">event_busy</span>
           <p className="text-white font-medium">No Upcoming Events</p>
-          <p className="text-slate-400 text-sm mt-1">Check back later for new tournaments and workshops.</p>
+          <p className="text-slate-500 text-sm mt-1">Check back later for new tournaments and workshops.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -144,7 +144,7 @@ export default function EventListClient({
             const myRegs = registrations.filter(r => r.event_id === event.id);
 
             return (
-              <div key={event.id} className="bg-card-dark border border-border-dark rounded-xl overflow-hidden flex flex-col hover:border-border-hover transition-colors">
+              <div key={event.id} className="bg-card-dark border border-border-dark rounded-xl shadow-sm overflow-hidden flex flex-col hover:border-border-hover transition-colors">
                 <div className="p-5 flex-1 relative">
                   <div className={`absolute top-4 right-4 px-2 py-0.5 rounded flex items-center gap-1 border text-[10px] uppercase font-bold tracking-wider ${getTypeStyle(event.type)}`}>
                     <span className="material-icons-round text-[12px]">{getTypeIcon(event.type)}</span>
@@ -157,28 +157,28 @@ export default function EventListClient({
                       <span className="text-white text-xl font-bold leading-none mt-0.5">{day}</span>
                     </div>
                     <div>
-                      <h3 className="text-white font-bold text-lg leading-tight mt-1 pr-16">{event.title}</h3>
+                      <h3 className="text-gray-900 font-bold text-lg leading-tight mt-1 pr-16">{event.title}</h3>
                       <p className="text-slate-500 text-xs mt-1 font-medium">
                         {event.start_time?.slice(0,5)} - {event.end_time?.slice(0,5)}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-slate-300 text-sm line-clamp-3 mb-4">{event.description}</p>
+                  <p className="text-slate-700 text-sm line-clamp-3 mb-4">{event.description}</p>
                   
                   <div className="space-y-1.5 mb-2 mt-auto">
                     {event.locations?.name && (
-                      <p className="text-xs text-slate-400 flex items-center gap-2">
+                      <p className="text-xs text-slate-500 flex items-center gap-2">
                         <span className="material-icons-round text-[14px]">location_on</span>
                         {event.locations.name}
                       </p>
                     )}
-                    <p className="text-xs text-slate-400 flex items-center gap-2">
+                    <p className="text-xs text-slate-500 flex items-center gap-2">
                       <span className="material-icons-round text-[14px]">payments</span>
                       {event.price > 0 ? `$${event.price}` : "Free"}
                     </p>
                     {event.capacity && (
-                      <p className="text-xs text-slate-400 flex items-center gap-2">
+                      <p className="text-xs text-slate-500 flex items-center gap-2">
                         <span className="material-icons-round text-[14px]">group</span>
                         Capacity: {event.capacity}
                       </p>
@@ -213,10 +213,10 @@ export default function EventListClient({
       {/* RSVP Modal */}
       {selectedEvent && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-card-dark border border-border-dark rounded-2xl w-full max-w-md overflow-hidden shadow-2xl">
+          <div className="bg-card-dark border border-border-dark rounded-2xl shadow-sm w-full max-w-md overflow-hidden shadow-2xl">
             <div className="px-6 py-4 border-b border-border-dark flex justify-between items-center bg-surface-dark">
-              <h2 className="text-lg font-bold text-white">Complete Registration</h2>
-              <button onClick={() => setSelectedEvent(null)} className="text-slate-400 hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-gray-900">Complete Registration</h2>
+              <button onClick={() => setSelectedEvent(null)} className="text-slate-500 hover:text-white transition-colors">
                 <span className="material-icons-round">close</span>
               </button>
             </div>
@@ -224,12 +224,12 @@ export default function EventListClient({
             <form onSubmit={handleRSVP} className="p-6">
               <div className="mb-6">
                 <h3 className="text-white font-medium mb-1">{selectedEvent.title}</h3>
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-500 text-sm">
                   {new Date(selectedEvent.event_date).toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: 'numeric' })} at {selectedEvent.start_time?.slice(0,5)}
                 </p>
                 <div className="mt-3 inline-block bg-surface-dark border border-border-dark rounded-lg px-3 py-1.5">
-                  <span className="text-xs text-slate-400">Fee:</span>
-                  <span className="text-sm font-bold text-white ml-2">{selectedEvent.price > 0 ? `$${selectedEvent.price}` : "Free"}</span>
+                  <span className="text-xs text-slate-500">Fee:</span>
+                  <span className="text-sm font-bold text-gray-900 ml-2">{selectedEvent.price > 0 ? `$${selectedEvent.price}` : "Free"}</span>
                 </div>
               </div>
 
@@ -242,7 +242,7 @@ export default function EventListClient({
               
               {selectedEvent.type !== "parent_meeting" && (
                 <div className="mb-6">
-                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Select Student</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1.5">Select Student</label>
                   <select 
                     value={selectedChildId}
                     onChange={(e) => setSelectedChildId(e.target.value)}
