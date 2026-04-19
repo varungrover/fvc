@@ -28,13 +28,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-card-dark border border-border-dark rounded-2xl p-8 shadow-xl">
+    <div
+      className="rounded-2xl p-8 shadow-2xl border border-white/10"
+      style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}
+    >
       <h1 className="text-2xl font-bold text-white mb-1">Welcome back</h1>
-      <p className="text-slate-400 text-sm mb-8">Sign in to your account</p>
+      <p className="text-purple-200/70 text-sm mb-8">Sign in to your account</p>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
             Email address
           </label>
           <input
@@ -43,18 +46,19 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-sm font-medium text-slate-300">
+            <label className="block text-sm font-medium text-purple-100/80">
               Password
             </label>
             <Link
               href="/forgot-password"
-              className="text-xs text-primary hover:text-blue-400 transition-colors"
+              className="text-xs text-purple-300 hover:text-pink-300 transition-colors"
             >
               Forgot password?
             </Link>
@@ -65,12 +69,14 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         {error && (
-          <div className="bg-error/10 border border-error/30 rounded-lg px-4 py-3 text-error text-sm">
+          <div className="rounded-xl px-4 py-3 text-sm text-red-300 border border-red-400/30"
+               style={{ background: "rgba(239,68,68,0.1)" }}>
             {error}
           </div>
         )}
@@ -78,15 +84,16 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200"
+          className="w-full text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-purple-500/30 hover:scale-[1.02] active:scale-[0.98]"
+          style={{ background: "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)" }}
         >
-          {loading ? "Signing in…" : "Sign in"}
+          {loading ? "Signing in…" : "Sign In"}
         </button>
       </form>
 
-      <p className="text-center text-sm text-slate-500 mt-6">
+      <p className="text-center text-sm text-white/40 mt-6">
         New to Fraser Valley Chess?{" "}
-        <Link href="/register" className="text-primary hover:text-blue-400 font-medium transition-colors">
+        <Link href="/register" className="text-purple-300 hover:text-pink-300 font-medium transition-colors">
           Create an account
         </Link>
       </p>

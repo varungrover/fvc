@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -45,20 +43,22 @@ export default function RegisterPage() {
       return;
     }
 
-    router.push("/dashboard");
-    router.refresh();
+    window.location.href = "/dashboard";
   }
 
   return (
-    <div className="bg-card-dark border border-border-dark rounded-2xl p-8 shadow-xl">
+    <div
+      className="rounded-2xl p-8 shadow-2xl border border-white/10"
+      style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}
+    >
       <h1 className="text-2xl font-bold text-white mb-1">Create your account</h1>
-      <p className="text-slate-400 text-sm mb-8">
+      <p className="text-purple-200/70 text-sm mb-8">
         Register as a parent to enroll your children
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
             Full name
           </label>
           <input
@@ -67,12 +67,13 @@ export default function RegisterPage() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="Jane Smith"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
             Email address
           </label>
           <input
@@ -81,25 +82,27 @@ export default function RegisterPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
-            Phone number <span className="text-slate-500">(optional)</span>
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
+            Phone number <span className="text-white/30">(optional)</span>
           </label>
           <input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 604 000 0000"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
             Password
           </label>
           <input
@@ -108,12 +111,13 @@ export default function RegisterPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Min. 8 characters"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-purple-100/80 mb-1.5">
             Confirm password
           </label>
           <input
@@ -122,12 +126,14 @@ export default function RegisterPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full border border-border-dark rounded-lg py-3 px-3 bg-surface-dark text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full rounded-xl py-3 px-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}
           />
         </div>
 
         {error && (
-          <div className="bg-error/10 border border-error/30 rounded-lg px-4 py-3 text-error text-sm">
+          <div className="rounded-xl px-4 py-3 text-sm text-red-300 border border-red-400/30"
+               style={{ background: "rgba(239,68,68,0.1)" }}>
             {error}
           </div>
         )}
@@ -135,15 +141,16 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200"
+          className="w-full text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-purple-500/30 hover:scale-[1.02] active:scale-[0.98]"
+          style={{ background: "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)" }}
         >
-          {loading ? "Creating account…" : "Create account"}
+          {loading ? "Creating account…" : "Create Account"}
         </button>
       </form>
 
-      <p className="text-center text-sm text-slate-500 mt-6">
+      <p className="text-center text-sm text-white/40 mt-6">
         Already have an account?{" "}
-        <Link href="/login" className="text-primary hover:text-blue-400 font-medium transition-colors">
+        <Link href="/login" className="text-purple-300 hover:text-pink-300 font-medium transition-colors">
           Sign in
         </Link>
       </p>
