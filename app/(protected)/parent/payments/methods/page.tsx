@@ -32,7 +32,7 @@ const INITIAL_CARDS: Card[] = [
 ];
 
 const BRAND_STYLES: Record<string, { bg: string; text: string }> = {
-  Visa: { bg: "from-blue-600 to-blue-800", text: "VISA" },
+  Visa: { bg: "from-purple-600 to-purple-800", text: "VISA" },
   Mastercard: { bg: "from-orange-500 to-red-600", text: "MC" },
   Amex: { bg: "from-slate-500 to-slate-700", text: "AMEX" },
 };
@@ -118,7 +118,7 @@ export default function PaymentMethodsPage() {
               key={card.id}
               className={`bg-card-dark border rounded-xl p-5 transition-all duration-200 ${
                 card.isDefault
-                  ? "border-primary/40 shadow-[0_0_10px_rgba(43,108,238,0.1)]"
+                  ? "border-primary/40 shadow-[0_0_10px_rgba(168,85,247,0.1)]"
                   : "border-border-dark"
               }`}
             >
@@ -291,7 +291,7 @@ export default function PaymentMethodsPage() {
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="flex-1 bg-primary hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200"
+              className="flex-1 bg-primary hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200"
             >
               Save card
             </button>

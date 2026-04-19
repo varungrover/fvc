@@ -93,7 +93,7 @@ export default function EnrollForm({
         <div className="flex gap-3 justify-center pt-2">
           <Link
             href="/parent/enrollments"
-            className="bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
+            className="bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
           >
             View my enrollments
           </Link>
@@ -221,7 +221,7 @@ export default function EnrollForm({
         <button
           type="submit"
           disabled={loading || students.length === 0}
-          className="flex-1 bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200 text-sm"
+          className="flex-1 bg-primary hover:bg-purple-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200 text-sm"
         >
           {loading
             ? "Processing…"

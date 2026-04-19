@@ -100,7 +100,7 @@ export default function CheckoutForm({
             className="accent-primary"
           />
           <div className="flex items-center gap-3 flex-1">
-            <div className="w-12 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-md flex items-center justify-center">
+            <div className="w-12 h-8 bg-gradient-to-br from-purple-600 to-purple-800 rounded-md flex items-center justify-center">
               <span className="text-white text-xs font-bold tracking-wider">VISA</span>
             </div>
             <div>
@@ -243,7 +243,7 @@ export default function CheckoutForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 px-4 rounded-lg shadow-[0_0_12px_rgba(43,108,238,0.25)] hover:shadow-[0_0_20px_rgba(43,108,238,0.35)] transition-all duration-200 text-sm flex items-center justify-center gap-2"
+        className="w-full bg-primary hover:bg-purple-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 px-4 rounded-lg shadow-[0_0_12px_rgba(168,85,247,0.25)] hover:shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all duration-200 text-sm flex items-center justify-center gap-2"
       >
         {loading ? (
           <>

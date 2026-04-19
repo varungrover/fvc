@@ -213,7 +213,7 @@ export default function MerchandiseOrderList({
                 {nextStatus && (
                   <button
                     onClick={() => updateStatus(order.id, nextStatus)}
-                    className="text-xs font-medium text-primary hover:text-blue-400 transition-colors flex items-center gap-1"
+                    className="text-xs font-medium text-primary hover:text-purple-300 transition-colors flex items-center gap-1"
                   >
                     <span className="material-icons-round text-sm">
                       {nextStatus === "ready" ? "inventory" : "check_circle"}

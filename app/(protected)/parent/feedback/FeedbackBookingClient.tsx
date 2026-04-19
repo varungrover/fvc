@@ -65,7 +65,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
         <h2 className="text-white font-bold">Your Requests</h2>
         <button
           onClick={() => setIsOpen(true)}
-          className="px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors"
+          className="px-4 py-2 bg-primary hover:bg-purple-600 text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors"
         >
           <span className="material-icons-round text-[18px]">add</span>
           New Request
@@ -202,7 +202,7 @@ export default function FeedbackBookingClient({ parentId, students, initialBooki
                 <button
                   type="submit"
                   disabled={loading || !formData.studentId}
-                  className="flex-1 px-4 py-2.5 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                  className="flex-1 px-4 py-2.5 bg-primary hover:bg-purple-600 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
                 >
                   {loading && <span className="material-icons-round animate-spin text-[18px]">autorenew</span>}
                   Submit Request

@@ -142,7 +142,7 @@ export default function SessionSchedulerClient({
           </button>
           <button
             onClick={() => setWeekOffset(0)}
-            className="text-xs text-primary hover:text-blue-400 font-medium transition-colors ml-2"
+            className="text-xs text-primary hover:text-purple-300 font-medium transition-colors ml-2"
           >
             Today
           </button>
@@ -150,7 +150,7 @@ export default function SessionSchedulerClient({
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all"
+          className="flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all"
         >
           <span className="material-icons-round text-lg">add</span>
           Add session
@@ -243,7 +243,7 @@ export default function SessionSchedulerClient({
             <button
               type="submit"
               disabled={loading}
-              className="bg-primary hover:bg-blue-600 disabled:opacity-60 text-white font-medium py-2 px-5 rounded-lg text-sm transition-all"
+              className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2 px-5 rounded-lg text-sm transition-all"
             >
               {loading ? "Saving…" : "Create session"}
             </button>

@@ -208,7 +208,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
             <button
               type="submit"
               disabled={loading}
-              className="bg-primary hover:bg-blue-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm transition-all"
+              className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm transition-all"
             >
               {loading ? "Creating…" : "Create coupon"}
             </button>
@@ -224,7 +224,7 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
       ) : (
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all"
+          className="flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all"
         >
           <span className="material-icons-round text-lg">add</span>
           Create coupon

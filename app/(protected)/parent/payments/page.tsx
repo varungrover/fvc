@@ -229,7 +229,7 @@ export default async function PaymentHistoryPage() {
                     </td>
                     <td className="px-5 py-3.5 text-right">
                       {payment.receiptId ? (
-                        <button className="text-xs text-primary hover:text-blue-400 font-medium transition-colors inline-flex items-center gap-1">
+                        <button className="text-xs text-primary hover:text-purple-300 font-medium transition-colors inline-flex items-center gap-1">
                           <span className="material-icons-round text-[14px]">download</span>
                           {payment.receiptId}
                         </button>

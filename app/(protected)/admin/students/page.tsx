@@ -179,7 +179,7 @@ export default async function AdminStudentsPage({
                       <td className="px-5 py-3.5 text-right">
                         <Link
                           href={`/admin/students/${student.id}`}
-                          className="text-xs text-primary hover:text-blue-400 font-medium transition-colors"
+                          className="text-xs text-primary hover:text-purple-300 font-medium transition-colors"
                         >
                           View →
                         </Link>

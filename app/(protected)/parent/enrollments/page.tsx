@@ -52,7 +52,7 @@ export default async function MyEnrollmentsPage() {
         </div>
         <Link
           href="/courses"
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all"
+          className="flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all"
         >
           <span className="material-icons-round text-[18px]">add</span>
           Browse courses
@@ -66,7 +66,7 @@ export default async function MyEnrollmentsPage() {
           <p className="text-slate-500 text-sm mt-1 mb-5">Browse available courses and enroll your children.</p>
           <Link
             href="/courses"
-            className="bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
+            className="bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all"
           >
             Browse courses
           </Link>
@@ -133,7 +133,7 @@ export default async function MyEnrollmentsPage() {
                     {enrollment.status === "trial" && (
                       <Link
                         href={`/checkout?enrollment=${enrollment.id}`}
-                        className="text-xs font-semibold text-primary hover:text-blue-400 transition-colors"
+                        className="text-xs font-semibold text-primary hover:text-purple-300 transition-colors"
                       >
                         Upgrade to full →
                       </Link>

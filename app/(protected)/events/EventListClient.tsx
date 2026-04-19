@@ -28,7 +28,7 @@ export default function EventListClient({
       case "tournament":
         return "bg-amber-500/10 text-amber-500 border-amber-500/20";
       case "workshop":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
+        return "bg-purple-500/10 text-purple-500 border-purple-500/20";
       case "camp":
         return "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
       default:
@@ -107,7 +107,7 @@ export default function EventListClient({
       return (
         <button 
           onClick={() => { setSelectedEvent(event); setSelectedChildId(""); setError(null); }}
-          className="mt-4 w-full py-2.5 rounded-xl bg-primary hover:bg-blue-600 text-white text-sm font-medium transition-colors"
+          className="mt-4 w-full py-2.5 rounded-xl bg-primary hover:bg-purple-600 text-white text-sm font-medium transition-colors"
         >
           RSVP Now
         </button>
@@ -118,7 +118,7 @@ export default function EventListClient({
     return (
       <button 
         onClick={() => { setSelectedEvent(event); setSelectedChildId(childrenList[0]?.id || ""); setError(null); }}
-        className="mt-4 w-full py-2.5 rounded-xl bg-primary hover:bg-blue-600 text-white text-sm font-medium transition-colors"
+        className="mt-4 w-full py-2.5 rounded-xl bg-primary hover:bg-purple-600 text-white text-sm font-medium transition-colors"
       >
         Register Student
       </button>
@@ -268,7 +268,7 @@ export default function EventListClient({
                 <button
                   type="submit"
                   disabled={loading || (selectedEvent.type !== "parent_meeting" && !selectedChildId)}
-                  className="flex-1 px-4 py-2.5 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                  className="flex-1 px-4 py-2.5 bg-primary hover:bg-purple-600 text-white text-sm font-medium rounded-xl transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
                 >
                   {loading && <span className="material-icons-round animate-spin text-[18px]">autorenew</span>}
                   Confirm

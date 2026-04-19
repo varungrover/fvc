@@ -101,7 +101,7 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
       {!showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all"
+          className="flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all"
         >
           <span className="material-icons-round text-lg">add</span>
           New rule
@@ -157,7 +157,7 @@ export default function LoyaltyClient({ initialRules }: { initialRules: LoyaltyR
           {error && <p className="text-error text-sm bg-error/10 border border-error/20 rounded-lg px-3 py-2">{error}</p>}
 
           <div className="flex gap-3 pt-1">
-            <button type="submit" disabled={loading} className="bg-primary hover:bg-blue-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm">
+            <button type="submit" disabled={loading} className="bg-primary hover:bg-purple-600 disabled:opacity-60 text-white font-medium py-2.5 px-6 rounded-lg text-sm">
               {loading ? "Saving…" : "Create rule"}
             </button>
             <button type="button" onClick={() => setShowForm(false)} className="border border-border-dark text-slate-300 hover:text-white py-2.5 px-5 rounded-lg text-sm">

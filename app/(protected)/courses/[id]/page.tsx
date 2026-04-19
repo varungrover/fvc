@@ -166,7 +166,7 @@ export default async function CourseDetailPage({
 
           <Link
             href={`/courses/${course.id}/enroll`}
-            className="mt-5 w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200 text-sm text-center"
+            className="mt-5 w-full bg-primary hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200 text-sm text-center"
           >
             Enroll now
           </Link>

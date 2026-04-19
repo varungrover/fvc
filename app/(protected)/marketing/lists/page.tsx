@@ -179,7 +179,7 @@ export default async function MarketingListsPage() {
             <div className="px-5 py-3 border-t border-border-dark bg-surface-dark/40">
               <Link
                 href={`/marketing/campaigns?list=${seg.key}`}
-                className="text-xs font-semibold text-primary hover:text-blue-400 flex items-center gap-1 transition-colors"
+                className="text-xs font-semibold text-primary hover:text-purple-300 flex items-center gap-1 transition-colors"
               >
                 <span className="material-icons-round text-[14px]">campaign</span>
                 Send campaign to this list

@@ -93,7 +93,7 @@ export default async function ConfirmationPage({
           <div className="flex flex-col gap-3">
             <Link
               href="/parent/enrollments"
-              className="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-all shadow-[0_0_10px_rgba(43,108,238,0.2)] flex items-center justify-center gap-2"
+              className="w-full bg-primary hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-all shadow-[0_0_10px_rgba(168,85,247,0.2)] flex items-center justify-center gap-2"
             >
               <span className="material-icons-round text-lg">assignment</span>
               View my enrollments
@@ -107,7 +107,7 @@ export default async function ConfirmationPage({
             </Link>
             <Link
               href="/courses"
-              className="text-sm text-primary hover:text-blue-400 font-medium transition-colors mt-1"
+              className="text-sm text-primary hover:text-purple-300 font-medium transition-colors mt-1"
             >
               Browse more courses →
             </Link>
@@ -152,7 +152,7 @@ export default async function ConfirmationPage({
         <div className="flex flex-col gap-3">
           <Link
             href={`/checkout?enrollment=${enrollmentId}`}
-            className="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-all shadow-[0_0_10px_rgba(43,108,238,0.2)] flex items-center justify-center gap-2"
+            className="w-full bg-primary hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg text-sm transition-all shadow-[0_0_10px_rgba(168,85,247,0.2)] flex items-center justify-center gap-2"
           >
             <span className="material-icons-round text-lg">refresh</span>
             Try again

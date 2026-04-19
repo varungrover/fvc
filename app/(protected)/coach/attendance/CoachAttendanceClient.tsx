@@ -166,7 +166,7 @@ export default function CoachAttendanceClient({
                   onClick={() => router.push(`/coach/attendance?session=${session.id}`)}
                   className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 ${
                     isActive
-                      ? "border-primary/40 bg-primary/5 shadow-[0_0_8px_rgba(43,108,238,0.1)]"
+                      ? "border-primary/40 bg-primary/5 shadow-[0_0_8px_rgba(168,85,247,0.1)]"
                       : "border-border-dark bg-card-dark hover:bg-card-hover"
                   }`}
                 >

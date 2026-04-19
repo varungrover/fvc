@@ -145,7 +145,7 @@ export default async function DashboardPage() {
               <h2 className="text-base font-bold text-white">Recent Enrollments</h2>
               <Link
                 href="/admin/students"
-                className="text-xs text-primary hover:text-blue-400 font-medium transition-colors"
+                className="text-xs text-primary hover:text-purple-300 font-medium transition-colors"
               >
                 View all →
               </Link>
@@ -186,7 +186,7 @@ export default async function DashboardPage() {
               <h2 className="text-base font-bold text-white">Active Courses</h2>
               <Link
                 href="/admin/courses"
-                className="text-xs text-primary hover:text-blue-400 font-medium transition-colors"
+                className="text-xs text-primary hover:text-purple-300 font-medium transition-colors"
               >
                 Manage →
               </Link>
@@ -228,7 +228,7 @@ export default async function DashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <Link
               href="/admin/courses"
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary hover:bg-blue-600 text-white text-sm font-medium transition-all duration-200 shadow-[0_0_10px_rgba(43,108,238,0.2)]"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary hover:bg-purple-600 text-white text-sm font-medium transition-all duration-200 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
             >
               <span className="material-icons-round text-xl">add_circle</span>
               Create Course
@@ -340,7 +340,7 @@ export default async function DashboardPage() {
           <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
               <h2 className="text-base font-bold text-white">Today&apos;s Sessions</h2>
-              <Link href="/coach/schedule" className="text-xs text-primary hover:text-blue-400">View schedule →</Link>
+              <Link href="/coach/schedule" className="text-xs text-primary hover:text-purple-300">View schedule →</Link>
             </div>
             {!todaySessions || todaySessions.length === 0 ? (
               <div className="px-5 py-10 text-center text-slate-500 text-sm">No sessions today</div>
@@ -355,7 +355,7 @@ export default async function DashboardPage() {
                       </div>
                       <Link
                         href={`/coach/attendance?session=${s.id}`}
-                        className="text-xs font-medium text-primary hover:text-blue-400 flex items-center gap-1"
+                        className="text-xs font-medium text-primary hover:text-purple-300 flex items-center gap-1"
                       >
                         <span className="material-icons-round text-sm">how_to_reg</span>
                         Attendance
@@ -512,7 +512,7 @@ export default async function DashboardPage() {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-bold text-white">Children</h2>
-            <Link href="/parent/children" className="text-xs text-primary hover:text-blue-400">Manage →</Link>
+            <Link href="/parent/children" className="text-xs text-primary hover:text-purple-300">Manage →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {(children ?? []).map((child: any) => {
@@ -538,7 +538,7 @@ export default async function DashboardPage() {
                   </div>
                   <Link
                     href={`/parent/progress/${child.id}`}
-                    className="mt-3 text-xs text-primary hover:text-blue-400 flex items-center gap-1"
+                    className="mt-3 text-xs text-primary hover:text-purple-300 flex items-center gap-1"
                   >
                     <span className="material-icons-round text-[14px]">insights</span>
                     View progress
@@ -561,7 +561,7 @@ export default async function DashboardPage() {
           <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
               <h2 className="text-base font-bold text-white">Upcoming Sessions</h2>
-              <Link href="/parent/enrollments" className="text-xs text-primary hover:text-blue-400">All →</Link>
+              <Link href="/parent/enrollments" className="text-xs text-primary hover:text-purple-300">All →</Link>
             </div>
             {!upcomingSessions || upcomingSessions.length === 0 ? (
               <div className="px-5 py-8 text-center text-slate-500 text-sm">No sessions this week</div>
@@ -576,7 +576,7 @@ export default async function DashboardPage() {
                       </div>
                       <Link
                         href="/student/checkin"
-                        className="text-xs text-primary hover:text-blue-400 flex items-center gap-0.5 mt-0.5"
+                        className="text-xs text-primary hover:text-purple-300 flex items-center gap-0.5 mt-0.5"
                       >
                         <span className="material-icons-round text-[13px]">how_to_reg</span>
                         Check in
@@ -592,7 +592,7 @@ export default async function DashboardPage() {
           <div className="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-border-dark flex items-center justify-between">
               <h2 className="text-base font-bold text-white">Upcoming Events</h2>
-              <Link href="/events" className="text-xs text-primary hover:text-blue-400">See all →</Link>
+              <Link href="/events" className="text-xs text-primary hover:text-purple-300">See all →</Link>
             </div>
             {!events || events.length === 0 ? (
               <div className="px-5 py-8 text-center text-slate-500 text-sm">No upcoming events</div>
@@ -607,7 +607,7 @@ export default async function DashboardPage() {
                       <p className="text-sm font-medium text-white">{e.title}</p>
                       <p className="text-xs text-slate-500 capitalize">{e.type.replace("_", " ")} · {e.price > 0 ? `$${e.price}` : "Free"}</p>
                     </div>
-                    <Link href="/events" className="text-xs text-primary hover:text-blue-400">RSVP</Link>
+                    <Link href="/events" className="text-xs text-primary hover:text-purple-300">RSVP</Link>
                   </div>
                 ))}
               </div>

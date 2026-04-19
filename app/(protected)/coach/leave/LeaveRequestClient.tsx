@@ -62,7 +62,7 @@ export default function LeaveRequestClient({
         <h2 className="text-white font-bold">Your Leave History</h2>
         <button
           onClick={() => setShowForm(true)}
-          className="px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors shadow-[0_0_10px_rgba(43,108,238,0.2)]"
+          className="px-4 py-2 bg-primary hover:bg-purple-600 text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors shadow-[0_0_10px_rgba(168,85,247,0.2)]"
         >
           <span className="material-icons-round text-[18px]">add</span>
           New Leave Request
@@ -109,7 +109,7 @@ export default function LeaveRequestClient({
             <button
               type="submit"
               disabled={loading || !formData.start_date || !formData.end_date}
-              className="bg-primary hover:bg-blue-600 disabled:opacity-50 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
+              className="bg-primary hover:bg-purple-600 disabled:opacity-50 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
             >
               {loading ? "Submitting..." : "Submit request"}
             </button>

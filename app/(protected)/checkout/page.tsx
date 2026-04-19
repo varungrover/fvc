@@ -27,7 +27,7 @@ export default async function CheckoutPage({
           </p>
           <a
             href="/courses"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all mt-2"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg text-sm transition-all mt-2"
           >
             Browse courses
           </a>

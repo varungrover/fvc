@@ -238,7 +238,7 @@ export default function CheckInClient({
                     ? "bg-surface-dark text-slate-600 cursor-not-allowed"
                     : sessionStatus === "active"
                     ? "bg-success hover:bg-emerald-600 text-white shadow-[0_0_12px_rgba(16,185,129,0.2)]"
-                    : "bg-primary hover:bg-blue-600 text-white shadow-[0_0_10px_rgba(43,108,238,0.2)]"
+                    : "bg-primary hover:bg-purple-600 text-white shadow-[0_0_10px_rgba(168,85,247,0.2)]"
                 }`}
               >
                 {isLoadingThis ? (

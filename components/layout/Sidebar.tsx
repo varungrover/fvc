@@ -89,7 +89,7 @@ export default function Sidebar({ profile }: { profile: Profile }) {
     <aside className="w-64 bg-sidebar-dark border-r border-border-dark flex flex-col flex-shrink-0">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-border-dark">
-        <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-[0_0_12px_rgba(43,108,238,0.25)] flex-shrink-0">
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center shadow-[0_0_12px_rgba(168,85,247,0.35)] flex-shrink-0" style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
           <span className="text-white text-lg">♟</span>
         </div>
         <div>

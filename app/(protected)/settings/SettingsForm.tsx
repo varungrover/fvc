@@ -126,7 +126,7 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
 
         <button
           type="submit" disabled={profileLoading}
-          className="bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-2.5 px-5 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200 text-sm"
+          className="bg-primary hover:bg-purple-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-2.5 px-5 rounded-lg shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200 text-sm"
         >
           {profileLoading ? "Saving…" : "Save changes"}
         </button>
@@ -166,7 +166,7 @@ export default function SettingsForm({ profile }: { profile: Profile }) {
 
         <button
           type="submit" disabled={passwordLoading}
-          className="bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-2.5 px-5 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200 text-sm"
+          className="bg-primary hover:bg-purple-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-2.5 px-5 rounded-lg shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200 text-sm"
         >
           {passwordLoading ? "Updating…" : "Update password"}
         </button>

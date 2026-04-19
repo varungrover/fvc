@@ -63,7 +63,7 @@ export default function CoachScheduleClient({ sessions }: { sessions: any[] }) {
         </button>
         <button
           onClick={() => setWeekOffset(0)}
-          className="text-xs text-primary hover:text-blue-400 font-medium transition-colors ml-2"
+          className="text-xs text-primary hover:text-purple-300 font-medium transition-colors ml-2"
         >
           Today
         </button>

@@ -22,7 +22,7 @@ export default async function ChildrenPage() {
         </div>
         <Link
           href="/parent/children/add"
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg shadow-[0_0_10px_rgba(43,108,238,0.2)] transition-all duration-200 text-sm"
+          className="flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-4 rounded-lg shadow-[0_0_10px_rgba(168,85,247,0.2)] transition-all duration-200 text-sm"
         >
           <span className="material-icons-round text-[18px]">add</span>
           Add Child
@@ -36,7 +36,7 @@ export default async function ChildrenPage() {
           <p className="text-slate-500 text-sm mt-1 mb-5">Add a child profile to get started with enrollments.</p>
           <Link
             href="/parent/children/add"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 text-sm"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-purple-600 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 text-sm"
           >
             <span className="material-icons-round text-[18px]">add</span>
             Add your first child
@@ -68,7 +68,7 @@ export default async function ChildrenPage() {
                 )}
                 <Link
                   href={`/parent/children/${student.id}`}
-                  className="flex items-center gap-1.5 text-sm text-primary hover:text-blue-400 font-medium transition-colors"
+                  className="flex items-center gap-1.5 text-sm text-primary hover:text-purple-300 font-medium transition-colors"
                 >
                   <span className="material-icons-round text-[16px]">edit</span>
                   Edit profile
