@@ -1,0 +1,163 @@
+Fraser Valley Chess Academy User Stories
+ User & Account Management (Features)
+ Customer Profile
+As a customer, I want to create my profile. For enrollment/ registration, customers must provide the following information: Customer Full name, Customer DOB (mm/dd/yyyy), Customer email, Cust. phone number and emergency contact, Cust gender, credit/ debit card info, CFC ID (optional). 
+As a Customer, I want to create and manage multiple member profiles under one account including self/ adults (member profile under a customer account)  in a direct family.
+As a customer, I can add unique email IDs of other family members and children if I wish to create individual learning profiles. Please refer to the Member (actor) section down below. Each unique student profile must be maintained separately with following details: First and Last Name, DOB of Student profile, Email Id (Optional), CFC Id (Optional), Grade (Optional), T-Shirt Size, Preferred Color. In some situations, a Registering profile is for an adult and the system should have the ability to create a member profile for Self by clicking an option like - “Register me as a member as well”. Basic contact info should be copied to the member profile from Customer profile in that case. 
+As a Customer, I want to view my members’ progress, attendance, and achievements. 
+As a customer, I want to receive notifications for missed classes or failed payments. Any upcoming events or classes, events and Camps should be visible on the dashboard. (Later Phases: :  parents meet should display on my dashboard. RSVP option for parents meeting along with ability to reschedule/ book feedback time with Branch Manager/ Tutor.)
+As a customer, I want access to invoices, payment history, and receipts. Be able to add a credit or debit card to my account and choose one which is default for monthly payments.
+I should be able to purchase new courses for a member of my account. I will be ready to pay $25 (Configurable by admin) as a member setup fee only the first time I purchase a course for a member of my family. This is applicable only to the first purchase of every member. For Courses with multiple frequencies, I should be able to choose Location and then Planet (Chess/ Maths/ English Etc), Choose Level (Like Grade-7, Grade 8 etc) and then choose frequency of class (Weekly one or two or three classes) and then pick the weekly available schedule for the course. Also, I would like to associate this to one of my member profiles. 
+I should be able to see all upcoming events and tournaments and be able to register them for a specific child profile at a button click. While registering for an event or camp, I will pick the member profile for which the purchase is made. Only custom data points for specific events should be displayed/ asked to me to make the booking of events seamless. 
+If I am a new customer, I want to book a free trial at my preferred location and choose from a selection of time slots. Parents should be able to see available space in each batch, like a count. 
+Once entered, all personal identifier information including family members (other than name) should be masked, especially DOB, email address, gender, billing address, phone number etc. 
+To see or edit PI information, customers must use 2FA and it must be set with a phone number registered on the profile. 
+ Coach / Tutor
+As a coach, I want a dashboard showing my assigned students and sessions. Upon clicking on the widget, it should take me into the detailed view with each student name, course, last session topic covered, homeworks done etc (Later Phase: link to their LMS account and chess performance report). 
+As a coach, I should be able to enter topics covered, homeworks done etc in each class attended by the member.
+As a coach, I want to mark attendance and add notes per session. (Later Phases: Notes should be having specific areas like: topics covered in class, unlocking or rewarding badges for good performance, messages to parents in private or common/ bulk. )
+As a coach, I want to manage make-up classes and trials. Being able to add trial feedback and recommend the right batch. Able to complete a trial assessment report with pre-filled fields: a textual field, an attachment and I should be able to recommend batches for the specific course. Upon submission, the same should be visible by the admin or manager and on the parent dashboard to sign up with ease for the recommended batch. 
+As a Coach, I can login to LMS Portal and create courses: “Planet-> Level-> Module-> Topic” is the hierarchy. I should be able to create quizzes with right answers at topics and module level so that students can go through the course and attempt them and get their evaluation done.
+As a Coach, I should be able to create a course using an editor in the application or attach a PDF or provide a You Tube Link. If You Tube link is provided, it should be opened as a new tab in the browser.
+As a Coach, I should be able to mention my availability and leaves or absences for next 6 months. Availability calendar should be by days of the week and should be able to carry over automatically if leaves are not applied.
+Management (Francisor):
+As a management member, I want to create Franchisor Admin Profiles including my own Id. All Franchisor Admin privileges should be available to me.
+As a management member, I want to see price change requests from Franchisee ownerships and approve them.
+As a Management member, I want to see revenue by all Ownerships and all locations.
+As a Management member, I want to see revenue by all planets and levels.
+As a Management member, I want to review customer registration efforts by course, ownerships and locations  which are failing because of non available slots.
+Admin  (Francisor)
+As an admin, I want to create Planets (e.g. Chess/ Maths/ English)  for my application.
+As an admin, I want to create Levels under each planet(e.g. PP/RR etc for Chess. Grade 1-10 for Math etc).
+As a Franchisor Admin, I should be able to enter the Holiday Calendar of Corporate locations.
+Courses will be defined at the “Level” of each planet. The system should allow me to attach a course image to be displayed in the Website for Sale and variants with Pricing. E.g. Maths -> Grade 10 -> Weekly once for $159 ; Maths -> Grade 10 -> Weekly twice for $199; Maths -> Grade 10 -> Weekly thrice for $229. I should be able to capture if a variant is associated with weekly frequency and how many times.
+As an admin, I want to define the ownership and tag them as either corporate or Franchisee. Field I need to capture, full name, email Id and Ownership Type and locations associated with the ownership. This should result in a Management Account and email should be sent out with a temporary password..
+As an admin, I want to define the locations under each ownership. For this, I want to provide a location name and provide an Address in the Format of Address Line 1, Address Line 2, City, Country, Province or State, Zip or Postal Code
+As an Admin, I want to create and manage customer accounts. The process should be the same as that of the customer. Please refer to the Customer Section for a list of fields.
+As an Admin, I want to create a Member for an existing Account. The list of fields remains the same as mentioned in the Customer Section.
+As an Admin, I want to register a course for a member and hence a Customer Account. Payment can be through credit card and cash. The course registration process will be the same as that of the customer. It will be a preferred option for me to enter the CC Details in a web page of stripe rather than a learning provider.
+As an Admin, I want to associate courses (Planet -> Level)  to only corporate locations and define their Schedule. A sample option is here:
+As an admin, I want to see  customers who have missed payments by month for corporate locations.
+As an Admin, I want to Change Customer Credit Card Information on Profile and Charge the same for missed payments.
+As an admin, I want to assign coaches to sessions by locations. This should be workable for all coaches and mentors of Corporate. A staff Roaster needs to be created for the next 2 weeks at least 1 week in advance. Roasters should account for holidays of durable and any staff availability and absence entered by them.
+As an Admin, I should be able to mention the percentages of multi planet discounts. E.g. what happens when a customer purchases 2 planets or 3 planets or 4 planets and so on.
+As an Admin, I should be able to create an account for each mentor of corporate and send them an email of account creation with a temporary password which needs to be set on the first login.
+Management (Franchisee):
+As a management member, I want to create Franchisee Admin Profiles including my own Id. All Franchisee Admin privileges should be available to me.
+As a management member, I want to submit price change requests to Franchisor ownerships and see the progress of the same.
+As a Management member, I want to see revenue by all  locations under me.
+As a Management member, I want to see revenue by all planets and levels.
+As a Management member, I want to review customer registration efforts by course locations  which are failing because of non available slots.
+ Admin (Franchisee ownership based)
+As an admin, I want to create and manage  users by ownership of my franchisee. The process should be the same as that of the customer. Please refer to the Customer Section for a list of fields.
+As an Admin, I want to choose Planets and Courses applicable to each location of my ownership. This should be workable for all coaches and mentors under my Franchisee Ownership. A staff Roaster needs to be created for the next 2 weeks at least 1 week in advance. Roasters should account for holidays of that duration and any staff availability and absence entered by them.
+I want to create course schedules for each location under my Franchisee Ownership.
+As a Franchisee Admin, I should be able to enter the Holiday Calendar of Corporate locations.
+As an Admin, I should be able to create an account for each mentor of franchisee ownership and send them an email of account creation with a temporary password which needs to be set on the first login.
+As an admin, I want to request price changes through the Franchisor. The request form should show the franchisor rate, the rate my ownership is requesting and reason for Change. Attachments should be allowed in the form.
+As an Admin, I want to raise tickets and issues related to IT and Non-IT. The system should capture Ownership name by default, choice of location (only if needed), a short description and category of IT vs Non IT.
+System (Actor):
+As a system, Charge CC of all customers as per registered courses.
+If a customer registers a course at a location, discounts should be calculated as per the discount rule of number of planets attended by the same member.
+Each dollar spent by a customer should give me 1 loyalty point and the same should be displayed in the customer profile.
+If a customer de-registers a course, it should be only accepted on 15 days advance notice.
+As a system, I will create an expected attendance sheet for each day based on Member registration of the course and assign them to each mentor of the course as per the Roaster of the location. This will help in easy attendance tracking 
+Question
+Area
+Decision
+Should members have their own login to access the LMS portal?
+Member login
+Parent only
+What region, currency, and privacy regime should the system support at launch?
+Region & currency
+Canada now (CAD, GST/PST/HST, PIPEDA); US later
+Which payment processor should the system integrate with?
+Payments
+Stripe (confirmed)
+How do the two course hierarchies (sales vs. LMS content) relate?
+Course hierarchy
+Same Levels; purchase auto-unlocks LMS content
+When should the card be charged each recurring cycle?
+Billing cycle
+1st of calendar month, prorated first month
+How should the 15-day cancellation notice translate into operations?
+Cancellation rule
+No preference — recommend: stop next cycle's charge if 15+ days before next bill
+Which roles can view full PII (after 2FA)?
+PII visibility
+Customer + Franchisor Admin + Franchisee Admin (coaches blocked)
+What is the free trial policy for new customers?
+Trial policy
+One free trial per member per Planet
+When should 2FA be required, and via which channel(s)?
+2FA model
+Every login; SMS or authenticator app
+How does the $25 member setup fee apply across Planets?
+Setup fee scope
+Per member per Planet
+How is the multi-planet discount applied?
+Multi-planet discount
+Per member, recomputed monthly
+How can loyalty points be redeemed?
+Loyalty redemption
+Earn-and-display only at launch; redemption deferred
+Where is batch capacity (max students per class) set?
+Batch capacity
+Per individual batch slot
+How does scheduling work for multi-frequency variants?
+Multi-frequency
+Customer picks N slots at checkout
+What is the make-up class policy?
+Make-ups
+Unlimited; expire 30 days from missed class
+What happens when a coach is absent and no substitute is available?
+Coach absence
+Admin reschedules within 7 days
+How are quizzes scored, and how many retakes are allowed?
+Quiz scoring
+Coach-configurable per quiz
+Does the LMS gate progression between Modules?
+Progression
+Yes — must pass module quiz to unlock next
+How is a quiz attempt attributed to a specific member?
+Quiz attribution
+Per-quiz member pick
+What is the publish workflow for LMS content authored by a coach?
+Publish flow
+Draft → Franchisor Admin approves globally
+Which notification channels should the system use?
+Notifications
+Email only at launch; SMS in later phase (SMS retained for 2FA codes)
+What channel(s) should the system support at launch?
+Channels
+Responsive web only
+What languages and accessibility level are required at launch?
+I18n & a11y
+No preference — recommend: English only, WCAG 2.1 AA, i18n-ready code
+How should coach ↔ parent messaging work?
+Coach messaging
+No preference — recommend: defer to later phase; session notes one-way for now
+Which dimensions should the management revenue dashboard support?
+Reports
+Full pivot: Time × Ownership × Location × Planet × Level
+What export formats should reports support?
+Exports
+CSV only
+What workflow states should the price-change request go through?
+Price-change states
+Submitted → Under Review → Approved/Rejected
+When does an approved price change take effect?
+Price effective date
+No preference — recommend: 1st of next calendar month ≥30 days from approval
+Who manages which holiday calendar?
+Holiday calendar
+Each tier owns its own scope (Franchisor=corporate; Franchisee=their own)
+How should the CFC ID field be validated?
+CFC ID
+No preference — recommend: format check only; optional except chess events
+What is the ticket workflow for IT / Non-IT issues?
+Tickets
+No preference — recommend: 48h first response, category-routed, visible to submitter + franchisor
+How should custom fields for events / tournaments be modeled?
+Event fields
+Out of scope for v1 — small fixed set at launch (name, t-shirt, emergency contact, optional CFC ID)

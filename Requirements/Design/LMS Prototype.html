@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Learning Planet — LMS Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { height: 100%; }
+  body {
+    font-family: 'Nunito Sans', system-ui, sans-serif;
+    background: #f4f6fa;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
+  input, select, textarea, button { font-family: 'Nunito Sans', system-ui, sans-serif; }
+  select option { background: #0d1b3e; color: #fff; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="components/shared.jsx"></script>
+<script type="text/babel" src="components/customer.jsx"></script>
+<script type="text/babel" src="components/coach.jsx"></script>
+<script type="text/babel" src="components/admin.jsx"></script>
+<script type="text/babel" src="components/coaches-screen.jsx"></script>
+<script type="text/babel" src="components/roster-screen.jsx"></script>
+<script type="text/babel" src="components/locations-screen.jsx"></script>
+<script type="text/babel" src="components/lms-management.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#0a9b8a",
+  "navyColor": "#0d1b3e",
+  "ambientBg": "#f4f6fa",
+  "cardRadius": 12,
+  "density": "comfortable"
+}/*EDITMODE-END*/;
+
+const ROLES = [
+  { id: 'customer', label: 'Parent / Customer', user: 'Raj Sharma' },
+  { id: 'coach',    label: 'Coach / Tutor',     user: 'David Chen' },
+  { id: 'admin',    label: 'Admin (Corporate)',  user: 'Admin User' },
+  { id: 'mgmt',     label: 'Management (Franchisor)', user: 'Mgmt User' },
+];
+
+const CUSTOMER_NAV = [
+  { id: 'dashboard', label: 'Dashboard',    icon: '🏠' },
+  { id: 'members',   label: 'My Members',   icon: '👨‍👩‍👧' },
+  { id: 'enroll',    label: 'Enroll',       icon: '➕' },
+  { id: 'lms',       label: 'Learning Portal', icon: '📖' },
+  { id: 'payments',  label: 'Billing',      icon: '💳' },
+  { id: 'divider1',  divider: true },
+  { id: 'settings',  label: 'Settings',     icon: '⚙️' },
+];
+
+const COACH_NAV = [
+  { id: 'dashboard', label: 'Dashboard',    icon: '🏠' },
+  { id: 'sessions',  label: 'Sessions',     icon: '📋' },
+  { id: 'students',  label: 'My Students',  icon: '👥' },
+  { id: 'lms',       label: 'LMS Content',  icon: '📚' },
+  { id: 'divider1',  divider: true },
+  { id: 'availability', label: 'Availability', icon: '📅' },
+];
+
+const ADMIN_NAV = [
+  { id: 'dashboard', label: 'Dashboard',    icon: '🏠' },
+  { id: 'locations', label: 'Locations',    icon: '📍' },
+  { id: 'coaches',   label: 'Coaches',      icon: '👨‍🏫' },
+  { id: 'customers', label: 'Customers',    icon: '👥' },
+  { id: 'roster',    label: 'Staff Roster', icon: '📅' },
+  { id: 'payments',  label: 'Payments',     icon: '💳' },
+  { id: 'divider1',  divider: true },
+  { id: 'discounts', label: 'Discounts',    icon: '🏷️' },
+  { id: 'holidays',  label: 'Holidays',     icon: '🗓️' },
+  { id: 'planets',   label: 'Planets',      icon: '🌍' },
+];
+
+const MGMT_NAV = [
+  { id: 'dashboard', label: 'Dashboard',    icon: '🏠' },
+  { id: 'revenue',   label: 'Revenue',      icon: '📊' },
+  { id: 'pricing',   label: 'Pricing',      icon: '💲' },
+  { id: 'locations', label: 'Locations',    icon: '📍' },
+  { id: 'divider1',  divider: true },
+  { id: 'reports',   label: 'Reports',      icon: '📈' },
+];
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [role, setRole] = React.useState('customer');
+  const [screen, setScreen] = React.useState('dashboard');
+  const [collapsed, setCollapsed] = React.useState(false);
+
+  const roleConfig = ROLES.find(r => r.id === role);
+
+  const navMap = {
+    customer: CUSTOMER_NAV,
+    coach:    COACH_NAV,
+    admin:    ADMIN_NAV,
+    mgmt:     MGMT_NAV,
+  };
+  const nav = navMap[role] || CUSTOMER_NAV;
+
+  // When role changes, reset to dashboard
+  const handleRoleSwitch = (newRole) => {
+    setRole(newRole);
+    setScreen('dashboard');
+  };
+
+  // Render the active screen
+  const renderScreen = () => {
+    if (role === 'customer') {
+      if (screen === 'dashboard')
+        return <CustomerDashboard onNavigate={setScreen} />;
+      if (screen === 'members')
+        return <MemberManagement />;
+      if (screen === 'enroll' || screen === 'enroll-event')
+        return <EnrollmentFlow onDone={() => setScreen('dashboard')} />;
+      if (screen === 'lms')
+        return <LMSPortal />;
+      if (screen === 'payments')
+        return <PaymentHistory />;
+    }
+    if (role === 'coach') {
+      return <CoachDashboard onNavigate={setScreen} />;
+    }
+    if (role === 'admin') {
+      if (screen === 'coaches') return <CoachesScreen />;
+      if (screen === 'roster') return <RosterScreen />;
+      if (screen === 'locations') return <LocationsScreen />;
+      return <AdminDashboard onNavigate={setScreen} />;
+    }
+    if (role === 'mgmt') {
+      return <ManagementDashboard />;
+    }
+    return (
+      <div style={{ padding: 40, textAlign: 'center', color: TLP.gray400 }}>
+        <div style={{ fontSize: 48, marginBottom: 12 }}>🚧</div>
+        <div style={{ fontSize: 16, fontWeight: 600 }}>Screen coming soon</div>
+      </div>
+    );
+  };
+
+  // Apply tweaks to CSS vars
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--accent', tweaks.accentColor);
+    document.documentElement.style.setProperty('--navy', tweaks.navyColor);
+    document.documentElement.style.setProperty('--bg', tweaks.ambientBg);
+    document.body.style.background = tweaks.ambientBg;
+  }, [tweaks]);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+      <TopBar
+        role={role}
+        user={roleConfig?.user}
+        onRoleSwitch={handleRoleSwitch}
+        roles={ROLES}
+      />
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        {/* Sidebar */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          <Sidebar items={nav} active={screen} onSelect={setScreen} collapsed={collapsed} />
+          {/* Collapse toggle */}
+          <button onClick={() => setCollapsed(c => !c)} style={{
+            position: 'absolute', bottom: 16, right: collapsed ? '50%' : 12,
+            transform: collapsed ? 'translateX(50%)' : 'none',
+            background: 'rgba(255,255,255,0.12)', border: 'none', color: 'rgba(255,255,255,0.6)',
+            borderRadius: 6, width: 28, height: 28, cursor: 'pointer', fontSize: 12,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'all 0.2s',
+          }}>{collapsed ? '→' : '←'}</button>
+        </div>
+
+        {/* Main content */}
+        <main style={{ flex: 1, overflow: 'auto', background: tweaks.ambientBg }}>
+          {renderScreen()}
+        </main>
+      </div>
+
+      {/* Tweaks Panel */}
+      <TweaksPanel>
+        <TweakSection label="Brand Colors" />
+        <TweakColor label="Primary Accent" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+        <TweakColor label="Navy / Sidebar" value={tweaks.navyColor} onChange={v => setTweak('navyColor', v)} />
+        <TweakColor label="Page Background" value={tweaks.ambientBg} onChange={v => setTweak('ambientBg', v)} />
+        <TweakSection label="Layout" />
+        <TweakSlider label="Card Radius" value={tweaks.cardRadius} min={0} max={24} step={2} unit="px" onChange={v => setTweak('cardRadius', v)} />
+        <TweakRadio label="Density" value={tweaks.density} options={['compact', 'comfortable', 'spacious']} onChange={v => setTweak('density', v)} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
