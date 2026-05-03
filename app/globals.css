@@ -1,1 +1,86 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-nunito-sans), system-ui, -apple-system, sans-serif;
+
+  /* Brand */
+  --color-navy: #0d1b3e;
+  --color-navy-light: #1a2d5a;
+  --color-teal: #0a9b8a;
+  --color-teal-light: #e6f7f5;
+  --color-amber: #f5a623;
+  --color-amber-light: #fef3dc;
+
+  /* Semantic */
+  --color-success: #38a169;
+  --color-success-light: #f0fff4;
+  --color-danger: #e53e3e;
+  --color-danger-light: #fff5f5;
+  --color-info: #3182ce;
+  --color-info-light: #ebf8ff;
+  --color-warning: #f5a623;
+  --color-warning-light: #fef3dc;
+
+  /* Planet accent palette */
+  --color-planet-chess: #0a9b8a;
+  --color-planet-chess-bg: #e6f7f5;
+  --color-planet-math: #3182ce;
+  --color-planet-math-bg: #ebf8ff;
+  --color-planet-english: #38a169;
+  --color-planet-english-bg: #f0fff4;
+  --color-planet-finance: #f5a623;
+  --color-planet-finance-bg: #fef3dc;
+  --color-planet-arts: #805ad5;
+  --color-planet-arts-bg: #faf5ff;
+  --color-planet-business: #e67e22;
+  --color-planet-business-bg: #fef9f0;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-bg: #f4f6fa;
+
+  /* Radius */
+  --radius-card: 12px;
+  --radius-modal: 14px;
+  --radius-control: 8px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+button {
+  font-family: inherit;
+}
