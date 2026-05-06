@@ -19,7 +19,7 @@ const ROLE_LANDING: Record<Role, string> = {
 }
 
 const PUBLIC_PATHS = ['/', '/login']
-const PUBLIC_PREFIXES = ['/t/', '/api/auth/login']
+const PUBLIC_PREFIXES = ['/t/', '/api/auth/login', '/api/public/']
 
 export function getAllowedPrefixForRole(role: Role): string {
   return ROLE_PREFIX[role]
