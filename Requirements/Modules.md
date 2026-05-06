@@ -24,15 +24,14 @@ least schema-complete and API-ready.
 5. Scheduling & Batches           (depends on 3)
 6. Coach & Staff                 (depends on 2, 3)
 7. Customer & Member             (depends on 2)
-8. Enrollment & Billing          (depends on 4, 5, 6, 7)
+8. Enrollment & Billing          (depends on 3, 5, 6, 7)
 9. Roster                        (depends on 5, 6)
 10. Attendance, Sessions & Trials (depends on 5, 6, 7, 8, 9)
-13. LMS & Content                (depends on 4, 7)
+13. LMS & Content                (depends on 3, 7)
 15. Notifications                (depends on 8, 10)
 16. Reporting & Analytics        (depends on 8, 10)
-17. Price Change Requests        (depends on 2, 3, 4)
-18. Support Tickets              (depends on 2)
-19. Public Storefront            (depends on 4)
+17. Price Change Requests & Support Tickets (depends on 2, 3)
+19. Public Storefront            (depends on 3)
 ```
 
 ---
@@ -644,15 +643,17 @@ All data modules (8, 10) must be complete before reports have real data.
 
 ---
 
-## Module 17 — Price Change Requests
+## Module 17 — Price Change Requests & Support Tickets
 
-**Domain:** Franchisee locations requesting price overrides; Franchisor Admin review and
-approval; approved prices written to `location_course_offerings`.
+**Domain:** Two franchisee-initiated workflows with the same role pattern (XA/XM submit →
+FA/FM action): price override requests with franchisor approval and price write-back, and
+internal IT/non-IT issue tracking.
 
 ### Database tables
 | Table | Purpose |
 |---|---|
 | `price_change_requests` | `requesting_location_id`, `product_variant_id`, requested price, reason, status, attachments |
+| `support_tickets` | `ownership_id`, optional `location_id`, category (IT/Non-IT), description, status |
 
 ### API routes
 | Method | Path | Roles |
@@ -661,39 +662,6 @@ approval; approved prices written to `location_course_offerings`.
 | POST | `/api/price-requests` | XA, XM |
 | POST | `/api/price-requests/:id/attachments` | XA, XM |
 | PATCH | `/api/price-requests/:id/review` | FA, FM |
-
-### UI pages
-| Page | Role |
-|---|---|
-| Franchisee Admin → Price Requests (submit + track) | XA |
-| Management → Pricing (Franchisor: approve/reject; Franchisee: submit/track) | FM, XM |
-
-### Role access summary
-XA/XM submit requests for their locations. FA/FM review all requests and approve or reject.
-
-### Dependencies
-- Module 2 (Ownerships) — request scope
-- Module 3 (Catalog, Locations & Offerings) — approval writes the new price to `location_course_offerings`; `product_variant_id` reference
-
-### Notes
-- Schema gap: `requesting_location_id` (SQL) vs. `requestingOwnershipId` (TypeScript). The SQL design is correct — fix TypeScript (see gaps.md §3b) before wiring this module.
-- On approval, server should immediately PATCH the relevant `location_course_offerings` row with the new price. Trigger a notification to the requesting XA.
-- Attachment storage: Supabase Storage; save URL in the request record.
-
----
-
-## Module 18 — Support Tickets
-
-**Domain:** Internal IT and non-IT issue tracking raised by franchise staff.
-
-### Database tables
-| Table | Purpose |
-|---|---|
-| `support_tickets` | `ownership_id`, optional `location_id`, category (IT/Non-IT), description, status |
-
-### API routes
-| Method | Path | Roles |
-|---|---|---|
 | GET | `/api/tickets?ownershipId=` | FA, XA, FM, XM |
 | POST | `/api/tickets` | FA, XA, FM, XM |
 | PATCH | `/api/tickets/:id` | FA, FM |
@@ -701,17 +669,23 @@ XA/XM submit requests for their locations. FA/FM review all requests and approve
 ### UI pages
 | Page | Role |
 |---|---|
+| Franchisee Admin → Price Requests (submit + track) | XA |
 | Franchisee Admin → Tickets (raise + track) | XA |
+| Management → Pricing (Franchisor: approve/reject; Franchisee: submit/track) | FM, XM |
 
 ### Role access summary
-XA/XM raise tickets for their ownership. FA/FM view all tickets and update status.
+XA/XM submit price requests and raise tickets. FA/FM review price requests and approve or reject; FA/FM view all tickets and update status.
 
 ### Dependencies
-- Module 2 (Ownerships) — ticket scoped to an ownership
+- Module 2 (Ownerships) — both resources scoped to an ownership
+- Module 3 (Catalog, Locations & Offerings) — price request approval writes to `location_course_offerings`; `product_variant_id` reference
 
 ### Notes
-- Simple CRUD at launch — no assignment, SLA tracking, or email threading needed.
-- `ownership_id` is auto-populated from the JWT claim; the submitter picks an optional location.
+- Schema gap: `requesting_location_id` (SQL) vs. `requestingOwnershipId` (TypeScript). The SQL design is correct — fix TypeScript (see gaps.md §3b) before wiring price requests.
+- On price request approval, server should immediately PATCH the relevant `location_course_offerings` row with the new price and trigger a notification to the requesting XA.
+- Attachment storage: Supabase Storage; save URL in the request record.
+- Support tickets are simple CRUD at launch — no assignment, SLA tracking, or email threading needed.
+- `ownership_id` on tickets is auto-populated from the JWT claim; submitter picks an optional location.
 
 ---
 
@@ -721,7 +695,7 @@ XA/XM raise tickets for their ownership. FA/FM view all tickets and update statu
 events, and trial/enrollment CTAs.
 
 ### Database tables
-No owned tables — reads from Modules 3, 4.
+No owned tables — reads from Module 3.
 
 ### API routes
 | Method | Path | Roles |
