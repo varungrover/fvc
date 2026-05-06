@@ -2,8 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import {
   listLocations,
   getLocation,
-  createLocation,
-  updateLocation,
 } from './locations'
 import type { SessionUser } from '@/lib/auth/types'
 

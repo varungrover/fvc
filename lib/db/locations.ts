@@ -16,6 +16,7 @@ export interface LocationRow {
   updated_at: string
 }
 
+// Named GLOBAL_ROLES (not FRANCHISOR_ROLES as in ownerships.ts) — same values, clearer intent.
 const GLOBAL_ROLES = new Set(['franchisor_admin', 'franchisor_mgmt'])
 
 function isGlobalRole(session: SessionUser): boolean {
@@ -49,6 +50,8 @@ export async function getLocation(
   if (error || !data) return null
 
   const row = data as LocationRow
+  // We need the row to know its ownership_id — guard-first pre-check isn't possible here.
+  // RLS enforces scope at the DB layer; this check is defence-in-depth at the app layer.
   if (!isGlobalRole(session) && row.ownership_id !== session.ownershipId) return null
 
   return row
@@ -108,6 +111,8 @@ export async function updateLocation(
   const cleanPatch = Object.fromEntries(
     Object.entries(patch).filter(([, v]) => v !== undefined),
   )
+
+  if (Object.keys(cleanPatch).length === 0) return null
 
   const { data, error } = await supabase
     .from('locations')
