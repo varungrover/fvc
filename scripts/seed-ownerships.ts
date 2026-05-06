@@ -97,7 +97,7 @@ async function seed() {
       continue
     }
 
-    const user = users?.users.find((u) => u.email === email)
+    const user = (users?.users ?? []).find((u) => u.email === email)
     if (!user) {
       console.log(`  - skip  ${email} (user not found)`)
       continue
