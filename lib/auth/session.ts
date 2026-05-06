@@ -18,7 +18,7 @@ export async function getSession(): Promise<SessionUser | null> {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('full_name, must_change_password')
+    .select('full_name, must_reset_pw')
     .eq('id', user.id)
     .single()
 
@@ -28,6 +28,6 @@ export async function getSession(): Promise<SessionUser | null> {
     role: meta.role as Role,
     ownershipId: meta.ownership_id ?? null,
     fullName: profile?.full_name ?? '',
-    mustChangePassword: profile?.must_change_password ?? meta.must_change_password ?? false,
+    mustChangePassword: profile?.must_reset_pw ?? meta.must_change_password ?? false,
   }
 }

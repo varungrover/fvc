@@ -44,8 +44,9 @@ export async function proxy(request: NextRequest) {
     // If logged-in user hits /login, redirect to their landing
     if (pathname === '/login' && user) {
       const role = user.app_metadata?.role as Role | undefined
-      if (role) {
-        return NextResponse.redirect(new URL(getLandingForRole(role), request.url))
+      const landing = role ? getLandingForRole(role) : undefined
+      if (landing) {
+        return NextResponse.redirect(new URL(landing, request.url))
       }
     }
     return supabaseResponse
@@ -69,8 +70,9 @@ export async function proxy(request: NextRequest) {
   // Wrong role prefix — redirect to correct landing
   if (role) {
     const allowed = getAllowedPrefixForRole(role)
-    if (!pathname.startsWith(allowed) && pathname !== '/change-password') {
-      return NextResponse.redirect(new URL(getLandingForRole(role), request.url))
+    const landing = getLandingForRole(role)
+    if (allowed && landing && !pathname.startsWith(allowed) && pathname !== '/change-password') {
+      return NextResponse.redirect(new URL(landing, request.url))
     }
   }
 

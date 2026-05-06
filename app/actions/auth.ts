@@ -68,7 +68,7 @@ export async function changePasswordAction(
   })
 
   // Also update profiles table
-  await supabase.from('profiles').update({ must_change_password: false }).eq('id', user.id)
+  await supabase.from('profiles').update({ must_reset_pw: false }).eq('id', user.id)
 
   const role = user.app_metadata?.role as Role | undefined
   redirect(role ? getLandingForRole(role) : '/login')
