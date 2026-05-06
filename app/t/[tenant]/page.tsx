@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TENANT_BY_SLUG } from "@/lib/mock/tenants";
 import { LOCATIONS_BY_TENANT } from "@/lib/mock/locations";
 import { PLANETS } from "@/lib/mock/planets";
 import { LEVELS_BY_PLANET } from "@/lib/mock/levels";
@@ -15,13 +14,16 @@ export default async function TenantStorefront({
   params: Promise<{ tenant: string }>;
 }) {
   const { tenant: slug } = await params;
-  const tenantData = TENANT_BY_SLUG[slug];
-
-  if (!tenantData) notFound();
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/api/public/ownerships?slug=${slug}`,
+    { next: { revalidate: 60 } },
+  )
+  if (!res.ok) notFound()
+  const tenantData = await res.json()
 
   const locations = LOCATIONS_BY_TENANT[tenantData.id] ?? [];
-  const primary = tenantData.brandPrimary;
-  const accent = tenantData.brandAccent;
+  const primary = tenantData.brand_primary;
+  const accent = tenantData.brand_accent;
 
   // Tint helpers derived from brand colors
   const primaryLight = primary + "1a"; // 10% opacity overlay
@@ -80,7 +82,7 @@ export default async function TenantStorefront({
                 letterSpacing: "-0.3px",
               }}
             >
-              {tenantData.fullName}
+              {tenantData.full_name}
             </span>
           </div>
 
@@ -183,7 +185,7 @@ export default async function TenantStorefront({
               marginBottom: 18,
             }}
           >
-            {tenantData.ownershipType === "corporate" ? "Learning Academy" : "Franchisee Academy"}
+            {tenantData.ownership_type === "corporate" ? "Learning Academy" : "Franchisee Academy"}
           </span>
 
           <h1
@@ -196,7 +198,7 @@ export default async function TenantStorefront({
               letterSpacing: "-1.5px",
             }}
           >
-            {tenantData.fullName}
+            {tenantData.full_name}
           </h1>
 
           {tenantData.tagline && (
@@ -806,7 +808,7 @@ export default async function TenantStorefront({
             }}
           >
             One free trial per member per subject. Sign in to book a time slot at
-            your nearest {tenantData.fullName} location.
+            your nearest {tenantData.full_name} location.
           </p>
           <div
             style={{
@@ -886,7 +888,7 @@ export default async function TenantStorefront({
             >
               🪐
             </div>
-            <span style={{ fontWeight: 700, color: TLP.gray300 }}>{tenantData.fullName}</span>
+            <span style={{ fontWeight: 700, color: TLP.gray300 }}>{tenantData.full_name}</span>
           </div>
           <div style={{ color: TLP.gray500, fontSize: 12 }}>
             Powered by{" "}
