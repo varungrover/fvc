@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
-    "seed:auth": "tsx scripts/seed-auth.ts"
+    "seed:auth": "tsx scripts/seed-auth.ts",
+    "seed:ownerships": "tsx scripts/seed-ownerships.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",
