@@ -27,8 +27,7 @@ least schema-complete and API-ready.
 7. Customer & Member             (depends on 2)
 8. Enrollment & Billing          (depends on 4, 5, 6, 7)
 9. Roster                        (depends on 5, 6)
-10. Attendance & Sessions        (depends on 6, 8, 9)
-11. Trials                       (depends on 5, 6, 7)
+10. Attendance, Sessions & Trials (depends on 5, 6, 7, 8, 9)
 13. LMS & Content                (depends on 4, 7)
 15. Notifications                (depends on 8, 10)
 16. Reporting & Analytics        (depends on 8, 10)
@@ -468,18 +467,20 @@ FA/XA create, edit, and publish rosters. CO reads their published assignments on
 
 ---
 
-## Module 10 — Attendance & Sessions
+## Module 10 — Attendance, Sessions & Trials
 
-**Domain:** Session-level tracking derived from roster assignments: marking attendance,
-recording session notes and per-member notes, makeup class management.
+**Domain:** Session-level tracking derived from roster assignments (marking attendance, session
+notes, makeup management) and the full trial lifecycle (booking, assessment, batch recommendation).
 
 ### Database tables
 | Table | Purpose |
 |---|---|
-| `roster_assignments` | Shared with Module 9; attendance is recorded against these rows |
-| `attendance` | Per-member attendance record for a session (`roster_assignment_id`, `member_id`, status) |
+| `roster_assignments` | Shared with Module 9; attendance and trial slots anchor here |
+| `attendance` | Per-member attendance record (`roster_assignment_id`, `member_id`, status) |
 | `session_notes` | Coach-level notes per session |
 | `member_session_notes` | Per-member private notes by coach |
+| `trials` | `member_id`, `batch_id`, `location_id`, status |
+| `trial_assessments` | Text feedback, attachment, recommended batch IDs |
 
 ### API routes
 | Method | Path | Roles |
@@ -493,46 +494,6 @@ recording session notes and per-member notes, makeup class management.
 | PATCH | `/api/sessions/:id/notes/:noteId` | CO |
 | GET | `/api/sessions/:id/member-notes` | CO, FA, XA |
 | POST | `/api/sessions/:id/member-notes` | CO |
-
-### UI pages
-| Page | Role |
-|---|---|
-| Coach → Sessions (list + attendance modal) | CO |
-| Coach → Students | CO |
-| Customer → Members (attendance history per member) | CX |
-| Admin → Roster (session detail drill-down) | FA |
-
-### Role access summary
-CO marks attendance and writes notes. FA/XA read all sessions in their ownership. CX reads
-their own members' attendance history.
-
-### Dependencies
-- Module 8 (Enrollment) — expected attendance list is derived from active `enrollment_batches`
-- Module 9 (Roster) — `roster_assignments` is the session record; attendance hangs off it
-
-### Notes
-- A "session" in the UX is a `roster_assignment` row (no standalone `sessions` table in SQL — see gaps.md §7).
-- Expected attendance sheet is generated automatically when a roster is published: one `attendance` row per active enrolled member in the batch, status = `expected`.
-- Makeup class: admin creates a makeup `roster_assignment` for the missed member; attendance status for that entry is `makeup_booked` → `makeup_attended`.
-- `AttendanceStatus` must be expanded to 7 values: `expected`, `present`, `absent`, `makeup_booked`, `makeup_attended`, `trial_booked`, `trial_attended` (see gaps.md §4c).
-- If no substitute coach is available for an absent coach, admin reschedules within 7 days (product decision); no automated rescheduling is built at launch.
-
----
-
-## Module 11 — Trials
-
-**Domain:** Free trial booking for new customers, trial assessment by coach, batch
-recommendation visible to both admin and parent.
-
-### Database tables
-| Table | Purpose |
-|---|---|
-| `trials` | `member_id`, `batch_id`, `location_id`, status |
-| `trial_assessments` | Text feedback, attachment, recommended batch IDs |
-
-### API routes
-| Method | Path | Roles |
-|---|---|---|
 | GET | `/api/trials?memberId=` | CX (own), FA, XA, CO |
 | POST | `/api/trials` | CX, FA, XA |
 | PATCH | `/api/trials/:id` | CO, FA, XA |
@@ -542,23 +503,33 @@ recommendation visible to both admin and parent.
 ### UI pages
 | Page | Role |
 |---|---|
-| Coach → Sessions (make-up/trial management) | CO |
-| Customer → Dashboard (recommended batch from assessment) | CX |
+| Coach → Sessions (list + attendance modal + trial/makeup management) | CO |
+| Coach → Students | CO |
+| Customer → Members (attendance history per member) | CX |
+| Customer → Dashboard (recommended batch from trial assessment) | CX |
+| Admin → Roster (session detail drill-down) | FA |
 | Public storefront (trial booking CTA → login gate) | PUB |
 
 ### Role access summary
-CX books one free trial per member per Planet. CO completes the assessment. FA/XA manage
-and view all trials in their ownership.
+CO marks attendance, writes notes, and completes trial assessments. CX reads their own members'
+attendance history and books trials. FA/XA manage all sessions and trials in their ownership.
 
 ### Dependencies
 - Module 5 (Batches) — trial is booked into an existing batch slot
-- Module 6 (Coach & Staff) — coach conducts the trial
-- Module 7 (Customer & Member) — member identity
+- Module 6 (Coach & Staff) — coach conducts sessions and trials
+- Module 7 (Customer & Member) — member identity for both attendance and trials
+- Module 8 (Enrollment) — expected attendance list derived from active `enrollment_batches`
+- Module 9 (Roster) — `roster_assignments` is the session record; attendance and trials hang off it
 
 ### Notes
-- **Policy:** One free trial per member per Planet (decided). Server must enforce this — reject a second trial booking for the same `member_id` + `planet_id` combination.
-- Trial assessment attachment: store in Supabase Storage; save the file URL in `trial_assessments`.
-- Recommended batch from the assessment should surface on the CX dashboard with a direct "Enroll now" CTA linking to Module 8's enroll flow pre-filled.
+- A "session" in the UX is a `roster_assignment` row (no standalone `sessions` table in SQL — see gaps.md §7).
+- Expected attendance sheet is generated automatically when a roster is published: one `attendance` row per active enrolled member in the batch, status = `expected`.
+- Makeup class: admin creates a makeup `roster_assignment` for the missed member; attendance status is `makeup_booked` → `makeup_attended`.
+- `AttendanceStatus` must be expanded to 7 values: `expected`, `present`, `absent`, `makeup_booked`, `makeup_attended`, `trial_booked`, `trial_attended` (see gaps.md §4c).
+- If no substitute coach is available for an absent coach, admin reschedules within 7 days; no automated rescheduling at launch.
+- **Trial policy:** one free trial per member per Planet. Server must enforce — reject a second booking for the same `member_id` + `planet_id`.
+- Trial assessment attachment: store in Supabase Storage; save URL in `trial_assessments`.
+- Recommended batch from assessment surfaces on the CX dashboard with a direct "Enroll now" CTA pre-filling Module 8's enroll flow.
 
 ---
 
@@ -652,8 +623,7 @@ Every authenticated user manages their own notifications. No cross-user reads.
 ### Dependencies
 - Module 8 (Enrollment & Billing) — missed payment, failed charge triggers
 - Module 9 (Roster) — roster published notification to coaches
-- Module 10 (Attendance) — missed class notification to CX
-- Module 11 (Trials) — trial assessment submitted notification to CX
+- Module 10 (Attendance & Trials) — missed class notification to CX; trial assessment submitted notification to CX
 
 ### Notes
 - Delivery channel at launch: in-app only. SMS/email deferred to a later phase.
