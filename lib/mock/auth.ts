@@ -18,7 +18,7 @@ export interface DemoAccount {
   coachId?: string;
 }
 
-export const DEMO_PASSWORD = "demo";
+export const DEMO_PASSWORD = "demo1234!";
 
 export const DEMO_ACCOUNTS: DemoAccount[] = [
   {
