@@ -1,10 +1,13 @@
-# Module 3 — Locations Implementation Plan
+# Module 3 — Catalog, Locations & Offerings Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace mock location data with a real `locations` table — migration, RLS, CRUD API, seed, and updated admin/franchisee-admin/management pages that read from DB.
+**Goal:** Replace all mock catalog/location/offering/holiday data with real DB tables — migrations, RLS, CRUD APIs, seed scripts, data-access layers, and updated pages. Three sub-domains delivered in dependency order:
+1. **Locations** _(Tasks 1–7, complete)_ — `locations` table, API, seed, and three pages wired to DB.
+2. **Catalog** _(Tasks 8–12)_ — `planets`, `products`, `product_variants` tables, API, seed, `lib/db/catalog.ts`, and Admin → Planets page.
+3. **Offerings & Holidays** _(Tasks 13–18)_ — `location_course_offerings` + `holidays` tables, APIs, seeds, data-access layers, and holiday pages.
 
-**Architecture:** `locations` has a FK to `ownerships` (built in Module 2). RLS mirrors the ownership pattern: FA/FM see all locations globally; scoped roles (XA/XM/coach/customer) see only locations belonging to their `ownership_id` from JWT `app_metadata`. Pages convert from `"use client"` + mock imports to Server Component data-fetching + Client Component rendering. Batch/enrollment stats remain placeholder (`—`) until Module 4 (Batches), since mock batch IDs don't match real UUID location IDs.
+**Architecture:** Catalog is global/FA-owned with no ownership scoping. Locations and offerings scope by `ownership_id` from JWT `app_metadata`. Holidays scope by global / ownership / location. All pages follow the Server Component + Client Component split established in Tasks 5–7. Batch/enrollment stats remain placeholder (`—`) until Module 5 (Batches).
 
 **Tech Stack:** Next.js 16.2.2 App Router · Supabase Postgres · `@supabase/ssr` · Vitest 3.x · TypeScript 5
 
@@ -14,21 +17,50 @@
 
 ## File Map
 
-| File | Action | Purpose |
-|---|---|---|
-| `supabase/migrations/003_locations.sql` | Create | locations table, RLS, FK to ownerships |
-| `scripts/seed-locations.ts` | Create | Seed 6 demo locations; looks up ownership IDs by slug |
-| `lib/db/locations.ts` | Create | Scoped data-access functions (same pattern as ownerships.ts) |
-| `lib/db/locations.test.ts` | Create | Unit tests for scoping / filtering logic |
-| `app/api/locations/route.ts` | Create | GET scoped list + POST create |
-| `app/api/locations/[id]/route.ts` | Create | GET single + PATCH update |
-| `app/api/public/locations/route.ts` | Create | GET active locations by ownership slug (storefront) |
-| `app/(app)/admin/locations/LocationsClient.tsx` | Create | Client component: search, expand, add-location modal for admin |
-| `app/(app)/admin/locations/page.tsx` | Modify | Server Component: fetch DB locations, pass to LocationsClient |
-| `app/(app)/franchisee-admin/locations/LocationsClient.tsx` | Create | Client component for franchisee-admin locations UI |
-| `app/(app)/franchisee-admin/locations/page.tsx` | Modify | Server Component: fetch DB locations for franchisee scope |
-| `app/(app)/management/locations/LocationsClient.tsx` | Create | Client component for management read-only locations view |
-| `app/(app)/management/locations/page.tsx` | Modify | Server Component: fetch all DB locations with ownership info |
+| File | Action | Status | Purpose |
+|---|---|---|---|
+| `supabase/migrations/003_locations.sql` | Create | ✅ Done | locations table, RLS, FK to ownerships |
+| `scripts/seed-locations.ts` | Create | ✅ Done | Seed 6 demo locations |
+| `lib/db/locations.ts` | Create | ✅ Done | Scoped data-access functions |
+| `lib/db/locations.test.ts` | Create | ✅ Done | Unit tests for scoping / filtering |
+| `app/api/locations/route.ts` | Create | ✅ Done | GET scoped list + POST create |
+| `app/api/locations/[id]/route.ts` | Create | ✅ Done | GET single + PATCH update |
+| `app/api/public/locations/route.ts` | Create | ✅ Done | GET active locations by ownership (storefront) |
+| `app/(app)/admin/locations/LocationsClient.tsx` | Create | ✅ Done | Client component: search, expand, add-location modal |
+| `app/(app)/admin/locations/page.tsx` | Modify | ✅ Done | Server Component: fetch DB locations |
+| `app/(app)/franchisee-admin/locations/LocationsClient.tsx` | Create | ✅ Done | Client component for franchisee-admin locations |
+| `app/(app)/franchisee-admin/locations/page.tsx` | Modify | ✅ Done | Server Component: fetch DB locations (scoped) |
+| `app/(app)/management/locations/LocationsClient.tsx` | Create | ✅ Done | Client component for management locations view |
+| `app/(app)/management/locations/page.tsx` | Modify | ✅ Done | Server Component: fetch all locations with ownership |
+| `supabase/migrations/004_catalog.sql` | Create | ⬜ Pending | planets, products, product_variants tables + RLS |
+| `scripts/seed-catalog.ts` | Create | ⬜ Pending | Seed 5 planets, ~30 levels, ~90 variants |
+| `lib/db/catalog.ts` | Create | ⬜ Pending | listPlanets, listLevels, listVariants + write fns |
+| `lib/db/catalog.test.ts` | Create | ⬜ Pending | Unit tests for catalog access |
+| `app/api/planets/route.ts` | Create | ⬜ Pending | GET all + POST create planet |
+| `app/api/planets/[id]/route.ts` | Create | ⬜ Pending | PATCH update + DELETE (deactivate) planet |
+| `app/api/levels/route.ts` | Create | ⬜ Pending | GET by planetId + POST create level |
+| `app/api/levels/[id]/route.ts` | Create | ⬜ Pending | PATCH + DELETE level |
+| `app/api/course-variants/route.ts` | Create | ⬜ Pending | GET by levelId + POST create variant |
+| `app/api/course-variants/[id]/route.ts` | Create | ⬜ Pending | PATCH + DELETE variant |
+| `app/(app)/admin/planets/PlanetsClient.tsx` | Create | ⬜ Pending | Client component: accordion tree, add modals |
+| `app/(app)/admin/planets/page.tsx` | Modify | ⬜ Pending | Server Component: fetch full catalog tree |
+| `supabase/migrations/005_offerings.sql` | Create | ⬜ Pending | location_course_offerings table + RLS |
+| `scripts/seed-offerings.ts` | Create | ⬜ Pending | Seed offerings for 6 locations × Chess variants |
+| `lib/db/offerings.ts` | Create | ⬜ Pending | listOfferings, createOffering, updateOffering |
+| `lib/db/offerings.test.ts` | Create | ⬜ Pending | Unit tests for offering scoping |
+| `app/api/locations/[id]/offerings/route.ts` | Create | ⬜ Pending | GET offerings list + POST create |
+| `app/api/locations/[id]/offerings/[offeringId]/route.ts` | Create | ⬜ Pending | PATCH update offering |
+| `supabase/migrations/006_holidays.sql` | Create | ⬜ Pending | holidays table with ownership_id + location_id + RLS |
+| `scripts/seed-holidays.ts` | Create | ⬜ Pending | Seed 9 demo holidays (global + ownership-scoped) |
+| `lib/db/holidays.ts` | Create | ⬜ Pending | listHolidays, createHoliday, deleteHoliday |
+| `lib/db/holidays.test.ts` | Create | ⬜ Pending | Unit tests for holiday scoping |
+| `app/api/holidays/route.ts` | Create | ⬜ Pending | GET filtered list + POST create |
+| `app/api/holidays/[id]/route.ts` | Create | ⬜ Pending | DELETE holiday |
+| `app/(app)/admin/holidays/HolidaysClient.tsx` | Create | ⬜ Pending | Client: calendar/list, add modal, delete |
+| `app/(app)/admin/holidays/page.tsx` | Modify | ⬜ Pending | Server Component: fetch all holidays |
+| `app/(app)/franchisee-admin/holidays/HolidaysClient.tsx` | Create | ⬜ Pending | Client: scoped view, add/delete own holidays |
+| `app/(app)/franchisee-admin/holidays/page.tsx` | Modify | ⬜ Pending | Server Component: fetch scoped holidays |
+| `lib/types.ts` | Modify | ⬜ Pending | Fix LocationCourseOffering type (add price, setupFee) |
 
 ---
 
@@ -1524,9 +1556,731 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
 
 ---
 
+---
+
+# Catalog Tasks (Tasks 8–12)
+
+---
+
+## Task 8: Catalog Migration
+
+**Files:**
+- Create: `supabase/migrations/004_catalog.sql`
+
+- [ ] **Step 1: Create the migration file**
+
+  Create `supabase/migrations/004_catalog.sql`:
+
+  ```sql
+  -- planets
+  create table public.planets (
+    id          uuid primary key default gen_random_uuid(),
+    name        varchar(100) not null unique,
+    description text,
+    is_active   boolean not null default true,
+    created_at  timestamptz not null default now(),
+    updated_at  timestamptz not null default now()
+  );
+
+  alter table public.planets enable row level security;
+
+  create policy "authenticated read planets"
+    on public.planets for select
+    using (auth.role() = 'authenticated');
+
+  create policy "public read active planets"
+    on public.planets for select
+    using (is_active = true);
+
+  create policy "franchisor admin write planets"
+    on public.planets for all
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin')
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin');
+
+  -- products (UX: levels)
+  create table public.products (
+    id          uuid primary key default gen_random_uuid(),
+    planet_id   uuid not null references public.planets(id),
+    name        varchar(100) not null,
+    sort_order  integer not null default 0,
+    is_active   boolean not null default true,
+    created_at  timestamptz not null default now(),
+    updated_at  timestamptz not null default now(),
+    unique (planet_id, name)
+  );
+
+  alter table public.products enable row level security;
+
+  create policy "authenticated read products"
+    on public.products for select
+    using (auth.role() = 'authenticated');
+
+  create policy "public read active products"
+    on public.products for select
+    using (is_active = true);
+
+  create policy "franchisor admin write products"
+    on public.products for all
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin')
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin');
+
+  -- product_variants (UX: course variants)
+  create table public.product_variants (
+    id                  uuid primary key default gen_random_uuid(),
+    product_id          uuid not null references public.products(id),
+    frequency_per_week  smallint not null check (frequency_per_week between 1 and 7),
+    base_price          numeric(10,2) not null,
+    setup_fee           numeric(10,2) not null default 0,
+    is_active           boolean not null default true,
+    created_at          timestamptz not null default now(),
+    updated_at          timestamptz not null default now(),
+    unique (product_id, frequency_per_week)
+  );
+
+  alter table public.product_variants enable row level security;
+
+  create policy "authenticated read product_variants"
+    on public.product_variants for select
+    using (auth.role() = 'authenticated');
+
+  create policy "public read active product_variants"
+    on public.product_variants for select
+    using (is_active = true);
+
+  create policy "franchisor admin write product_variants"
+    on public.product_variants for all
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin')
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin');
+
+  create index on public.products (planet_id);
+  create index on public.product_variants (product_id);
+  ```
+
+- [ ] **Step 2: Apply the migration via Supabase MCP**
+
+  Use `mcp__supabase__apply_migration` with project ID `nxocuhlrldrbbltiqkqh`.
+
+- [ ] **Step 3: Verify migration applied**
+
+  Use `mcp__supabase__list_tables` to confirm `planets`, `products`, `product_variants` appear.
+
+- [ ] **Step 4: Commit**
+
+  ```bash
+  git add supabase/migrations/004_catalog.sql
+  git commit -m "feat(catalog): add planets, products, product_variants migration with RLS"
+  ```
+
+---
+
+## Task 9: Catalog Seed Script
+
+**Files:**
+- Create: `scripts/seed-catalog.ts`
+
+- [ ] **Step 1: Create `scripts/seed-catalog.ts`**
+
+  The script must be idempotent (skip by name uniqueness). Use `SUPABASE_SERVICE_ROLE_KEY` for admin access. Structure:
+
+  1. Upsert each planet by name → collect `{ name → id }` map.
+  2. For each planet, upsert levels with `sort_order` matching array index.
+  3. For each level, upsert variants (1×, 2×, 3× weekly) with prices from the spec.
+
+  Seed data:
+  - **Chess**: PP, RR — variants at $159/$199/$239 + $50 setup fee.
+  - **Math**: Grade 1–10 — same variant pricing.
+  - **English**: Grade 1–10 — same variant pricing.
+  - **Finance**: Beginner, Intermediate, Advanced — same variant pricing.
+  - **Arts**: Beginner, Intermediate, Advanced — same variant pricing.
+
+- [ ] **Step 2: Run the seed script**
+
+  ```bash
+  npx tsx scripts/seed-catalog.ts
+  ```
+
+  Confirm: "Seeded X planets, Y levels, Z variants" output.
+
+- [ ] **Step 3: Verify in Supabase**
+
+  Use `mcp__supabase__execute_sql` to confirm row counts match expected totals.
+
+- [ ] **Step 4: Commit**
+
+  ```bash
+  git add scripts/seed-catalog.ts
+  git commit -m "feat(catalog): seed planets, products, product_variants demo data"
+  ```
+
+---
+
+## Task 10: Catalog Data-Access Layer
+
+**Files:**
+- Create: `lib/db/catalog.ts`
+- Create: `lib/db/catalog.test.ts`
+
+- [ ] **Step 1: Write failing tests in `lib/db/catalog.test.ts`**
+
+  Test cases:
+  - `listPlanets` returns all active planets sorted by name.
+  - `listLevels(planetId)` returns only levels for that planet, sorted by `sort_order`.
+  - `listVariants(levelId)` returns variants for that level, sorted by `frequency_per_week`.
+  - `deactivatePlanet` sets `is_active = false` without deleting.
+  - `createPlanet` with duplicate name throws a unique constraint error.
+
+- [ ] **Step 2: Run tests to verify they fail**
+
+  ```bash
+  npx vitest run lib/db/catalog.test.ts
+  ```
+
+- [ ] **Step 3: Create `lib/db/catalog.ts`**
+
+  Export typed functions:
+
+  ```typescript
+  export type PlanetRow = { id: string; name: string; description: string | null; is_active: boolean; created_at: string; updated_at: string }
+  export type LevelRow  = { id: string; planet_id: string; name: string; sort_order: number; is_active: boolean; created_at: string; updated_at: string }
+  export type VariantRow = { id: string; product_id: string; frequency_per_week: number; base_price: number; setup_fee: number; is_active: boolean; created_at: string; updated_at: string }
+
+  export async function listPlanets(supabase): Promise<PlanetRow[]>
+  export async function createPlanet(supabase, input: { name: string; description?: string }): Promise<PlanetRow>
+  export async function updatePlanet(supabase, id: string, patch: Partial<Pick<PlanetRow, 'name' | 'description' | 'is_active'>>): Promise<PlanetRow | null>
+  export async function deactivatePlanet(supabase, id: string): Promise<void>
+
+  export async function listLevels(supabase, planetId: string): Promise<LevelRow[]>
+  export async function createLevel(supabase, input: { planetId: string; name: string; sortOrder?: number }): Promise<LevelRow>
+  export async function updateLevel(supabase, id: string, patch: Partial<Pick<LevelRow, 'name' | 'sort_order' | 'is_active'>>): Promise<LevelRow | null>
+  export async function deactivateLevel(supabase, id: string): Promise<void>
+
+  export async function listVariants(supabase, levelId: string): Promise<VariantRow[]>
+  export async function createVariant(supabase, input: { levelId: string; frequencyPerWeek: number; basePrice: number; setupFee?: number }): Promise<VariantRow>
+  export async function updateVariant(supabase, id: string, patch: Partial<Pick<VariantRow, 'frequency_per_week' | 'base_price' | 'setup_fee' | 'is_active'>>): Promise<VariantRow | null>
+  export async function deactivateVariant(supabase, id: string): Promise<void>
+  ```
+
+- [ ] **Step 4: Run tests to verify they pass**
+
+  ```bash
+  npx vitest run lib/db/catalog.test.ts
+  ```
+
+- [ ] **Step 5: Commit**
+
+  ```bash
+  git add lib/db/catalog.ts lib/db/catalog.test.ts
+  git commit -m "feat(catalog): data-access layer for planets, products, product_variants"
+  ```
+
+---
+
+## Task 11: Catalog API Routes
+
+**Files:**
+- Create: `app/api/planets/route.ts`
+- Create: `app/api/planets/[id]/route.ts`
+- Create: `app/api/levels/route.ts`
+- Create: `app/api/levels/[id]/route.ts`
+- Create: `app/api/course-variants/route.ts`
+- Create: `app/api/course-variants/[id]/route.ts`
+
+- [ ] **Step 1: Create `app/api/planets/route.ts`**
+
+  - `GET`: no auth required (public catalog). Returns active planets sorted by name.
+  - `POST`: FA only. Body: `{ name, description? }`. Returns `201 + PlanetRow`.
+
+- [ ] **Step 2: Create `app/api/planets/[id]/route.ts`**
+
+  - `PATCH`: FA only. Partial update from body. Returns `200 + PlanetRow` or `404`.
+  - `DELETE`: FA only. Calls `deactivatePlanet` (sets `is_active = false`). Returns `204`.
+
+- [ ] **Step 3: Create `app/api/levels/route.ts`**
+
+  - `GET`: no auth required. `?planetId=` required — 400 if missing. Returns levels sorted by `sort_order`.
+  - `POST`: FA only. Body: `{ planetId, name, sortOrder? }`. Returns `201 + LevelRow`.
+
+- [ ] **Step 4: Create `app/api/levels/[id]/route.ts`**
+
+  - `PATCH`: FA only. Returns `200 + LevelRow` or `404`.
+  - `DELETE`: FA only. Deactivates. Returns `204`.
+
+- [ ] **Step 5: Create `app/api/course-variants/route.ts`**
+
+  - `GET`: no auth required. `?levelId=` required. Returns variants sorted by `frequency_per_week`.
+  - `POST`: FA only. Body: `{ levelId, frequencyPerWeek, basePrice, setupFee? }`. Returns `201 + VariantRow`.
+
+- [ ] **Step 6: Create `app/api/course-variants/[id]/route.ts`**
+
+  - `PATCH`: FA only. Returns `200 + VariantRow` or `404`.
+  - `DELETE`: FA only. Deactivates. Returns `204`.
+
+- [ ] **Step 7: Smoke-test all GET endpoints**
+
+  ```bash
+  curl http://localhost:3000/api/planets
+  curl "http://localhost:3000/api/levels?planetId=<chess-uuid>"
+  curl "http://localhost:3000/api/course-variants?levelId=<pp-uuid>"
+  ```
+
+  Confirm JSON arrays return seeded data.
+
+- [ ] **Step 8: Commit**
+
+  ```bash
+  git add app/api/planets app/api/levels app/api/course-variants
+  git commit -m "feat(catalog): planets, levels, course-variants API routes"
+  ```
+
+---
+
+## Task 12: Admin → Planets Page
+
+**Files:**
+- Create: `app/(app)/admin/planets/PlanetsClient.tsx`
+- Modify: `app/(app)/admin/planets/page.tsx`
+
+- [ ] **Step 1: Read the current `app/(app)/admin/planets/page.tsx`**
+
+  Understand existing mock imports and component structure before modifying.
+
+- [ ] **Step 2: Create `app/(app)/admin/planets/PlanetsClient.tsx`**
+
+  Client component. Props: `planets: PlanetRow[]` (each with nested `levels: LevelRow[]`, each with nested `variants: VariantRow[]`).
+
+  UI:
+  - Planet row: name, description, active badge, "Add Level" button, expand toggle.
+  - Level row (inside accordion): name, sort_order, "Add Variant" button, expand toggle.
+  - Variant row: frequency label ("1× / week"), base_price, setup_fee, active badge.
+  - "Add Planet" button at top → POST `/api/planets` → optimistic append.
+  - "Add Level" → POST `/api/levels` → optimistic append under parent planet.
+  - "Add Variant" → POST `/api/course-variants` → optimistic append under parent level.
+  - Deactivate (PATCH `isActive: false`) on each row with confirmation.
+
+- [ ] **Step 3: Rewrite `app/(app)/admin/planets/page.tsx` as Server Component**
+
+  Fetch full catalog tree in one query:
+
+  ```typescript
+  const { data: planets } = await supabase
+    .from('planets')
+    .select('*, products(*, product_variants(*))')
+    .order('name')
+  ```
+
+  Pass to `PlanetsClient`.
+
+- [ ] **Step 4: Smoke-test in browser**
+
+  Log in as `franchisor.admin@demo.com`. Navigate to Admin → Planets. Confirm tree renders with seeded data, "Add Planet" modal opens and submits.
+
+- [ ] **Step 5: Commit**
+
+  ```bash
+  git add "app/(app)/admin/planets/PlanetsClient.tsx" "app/(app)/admin/planets/page.tsx"
+  git commit -m "feat(catalog): wire admin planets page to DB with accordion tree UI"
+  ```
+
+---
+
+---
+
+# Offerings & Holidays Tasks (Tasks 13–18)
+
+---
+
+## Task 13: Offerings Migration
+
+**Files:**
+- Create: `supabase/migrations/005_offerings.sql`
+
+- [ ] **Step 1: Create the migration file**
+
+  ```sql
+  create table public.location_course_offerings (
+    id                  uuid primary key default gen_random_uuid(),
+    location_id         uuid not null references public.locations(id),
+    product_variant_id  uuid not null references public.product_variants(id),
+    price               numeric(10,2) not null,
+    setup_fee           numeric(10,2) not null default 0,
+    is_active           boolean not null default true,
+    created_at          timestamptz not null default now(),
+    updated_at          timestamptz not null default now(),
+    unique (location_id, product_variant_id)
+  );
+
+  alter table public.location_course_offerings enable row level security;
+
+  -- FA/FM: read all offerings
+  create policy "franchisor read all offerings"
+    on public.location_course_offerings for select
+    using (
+      (auth.jwt() -> 'app_metadata' ->> 'role') in ('franchisor_admin', 'franchisor_mgmt')
+    );
+
+  -- Scoped roles: read offerings for locations in their ownership
+  create policy "scoped users read own offerings"
+    on public.location_course_offerings for select
+    using (
+      location_id in (
+        select id from public.locations
+        where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+      )
+    );
+
+  -- Public: read active offerings (for storefront)
+  create policy "public read active offerings"
+    on public.location_course_offerings for select
+    using (is_active = true);
+
+  -- FA: insert/update any offering
+  create policy "franchisor admin write offerings"
+    on public.location_course_offerings for all
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin')
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin');
+
+  -- XA: insert/update offerings for their own locations
+  create policy "franchisee admin write own offerings"
+    on public.location_course_offerings for all
+    using (
+      (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
+      and location_id in (
+        select id from public.locations
+        where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+      )
+    )
+    with check (
+      (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
+      and location_id in (
+        select id from public.locations
+        where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+      )
+    );
+
+  create index on public.location_course_offerings (location_id);
+  create index on public.location_course_offerings (product_variant_id);
+  ```
+
+- [ ] **Step 2: Apply the migration**
+
+  Use `mcp__supabase__apply_migration` with project ID `nxocuhlrldrbbltiqkqh`.
+
+- [ ] **Step 3: Fix `lib/types.ts` `LocationCourseOffering` type**
+
+  Update the TypeScript type to include `price` and `setupFee` fields (gaps.md §4b fix).
+
+- [ ] **Step 4: Commit**
+
+  ```bash
+  git add supabase/migrations/005_offerings.sql lib/types.ts
+  git commit -m "feat(offerings): add location_course_offerings migration + fix TypeScript type"
+  ```
+
+---
+
+## Task 14: Offerings Seed + Data-Access + API
+
+**Files:**
+- Create: `scripts/seed-offerings.ts`
+- Create: `lib/db/offerings.ts`
+- Create: `lib/db/offerings.test.ts`
+- Create: `app/api/locations/[id]/offerings/route.ts`
+- Create: `app/api/locations/[id]/offerings/[offeringId]/route.ts`
+
+- [ ] **Step 1: Create `scripts/seed-offerings.ts`**
+
+  For each of the 6 demo locations: look up real `location_id` by name + ownership slug. Look up `product_variant_id`s for Chess PP and RR (1×, 2×, 3× weekly). Upsert offerings with prices matching mock data. Mark all Chess offerings `is_active = true`; seed other planet offerings as `is_active = false`. Idempotent (skip by unique constraint).
+
+- [ ] **Step 2: Run the seed script**
+
+  ```bash
+  npx tsx scripts/seed-offerings.ts
+  ```
+
+- [ ] **Step 3: Create `lib/db/offerings.ts`**
+
+  ```typescript
+  export type OfferingRow = {
+    id: string; location_id: string; product_variant_id: string
+    price: number; setup_fee: number; is_active: boolean
+    created_at: string; updated_at: string
+  }
+
+  export async function listOfferings(supabase, locationId: string, session): Promise<OfferingRow[]>
+  // Joins: variant { frequency_per_week, base_price, product { name, planet { name } } }
+  export async function createOffering(supabase, input: { locationId: string; productVariantId: string; price: number; setupFee?: number }, session): Promise<OfferingRow>
+  export async function updateOffering(supabase, id: string, patch: Partial<Pick<OfferingRow, 'price' | 'setup_fee' | 'is_active'>>, session): Promise<OfferingRow | null>
+  ```
+
+  Scoping: FA/FM see any location's offerings. XA/XM see only own-ownership locations. Returns `null` (→ 404) for out-of-scope.
+
+- [ ] **Step 4: Write tests in `lib/db/offerings.test.ts`**
+
+  Test scoping: XA from TLP cannot read Maple Leaf offerings; FA can read both.
+
+- [ ] **Step 5: Create `app/api/locations/[id]/offerings/route.ts`**
+
+  - `GET`: all authenticated roles (CX included — needed for enrollment). Calls `listOfferings`. Returns 404 if location is out of scope.
+  - `POST`: FA and XA only. Body: `{ productVariantId, price, setupFee? }`. Returns `201 + OfferingRow`.
+
+- [ ] **Step 6: Create `app/api/locations/[id]/offerings/[offeringId]/route.ts`**
+
+  - `PATCH`: FA and XA only. Patchable: `price`, `setupFee`, `isActive`. Returns `200` or `404`.
+
+- [ ] **Step 7: Commit**
+
+  ```bash
+  git add scripts/seed-offerings.ts lib/db/offerings.ts lib/db/offerings.test.ts "app/api/locations/[id]/offerings"
+  git commit -m "feat(offerings): seed, data-access layer, and API for location_course_offerings"
+  ```
+
+---
+
+## Task 15: Holidays Migration
+
+**Files:**
+- Create: `supabase/migrations/006_holidays.sql`
+
+- [ ] **Step 1: Create the migration file**
+
+  ```sql
+  create table public.holidays (
+    id           uuid primary key default gen_random_uuid(),
+    date         date not null,
+    name         varchar(255) not null,
+    ownership_id uuid references public.ownerships(id),
+    location_id  uuid references public.locations(id),
+    created_at   timestamptz not null default now(),
+    -- A holiday is scoped to ownership OR location, not both simultaneously
+    constraint holidays_single_scope check (
+      not (ownership_id is not null and location_id is not null)
+    ),
+    unique (date, ownership_id, location_id)
+  );
+
+  alter table public.holidays enable row level security;
+
+  -- Global holidays: visible to all authenticated users
+  create policy "authenticated read global holidays"
+    on public.holidays for select
+    using (
+      auth.role() = 'authenticated'
+      and ownership_id is null
+      and location_id is null
+    );
+
+  -- Ownership-scoped holidays: visible to own ownership
+  create policy "authenticated read own ownership holidays"
+    on public.holidays for select
+    using (
+      auth.role() = 'authenticated'
+      and ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+    );
+
+  -- Location-scoped holidays: visible if location belongs to own ownership
+  create policy "authenticated read own location holidays"
+    on public.holidays for select
+    using (
+      auth.role() = 'authenticated'
+      and location_id in (
+        select id from public.locations
+        where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+      )
+    );
+
+  -- FA/FM: read all holidays unconditionally
+  create policy "franchisor read all holidays"
+    on public.holidays for select
+    using (
+      (auth.jwt() -> 'app_metadata' ->> 'role') in ('franchisor_admin', 'franchisor_mgmt')
+    );
+
+  -- FA: insert and delete any holiday
+  create policy "franchisor admin write holidays"
+    on public.holidays for all
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin')
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin');
+
+  -- XA: insert/delete holidays scoped to own ownership or own locations
+  create policy "franchisee admin write own holidays"
+    on public.holidays for all
+    using (
+      (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
+      and (
+        ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+        or location_id in (
+          select id from public.locations
+          where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+        )
+      )
+    )
+    with check (
+      (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
+      and (
+        ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+        or location_id in (
+          select id from public.locations
+          where ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+        )
+      )
+    );
+
+  create index on public.holidays (date);
+  create index on public.holidays (ownership_id);
+  create index on public.holidays (location_id);
+  ```
+
+- [ ] **Step 2: Apply the migration**
+
+  Use `mcp__supabase__apply_migration`.
+
+- [ ] **Step 3: Commit**
+
+  ```bash
+  git add supabase/migrations/006_holidays.sql
+  git commit -m "feat(holidays): add holidays table with ownership+location scoping and RLS"
+  ```
+
+---
+
+## Task 16: Holidays Seed + Data-Access + API
+
+**Files:**
+- Create: `scripts/seed-holidays.ts`
+- Create: `lib/db/holidays.ts`
+- Create: `lib/db/holidays.test.ts`
+- Create: `app/api/holidays/route.ts`
+- Create: `app/api/holidays/[id]/route.ts`
+
+- [ ] **Step 1: Create `scripts/seed-holidays.ts`**
+
+  Seed the 9 demo holidays from the spec. Global ones use `ownership_id = null, location_id = null`. BC-specific ones use TLP's `ownership_id`. Idempotent via unique constraint `(date, ownership_id, location_id)`.
+
+- [ ] **Step 2: Run seed**
+
+  ```bash
+  npx tsx scripts/seed-holidays.ts
+  ```
+
+- [ ] **Step 3: Create `lib/db/holidays.ts`**
+
+  ```typescript
+  export type HolidayRow = {
+    id: string; date: string; name: string
+    ownership_id: string | null; location_id: string | null; created_at: string
+  }
+  export type HolidayFilters = { ownershipId?: string; locationId?: string }
+
+  export async function listHolidays(supabase, filters: HolidayFilters, session): Promise<HolidayRow[]>
+  // Returns global + own-scope holidays. FA gets all. Filters narrow further.
+  export async function createHoliday(supabase, input: { date: string; name: string; ownershipId?: string; locationId?: string }, session): Promise<HolidayRow>
+  // XA: validates ownershipId = own, locationId = own location. Throws 403 otherwise.
+  export async function deleteHoliday(supabase, id: string, session): Promise<void | null>
+  // null = not found or out of scope
+  ```
+
+- [ ] **Step 4: Write tests in `lib/db/holidays.test.ts`**
+
+  - FA sees global + TLP + Maple Leaf holidays.
+  - XA from TLP sees global + TLP holidays only.
+  - XA from Maple Leaf cannot delete a TLP holiday.
+  - `createHoliday` by XA with another ownership's `ownershipId` returns null/throws.
+
+- [ ] **Step 5: Create `app/api/holidays/route.ts`**
+
+  - `GET ?ownershipId=&locationId=`: Authenticated. Returns caller-visible holidays, filtered by query params if provided.
+  - `POST`: FA and XA only. Body: `{ date, name, ownershipId?, locationId? }`. Returns `201 + HolidayRow`.
+
+- [ ] **Step 6: Create `app/api/holidays/[id]/route.ts`**
+
+  - `DELETE`: FA and XA only (own-scope). Returns `204` or `404`.
+
+- [ ] **Step 7: Commit**
+
+  ```bash
+  git add scripts/seed-holidays.ts lib/db/holidays.ts lib/db/holidays.test.ts app/api/holidays
+  git commit -m "feat(holidays): seed, data-access layer, and API for holidays"
+  ```
+
+---
+
+## Task 17: Admin → Holidays Page
+
+**Files:**
+- Create: `app/(app)/admin/holidays/HolidaysClient.tsx`
+- Modify: `app/(app)/admin/holidays/page.tsx`
+
+- [ ] **Step 1: Read the current `app/(app)/admin/holidays/page.tsx`**
+
+- [ ] **Step 2: Create `app/(app)/admin/holidays/HolidaysClient.tsx`**
+
+  Props: `holidays: HolidayRow[]`, `ownerships: OwnershipRow[]`, `locations: LocationRow[]`.
+
+  UI:
+  - List view: date, name, scope badge ("Global", ownership name, or location name).
+  - "Add Holiday" button → modal: date picker, name field, optional scope selector (ownership dropdown or location dropdown — mutually exclusive).
+  - Delete button per holiday (calls `DELETE /api/holidays/:id`).
+  - Optimistic removal from local state on delete.
+
+- [ ] **Step 3: Rewrite `app/(app)/admin/holidays/page.tsx` as Server Component**
+
+  Fetch:
+  - All holidays via `listHolidays(supabase, {}, session)`.
+  - All ownerships (for scope selector in Add modal).
+  - All locations (for scope selector in Add modal).
+
+- [ ] **Step 4: Smoke-test in browser**
+
+  Log in as `franchisor.admin@demo.com`. Navigate to Admin → Holidays. Confirm seeded holidays appear. Add a holiday and confirm it appears.
+
+- [ ] **Step 5: Commit**
+
+  ```bash
+  git add "app/(app)/admin/holidays/HolidaysClient.tsx" "app/(app)/admin/holidays/page.tsx"
+  git commit -m "feat(holidays): wire admin holidays page to DB"
+  ```
+
+---
+
+## Task 18: Franchisee Admin → Holidays Page
+
+**Files:**
+- Create: `app/(app)/franchisee-admin/holidays/HolidaysClient.tsx`
+- Modify: `app/(app)/franchisee-admin/holidays/page.tsx`
+
+- [ ] **Step 1: Read the current `app/(app)/franchisee-admin/holidays/page.tsx`**
+
+- [ ] **Step 2: Create `app/(app)/franchisee-admin/holidays/HolidaysClient.tsx`**
+
+  Props: `holidays: HolidayRow[]`, `locations: LocationRow[]` (own locations only).
+
+  UI:
+  - Grouped view: "Corporate Holidays" (global, read-only) and "Your Holidays" (own scope, editable).
+  - "Add Holiday" → modal: date, name, scope (own ownership or specific own location).
+  - Delete only on own-scope holidays (not global ones).
+
+- [ ] **Step 3: Rewrite `app/(app)/franchisee-admin/holidays/page.tsx` as Server Component**
+
+  Fetch:
+  - Holidays via `listHolidays(supabase, { ownershipId: session.ownershipId }, session)`.
+  - Own locations via `listLocations(supabase, session)`.
+
+- [ ] **Step 4: Smoke-test in browser**
+
+  Log in as `franchisee.admin@demo.com`. Navigate to Franchisee Admin → Holidays. Confirm global holidays appear read-only. Add an ownership-scoped holiday.
+
+- [ ] **Step 5: Commit**
+
+  ```bash
+  git add "app/(app)/franchisee-admin/holidays/HolidaysClient.tsx" "app/(app)/franchisee-admin/holidays/page.tsx"
+  git commit -m "feat(holidays): wire franchisee-admin holidays page to DB"
+  ```
+
+---
+
 ## Self-Review
 
-**Spec coverage check:**
+**Locations (Tasks 1–7) — complete:**
 - [x] locations table with FK to ownerships — Task 1
 - [x] RLS: FA/FM see all; XA/XM/scoped see own — Task 1
 - [x] Seed 6 demo locations matching mock data — Task 2
@@ -1539,11 +2293,32 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
 - [x] Management locations page reads from DB with ownership grouping — Task 7
 - [x] "Add Location" modal functional in admin + franchisee-admin pages — Tasks 5, 6
 
-**Batch stats:** Intentionally show `—` placeholder. Mock batch IDs (e.g. `loc_tlp_surrey`) are not UUID-compatible with real seeded location IDs. Stats will be live once Module 4 (Batches) migrates batch data to DB.
+**Catalog (Tasks 8–12) — pending:**
+- [x] `planets`, `products`, `product_variants` migration with RLS — Task 8
+- [x] Seed 5 planets, ~30 levels, ~90 variants — Task 9
+- [x] `lib/db/catalog.ts` with listPlanets/Levels/Variants + write fns — Task 10
+- [x] `lib/db/catalog.test.ts` — Task 10
+- [x] GET/POST `/api/planets`, PATCH/DELETE `/api/planets/[id]` — Task 11
+- [x] GET/POST `/api/levels`, PATCH/DELETE `/api/levels/[id]` — Task 11
+- [x] GET/POST `/api/course-variants`, PATCH/DELETE `/api/course-variants/[id]` — Task 11
+- [x] Admin → Planets page wired to DB with accordion tree UI — Task 12
 
-**Type consistency check:**
-- `LocationRow` interface defined once in `lib/db/locations.ts`, imported in both API routes and Client components — consistent.
-- `updateLocation` patch keys (`address_line1`, `state_province`, etc.) match `LocationRow` field names — consistent.
-- API route maps camelCase body fields (`addressLine1`) to snake_case DB fields (`address_line1`) — consistent across POST and PATCH.
+**Offerings (Task 13–14) — pending:**
+- [x] `location_course_offerings` migration with RLS — Task 13
+- [x] Fix `lib/types.ts` `LocationCourseOffering` type (add price, setupFee) — Task 13
+- [x] Seed offerings for 6 demo locations — Task 14
+- [x] `lib/db/offerings.ts` + `offerings.test.ts` — Task 14
+- [x] GET/POST `/api/locations/[id]/offerings` — Task 14
+- [x] PATCH `/api/locations/[id]/offerings/[offeringId]` — Task 14
 
-**Placeholder scan:** No TBDs, no "implement later", all code blocks are complete.
+**Holidays (Tasks 15–18) — pending:**
+- [x] `holidays` migration with `ownership_id` + `location_id` + RLS (fixes gaps.md §4a) — Task 15
+- [x] Seed 9 demo holidays — Task 16
+- [x] `lib/db/holidays.ts` + `holidays.test.ts` — Task 16
+- [x] GET/POST `/api/holidays`, DELETE `/api/holidays/[id]` — Task 16
+- [x] Admin → Holidays page wired to DB — Task 17
+- [x] Franchisee Admin → Holidays page wired to DB — Task 18
+
+**Batch stats:** Intentionally show `—` placeholder. Stats will be live once Module 5 (Batches) migrates batch data to DB.
+
+**Type consistency:** camelCase body fields → snake_case DB fields mapping must be maintained in all new route handlers (same pattern as locations).

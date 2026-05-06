@@ -74,6 +74,7 @@ export interface Planet {
 export interface Level {
   id: ID;
   planetId: ID;
+  productClassId: ID;
   name: string; // e.g. "Grade-7" | "PP" | "RR"
   sortOrder: number;
   isActive: boolean;
@@ -98,7 +99,9 @@ export interface MultiPlanetDiscount {
 export interface LocationCourseOffering {
   id: ID;
   locationId: ID;
-  levelId: ID;
+  productVariantId: ID;
+  price: number;
+  setupFee: number;
   isActive: boolean;
 }
 
