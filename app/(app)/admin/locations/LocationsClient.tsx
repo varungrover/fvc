@@ -39,6 +39,7 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
     country: 'Canada',
   })
   const [saving, setSaving] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
   const [localLocations, setLocalLocations] = useState<LocationRow[]>(locations)
 
   const activeCount = localLocations.filter((l) => l.is_active).length
@@ -59,10 +60,11 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
       postalCode: '',
       country: 'Canada',
     })
+    setAddError(null)
   }
 
   async function handleAddLocation() {
-    if (!addForm.name || !addForm.addressLine1 || !addForm.city || !addForm.stateProvince) return
+    if (!addForm.name || !addForm.addressLine1 || !addForm.city || !addForm.stateProvince || !addForm.country) return
     setSaving(true)
     try {
       const res = await fetch('/api/locations', {
@@ -80,10 +82,14 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
         }),
       })
       if (res.ok) {
+        setAddError(null)
         const newLoc: LocationRow = await res.json()
         setLocalLocations((prev) => [...prev, newLoc])
         setShowAddLocation(false)
         resetForm()
+      } else {
+        const errBody = await res.json().catch(() => ({}))
+        setAddError(errBody.error ?? 'Failed to save. Please try again.')
       }
     } finally {
       setSaving(false)
@@ -166,7 +172,7 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
                         {loc.name}
                       </div>
                       <div style={{ fontSize: 12, color: TLP.gray500, marginTop: 2 }}>
-                        {loc.address_line1}, {loc.city}, {loc.state_province}
+                        {loc.address_line1}, {loc.city}, {loc.state_province} {loc.postal_code ?? ''}
                       </div>
                     </div>
                   </div>
@@ -233,7 +239,8 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
                 !addForm.name ||
                 !addForm.addressLine1 ||
                 !addForm.city ||
-                !addForm.stateProvince
+                !addForm.stateProvince ||
+                !addForm.country
               }
             >
               {saving ? 'Saving…' : 'Add Location'}
@@ -242,6 +249,9 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
         }
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {addError && (
+            <div style={{ color: '#dc2626', fontSize: 13, marginBottom: 8 }}>{addError}</div>
+          )}
           <Input
             label="Location Name"
             required
