@@ -66,13 +66,13 @@ const SEED_USERS = [
   {
     email: 'franchisor.mgmt@demo.com',
     full_name: 'Anika Iyer',
-    role: 'franchisor_management',
+    role: 'franchisor_mgmt',
     ownership_id: 'ten_tlp',
   },
   {
     email: 'franchisee.mgmt@demo.com',
     full_name: 'David Chen',
-    role: 'franchisee_management',
+    role: 'franchisee_mgmt',
     ownership_id: 'ten_mla',
   },
 ] as const

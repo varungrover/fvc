@@ -2,18 +2,18 @@ import type { Role } from '@/lib/types'
 
 const ROLE_PREFIX: Record<Role, string> = {
   franchisor_admin:      '/admin',
-  franchisor_management: '/management',
+  franchisor_mgmt:       '/management',
   franchisee_admin:      '/franchisee-admin',
-  franchisee_management: '/management',
+  franchisee_mgmt:       '/management',
   coach:                 '/coach',
   customer:              '/customer',
 }
 
 const ROLE_LANDING: Record<Role, string> = {
   franchisor_admin:      '/admin/dashboard',
-  franchisor_management: '/management/dashboard',
+  franchisor_mgmt:       '/management/dashboard',
   franchisee_admin:      '/franchisee-admin/dashboard',
-  franchisee_management: '/management/dashboard',
+  franchisee_mgmt:       '/management/dashboard',
   coach:                 '/coach/dashboard',
   customer:              '/customer/dashboard',
 }

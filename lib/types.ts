@@ -16,8 +16,8 @@ export type Role =
   | "coach"
   | "franchisor_admin"
   | "franchisee_admin"
-  | "franchisor_management"
-  | "franchisee_management";
+  | "franchisor_mgmt"
+  | "franchisee_mgmt";
 
 export type OwnershipType = "corporate" | "franchisee";
 

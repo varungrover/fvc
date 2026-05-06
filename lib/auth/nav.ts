@@ -64,8 +64,8 @@ export function navForRole(role: Role): NavItem[] {
     case 'coach':                 return COACH_NAV
     case 'franchisor_admin':      return ADMIN_NAV
     case 'franchisee_admin':      return FRANCHISEE_ADMIN_NAV
-    case 'franchisor_management':
-    case 'franchisee_management': return MANAGEMENT_NAV
+    case 'franchisor_mgmt':
+    case 'franchisee_mgmt': return MANAGEMENT_NAV
   }
 }
 
@@ -75,7 +75,7 @@ export function roleLabelFor(role: Role): string {
     case 'coach':                 return 'Coach'
     case 'franchisor_admin':      return 'Franchisor Admin'
     case 'franchisee_admin':      return 'Franchisee Admin'
-    case 'franchisor_management': return 'Management'
-    case 'franchisee_management': return 'Management'
+    case 'franchisor_mgmt': return 'Management'
+    case 'franchisee_mgmt': return 'Management'
   }
 }

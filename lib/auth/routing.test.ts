@@ -10,14 +10,14 @@ describe('getAllowedPrefixForRole', () => {
   it('maps franchisor_admin to /admin', () => {
     expect(getAllowedPrefixForRole('franchisor_admin')).toBe('/admin')
   })
-  it('maps franchisor_management to /management', () => {
-    expect(getAllowedPrefixForRole('franchisor_management')).toBe('/management')
+  it('maps franchisor_mgmt to /management', () => {
+    expect(getAllowedPrefixForRole('franchisor_mgmt')).toBe('/management')
   })
   it('maps franchisee_admin to /franchisee-admin', () => {
     expect(getAllowedPrefixForRole('franchisee_admin')).toBe('/franchisee-admin')
   })
-  it('maps franchisee_management to /management', () => {
-    expect(getAllowedPrefixForRole('franchisee_management')).toBe('/management')
+  it('maps franchisee_mgmt to /management', () => {
+    expect(getAllowedPrefixForRole('franchisee_mgmt')).toBe('/management')
   })
   it('maps coach to /coach', () => {
     expect(getAllowedPrefixForRole('coach')).toBe('/coach')
@@ -31,14 +31,14 @@ describe('getLandingForRole', () => {
   it('returns /admin/dashboard for franchisor_admin', () => {
     expect(getLandingForRole('franchisor_admin')).toBe('/admin/dashboard')
   })
-  it('returns /management/dashboard for franchisor_management', () => {
-    expect(getLandingForRole('franchisor_management')).toBe('/management/dashboard')
+  it('returns /management/dashboard for franchisor_mgmt', () => {
+    expect(getLandingForRole('franchisor_mgmt')).toBe('/management/dashboard')
   })
   it('returns /franchisee-admin/dashboard for franchisee_admin', () => {
     expect(getLandingForRole('franchisee_admin')).toBe('/franchisee-admin/dashboard')
   })
-  it('returns /management/dashboard for franchisee_management', () => {
-    expect(getLandingForRole('franchisee_management')).toBe('/management/dashboard')
+  it('returns /management/dashboard for franchisee_mgmt', () => {
+    expect(getLandingForRole('franchisee_mgmt')).toBe('/management/dashboard')
   })
   it('returns /coach/dashboard for coach', () => {
     expect(getLandingForRole('coach')).toBe('/coach/dashboard')

@@ -60,7 +60,7 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
   },
   {
     email: "franchisor.mgmt@demo.com",
-    role: "franchisor_management",
+    role: "franchisor_mgmt",
     landing: "/management/dashboard",
     label: "Franchisor Management",
     description: "Network-wide revenue, pricing approvals, rollups across all ownerships.",
@@ -69,7 +69,7 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
   },
   {
     email: "franchisee.mgmt@demo.com",
-    role: "franchisee_management",
+    role: "franchisee_mgmt",
     landing: "/management/dashboard",
     label: "Franchisee Management",
     description: "Single-ownership revenue + price-change requests upstream.",
