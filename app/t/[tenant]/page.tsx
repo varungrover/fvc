@@ -15,7 +15,7 @@ export default async function TenantStorefront({
 }) {
   const { tenant: slug } = await params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/api/public/ownerships?slug=${slug}`,
+    `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/api/public/ownerships?slug=${encodeURIComponent(slug)}`,
     { next: { revalidate: 60 } },
   )
   if (!res.ok) notFound()

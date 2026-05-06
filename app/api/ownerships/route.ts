@@ -40,13 +40,21 @@ export async function POST(request: NextRequest) {
   // Invite management account
   if (body.mgmtEmail) {
     const admin = createAdminClient()
-    await admin.auth.admin.inviteUserByEmail(body.mgmtEmail, {
-      data: {
-        role: 'franchisee_mgmt',
-        ownership_id: ownership.id,
-        must_change_password: true,
-      },
-    })
+    try {
+      await admin.auth.admin.inviteUserByEmail(body.mgmtEmail, {
+        data: {
+          role: body.ownershipType === 'corporate' ? 'franchisor_mgmt' : 'franchisee_mgmt',
+          ownership_id: ownership.id,
+          must_change_password: true,
+        },
+      })
+    } catch (e) {
+      console.warn('Ownership created but management invite failed:', e)
+      return NextResponse.json(
+        { ...ownership, warning: 'Ownership created but management invite failed' },
+        { status: 201 }
+      )
+    }
   }
 
   return NextResponse.json(ownership, { status: 201 })

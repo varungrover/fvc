@@ -35,6 +35,7 @@ export async function PATCH(
   const ownership = await updateOwnership(supabase, id, {
     full_name: body.fullName,
     email: body.email,
+    ownership_type: body.ownershipType,
     slug: body.slug,
     brand_primary: body.brandPrimary,
     brand_accent: body.brandAccent,
