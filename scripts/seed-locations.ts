@@ -3,7 +3,7 @@ import { config } from 'dotenv'
 import { existsSync } from 'fs'
 import { resolve } from 'path'
 
-const envPaths = ['.env.local', '../.env.local'].map((p) => resolve(process.cwd(), p))
+const envPaths = ['.env.local', '../.env.local', '../../.env.local', '../../../.env.local'].map((p) => resolve(process.cwd(), p))
 const envPath = envPaths.find(existsSync)
 if (envPath) config({ path: envPath })
 else config({ path: '.env.local' })
@@ -11,7 +11,7 @@ else config({ path: '.env.local' })
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
-if (!supabaseUrl || !serviceRoleKey) {
+if (!supabaseUrl || !serviceRoleKey || serviceRoleKey === '<NEEDS_TO_BE_SET>') {
   console.error('Missing NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY')
   process.exit(1)
 }
@@ -79,7 +79,7 @@ const SEED_LOCATIONS = [
   },
 ]
 
-async function main() {
+async function seed() {
   console.log('Seeding locations...')
 
   // Fetch ownership IDs by slug
@@ -109,7 +109,7 @@ async function main() {
       .select('id')
       .eq('ownership_id', ownershipId)
       .eq('name', loc.name)
-      .single()
+      .maybeSingle()
 
     if (existing) {
       console.log(`  ✓ skip  ${loc.name} (already exists, id: ${existing.id})`)
@@ -125,7 +125,7 @@ async function main() {
       country: loc.country,
       postal_code: loc.postal_code,
       is_active: true,
-    }).select().single()
+    }).select('id').single()
 
     if (error) {
       console.error(`  ✗ ${loc.name}:`, error.message)
@@ -138,4 +138,7 @@ async function main() {
   console.log('Done.')
 }
 
-main()
+seed().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})
