@@ -20,9 +20,8 @@ least schema-complete and API-ready.
 ```
 1. Auth & Identity
 2. Tenancy & Ownerships
-3. Location & Offerings          (depends on 2)
-4. Catalog                       (depends on 2)
-5. Scheduling & Batches          (depends on 3, 4)
+3. Catalog, Locations & Offerings (depends on 2)
+5. Scheduling & Batches           (depends on 3)
 6. Coach & Staff                 (depends on 2, 3)
 7. Customer & Member             (depends on 2)
 8. Enrollment & Billing          (depends on 4, 5, 6, 7)
@@ -115,66 +114,24 @@ FA creates and edits all ownerships. FM reads all. XA/XM read their own only.
 
 ---
 
-## Module 3 — Location & Offerings
+## Module 3 — Catalog, Locations & Offerings
 
-**Domain:** Physical locations under an ownership, course offerings enabled per location,
-per-location pricing, holiday calendar.
+**Domain:** The full "what and where" setup layer: global course catalog (Planets → Levels →
+Variants), physical locations per ownership, which variants are active at each location with
+local price overrides, and the holiday calendar.
+
+> **Scope note:** Catalog writes are FA-only (global). Location and offering writes are FA + XA
+> (per-ownership). Keep this distinction in mind when implementing role guards.
 
 ### Database tables
 | Table | Purpose |
 |---|---|
-| `locations` | Address, active flag, `ownership_id` |
-| `location_course_offerings` | Which `product_variant` is active at which location; stores `price` and `setup_fee` overrides |
+| `planets` | Top-level subject: Chess, Math, English, Finance, Arts — global, FA-owned |
+| `products` (Levels in UX) | Named level under a planet: PP, RR, Grade 7 — global |
+| `product_variants` | Frequency/price variant: 1×/week $159, 2×/week $199 — global |
+| `locations` | Address, active flag, `ownership_id` — per-ownership |
+| `location_course_offerings` | Which `product_variant` is active at a location; local `price` and `setup_fee` overrides |
 | `holidays` | Date + optional `ownership_id` or `location_id` scope |
-
-### API routes
-| Method | Path | Roles |
-|---|---|---|
-| GET | `/api/locations?ownershipId=` | FA, FM, XA, XM, CO |
-| POST | `/api/locations` | FA, XA |
-| GET | `/api/locations/:id` | FA, FM, XA, XM, CO |
-| PATCH | `/api/locations/:id` | FA, XA |
-| GET | `/api/locations/:id/offerings` | FA, XA, CO, CX |
-| POST | `/api/locations/:id/offerings` | FA, XA |
-| PATCH | `/api/locations/:id/offerings/:offeringId` | FA, XA |
-| GET | `/api/holidays?ownershipId=&locationId=` | FA, XA, CO |
-| POST | `/api/holidays` | FA, XA |
-| DELETE | `/api/holidays/:id` | FA, XA |
-
-### UI pages
-| Page | Role |
-|---|---|
-| Admin → Locations (list + detail) | FA |
-| Franchisee Admin → Locations | XA |
-| Admin → Holidays | FA |
-| Franchisee Admin → Holidays | XA |
-
-### Role access summary
-FA sees all locations across all ownerships. XA sees own ownership only. CO reads assigned
-locations. CX reads offerings when browsing enrollment.
-
-### Dependencies
-- Module 1 (Auth)
-- Module 2 (Ownerships) — location is always under an ownership
-
-### Notes
-- `location_course_offerings` carries `price` and `setup_fee` — this is what the enrollment flow prices from, not the variant's base price. **Do not skip these fields** (see gaps.md §4b).
-- Holidays feed into Module 9 (Roster) for automatic exclusion when generating weekly schedules.
-- Franchisee Admin can enter their own ownership's holidays; Franchisor Admin covers corporate locations.
-
----
-
-## Module 4 — Catalog
-
-**Domain:** The academic content hierarchy used for sales: Planets → Levels (Products) →
-Course Variants. Defines what can be sold; does not define schedule or location.
-
-### Database tables
-| Table | Purpose |
-|---|---|
-| `planets` | Top-level subject: Chess, Math, English, Finance, Arts |
-| `products` (Levels in UX) | Named level under a planet: PP, RR, Grade 7 |
-| `product_variants` | Frequency/price variant: 1×/week $159, 2×/week $199 |
 
 ### API routes
 | Method | Path | Roles |
@@ -191,25 +148,42 @@ Course Variants. Defines what can be sold; does not define schedule or location.
 | POST | `/api/course-variants` | FA |
 | PATCH | `/api/course-variants/:id` | FA |
 | DELETE | `/api/course-variants/:id` | FA |
+| GET | `/api/locations?ownershipId=` | FA, FM, XA, XM, CO |
+| POST | `/api/locations` | FA, XA |
+| GET | `/api/locations/:id` | FA, FM, XA, XM, CO |
+| PATCH | `/api/locations/:id` | FA, XA |
+| GET | `/api/locations/:id/offerings` | FA, XA, CO, CX |
+| POST | `/api/locations/:id/offerings` | FA, XA |
+| PATCH | `/api/locations/:id/offerings/:offeringId` | FA, XA |
+| GET | `/api/holidays?ownershipId=&locationId=` | FA, XA, CO |
+| POST | `/api/holidays` | FA, XA |
+| DELETE | `/api/holidays/:id` | FA, XA |
 
 ### UI pages
 | Page | Role |
 |---|---|
 | Admin → Planets (list + levels + variants) | FA |
-| Public storefront (read-only display) | PUB |
+| Admin → Locations (list + detail) | FA |
+| Admin → Holidays | FA |
+| Franchisee Admin → Locations | XA |
+| Franchisee Admin → Holidays | XA |
+| Public storefront (catalog read-only display) | PUB |
 | Customer → Enroll (step 1: pick planet/level/variant) | CX |
 
 ### Role access summary
-Only FA creates or modifies catalog items. All other roles read. Catalog is global across all
-ownerships in the deployment — individual locations opt in via Module 3 (Offerings).
+Catalog (planets/levels/variants): FA creates and modifies; all roles read.
+Locations and offerings: FA sees all ownerships; XA sees own only; CO reads assigned locations; CX reads offerings during enrollment.
 
 ### Dependencies
 - Module 1 (Auth)
-- Module 2 (Ownerships) — Planets created by FA belong to the franchisor; franchisees cannot add Planets
+- Module 2 (Ownerships) — locations belong to an ownership; catalog planets belong to the franchisor
 
 ### Notes
-- `products` table is the SQL name for what the UX calls "Levels" — maintain this mapping mentally during backend wiring.
-- Multi-planet discount (Module 8) references Planets for discount tier calculation — Catalog must be stable before Enrollment is built.
+- `products` table is the SQL name for what the UX calls "Levels" — maintain this mapping during backend wiring.
+- `location_course_offerings` carries `price` and `setup_fee` — enrollment prices from here, not the variant's base price. **Do not skip these fields** (see gaps.md §4b).
+- Multi-planet discount (Module 8) references Planets for discount tier calculation — catalog must be stable before Enrollment is built.
+- Holidays feed into Module 9 (Roster) for automatic session exclusion.
+- Franchisee Admin can enter their own ownership's holidays; Franchisor Admin covers corporate locations.
 - The LMS content hierarchy (Module 13) maps onto Levels via `lms_product_sale_product_mapping`. Catalog does not own that mapping.
 
 ---
@@ -245,8 +219,7 @@ FA/XA create and edit batches for their locations. All authenticated roles and P
 capacity counts.
 
 ### Dependencies
-- Module 3 (Locations) — batch belongs to a location
-- Module 4 (Catalog) — batch is for a level
+- Module 3 (Catalog, Locations & Offerings) — batch belongs to a location and is for a level
 
 ### Notes
 - A batch is a recurring slot (e.g. "Monday 4–5 pm"). Individual session occurrences are
@@ -295,7 +268,7 @@ availability and leaves.
 ### Dependencies
 - Module 1 (Auth) — coach account is a `profiles` row; creation triggers temp-password email
 - Module 2 (Ownerships) — coach belongs to an ownership
-- Module 4 (Catalog) — planet assignments via `staff_planets`
+- Module 3 (Catalog) — planet assignments via `staff_planets`
 
 ### Notes
 - Coach `status` ("active", "on_leave", "inactive") is **derived at query time** from `staff_leaves`, not stored. A coach is "on_leave" if today falls within any of their leave entries (see gaps.md §6).
@@ -405,8 +378,7 @@ CX self-enrolls. FA/XA enroll on behalf of a customer and accept cash or card. F
 discount tiers globally. FM/XM see revenue-level invoice data via Reporting.
 
 ### Dependencies
-- Module 3 (Locations & Offerings) — enrollment price comes from `location_course_offerings`
-- Module 4 (Catalog) — variant + level + planet IDs
+- Module 3 (Catalog, Locations & Offerings) — variant + level + planet IDs; enrollment price comes from `location_course_offerings`
 - Module 5 (Batches) — batch slot selection and capacity check
 - Module 6 (Coach & Staff) — coach context for the enrolled batch (read-only at enrollment time)
 - Module 7 (Customer & Member) — `customer_id`, `member_id`
@@ -455,7 +427,7 @@ to coaches.
 FA/XA create, edit, and publish rosters. CO reads their published assignments only (not drafts).
 
 ### Dependencies
-- Module 3 (Locations) — roster is per location; holidays from this module are excluded
+- Module 3 (Catalog, Locations & Offerings) — roster is per location; holidays from this module are excluded
 - Module 5 (Batches) — roster fills the batch slots defined here
 - Module 6 (Coach & Staff) — availability and leaves determine assignability
 
@@ -583,7 +555,7 @@ attempts. FA can delete content. Published filter: CX only sees published module
 CO/FA see all including drafts.
 
 ### Dependencies
-- Module 4 (Catalog) — LMS content maps to sales levels via `lms_product_sale_product_mapping`
+- Module 3 (Catalog) — LMS content maps to sales levels via `lms_product_sale_product_mapping`
 - Module 7 (Customer & Member) — quiz attempts are per member
 - Module 8 (Enrollment) — purchasing a course auto-unlocks its LMS content for the member
 
@@ -701,8 +673,7 @@ XA/XM submit requests for their locations. FA/FM review all requests and approve
 
 ### Dependencies
 - Module 2 (Ownerships) — request scope
-- Module 3 (Locations & Offerings) — approval writes the new price to `location_course_offerings`
-- Module 4 (Catalog) — `product_variant_id` reference
+- Module 3 (Catalog, Locations & Offerings) — approval writes the new price to `location_course_offerings`; `product_variant_id` reference
 
 ### Notes
 - Schema gap: `requesting_location_id` (SQL) vs. `requestingOwnershipId` (TypeScript). The SQL design is correct — fix TypeScript (see gaps.md §3b) before wiring this module.
@@ -767,7 +738,7 @@ No owned tables — reads from Modules 3, 4.
 Fully public — no auth.
 
 ### Dependencies
-- Module 4 (Catalog) — planets, levels, pricing
+- Module 3 (Catalog) — planets, levels, pricing
 
 ### Notes
 - Per-tenant branding (logo, colors) is configured in deployment env vars or a `brand_config` table; the storefront API returns this alongside catalog data.
