@@ -1,0 +1,577 @@
+-- ============================================================
+-- MENTORA APPLICATION - PostgreSQL Schema
+-- Phase 1 User Stories
+-- ============================================================
+
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+
+-- ============================================================
+-- SECTION 1: GEOGRAPHY & ORGANIZATION
+-- ============================================================
+
+CREATE TABLE ownerships (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    full_name       VARCHAR(255) NOT NULL,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    ownership_type  VARCHAR(20) NOT NULL CHECK (ownership_type IN ('corporate', 'franchisee')),
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE locations (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    ownership_id    UUID NOT NULL REFERENCES ownerships(id) ON DELETE RESTRICT,
+    name            VARCHAR(255) NOT NULL,
+    address_line1   VARCHAR(255) NOT NULL,
+    address_line2   VARCHAR(255),
+    city            VARCHAR(100) NOT NULL,
+    state_province  VARCHAR(100) NOT NULL,
+    zip_postal      VARCHAR(20) NOT NULL,
+    country         VARCHAR(100) NOT NULL,
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE holidays (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    location_id     UUID REFERENCES locations(id) ON DELETE CASCADE,   -- NULL = all locations in ownership
+    holiday_date    DATE NOT NULL,
+    description     VARCHAR(255),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- ============================================================
+-- SECTION 2: PLANETS, productS, COURSES & PRICING
+-- ============================================================
+
+CREATE TABLE planets (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name            VARCHAR(100) NOT NULL UNIQUE,   -- e.g. Chess, Maths, English
+    description     TEXT,
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE product_classes (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name            VARCHAR(100) NOT NULL,           -- e.g. Course, event, camp, merc
+    sort_order      INTEGER NOT NULL DEFAULT 0,
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (name)
+);
+
+CREATE TABLE products (
+    id                     UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    planet_id              UUID NOT NULL REFERENCES planets(id) ON DELETE RESTRICT,
+    product_class_id       UUID NOT NULL REFERENCES product_classes(id) ON DELETE RESTRICT,
+    name                   VARCHAR(100) NOT NULL,           -- e.g. Grade 7, PP, RR
+    image_url              VARCHAR(500),
+    sort_order             INTEGER NOT NULL DEFAULT 0,
+    is_active       	   BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      	   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at             TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (planet_id, name)
+);
+
+CREATE TABLE product_variants (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id          UUID NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+    name            	VARCHAR(100) NOT NULL,           -- e.g. Grade 7 Twice/Week, PP twice per week
+    frequency_per_week  INTEGER CHECK (frequency_per_week BETWEEN 1 AND 7),
+    price               NUMERIC(10, 2) NOT NULL,
+    setup_fee           NUMERIC(10, 2) NOT NULL DEFAULT 25.00,  -- configurable; captured at time of purchase
+    image_url           VARCHAR(500),
+    is_active           BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (product_id, name),
+    UNIQUE (product_id, frequency_per_week)
+);
+
+-- Multi-planet discount rules (owned by each ownership or franchisor)
+CREATE TABLE multi_planet_discounts (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    planets_count   INTEGER NOT NULL CHECK (planets_count >= 2),
+    discount_pct    NUMERIC(5, 2) NOT NULL CHECK (discount_pct BETWEEN 0 AND 100),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Which planets/products are enabled at each location (franchisee can choose)
+CREATE TABLE location_course_offerings (
+    id                       UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    location_id     	     UUID NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
+    product_variant_id       UUID NOT NULL REFERENCES product_variants(id) ON DELETE CASCADE,
+    -- Copy these two values from product_variants table as is at the time of creation of location. Over the same at the time of Price Change Request Approval
+    price                    NUMERIC(10, 2) NOT NULL,                -- Price gets auto populated (copied) when courses selected or if Price change requests approved
+    setup_fee                NUMERIC(10, 2) NOT NULL DEFAULT 25.00,  -- configurable; captured at time of purchase
+    -- Copy Ends
+    is_active                BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at               TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      		TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (location_id, product_variant_id)
+);
+
+-- Price override requests (franchisee -> franchisor)
+CREATE TABLE price_change_requests (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    requesting_location_id UUID NOT NULL REFERENCES locations(id),
+    product_variant_id   UUID NOT NULL REFERENCES product_variants(id),
+    current_price       NUMERIC(10, 2) NOT NULL,
+    requested_price     NUMERIC(10, 2) NOT NULL,
+    reason              TEXT NOT NULL,
+    status              VARCHAR(20) NOT NULL DEFAULT 'pending'
+                            CHECK (status IN ('pending', 'approved', 'rejected')),
+    reviewed_by         UUID REFERENCES ownerships(id),
+    reviewed_at         TIMESTAMPTZ,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE price_change_attachments (
+    id                      UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    price_change_request_id UUID NOT NULL REFERENCES price_change_requests(id) ON DELETE CASCADE,
+    file_url                VARCHAR(500) NOT NULL,
+    file_name               VARCHAR(255),
+    uploaded_at             TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- ============================================================
+-- SECTION 3: USERS, ROLES & ACCOUNTS
+-- ============================================================
+
+CREATE TABLE roles (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(50) NOT NULL UNIQUE   -- franchisor_admin, franchisee_admin, coach, customer
+);
+
+INSERT INTO roles (name) VALUES
+    ('franchisor_mgmt'),
+    ('franchisor_admin'),
+    ('franchisee_mgmt'),
+    ('franchisee_admin'),
+    ('coach'),
+    ('customer');
+
+CREATE TABLE profiles (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    full_name       varchar(100) not NULL,
+    role_id         INTEGER NOT NULL REFERENCES roles(id),
+    ownership_id    UUID REFERENCES ownerships(id),   -- set for admin/staff or management accounts
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    must_reset_pw   BOOLEAN NOT NULL DEFAULT FALSE,   -- TRUE for temp-password accounts
+    two_fa_phone    VARCHAR(30),                      -- phone used for 2FA
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Customer profile (one per profile with role = 'customer')
+CREATE TABLE customers (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    profile_id          UUID NOT NULL UNIQUE REFERENCES profiles(id) ON DELETE CASCADE,
+    dob                 DATE,
+    phone               VARCHAR(30),
+    emergency_contact   VARCHAR(30),
+    terms_accepted      BOOLEAN NOT NULL DEFAULT FALSE,
+    Profile_CC_accepted      BOOLEAN NOT NULL DEFAULT FALSE,
+    loyalty_points      INTEGER NOT NULL DEFAULT 0,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Preferred + accessible locations for a customer. This table should be set on first purchase.
+CREATE TABLE customer_locations (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id     UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+    location_id     UUID NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
+    is_preferred    BOOLEAN NOT NULL DEFAULT FALSE,
+    UNIQUE (customer_id, location_id)
+);
+
+-- Member profiles (children or adults) under a customer account
+CREATE TABLE members (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id         UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+    profile_id          UUID REFERENCES profiles(id) ON DELETE CASCADE,
+    full_name           VARCHAR(255) NOT NULL,
+    dob                 DATE,
+    gender              VARCHAR(20),
+    grade               VARCHAR(20),
+    email               VARCHAR(255),               -- optional; separate from parent
+    emergency_contact   VARCHAR(30),
+    cfc_id              VARCHAR(100),
+    tshirt_size         VARCHAR(10),
+    preferred_color     VARCHAR(50),
+    is_self             BOOLEAN NOT NULL DEFAULT FALSE,  -- "Register me as a member too"
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Coach / Tutor/Staff/ Management/ Admin profiles
+
+
+-- Staff availability (weekly recurring)
+CREATE TABLE staff_availability (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    profile_id        UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+    day_of_week     INTEGER NOT NULL CHECK (day_of_week BETWEEN 0 AND 6), -- 0 = Sunday
+    start_time      TIME NOT NULL,
+    end_time        TIME NOT NULL,
+    effective_from  DATE NOT NULL,
+    effective_to    DATE,              -- NULL = open-ended
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Staff leaves / absences
+CREATE TABLE staff_leaves (
+    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    profile_id    UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+    leave_date  DATE NOT NULL, -- Insert multiple rows with separate dates for Multi- Day or full day leave.
+    leave_start_time  TIME, -- NULL for Full Day or Multi day leave
+    leave_end_time    TIME, -- NULL for Full Day or Multi day leave
+    reason      VARCHAR(255),
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (profile_id, leave_date)
+);
+
+
+-- ============================================================
+-- SECTION 4: PAYMENT & BILLING
+-- ============================================================
+
+CREATE TABLE payment_methods (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id         UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+    stripe_pm_id        VARCHAR(255) NOT NULL,   -- Stripe PaymentMethod ID
+    last4               CHAR(4),
+    card_brand          VARCHAR(30),
+    exp_month           SMALLINT,
+    exp_year            SMALLINT,
+    is_default          BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE invoices (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id     UUID NOT NULL REFERENCES customers(id),
+    ownership_id    UUID NOT NULL REFERENCES ownerships(id), -- Question for Customer: Should we bill by location or by Ownership?
+    amount          NUMERIC(10, 2) NOT NULL,
+    tax             NUMERIC(10, 2) NOT NULL DEFAULT 0,
+    discount        NUMERIC(10, 2) NOT NULL DEFAULT 0, -- Multi Planet Discounts are at the ownership level only
+    total           NUMERIC(10, 2) NOT NULL,
+    status          VARCHAR(20) NOT NULL DEFAULT 'pending'
+                        CHECK (status IN ('pending', 'paid', 'failed', 'refunded', 'waived')),
+    due_date        DATE,
+    paid_at         TIMESTAMPTZ,
+    stripe_pi_id    VARCHAR(255),                -- Stripe PaymentIntent ID
+    payment_method_id UUID REFERENCES payment_methods(id),
+    notes           TEXT,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE invoice_line_items (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    invoice_id      UUID NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
+    description     VARCHAR(500) NOT NULL,
+    amount          NUMERIC(10, 2) NOT NULL,
+    reference_type  VARCHAR(50),    -- 'enrollment', 'setup_fee', 'event', 'camp', 'trial'
+    reference_id    UUID            -- polymorphic FK to the relevant table
+);
+
+
+-- ============================================================
+-- SECTION 5: SCHEDULES, BATCHES & ENROLLMENTS
+-- ============================================================
+
+-- A batch is a recurring class session (e.g. Math Grade-7, Mon/Wed 4 PM, Location X)
+CREATE TABLE batches (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    location_id         UUID NOT NULL REFERENCES locations(id),
+    product_id            UUID NOT NULL REFERENCES products(id),
+    capacity            INTEGER NOT NULL,
+    day_of_week         INTEGER NOT NULL CHECK (day_of_week BETWEEN 0 AND 6), -- 0 - Sunday, 6 - Saturday
+    start_time          TIME NOT NULL,
+    end_time            TIME NOT NULL,
+    effective_from      DATE NOT NULL,
+    effective_to        DATE,
+    is_active           BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Member enrollment in a batch (recurring subscription)
+CREATE TABLE enrollments (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    member_id           UUID NOT NULL REFERENCES members(id),
+    product_variant_id            UUID NOT NULL REFERENCES product_variants(id),
+    customer_id         UUID NOT NULL REFERENCES customers(id),
+    invoice_id          UUID REFERENCES invoices(id),
+    setup_fee_paid      BOOLEAN NOT NULL DEFAULT FALSE,
+    enrolled_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    cancelled_at        TIMESTAMPTZ,
+    cancellation_notice DATE,       -- date customer gave notice (must be ≥ 15 days before cancel)
+    status              VARCHAR(20) NOT NULL DEFAULT 'active'
+                            CHECK (status IN ('active', 'cancelled', 'suspended')),
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (member_id, batch_id)
+);
+
+CREATE TABLE enrollment_batches (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    enrollment_id           UUID NOT NULL REFERENCES enrollments(id),
+    batch_id            UUID NOT NULL REFERENCES batches(id), -- Customer not allowed to reduce frequency. Cancel a course and buy a new one with lesser frequency.
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (enrollment_id, batch_id)
+);
+
+
+-- ============================================================
+-- SECTION 6: STAFF ROSTER
+-- ============================================================
+
+CREATE TABLE rosters (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    ownership_id     UUID NOT NULL REFERENCES ownerships(id),
+    week_start_date DATE NOT NULL,   -- Monday of the roster week
+    published_at    TIMESTAMPTZ,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (location_id, week_start_date)
+);
+
+CREATE TABLE roster_assignments (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    roster_id       UUID NOT NULL REFERENCES rosters(id) ON DELETE CASCADE,
+    location_id     UUID NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
+    profile_id        UUID NOT NULL REFERENCES profiles(id),
+    batch_id        UUID NOT NULL REFERENCES batches(id),
+    session_date    DATE NOT NULL,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (roster_id, profile_id, batch_id, session_date)
+);
+
+
+-- ============================================================
+-- SECTION 7: ATTENDANCE & SESSION NOTES
+-- ============================================================
+
+-- One row per scheduled session (auto-generated from roster)
+-- All Registered Courses by job
+-- Make Classes insert here
+
+CREATE TABLE attendance (
+    id              		UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    roster_assignment_id        UUID NOT NULL REFERENCES roster_assignments(id) ON DELETE CASCADE,
+    member_id       		UUID NOT NULL REFERENCES members(id),
+    enrollment_id   		UUID REFERENCES enrollments(id), -- Can be NULL if for Trial classes
+    missed_attendance_id        UUID REFERENCES attendance(id), -- Only gets the value for make up classes
+    trial_id			UUID REFERENCES trials(id), -- Only gets the value for trial class
+    status          		VARCHAR(20) NOT NULL DEFAULT 'expected'
+                        		CHECK (status IN ('expected', 'present', 'absent', 'makeup booked', 'trial booked', 'makeup attended', 'trial attended') ),
+    marked_at       		TIMESTAMPTZ,
+    UNIQUE ( roster_assignment_id, member_id, enrollment_id, missed_attendance_id, trial_id)
+);
+
+CREATE TABLE session_notes (
+    id                          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    roster_assignment_id        UUID NOT NULL REFERENCES roster_assignments(id) ON DELETE CASCADE,
+    profile_id                    UUID NOT NULL REFERENCES profiles(id),
+    topic_covered               TEXT,
+    homework_notes              TEXT,
+    general_notes               TEXT,
+    internal_only_flag		BOOLEAN, 
+    created_at                  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at                  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE member_session_notes (
+    id                          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    roster_assignment_id        UUID NOT NULL REFERENCES roster_assignments(id) ON DELETE CASCADE,
+    member_id                   UUID NOT NULL REFERENCES members(id),
+    profile_id                    UUID NOT NULL REFERENCES profiles(id),
+    homework_done               BOOLEAN,
+    private_note                TEXT,        -- coach note visible only to admin
+    created_at                  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- ============================================================
+-- SECTION 8: TRIALS
+-- ============================================================
+
+CREATE TABLE trials (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    member_id       UUID NOT NULL REFERENCES members(id),
+    customer_id     UUID NOT NULL REFERENCES customers(id),
+    location_id     UUID NOT NULL REFERENCES locations(id),
+    product_id        UUID NOT NULL REFERENCES products(id),
+    batch_id        UUID REFERENCES batches(id),    -- chosen slot
+    trial_date      DATE NOT NULL,
+    status          VARCHAR(20) NOT NULL DEFAULT 'scheduled'
+                        CHECK (status IN ('scheduled', 'completed', 'no_show', 'converted')),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE trial_assessments (
+    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    trial_id            UUID NOT NULL UNIQUE REFERENCES trials(id),
+    profile_id            UUID NOT NULL REFERENCES profiles(id),
+    assessment_text     TEXT,
+    attachment_url      VARCHAR(500),
+    recommended_batch_id UUID REFERENCES batches(id),
+    submitted_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- ============================================================
+-- SECTION 10: NOTIFICATIONS & SUPPORT TICKETS
+-- ============================================================
+
+CREATE TABLE notifications (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    profile_id      UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+    type            VARCHAR(50) NOT NULL,    -- 'course_registration', 'monthly_payment', 'missed_class', 'failed_payment'
+    title           VARCHAR(255) NOT NULL,
+    body            TEXT,
+    is_read         BOOLEAN NOT NULL DEFAULT FALSE,
+    reference_type  VARCHAR(50),
+    reference_id    UUID,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE support_tickets (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    ownership_id    UUID NOT NULL REFERENCES ownerships(id),
+    location_id     UUID REFERENCES locations(id),
+    raised_by       UUID NOT NULL REFERENCES profiles(id),
+    category        VARCHAR(10) NOT NULL CHECK (category IN ('IT', 'Non-IT')),
+    short_description VARCHAR(500) NOT NULL,
+    status          VARCHAR(20) NOT NULL DEFAULT 'open'
+                        CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+-- ============================================================
+-- SECTION 11: AUDIT & LOYALTY
+-- ============================================================
+
+CREATE TABLE loyalty_transactions (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id     UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+    points_delta    INTEGER NOT NULL,   -- positive = earned, negative = redeemed
+    reference_type  VARCHAR(50),
+    reference_id    UUID,
+    description     VARCHAR(255),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- ============================================================
+-- SECTION 12: LMS (Learning Management System). Put it in a separate DB for better performance
+-- ============================================================
+
+CREATE TABLE lms_planets (
+    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name        VARCHAR(255) NOT NULL,
+    sort_order  INTEGER NOT NULL DEFAULT 0,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lms_products (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    lms_planet_id   UUID NOT NULL REFERENCES lms_planets(id),
+    name            VARCHAR(255) NOT NULL,
+    sort_order      INTEGER NOT NULL DEFAULT 0,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lms_modules (
+    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    lms_product_id    UUID NOT NULL REFERENCES lms_products(id),
+    title       VARCHAR(255) NOT NULL,
+    sort_order  INTEGER NOT NULL DEFAULT 0,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lms_topics (
+    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    module_id   UUID NOT NULL REFERENCES lms_modules(id) ON DELETE CASCADE,
+    title       VARCHAR(255) NOT NULL,
+    content_type VARCHAR(20) NOT NULL CHECK (content_type IN ('text', 'pdf', 'youtube')),
+    content_body TEXT,           -- HTML/markdown for text content
+    content_url  VARCHAR(500),   -- for PDF or YouTube
+    sort_order   INTEGER NOT NULL DEFAULT 0,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lms_quizzes (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    reference_type  VARCHAR(20) NOT NULL CHECK (reference_type IN ('module', 'topic')),
+    reference_id    UUID NOT NULL,      -- FK to lms_modules or lms_topics
+    title           VARCHAR(255) NOT NULL,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE lms_quiz_questions (
+    id                 UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    quiz_id            UUID NOT NULL REFERENCES lms_quizzes(id) ON DELETE CASCADE,
+    question_text      TEXT NOT NULL,
+    question_image_url VARCHAR(500),
+    answer_type	       VARCHAR(50) NOT NULL CHECK (reference_type IN ('Single', 'Multiple')), -- Single or Multiple 
+    created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    sort_order         INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE lms_quiz_answer_options (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    quiz_id         UUID NOT NULL REFERENCES lms_quizzes(id) ON DELETE CASCADE,
+    lms_quiz_question_id UUID NOT NULL REFERENCES lms_quiz_questions(id) ON DELETE CASCADE,
+    answer_option_text         TEXT NOT NULL,
+    answer_option_image_url    VARCHAR(500),
+    is_correct_answer   BOOLEAN,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    sort_order      INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE lms_product_sale_product_mapping (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    lms_product_id    UUID NOT NULL REFERENCES lms_products(id),
+    sale_product_id   UUID NOT NULL; -- Intention FK is not enforced as that Sales DB and LMS DB can be seperated out
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    sort_order      INTEGER NOT NULL DEFAULT 0
+);
+
+
+-- ============================================================
+-- INDEXES FOR PERFORMANCE
+-- ============================================================
+
+CREATE INDEX idx_members_customer         ON members(customer_id);
+CREATE INDEX idx_enrollments_member       ON enrollments(member_id);
+CREATE INDEX idx_enrollments_batch        ON enrollments(batch_id);
+CREATE INDEX idx_batches_location_product ON batches(location_id, product_id);
+CREATE INDEX idx_attendance_session       ON attendance(session_id);
+CREATE INDEX idx_attendance_member        ON attendance(member_id);
+CREATE INDEX idx_sessions_batch_date      ON sessions(batch_id, session_date);
+CREATE INDEX idx_invoices_customer        ON invoices(customer_id);
+CREATE INDEX idx_invoices_status          ON invoices(status);
+CREATE INDEX idx_events_location          ON events(location_id);
+CREATE INDEX idx_event_reg_member         ON event_registrations(member_id);
+CREATE INDEX idx_notifications_profile    ON notifications(profile_id, is_read);
+CREATE INDEX idx_loyalty_customer         ON loyalty_transactions(customer_id);
+CREATE INDEX idx_rosters_location_week    ON rosters(location_id, week_start_date);
