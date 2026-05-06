@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { TLP } from "@/lib/theme/tokens";
 import { Avatar } from "@/components/ui/Avatar";
+import { logoutAction } from "@/app/actions/auth";
 
 interface Props {
   productName: string;
@@ -92,28 +92,33 @@ export function TopBar({
             {userName}
           </span>
         </div>
-        <Link
-          href="/login"
-          style={{
-            color: "rgba(255,255,255,0.6)",
-            fontSize: 12,
-            fontWeight: 600,
-            textDecoration: "none",
-            padding: "6px 10px",
-            borderRadius: 6,
-            transition: "background 0.15s, color 0.15s",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.08)";
-            (e.currentTarget as HTMLAnchorElement).style.color = "#fff";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-            (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)";
-          }}
-        >
-          Log out
-        </Link>
+        <form action={logoutAction}>
+          <button
+            type="submit"
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontSize: 12,
+              fontWeight: 600,
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              padding: "6px 10px",
+              borderRadius: 6,
+              fontFamily: "inherit",
+              transition: "background 0.15s, color 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.08)";
+              (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)";
+            }}
+          >
+            Log out
+          </button>
+        </form>
       </div>
     </div>
   );
