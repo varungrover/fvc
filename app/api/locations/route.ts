@@ -37,17 +37,26 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'ownershipId is required for franchisor_admin' }, { status: 400 })
   }
 
-  const supabase = await createClient()
-  const location = await createLocation(supabase, {
-    ownership_id: ownershipId,
-    name: body.name,
-    address_line1: body.addressLine1,
-    address_line2: body.addressLine2 ?? null,
-    city: body.city,
-    state_province: body.stateProvince,
-    country: body.country,
-    postal_code: body.postalCode ?? null,
-  })
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (!UUID_RE.test(ownershipId)) {
+    return NextResponse.json({ error: 'ownershipId must be a valid UUID' }, { status: 400 })
+  }
 
-  return NextResponse.json(location, { status: 201 })
+  const supabase = await createClient()
+  try {
+    const location = await createLocation(supabase, {
+      ownership_id: ownershipId,
+      name: body.name,
+      address_line1: body.addressLine1,
+      address_line2: body.addressLine2 ?? null,
+      city: body.city,
+      state_province: body.stateProvince,
+      country: body.country,
+      postal_code: body.postalCode ?? null,
+    })
+    return NextResponse.json(location, { status: 201 })
+  } catch (e) {
+    console.error('createLocation failed:', e)
+    return NextResponse.json({ error: 'Failed to create location' }, { status: 500 })
+  }
 }

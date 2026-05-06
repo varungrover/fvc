@@ -33,23 +33,39 @@ export async function PATCH(
   const { id } = await params
   const body = await request.json().catch(() => ({}))
 
-  const supabase = await createClient()
-  const location = await updateLocation(
-    supabase,
-    id,
-    {
-      name: body.name,
-      address_line1: body.addressLine1,
-      address_line2: body.addressLine2,
-      city: body.city,
-      state_province: body.stateProvince,
-      country: body.country,
-      postal_code: body.postalCode,
-      is_active: body.isActive,
-    },
-    session,
-  )
+  const patch: Partial<
+    Pick<
+      import('@/lib/db/locations').LocationRow,
+      | 'name'
+      | 'address_line1'
+      | 'address_line2'
+      | 'city'
+      | 'state_province'
+      | 'country'
+      | 'postal_code'
+      | 'is_active'
+    >
+  > = {}
+  if (body.name !== undefined) patch.name = body.name
+  if (body.addressLine1 !== undefined) patch.address_line1 = body.addressLine1
+  if (body.addressLine2 !== undefined) patch.address_line2 = body.addressLine2
+  if (body.city !== undefined) patch.city = body.city
+  if (body.stateProvince !== undefined) patch.state_province = body.stateProvince
+  if (body.country !== undefined) patch.country = body.country
+  if (body.postalCode !== undefined) patch.postal_code = body.postalCode
+  if (body.isActive !== undefined) patch.is_active = body.isActive
 
-  if (!location) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-  return NextResponse.json(location)
+  if (Object.keys(patch).length === 0) {
+    return NextResponse.json({ error: 'No fields to update' }, { status: 400 })
+  }
+
+  const supabase = await createClient()
+  try {
+    const location = await updateLocation(supabase, id, patch, session)
+    if (!location) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    return NextResponse.json(location)
+  } catch (e) {
+    console.error('updateLocation failed:', e)
+    return NextResponse.json({ error: 'Failed to update location' }, { status: 500 })
+  }
 }
