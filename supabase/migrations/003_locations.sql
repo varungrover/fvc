@@ -29,7 +29,8 @@ create policy "scoped users read own ownership locations"
     ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
   );
 
--- Public: read active locations (storefront use)
+-- Public: read active locations (storefront use — intentionally grants read to all active
+-- locations globally; ownership scoping happens at the API layer via /api/public/locations?ownershipId=)
 create policy "public read active locations"
   on public.locations for select
   using (is_active = true);
@@ -54,6 +55,9 @@ create policy "franchisor admin update location"
   on public.locations for update
   using (
     (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin'
+  )
+  with check (
+    (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin'
   );
 
 -- XA: update locations under their own ownership
@@ -62,4 +66,10 @@ create policy "franchisee admin update own location"
   using (
     (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
     and ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
+  )
+  with check (
+    (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisee_admin'
+    and ownership_id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
   );
+
+create index on public.locations (ownership_id);
