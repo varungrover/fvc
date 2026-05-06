@@ -132,9 +132,10 @@ export function LocationsClient({ groups, totalLocations }: Props) {
       </Card>
 
       {/* Location groups */}
-      {filteredGroups.map((group, idx) => {
-        const accentColor = ACCENT_COLORS[idx % ACCENT_COLORS.length]
-        const accentBg = ACCENT_BGS[idx % ACCENT_BGS.length]
+      {filteredGroups.map((group) => {
+        const colorIdx = groups.findIndex((g) => g.id === group.id)
+        const accentColor = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length]
+        const accentBg = ACCENT_BGS[colorIdx % ACCENT_BGS.length]
 
         return (
           <div key={group.id}>

@@ -11,11 +11,13 @@ export default async function ManagementLocationsPage() {
   const supabase = await createClient()
 
   // Fetch all ownerships + their locations in one join
-  const { data: ownerships } = await supabase
+  const { data: ownerships, error } = await supabase
     .from('ownerships')
     .select('id, full_name, locations(*)')
     .eq('is_active', true)
     .order('full_name')
+
+  if (error) throw error
 
   const groups = (ownerships ?? []).map((o) => ({
     id: o.id as string,
