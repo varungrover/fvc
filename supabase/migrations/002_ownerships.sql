@@ -30,7 +30,9 @@ create policy "scoped users read own ownership"
     id = ((auth.jwt() -> 'app_metadata' ->> 'ownership_id')::uuid)
   );
 
--- Public: read active ownerships (branding for storefront — no email exposed)
+-- Public: read active ownerships (branding for storefront)
+-- NOTE: Email is intentionally excluded at the API layer, not via RLS column restriction.
+-- The public API route selects only: id, full_name, ownership_type, slug, logo_url, brand_primary, brand_accent, tagline
 create policy "public read active ownerships"
   on public.ownerships for select
   using (is_active = true);
@@ -47,7 +49,13 @@ create policy "franchisor admin update ownership"
   on public.ownerships for update
   using (
     (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin'
+  )
+  with check (
+    (auth.jwt() -> 'app_metadata' ->> 'role') = 'franchisor_admin'
   );
+
+-- No DELETE policy: deletes are intentionally blocked at the DB layer.
+-- Ownership deactivation uses is_active = false (soft-delete).
 
 -- Add FK from profiles.ownership_id to ownerships.id
 alter table public.profiles
