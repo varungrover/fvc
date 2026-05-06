@@ -1,35 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { TLP } from "@/lib/theme/tokens";
-import { DEMO_ACCOUNTS, DEMO_PASSWORD, resolveDemoLogin } from "@/lib/mock/auth";
+import { DEMO_ACCOUNTS, DEMO_PASSWORD } from "@/lib/mock/auth";
+import { loginAction } from "@/app/actions/auth";
 
 function LoginForm() {
-  const router = useRouter();
   const params = useSearchParams();
   const next = params.get("next");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
-    const account = resolveDemoLogin(email);
-    if (!account) {
-      setError("That email isn't a demo account. Pick one from the list →");
-      return;
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.set("email", email);
+    formData.set("password", password);
+    if (next) formData.set("next", next);
+
+    const result = await loginAction(formData);
+    if (result?.error) {
+      setError(result.error);
     }
-    if (!password.trim()) {
-      setError("Password is required (any value works for the prototype).");
-      return;
-    }
-    router.push(next || account.landing);
+    setLoading(false);
   }
 
   return (
@@ -117,7 +120,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            hint={`Prototype hint: try "${DEMO_PASSWORD}"`}
+            hint={`Password: "${DEMO_PASSWORD}"`}
           />
           {error ? (
             <div
@@ -133,8 +136,13 @@ function LoginForm() {
               {error}
             </div>
           ) : null}
-          <Button type="submit" size="lg" style={{ marginTop: 6, justifyContent: "center" }}>
-            Sign in
+          <Button
+            type="submit"
+            size="lg"
+            style={{ marginTop: 6, justifyContent: "center" }}
+            disabled={loading}
+          >
+            {loading ? "Signing in…" : "Sign in"}
           </Button>
         </form>
 
