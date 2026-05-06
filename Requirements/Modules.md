@@ -1,6 +1,6 @@
 # Mentora — Module Delivery Map
 
-_Last updated: 2026-05-04_
+_Last updated: 2026-05-05_
 
 Each module entry defines the bounded domain, its database ownership, API surface, UI pages,
 role access, and inter-module dependencies. Use this to sequence sprints, assign work,
@@ -29,14 +29,12 @@ least schema-complete and API-ready.
 9. Roster                        (depends on 5, 6)
 10. Attendance & Sessions        (depends on 6, 8, 9)
 11. Trials                       (depends on 5, 6, 7)
-12. Events & Registrations       (depends on 7, 8)
 13. LMS & Content                (depends on 4, 7)
-14. Achievements                 (depends on 6, 7)
-15. Notifications                (depends on 8, 10, 12)
-16. Reporting & Analytics        (depends on 8, 10, 12)
+15. Notifications                (depends on 8, 10)
+16. Reporting & Analytics        (depends on 8, 10)
 17. Price Change Requests        (depends on 2, 3, 4)
 18. Support Tickets              (depends on 2)
-19. Public Storefront            (depends on 4, 12)
+19. Public Storefront            (depends on 4)
 ```
 
 ---
@@ -564,53 +562,6 @@ and view all trials in their ownership.
 
 ---
 
-## Module 12 — Events & Registrations
-
-**Domain:** Events, tournaments, and camps — creation, registration, custom data capture,
-and invoicing.
-
-### Database tables
-| Table | Purpose |
-|---|---|
-| `events` | Event/tournament/camp record; `ownership_id`, capacity, pricing |
-| `event_custom_fields` | Per-event dynamic form fields |
-| `event_registrations` | `member_id` + `event_id`; links to an invoice line item |
-
-_All three tables are missing from the current schema and must be added (see gaps.md §2a)._
-
-### API routes
-| Method | Path | Roles |
-|---|---|---|
-| GET | `/api/events?ownershipId=&type=` | All |
-| POST | `/api/events` | FA, XA |
-| PATCH | `/api/events/:id` | FA, XA |
-| DELETE | `/api/events/:id` | FA, XA |
-| GET | `/api/events/:id/registrations` | FA, XA |
-| POST | `/api/events/:id/registrations` | CX, FA, XA |
-| DELETE | `/api/events/:id/registrations/:regId` | CX (own), FA, XA |
-
-### UI pages
-| Page | Role |
-|---|---|
-| Admin → Events | FA |
-| Franchisee Admin → Events | XA |
-| Customer → Dashboard (upcoming events) | CX |
-| Customer → Events (browse + register) | CX |
-| Public storefront (upcoming events list) | PUB |
-
-### Role access summary
-FA/XA create and manage events. CX registers members. PUB reads upcoming public events.
-
-### Dependencies
-- Module 7 (Customer & Member) — registration is per member
-- Module 8 (Enrollment & Billing) — registration generates an invoice line item
-
-### Notes
-- Event custom fields: at registration time, render only the custom fields defined for that event (e.g. "chess rating", "shirt size for tournament").
-- Public events appear on the storefront before login. Registration always requires a CX account.
-
----
-
 ## Module 13 — LMS & Content
 
 **Domain:** Learning management system — content hierarchy (Planet → Level → Module → Topic),
@@ -674,40 +625,6 @@ CO/FA see all including drafts.
 
 ---
 
-## Module 14 — Achievements
-
-**Domain:** Coach-awarded badges and recognition entries per member.
-
-### Database tables
-| Table | Purpose |
-|---|---|
-| `member_achievements` | `member_id`, `awarded_by_profile_id`, `badge_name`, `notes`, `awarded_at` (to be added — see gaps.md §2b) |
-
-### API routes
-| Method | Path | Roles |
-|---|---|---|
-| GET | `/api/achievements?memberId=` | CX (own), CO, FA, XA |
-| POST | `/api/achievements` | CO, FA, XA |
-
-### UI pages
-| Page | Role |
-|---|---|
-| Coach → Achievements | CO |
-| Customer → Members (achievements section) | CX |
-
-### Role access summary
-CO awards badges. CX views their member's achievements. FA/XA view all.
-
-### Dependencies
-- Module 6 (Coach & Staff) — awarded_by is a coach profile
-- Module 7 (Customer & Member) — recipient is a member
-
-### Notes
-- `member_achievements` table does not exist in the current schema — must be added before this module can be wired (see gaps.md §2b).
-- Earn-and-display only at launch. No badge unlocking logic, no redemption, no automated triggers.
-
----
-
 ## Module 15 — Notifications
 
 **Domain:** System-generated in-app notifications triggered by key events across modules.
@@ -751,14 +668,14 @@ Every authenticated user manages their own notifications. No cross-user reads.
 rates, and failed-registration analysis.
 
 ### Database tables
-No owned tables — reads across Modules 3, 4, 8, 10, 12.
+No owned tables — reads across Modules 3, 4, 8, 10.
 
 ### API routes
 | Method | Path | Roles |
 |---|---|---|
 | GET | `/api/reports/revenue` | FM, XM, FA, XA |
 | GET | `/api/reports/enrollments` | FM, XM, FA, XA |
-| GET | `/api/reports/failed-registrations` | FM, XM, FA, XA |
+| GET | `/api/reports/failed-enrollments` | FM, XM, FA, XA |
 | GET | `/api/reports/attendance` | FM, XM, FA, XA |
 
 **Common query params:** `ownershipId`, `locationId`, `planetId`, `levelId`, `from`, `to`. Append `?format=csv` for CSV export.
@@ -776,12 +693,12 @@ FM and FA see all ownerships in the deployment. XM and XA see only their own own
 Scoping is enforced server-side by comparing the `ownershipId` query param against the JWT claim.
 
 ### Dependencies
-All data modules (8, 10, 12) must be complete before reports have real data.
+All data modules (8, 10) must be complete before reports have real data.
 
 ### Notes
 - All four report endpoints are read-only SQL aggregations — no write path.
 - CSV export: same query, different serialization. Use a shared query layer and serialize per the `format` param.
-- Failed registrations: log a `registration_attempt` event (lightweight table or Supabase log) whenever a batch is full and a CX tries to enroll. Report on these events.
+- Failed enrollments: log a `enrollment_attempt` event (lightweight table or Supabase log) whenever a batch is full and a CX tries to enroll. Report on these events.
 
 ---
 
@@ -863,14 +780,13 @@ XA/XM raise tickets for their ownership. FA/FM view all tickets and update statu
 events, and trial/enrollment CTAs.
 
 ### Database tables
-No owned tables — reads from Modules 3, 4, 12.
+No owned tables — reads from Modules 3, 4.
 
 ### API routes
 | Method | Path | Roles |
 |---|---|---|
 | GET | `/api/public/storefront` | PUB |
 | GET | `/api/public/planets` | PUB |
-| GET | `/api/public/events` | PUB |
 
 ### UI pages
 | Page | Role |
@@ -882,7 +798,6 @@ Fully public — no auth.
 
 ### Dependencies
 - Module 4 (Catalog) — planets, levels, pricing
-- Module 12 (Events) — upcoming public events
 
 ### Notes
 - Per-tenant branding (logo, colors) is configured in deployment env vars or a `brand_config` table; the storefront API returns this alongside catalog data.
@@ -896,8 +811,6 @@ Fully public — no auth.
 | # | Item | Owner | Module affected |
 |---|---|---|---|
 | G1 | Fix 7 SQL schema bugs (S1–S7 in gaps.md §1) | — | All |
-| G2 | Add missing tables: `events`, `event_registrations`, `event_custom_fields` | — | 12 |
-| G3 | Add missing table: `member_achievements` | — | 14 |
 | G4 | Add missing table: `lms_quiz_attempts` | — | 13 |
 | G5 | Add missing table: `staff_planets` | — | 6 |
 | G6 | Fix `rosters` key: `ownership_id` → `location_id` | — | 9 |
