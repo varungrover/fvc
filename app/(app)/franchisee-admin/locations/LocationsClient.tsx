@@ -89,6 +89,8 @@ export function LocationsClient({ locations, ownershipName }: Props) {
         const errBody = await res.json().catch(() => ({}))
         setAddError(errBody.error ?? 'Failed to save. Please try again.')
       }
+    } catch {
+      setAddError('Network error. Please try again.')
     } finally {
       setSaving(false)
     }

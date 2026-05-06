@@ -10,6 +10,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'ownershipId query param required' }, { status: 400 })
   }
 
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (!UUID_RE.test(ownershipId)) {
+    return NextResponse.json({ error: 'ownershipId must be a valid UUID' }, { status: 400 })
+  }
+
   const supabase = await createClient()
   const locations = await listPublicLocations(supabase, ownershipId)
   return NextResponse.json(locations)
