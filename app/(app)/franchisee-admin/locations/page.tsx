@@ -7,13 +7,14 @@ import { LocationsClient } from './LocationsClient'
 export default async function FranchiseeLocationsPage() {
   const session = await getSession()
   if (!session) redirect('/login')
+  if (!session.ownershipId) redirect('/login')
 
   const supabase = await createClient()
   const locations = await listLocations(supabase, session)
 
   const { data: ownership } = await supabase
     .from('ownerships')
-    .select('full_name, id')
+    .select('full_name')
     .eq('id', session.ownershipId ?? '')
     .single()
 
