@@ -67,6 +67,22 @@ export async function updateCoachLeaveStatusAction(leaveId: string, status: 'app
   revalidatePath(`/admin/coaches/${coachId}`)
 }
 
+export async function deleteCoachLeaveAction(leaveId: string, profileId: string) {
+  const supabase = await createClient()
+  const session = await getSession()
+  
+  const isSelf = session?.id === profileId
+  const isAdmin = session && ['franchisor_admin', 'franchisor_mgmt', 'franchisee_admin'].includes(session.role)
+
+  if (!session || (!isSelf && !isAdmin)) {
+    throw new Error('Unauthorized')
+  }
+
+  await db.deleteCoachLeave(supabase, leaveId)
+  revalidatePath(`/admin/coaches/${profileId}`)
+  revalidatePath('/coach/leaves')
+}
+
 export async function updateCoachQualificationsAction(profileId: string, planetIds: string[]) {
   const supabase = await createClient()
   const session = await getSession()

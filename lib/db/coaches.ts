@@ -202,3 +202,14 @@ export async function updateCoachLeaveStatus(
     .eq('id', leaveId)
   if (error) throw error
 }
+
+export async function deleteCoachLeave(
+  supabase: SupabaseClient,
+  leaveId: string
+): Promise<void> {
+  const { error } = await supabase
+    .from('staff_leaves')
+    .delete()
+    .eq('id', leaveId)
+  if (error) throw error
+}
