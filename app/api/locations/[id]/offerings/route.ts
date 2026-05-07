@@ -24,6 +24,7 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  console.log("DEBUG_POST: Received request");
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   
@@ -35,26 +36,20 @@ export async function POST(
     const { id: locationId } = await params;
     const body = await request.json();
     const { levelId, variantIds, enabled } = body;
+    console.log("DEBUG_POST: Params", { locationId, levelId, variantIds, enabled });
 
     const supabase = await createClient();
 
     if (enabled) {
-      if (!variantIds || variantIds.length === 0) {
-        return NextResponse.json({ error: "No variants provided" }, { status: 400 });
-      }
-
-      // 1. Fetch variants to get their prices (using 'price' column)
+      // 1. Fetch variants to get their prices
       const { data: variants, error: vError } = await supabase
         .from("product_variants")
         .select("id, price, setup_fee")
         .in("id", variantIds);
 
       if (vError) {
-        console.error("V_ERROR:", vError);
-        throw vError;
-      }
-      if (!variants || variants.length === 0) {
-        return NextResponse.json({ error: "No matching variants found" }, { status: 404 });
+        console.error("DEBUG_POST: V_ERROR", vError);
+        return NextResponse.json({ error: `[SERVER_V] ${vError.message}` }, { status: 500 });
       }
 
       // 2. Upsert offerings with default prices
@@ -72,21 +67,27 @@ export async function POST(
         )
         .select();
 
-      if (uError) throw uError;
+      if (uError) {
+        console.error("DEBUG_POST: U_ERROR", uError);
+        return NextResponse.json({ error: `[SERVER_U] ${uError.message}` }, { status: 500 });
+      }
       return NextResponse.json(updated);
     } else {
-      // 3. Delete offerings (or mark inactive)
+      // 3. Delete offerings
       const { error: dError } = await supabase
         .from("location_course_offerings")
         .delete()
         .eq("location_id", locationId)
         .in("product_variant_id", variantIds);
 
-      if (dError) throw dError;
+      if (dError) {
+        console.error("DEBUG_POST: D_ERROR", dError);
+        return NextResponse.json({ error: `[SERVER_D] ${dError.message}` }, { status: 500 });
+      }
       return NextResponse.json([]);
     }
   } catch (error: any) {
-    console.error("OFFERINGS_UPDATE_ERROR:", error);
-    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
+    console.error("DEBUG_POST: CATCH_ERROR", error);
+    return NextResponse.json({ error: `[SERVER_CATCH] ${error.message}` }, { status: 500 });
   }
 }
