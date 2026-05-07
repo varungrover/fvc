@@ -54,7 +54,10 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to update offerings");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to update offerings");
+      }
       const updatedOfferings = await res.json();
 
       // Update local state: if enabled, we should have offerings; if disabled, they should be removed (or marked inactive)

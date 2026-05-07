@@ -39,6 +39,10 @@ export async function POST(
     const supabase = await createClient();
 
     if (enabled) {
+      if (!variantIds || variantIds.length === 0) {
+        return NextResponse.json({ error: "No variants provided" }, { status: 400 });
+      }
+
       // 1. Fetch variants to get their base prices
       const { data: variants, error: vError } = await supabase
         .from("product_variants")
@@ -46,6 +50,9 @@ export async function POST(
         .in("id", variantIds);
 
       if (vError) throw vError;
+      if (!variants || variants.length === 0) {
+        return NextResponse.json({ error: "No matching variants found" }, { status: 404 });
+      }
 
       // 2. Upsert offerings with base prices
       const { data: updated, error: uError } = await supabase
@@ -76,7 +83,7 @@ export async function POST(
       return NextResponse.json([]);
     }
   } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("OFFERINGS_UPDATE_ERROR:", error);
+    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
   }
 }
