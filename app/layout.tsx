@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import { TLP } from "@/lib/theme/tokens";
+import LoadingProvider from "@/components/providers/LoadingProvider";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -15,14 +17,14 @@ export const metadata: Metadata = {
   description: "The LMS platform for learning academies",
 };
 
-import { Toaster } from "react-hot-toast";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={nunitoSans.variable}>
       <body>
-        {children}
-        <Toaster position="top-right" />
+        <LoadingProvider>
+          {children}
+          <Toaster position="top-right" />
+        </LoadingProvider>
       </body>
     </html>
   );
