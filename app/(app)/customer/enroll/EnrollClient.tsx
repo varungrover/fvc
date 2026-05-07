@@ -149,6 +149,16 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                     </div>
                   </div>
                 ))}
+                {members.length === 0 && (
+                  <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px 0", border: `2px dashed ${TLP.gray100}`, borderRadius: 16 }}>
+                    <div style={{ fontSize: 40, marginBottom: 16 }}>🐣</div>
+                    <div style={{ fontWeight: 700, color: TLP.navy, marginBottom: 8 }}>No Students Found</div>
+                    <p style={{ color: TLP.gray500, fontSize: 14, marginBottom: 24 }}>You need to add a student to your profile before enrolling.</p>
+                    <Button variant="primary" onClick={() => router.push("/customer/members/new")}>
+                      + Add New Student
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           )}

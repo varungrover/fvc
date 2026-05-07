@@ -6,7 +6,18 @@ export default async function EnrollPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
-  // Parallel fetch for speed
+  // 1. Get the customer record for this user
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("id")
+    .eq("profile_id", user?.id)
+    .single();
+
+  if (!customer) {
+    return <div>Customer record not found. Please complete your profile.</div>;
+  }
+
+  // 2. Parallel fetch for speed using the correct customer.id
   const [
     { data: levels },
     { data: members },
@@ -14,7 +25,7 @@ export default async function EnrollPage() {
     discountTiers
   ] = await Promise.all([
     supabase.from("product_variants").select("*"),
-    supabase.from("members").select("*").eq("customer_id", user?.id),
+    supabase.from("members").select("*").eq("customer_id", customer.id),
     supabase.from("batches").select("*"),
     listDiscountTiers(supabase)
   ]);
@@ -26,7 +37,7 @@ export default async function EnrollPage() {
         members: members || [], 
         batches: batches || [], 
         discountTiers,
-        customerId: user?.id 
+        customerId: customer.id 
       }} 
     />
   );
