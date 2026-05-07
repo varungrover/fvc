@@ -224,31 +224,57 @@ export interface PaymentMethod {
   isDefault: boolean;
 }
 
-export type InvoiceStatus = "pending" | "paid" | "failed" | "refunded" | "waived";
+export type InvoiceStatus = "draft" | "open" | "paid" | "void" | "uncollectible";
 
 export interface Invoice {
   id: ID;
   customerId: ID;
-  paymentMethodId?: ID;
-  amount: number;
-  tax: number;
-  discount: number;
-  total: number;
+  ownershipId: ID;
+  amountCents: number;
   status: InvoiceStatus;
-  stripePiId?: string;
-  issuedAt: ISODateTime;
+  dueDate: ISODate;
   paidAt?: ISODateTime;
+  stripeInvoiceId?: string;
+  createdAt: ISODateTime;
 }
 
-export type InvoiceLineItemRefType = "enrollment" | "setup_fee" | "event" | "camp" | "trial";
+export interface Payment {
+  id: ID;
+  invoiceId: ID;
+  amountCents: number;
+  method: "stripe" | "cash" | "transfer";
+  stripePaymentIntentId?: string;
+  status: "succeeded" | "failed" | "pending";
+  createdAt: ISODateTime;
+}
+
+export interface Membership {
+  id: ID;
+  memberId: ID;
+  ownershipId: ID;
+  stripeCustomerId?: string;
+  status: "active" | "paused" | "cancelled" | "past_due";
+  billingCycleAnchor: ISODate;
+  nextBillingDate: ISODate;
+  createdAt: ISODateTime;
+}
 
 export interface InvoiceLineItem {
   id: ID;
   invoiceId: ID;
+  enrollmentId?: ID;
   description: string;
   amount: number;
-  referenceType: InvoiceLineItemRefType;
-  referenceId: ID;
+  discountAmount: number;
+  referenceType: "enrollment" | "setup_fee" | "trial" | "adjustment";
+  referenceId?: ID;
+}
+
+export interface DiscountTier {
+  id: ID;
+  planetsCount: number;
+  discountPct: number;
+  isActive: boolean;
 }
 
 // ============================================================
@@ -267,18 +293,26 @@ export interface Batch {
   createdAt?: ISODateTime;
 }
 
-export type EnrollmentStatus = "active" | "cancelled" | "suspended";
+export type EnrollmentStatus = "active" | "dropped" | "completed";
 
 export interface Enrollment {
   id: ID;
   memberId: ID;
-  batchId: ID;
   customerId: ID;
-  invoiceId?: ID;
-  setupFeePaid: boolean;
-  cancellationNotice?: ISODate;
+  productVariantId: ID;
+  locationId: ID;
+  ownershipId: ID;
+  offeringPrice: number;
   status: EnrollmentStatus;
   enrolledAt: ISODateTime;
+  cancelledAt?: ISODateTime;
+  cancellationReason?: string;
+}
+
+export interface EnrollmentBatch {
+  id: ID;
+  enrollmentId: ID;
+  batchId: ID;
 }
 
 export interface EnrollmentDiscount {
