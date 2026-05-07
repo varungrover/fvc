@@ -9,10 +9,6 @@ import { Button } from '@/components/ui/Button'
 import { Tabs } from '@/components/ui/Tabs'
 import { 
   Calendar, 
-  Clock, 
-  MapPin, 
-  Mail, 
-  Plus, 
   Trash2, 
   Check, 
   X,
@@ -20,13 +16,8 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { 
-  updateCoachAvailabilityAction, 
-  createCoachLeaveAction,
-  updateCoachLeaveStatusAction,
-  updateCoachQualificationsAction
-} from '@/app/actions/coaches'
 import { PlanetAssignModal } from '../PlanetAssignModal'
+import { TLP } from '@/lib/theme/tokens'
 
 interface CoachDetailClientProps {
   coach: CoachRow
@@ -69,7 +60,12 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
   const saveAvailability = async () => {
     setIsSaving(true)
     try {
-      await updateCoachAvailabilityAction(coach.id, availability.map(({ id, profile_id, ...rest }) => rest))
+      const res = await fetch(`/api/coaches/${coach.id}/availability`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(availability.map(({ id, profile_id, ...rest }) => rest))
+      })
+      if (!res.ok) throw new Error('Failed to update availability')
       toast.success('Availability updated successfully')
     } catch (err) {
       toast.error('Failed to update availability')
@@ -80,7 +76,12 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
 
   const handleApproveLeave = async (leave: StaffLeave) => {
     try {
-      await updateCoachLeaveStatusAction(leave.id, 'approved', coach.id)
+      const res = await fetch(`/api/leaves/${leave.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'approved' })
+      })
+      if (!res.ok) throw new Error('Failed to update leave')
       setLeaves(leaves.map(l => l.id === leave.id ? { ...l, status: 'approved' } : l))
       toast.success('Leave approved')
     } catch (err) {
@@ -90,7 +91,12 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
 
   const handleRejectLeave = async (leave: StaffLeave) => {
     try {
-      await updateCoachLeaveStatusAction(leave.id, 'rejected', coach.id)
+      const res = await fetch(`/api/leaves/${leave.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'rejected' })
+      })
+      if (!res.ok) throw new Error('Failed to update leave')
       setLeaves(leaves.map(l => l.id === leave.id ? { ...l, status: 'rejected' } : l))
       toast.success('Leave rejected')
     } catch (err) {
@@ -100,7 +106,12 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
 
   const handleSaveQualifications = async (planetIds: string[]) => {
     try {
-      await updateCoachQualificationsAction(coach.id, planetIds)
+      const res = await fetch(`/api/coaches/${coach.id}/qualifications`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planetIds })
+      })
+      if (!res.ok) throw new Error('Failed to update qualifications')
       setCurrentPlanetIds(planetIds)
       toast.success('Qualifications updated')
     } catch (err) {
@@ -112,7 +123,7 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
   return (
     <div style={{ padding: '24px', maxWidth: '1000px', margin: '0 auto' }}>
       <div style={{ marginBottom: '20px' }}>
-        <Link href={backPath} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6366f1', fontSize: '14px', textDecoration: 'none' }}>
+        <Link href={backPath} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: TLP.indigo600, fontSize: '14px', textDecoration: 'none', fontWeight: 600 }}>
           <ArrowLeft size={16} />
           Back to Coaches
         </Link>
@@ -151,11 +162,11 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
         />
       </div>
 
-      <Card style={{ marginTop: '16px' }}>
+      <Card style={{ marginTop: '16px', padding: '24px' }}>
         {activeTab === 'availability' ? (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600 }}>Recurring Weekly Availability</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: TLP.navy }}>Weekly Availability</h3>
               <Button variant="secondary" size="sm" onClick={handleAddAvailability}>
                 <Plus size={16} style={{ marginRight: '8px' }} />
                 Add Slot
@@ -164,43 +175,44 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {availability.map((slot, index) => (
-                <div key={slot.id} style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '12px', border: '1px solid #eee', borderRadius: '8px' }}>
+                <div key={slot.id} style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', padding: '16px', background: TLP.bg, border: `1px solid ${TLP.gray100}`, borderRadius: '12px' }}>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>DAY</label>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>DAY</label>
                     <select 
                       value={slot.day_of_week}
                       onChange={(e) => handleUpdateAvailability(index, { day_of_week: e.target.value })}
-                      style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
+                      style={{ width: '100%', padding: '10px', borderRadius: '8px', border: `1.5px solid ${TLP.gray100}`, fontSize: '14px', outline: 'none' }}
                     >
                       {days.map(d => <option key={d} value={d}>{d}</option>)}
                     </select>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>START TIME</label>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>START TIME</label>
                     <input 
                       type="time" 
                       value={slot.start_time}
                       onChange={(e) => handleUpdateAvailability(index, { start_time: e.target.value })}
-                      style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
+                      style={{ width: '100%', padding: '10px', borderRadius: '8px', border: `1.5px solid ${TLP.gray100}`, fontSize: '14px', outline: 'none' }}
                     />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>END TIME</label>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>END TIME</label>
                     <input 
                       type="time" 
                       value={slot.end_time}
                       onChange={(e) => handleUpdateAvailability(index, { end_time: e.target.value })}
-                      style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
+                      style={{ width: '100%', padding: '10px', borderRadius: '8px', border: `1.5px solid ${TLP.gray100}`, fontSize: '14px', outline: 'none' }}
                     />
                   </div>
-                  <Button variant="secondary" size="sm" onClick={() => handleRemoveAvailability(index)} style={{ marginTop: '18px', color: '#ef4444' }}>
-                    <Trash2 size={16} />
+                  <Button variant="secondary" size="sm" onClick={() => handleRemoveAvailability(index)} style={{ color: '#ef4444', height: '42px', padding: '0 12px' }}>
+                    <Trash2 size={18} />
                   </Button>
                 </div>
               ))}
               {availability.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#666', fontSize: '14px' }}>
-                  No availability slots defined.
+                <div style={{ textAlign: 'center', padding: '60px', color: TLP.gray400, background: TLP.bg, borderRadius: '12px' }}>
+                  <Calendar size={40} style={{ opacity: 0.2, margin: '0 auto 12px' }} />
+                  <p>No availability slots defined.</p>
                 </div>
               )}
             </div>
@@ -208,29 +220,29 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
         ) : (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600 }}>Leave Requests</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: TLP.navy }}>Leave History</h3>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {leaves.map((leave) => (
-                <div key={leave.id} style={{ padding: '16px', border: '1px solid #eee', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div key={leave.id} style={{ padding: '16px 20px', border: `1px solid ${TLP.gray100}`, borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: TLP.bg }}>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '14px' }}>
+                    <div style={{ fontWeight: 700, fontSize: '15px', color: TLP.navy }}>
                       {new Date(leave.start_date).toLocaleDateString()} - {new Date(leave.end_date).toLocaleDateString()}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>{leave.reason || 'No reason provided'}</div>
+                    <div style={{ fontSize: '13px', color: TLP.gray500, marginTop: '4px' }}>{leave.reason || 'No reason provided'}</div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <Badge variant={leave.status === 'approved' ? 'success' : leave.status === 'rejected' ? 'error' : 'secondary'}>
                       {leave.status.toUpperCase()}
                     </Badge>
                     {isAdmin && leave.status === 'pending' && (
                       <div style={{ display: 'flex', gap: '8px' }}>
-                        <Button variant="secondary" size="sm" onClick={() => handleApproveLeave(leave)} style={{ color: '#10b981' }}>
-                          <Check size={16} />
+                        <Button variant="secondary" size="sm" onClick={() => handleApproveLeave(leave)} style={{ color: '#10b981', border: '1px solid #10b981' }}>
+                          <Check size={18} />
                         </Button>
-                        <Button variant="secondary" size="sm" onClick={() => handleRejectLeave(leave)} style={{ color: '#ef4444' }}>
-                          <X size={16} />
+                        <Button variant="secondary" size="sm" onClick={() => handleRejectLeave(leave)} style={{ color: '#ef4444', border: '1px solid #ef4444' }}>
+                          <X size={18} />
                         </Button>
                       </div>
                     )}
@@ -238,8 +250,9 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
                 </div>
               ))}
               {leaves.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#666', fontSize: '14px' }}>
-                  No leave history.
+                <div style={{ textAlign: 'center', padding: '60px', color: TLP.gray400, background: TLP.bg, borderRadius: '12px' }}>
+                  <Calendar size={40} style={{ opacity: 0.2, margin: '0 auto 12px' }} />
+                  <p>No leave history found.</p>
                 </div>
               )}
             </div>

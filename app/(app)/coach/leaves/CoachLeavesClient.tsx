@@ -11,15 +11,10 @@ import { Modal } from '@/components/ui/Modal'
 import { 
   Calendar, 
   Plus, 
-  AlertCircle,
-  CheckCircle2,
-  Clock,
   Trash2,
-  XCircle,
   Info
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
-import { createCoachLeaveAction, deleteCoachLeaveAction } from '@/app/actions/coaches'
 import { TLP } from '@/lib/theme/tokens'
 
 interface CoachLeavesClientProps {
@@ -55,13 +50,29 @@ export function CoachLeavesClient({ initialLeaves, profileId }: CoachLeavesClien
 
     setIsSubmitting(true)
     try {
-      await createCoachLeaveAction(profileId, newLeave)
-      // Refresh the page or update state
-      window.location.reload()
+      const res = await fetch(`/api/coaches/${profileId}/leaves`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newLeave)
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to submit leave request')
+      }
+
       toast.success('Leave request submitted!')
       setIsModalOpen(false)
-    } catch (err) {
-      toast.error('Failed to submit leave request')
+      // Refresh list
+      const updatedRes = await fetch(`/api/coaches/${profileId}/leaves`)
+      if (updatedRes.ok) {
+        const updatedLeaves = await updatedRes.json()
+        setLeaves(updatedLeaves)
+      } else {
+        window.location.reload()
+      }
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to submit leave request')
     } finally {
       setIsSubmitting(false)
     }
@@ -72,12 +83,20 @@ export function CoachLeavesClient({ initialLeaves, profileId }: CoachLeavesClien
 
     setIsCancelling(true)
     try {
-      await deleteCoachLeaveAction(leaveId, profileId)
+      const res = await fetch(`/api/leaves/${leaveId}`, {
+        method: 'DELETE'
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to cancel leave')
+      }
+
       setLeaves(leaves.filter(l => l.id !== leaveId))
       toast.success('Leave request cancelled')
       setIsDetailModalOpen(false)
-    } catch (err) {
-      toast.error('Failed to cancel leave')
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to cancel leave')
     } finally {
       setIsCancelling(false)
     }
