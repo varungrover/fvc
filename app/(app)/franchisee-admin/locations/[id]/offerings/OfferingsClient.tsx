@@ -55,8 +55,7 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        console.error("DEBUG: Toggle error", errorData);
+        const errorData = await res.json().catch(() => ({ error: "Server error" }));
         throw new Error(errorData.error || "Failed to update offerings");
       }
       const updatedOfferings = await res.json();
@@ -133,46 +132,64 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
                   </div>
                 </div>
 
-                <label style={{ 
-                  position: 'relative', 
-                  display: 'inline-block', 
-                  width: 44, 
-                  height: 24,
-                  cursor: isLoading ? 'wait' : 'pointer'
-                }}>
-                  <input 
-                    type="checkbox" 
-                    checked={isEnabled}
-                    disabled={isLoading}
-                    onChange={(e) => handleToggleLevel(level.id, e.target.checked)}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <span style={{
-                    position: 'absolute',
-                    cursor: 'pointer',
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    backgroundColor: isEnabled ? TLP.teal : TLP.gray200,
-                    transition: '.3s',
-                    borderRadius: 24,
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  {isLoading && (
+                    <div style={{
+                      width: 16,
+                      height: 16,
+                      border: `2px solid ${TLP.gray100}`,
+                      borderTop: `2px solid ${TLP.teal}`,
+                      borderRadius: "50%",
+                      animation: "spin 0.8s linear infinite"
+                    }} />
+                  )}
+                  <label style={{ 
+                    position: 'relative', 
+                    display: 'inline-block', 
+                    width: 44, 
+                    height: 24,
+                    cursor: isLoading ? 'wait' : 'pointer'
                   }}>
+                    <input 
+                      type="checkbox" 
+                      checked={isEnabled}
+                      disabled={isLoading}
+                      onChange={(e) => handleToggleLevel(level.id, e.target.checked)}
+                      style={{ opacity: 0, width: 0, height: 0 }}
+                    />
                     <span style={{
                       position: 'absolute',
-                      content: '""',
-                      height: 18, width: 18,
-                      left: isEnabled ? 22 : 3,
-                      bottom: 3,
-                      backgroundColor: 'white',
+                      cursor: 'pointer',
+                      top: 0, left: 0, right: 0, bottom: 0,
+                      backgroundColor: isEnabled ? TLP.teal : TLP.gray200,
                       transition: '.3s',
-                      borderRadius: '50%',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                    }} />
-                  </span>
-                </label>
+                      borderRadius: 24,
+                    }}>
+                      <span style={{
+                        position: 'absolute',
+                        content: '""',
+                        height: 18, width: 18,
+                        left: isEnabled ? 22 : 3,
+                        bottom: 3,
+                        backgroundColor: 'white',
+                        transition: '.3s',
+                        borderRadius: '50%',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                      }} />
+                    </span>
+                  </label>
+                </div>
               </Card>
             );
           })}
         </div>
       )}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes spin { 
+          from { transform: rotate(0deg); } 
+          to { transform: rotate(360deg); } 
+        }
+      `}} />
     </div>
   );
 }

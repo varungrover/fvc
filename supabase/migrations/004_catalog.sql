@@ -58,7 +58,7 @@ create table public.product_variants (
   id                  uuid primary key default gen_random_uuid(),
   product_id          uuid not null references public.products(id),
   frequency_per_week  smallint not null check (frequency_per_week between 1 and 7),
-  base_price          numeric(10,2) not null,
+  price               numeric(10,2) not null,
   setup_fee           numeric(10,2) not null default 0,
   is_active           boolean not null default true,
   created_at          timestamptz not null default now(),

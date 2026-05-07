@@ -1629,7 +1629,7 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
     id                  uuid primary key default gen_random_uuid(),
     product_id          uuid not null references public.products(id),
     frequency_per_week  smallint not null check (frequency_per_week between 1 and 7),
-    base_price          numeric(10,2) not null,
+    price               numeric(10,2) not null,
     setup_fee           numeric(10,2) not null default 0,
     is_active           boolean not null default true,
     created_at          timestamptz not null default now(),
@@ -1742,7 +1742,7 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
   ```typescript
   export type PlanetRow = { id: string; name: string; description: string | null; is_active: boolean; created_at: string; updated_at: string }
   export type LevelRow  = { id: string; planet_id: string; name: string; sort_order: number; is_active: boolean; created_at: string; updated_at: string }
-  export type VariantRow = { id: string; product_id: string; frequency_per_week: number; base_price: number; setup_fee: number; is_active: boolean; created_at: string; updated_at: string }
+  export type VariantRow = { id: string; product_id: string; frequency_per_week: number; price: number; setup_fee: number; is_active: boolean; created_at: string; updated_at: string }
 
   export async function listPlanets(supabase): Promise<PlanetRow[]>
   export async function createPlanet(supabase, input: { name: string; description?: string }): Promise<PlanetRow>
@@ -1756,7 +1756,7 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
 
   export async function listVariants(supabase, levelId: string): Promise<VariantRow[]>
   export async function createVariant(supabase, input: { levelId: string; frequencyPerWeek: number; basePrice: number; setupFee?: number }): Promise<VariantRow>
-  export async function updateVariant(supabase, id: string, patch: Partial<Pick<VariantRow, 'frequency_per_week' | 'base_price' | 'setup_fee' | 'is_active'>>): Promise<VariantRow | null>
+  export async function updateVariant(supabase, id: string, patch: Partial<Pick<VariantRow, 'frequency_per_week' | 'price' | 'setup_fee' | 'is_active'>>): Promise<VariantRow | null>
   export async function deactivateVariant(supabase, id: string): Promise<void>
   ```
 
@@ -1851,7 +1851,7 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
   UI:
   - Planet row: name, description, active badge, "Add Level" button, expand toggle.
   - Level row (inside accordion): name, sort_order, "Add Variant" button, expand toggle.
-  - Variant row: frequency label ("1× / week"), base_price, setup_fee, active badge.
+  - Variant row: frequency label ("1× / week"), price, setup_fee, active badge.
   - "Add Planet" button at top → POST `/api/planets` → optimistic append.
   - "Add Level" → POST `/api/levels` → optimistic append under parent planet.
   - "Add Variant" → POST `/api/course-variants` → optimistic append under parent level.
@@ -2007,7 +2007,7 @@ The management page is read-only — FA/FM see all locations grouped by ownershi
   }
 
   export async function listOfferings(supabase, locationId: string, session): Promise<OfferingRow[]>
-  // Joins: variant { frequency_per_week, base_price, product { name, planet { name } } }
+  // Joins: variant { frequency_per_week, price, product { name, planet { name } } }
   export async function createOffering(supabase, input: { locationId: string; productVariantId: string; price: number; setupFee?: number }, session): Promise<OfferingRow>
   export async function updateOffering(supabase, id: string, patch: Partial<Pick<OfferingRow, 'price' | 'setup_fee' | 'is_active'>>, session): Promise<OfferingRow | null>
   ```

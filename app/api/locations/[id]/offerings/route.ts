@@ -1,42 +1,18 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { listOfferings, upsertOffering } from '@/lib/db/offerings';
-
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const session = await getSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
-  try {
-    const supabase = await createClient();
-    const { id } = await params;
-    const offerings = await listOfferings(supabase, id);
-    return NextResponse.json(offerings);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
 
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  console.log("DEBUG_POST: Received request");
-  const session = await getSession();
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  
-  if (session.role !== "franchisor_admin" && session.role !== "franchisee_admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
-
   try {
     const { id: locationId } = await params;
     const body = await request.json();
-    const { levelId, variantIds, enabled } = body;
-    console.log("DEBUG_POST: Params", { locationId, levelId, variantIds, enabled });
+    const { variantIds, enabled } = body;
+
+    const session = await getSession();
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const supabase = await createClient();
 
@@ -48,11 +24,10 @@ export async function POST(
         .in("id", variantIds);
 
       if (vError) {
-        console.error("DEBUG_POST: V_ERROR", vError);
-        return NextResponse.json({ error: `[SERVER_V] ${vError.message}` }, { status: 500 });
+        return NextResponse.json({ error: `[V] ${vError.message}` }, { status: 500 });
       }
 
-      // 2. Upsert offerings with default prices
+      // 2. Upsert offerings
       const { data: updated, error: uError } = await supabase
         .from("location_course_offerings")
         .upsert(
@@ -68,8 +43,7 @@ export async function POST(
         .select();
 
       if (uError) {
-        console.error("DEBUG_POST: U_ERROR", uError);
-        return NextResponse.json({ error: `[SERVER_U] ${uError.message}` }, { status: 500 });
+        return NextResponse.json({ error: `[U] ${uError.message}` }, { status: 500 });
       }
       return NextResponse.json(updated);
     } else {
@@ -81,13 +55,32 @@ export async function POST(
         .in("product_variant_id", variantIds);
 
       if (dError) {
-        console.error("DEBUG_POST: D_ERROR", dError);
-        return NextResponse.json({ error: `[SERVER_D] ${dError.message}` }, { status: 500 });
+        return NextResponse.json({ error: `[D] ${dError.message}` }, { status: 500 });
       }
       return NextResponse.json([]);
     }
   } catch (error: any) {
-    console.error("DEBUG_POST: CATCH_ERROR", error);
-    return NextResponse.json({ error: `[SERVER_CATCH] ${error.message}` }, { status: 500 });
+    return NextResponse.json({ error: `[C] ${error.message}` }, { status: 500 });
+  }
+}
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  try {
+    const supabase = await createClient();
+    const { id } = await params;
+    const { data, error } = await supabase
+      .from('location_course_offerings')
+      .select('*')
+      .eq('location_id', id);
+    if (error) throw error;
+    return NextResponse.json(data);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

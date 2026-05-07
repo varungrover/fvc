@@ -287,7 +287,7 @@ Unique constraint: `(planet_id, name)`.
 | `id` | uuid | PK, default `gen_random_uuid()` | |
 | `product_id` | uuid | NOT NULL, FK → `products(id)` | |
 | `frequency_per_week` | smallint | NOT NULL, CHECK (1–7) | 1, 2, or 3 sessions/week |
-| `base_price` | numeric(10,2) | NOT NULL | Global default price |
+| `price` | numeric(10,2) | NOT NULL | Global default price |
 | `setup_fee` | numeric(10,2) | NOT NULL, default 0 | Global default setup fee |
 | `is_active` | boolean | NOT NULL, default true | |
 | `created_at` | timestamptz | NOT NULL, default now() | |
@@ -407,7 +407,7 @@ Seeded via `scripts/seed-catalog.ts`. Idempotent (skips by name uniqueness).
 
 **Variants per level (Chess example — apply to all levels):**
 
-| frequency_per_week | base_price | setup_fee |
+| frequency_per_week | price | setup_fee |
 |---|---|---|
 | 1 | 159.00 | 50.00 |
 | 2 | 199.00 | 50.00 |
@@ -421,7 +421,7 @@ Seeded via `scripts/seed-catalog.ts`. Idempotent (skips by name uniqueness).
 
 ## Overview
 
-`location_course_offerings` is the join table that says "this product_variant is available at this location, at this price". It carries per-location price overrides on top of the global `base_price` from `product_variants`. This is the price the customer sees and what enrollment snapshots at booking time.
+`location_course_offerings` is the join table that says "this product_variant is available at this location, at this price". It carries per-location price overrides on top of the global `price` from `product_variants`. This is the price the customer sees and what enrollment snapshots at booking time.
 
 **Fixes gaps.md §4b:** TypeScript `LocationCourseOffering` was missing `price` and `setupFee` fields. This migration adds them to the DB and the TypeScript type must be updated accordingly.
 
@@ -434,7 +434,7 @@ Seeded via `scripts/seed-catalog.ts`. Idempotent (skips by name uniqueness).
 | `id` | uuid | PK, default `gen_random_uuid()` | |
 | `location_id` | uuid | NOT NULL, FK → `locations(id)` | |
 | `product_variant_id` | uuid | NOT NULL, FK → `product_variants(id)` | |
-| `price` | numeric(10,2) | NOT NULL | Per-location override; seeded from `base_price` |
+| `price` | numeric(10,2) | NOT NULL | Per-location override; seeded from global `price` |
 | `setup_fee` | numeric(10,2) | NOT NULL, default 0 | Per-location override |
 | `is_active` | boolean | NOT NULL, default true | |
 | `created_at` | timestamptz | NOT NULL, default now() | |
@@ -458,7 +458,7 @@ RLS on a join table referencing `locations` requires a subquery: `location_id IN
 ## API Design — Offerings
 
 ### `GET /api/locations/:id/offerings`
-Returns all offerings for a location. FA/FM see always; scoped roles only if location is in their ownership. CX-readable for enrollment step 1. Include joined variant data (frequency, base_price) so the client doesn't need a second request.
+Returns all offerings for a location. FA/FM see always; scoped roles only if location is in their ownership. CX-readable for enrollment step 1. Include joined variant data (frequency, price) so the client doesn't need a second request.
 
 **Response:**
 ```json
@@ -472,7 +472,7 @@ Returns all offerings for a location. FA/FM see always; scoped roles only if loc
     "is_active": true,
     "variant": {
       "frequency_per_week": 1,
-      "base_price": 159.00,
+      "price": 159.00,
       "product": { "id": "uuid", "name": "PP", "planet": { "name": "Chess" } }
     }
   }
