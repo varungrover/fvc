@@ -8,38 +8,58 @@ export default function Loading() {
       left: 0,
       right: 0,
       bottom: 0,
-      background: "rgba(255, 255, 255, 0.8)",
-      backdropFilter: "blur(4px)",
+      background: "#ffffff", // Solid white for a "blocking" feel
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      zIndex: 9999,
-      transition: "all 0.3s ease"
+      zIndex: 99999,
     }}>
       <div style={{
-        width: 48,
-        height: 48,
-        border: `4px solid ${TLP.gray100}`,
-        borderTop: `4px solid ${TLP.teal}`,
-        borderRadius: "50%",
-        animation: "spin 1s linear infinite"
-      }} />
-      <div style={{
-        marginTop: 16,
-        fontSize: 14,
-        fontWeight: 600,
-        color: TLP.navy,
-        letterSpacing: "0.05em",
-        textTransform: "uppercase"
+        position: "relative",
+        width: 80,
+        height: 80,
       }}>
-        Loading Academy...
+        {/* Main outer ring */}
+        <div style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          border: `6px solid ${TLP.gray100}`,
+          borderRadius: "50%",
+        }} />
+        {/* Animated spinner ring */}
+        <div style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          border: `6px solid transparent`,
+          borderTop: `6px solid ${TLP.teal}`,
+          borderRadius: "50%",
+          animation: "spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite"
+        }} />
+      </div>
+
+      <div style={{
+        marginTop: 32,
+        fontSize: 16,
+        fontWeight: 800,
+        color: TLP.navy,
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        animation: "pulse 1.5s ease-in-out infinite"
+      }}>
+        Launching...
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.98); }
         }
       `}} />
     </div>
