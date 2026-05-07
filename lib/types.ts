@@ -309,10 +309,25 @@ export interface Enrollment {
   cancellationReason?: string;
 }
 
-export interface EnrollmentBatch {
+export type RosterStatus = "draft" | "published" | "archived";
+
+export interface Roster {
   id: ID;
-  enrollmentId: ID;
+  locationId: ID;
+  ownershipId: ID;
+  weekStarting: ISODate;
+  status: RosterStatus;
+  publishedAt?: ISODateTime;
+  createdAt: ISODateTime;
+}
+
+export interface RosterAssignment {
+  id: ID;
+  rosterId: ID;
   batchId: ID;
+  coachId: ID;
+  roomId?: string;
+  notes?: string;
 }
 
 export interface EnrollmentDiscount {
