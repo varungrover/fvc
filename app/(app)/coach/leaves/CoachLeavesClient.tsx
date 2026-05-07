@@ -29,6 +29,11 @@ export function CoachLeavesClient({ initialLeaves, profileId }: CoachLeavesClien
   const [selectedLeave, setSelectedLeave] = useState<StaffLeave | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isCancelling, setIsCancelling] = useState(false)
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
   
   const [newLeave, setNewLeave] = useState({
     start_date: '',
@@ -142,7 +147,11 @@ export function CoachLeavesClient({ initialLeaves, profileId }: CoachLeavesClien
                 </div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: '15px', color: TLP.navy }}>
-                    {new Date(leave.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} - {new Date(leave.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {!isMounted ? '...' : (
+                      <>
+                        {new Date(leave.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} - {new Date(leave.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </>
+                    )}
                   </div>
                   <div style={{ fontSize: '13px', color: TLP.gray500, marginTop: '2px' }}>
                     {leave.reason || 'Personal Leave'}
@@ -203,7 +212,7 @@ export function CoachLeavesClient({ initialLeaves, profileId }: CoachLeavesClien
               <div>
                 <div style={{ fontSize: '12px', fontWeight: 800, color: TLP.gray400, letterSpacing: '0.05em' }}>DATE RANGE</div>
                 <div style={{ fontWeight: 700, fontSize: '16px', color: TLP.navy }}>
-                   {new Date(selectedLeave.start_date).toLocaleDateString()} - {new Date(selectedLeave.end_date).toLocaleDateString()}
+                   {!isMounted ? '...' : `${new Date(selectedLeave.start_date).toLocaleDateString()} - ${new Date(selectedLeave.end_date).toLocaleDateString()}`}
                 </div>
               </div>
             </div>

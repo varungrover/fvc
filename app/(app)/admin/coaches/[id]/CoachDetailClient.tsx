@@ -35,6 +35,11 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
   const [isSaving, setIsSaving] = useState(false)
   const [isPlanetModalOpen, setIsPlanetModalOpen] = useState(false)
   const [currentPlanetIds, setCurrentPlanetIds] = useState(coach.planet_ids || [])
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -228,7 +233,7 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
                 <div key={leave.id} style={{ padding: '16px 20px', border: `1px solid ${TLP.gray100}`, borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: TLP.bg }}>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '15px', color: TLP.navy }}>
-                      {new Date(leave.start_date).toLocaleDateString()} - {new Date(leave.end_date).toLocaleDateString()}
+                      {!isMounted ? '...' : `${new Date(leave.start_date).toLocaleDateString()} - ${new Date(leave.end_date).toLocaleDateString()}`}
                     </div>
                     <div style={{ fontSize: '13px', color: TLP.gray500, marginTop: '4px' }}>{leave.reason || 'No reason provided'}</div>
                   </div>
