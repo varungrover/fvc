@@ -265,40 +265,61 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
           {/* STEP 3: SCHEDULE */}
           {step === 3 && (
             <div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Pick Schedule</h2>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+                <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, margin: 0 }}>Pick Schedule</h2>
+                <div style={{ 
+                  padding: "6px 16px", 
+                  borderRadius: 20, 
+                  background: formData.batchIds.length === (levels.find((v: any) => v.id === formData.variantId)?.frequency_per_week || 1) ? TLP.teal : TLP.gray100,
+                  color: formData.batchIds.length === (levels.find((v: any) => v.id === formData.variantId)?.frequency_per_week || 1) ? "white" : TLP.gray500,
+                  fontSize: 12,
+                  fontWeight: 700
+                }}>
+                  {formData.batchIds.length} / {levels.find((v: any) => v.id === formData.variantId)?.frequency_per_week || 1} SLOTS SELECTED
+                </div>
+              </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {batches.filter((b: any) => b.product_id === formData.productId).map((b: any) => (
-                  <div 
-                    key={b.id}
-                    onClick={() => {
-                      const ids = formData.batchIds.includes(b.id) 
-                        ? formData.batchIds.filter(id => id !== b.id)
-                        : [...formData.batchIds, b.id];
-                      setFormData({ ...formData, batchIds: ids });
-                    }}
-                    style={{ 
-                      padding: 20, 
-                      borderRadius: 12, 
-                      border: `1px solid ${formData.batchIds.includes(b.id) ? TLP.teal : TLP.gray100}`,
-                      background: formData.batchIds.includes(b.id) ? TLP.teal + "05" : "white",
-                      cursor: "pointer",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, color: TLP.navy }}>{b.day_of_week}s</div>
-                      <div style={{ fontSize: 14, color: TLP.gray500 }}>{b.start_time} - {b.end_time}</div>
-                    </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: TLP.teal }}>{b.max_capacity - (b.enrolled_count || 0)} SPOTS LEFT</div>
-                      <div style={{ width: 100, height: 4, background: TLP.gray100, borderRadius: 2, marginTop: 8 }}>
-                        <div style={{ width: `${(b.enrolled_count || 0) / b.max_capacity * 100}%`, height: "100%", background: TLP.teal, borderRadius: 2 }} />
+                {batches.filter((b: any) => b.product_id === formData.productId).map((b: any) => {
+                  const maxSlots = levels.find((v: any) => v.id === formData.variantId)?.frequency_per_week || 1;
+                  const isSelected = formData.batchIds.includes(b.id);
+                  const isFull = formData.batchIds.length >= maxSlots && !isSelected;
+
+                  return (
+                    <div 
+                      key={b.id}
+                      onClick={() => {
+                        if (isFull) return;
+                        const ids = isSelected 
+                          ? formData.batchIds.filter(id => id !== b.id)
+                          : [...formData.batchIds, b.id];
+                        setFormData({ ...formData, batchIds: ids });
+                      }}
+                      style={{ 
+                        padding: 20, 
+                        borderRadius: 12, 
+                        border: `1px solid ${isSelected ? TLP.teal : TLP.gray100}`,
+                        background: isSelected ? TLP.teal + "05" : "white",
+                        cursor: isFull ? "not-allowed" : "pointer",
+                        opacity: isFull ? 0.6 : 1,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        transition: "all 0.2s ease"
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 700, color: TLP.navy }}>{b.day_of_week}s</div>
+                        <div style={{ fontSize: 14, color: TLP.gray500 }}>{b.start_time} - {b.end_time}</div>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: TLP.teal }}>{b.max_capacity - (b.enrolled_count || 0)} SPOTS LEFT</div>
+                        <div style={{ width: 100, height: 4, background: TLP.gray100, borderRadius: 2, marginTop: 8 }}>
+                          <div style={{ width: `${(b.enrolled_count || 0) / b.max_capacity * 100}%`, height: "100%", background: TLP.teal, borderRadius: 2 }} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 {batches.filter((b: any) => b.product_id === formData.productId).length === 0 && (
                    <div style={{ textAlign: "center", padding: 40, color: TLP.gray400 }}>
                       No available schedules found for this program.
