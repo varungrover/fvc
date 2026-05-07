@@ -17,6 +17,8 @@ const CHESS_WORDS = [
   "Polishing Tactics...",
 ];
 
+const getRandomWord = () => CHESS_WORDS[Math.floor(Math.random() * CHESS_WORDS.length)];
+
 const LoadingContext = createContext({ setLoading: (val: boolean) => {} });
 
 export const useLoading = () => useContext(LoadingContext);
@@ -37,10 +39,11 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
   // Cycle through chess words when loading
   useEffect(() => {
     if (isLoading) {
-      let i = 0;
+      // Set initial random word
+      setLoadingText(getRandomWord());
+      
       textInterval.current = setInterval(() => {
-        i = (i + 1) % CHESS_WORDS.length;
-        setLoadingText(CHESS_WORDS[i]);
+        setLoadingText(getRandomWord());
       }, 700);
     } else {
       if (textInterval.current) clearInterval(textInterval.current);
@@ -62,7 +65,7 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
         anchor.href.startsWith(window.location.origin) &&
         !anchor.target &&
         anchor.getAttribute("download") === null &&
-        anchor.href !== window.location.href // Don't trigger for same-page hash links
+        anchor.href !== window.location.href
       ) {
         setIsLoading(true);
       }
@@ -81,20 +84,20 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
           left: 0,
           right: 0,
           bottom: 0,
-          background: "rgba(255, 255, 255, 0.88)", // Higher opacity for more visibility
-          backdropFilter: "blur(14px)", // Increased blur
+          background: "rgba(255, 255, 255, 0.5)", // Back to 0.5 transparency
+          backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           zIndex: 99999,
-          animation: "fadeIn 0.3s ease-out"
+          animation: "fadeIn 0.2s ease-out"
         }}>
            <div style={{
             position: "relative",
-            width: 90,
-            height: 90,
+            width: 80,
+            height: 80,
           }}>
             <div style={{ position: "absolute", width: "100%", height: "100%", border: `6px solid ${TLP.gray100}`, borderRadius: "50%" }} />
             <div style={{
