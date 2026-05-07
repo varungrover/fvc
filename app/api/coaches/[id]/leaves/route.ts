@@ -5,14 +5,15 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const supabase = await createClient()
     const { data, error } = await supabase
       .from('staff_leaves')
       .select('*')
-      .eq('profile_id', params.id)
+      .eq('profile_id', id)
       .order('start_date', { ascending: false })
 
     if (error) throw error
@@ -24,15 +25,16 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const supabase = await createClient()
     const session = await getSession()
 
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const isSelf = session.id === params.id
+    const isSelf = session.id === id
     const isAdmin = ['franchisor_admin', 'franchisor_mgmt', 'franchisee_admin'].includes(session.role)
 
     if (!isSelf && !isAdmin) {
@@ -40,7 +42,7 @@ export async function POST(
     }
 
     const body = await request.json()
-    const leave = await createCoachLeave(supabase, params.id, body)
+    const leave = await createCoachLeave(supabase, id, body)
 
     return NextResponse.json(leave)
   } catch (error: any) {

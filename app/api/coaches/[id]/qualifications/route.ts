@@ -4,9 +4,10 @@ import { NextResponse } from 'next/server'
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const supabase = await createClient()
     const session = await getSession()
 
@@ -23,7 +24,7 @@ export async function PUT(
     const { error: delErr } = await supabase
       .from('staff_planets')
       .delete()
-      .eq('profile_id', params.id)
+      .eq('profile_id', id)
 
     if (delErr) throw delErr
 
@@ -31,7 +32,7 @@ export async function PUT(
       const { error: insErr } = await supabase
         .from('staff_planets')
         .insert(
-          planetIds.map(pid => ({ profile_id: params.id, planet_id: pid }))
+          planetIds.map(pid => ({ profile_id: id, planet_id: pid }))
         )
       if (insErr) throw insErr
     }

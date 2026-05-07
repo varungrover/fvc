@@ -5,9 +5,10 @@ import { NextResponse } from 'next/server'
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const supabase = await createClient()
     const session = await getSession()
 
@@ -19,7 +20,7 @@ export async function DELETE(
     const { data: leave, error: lErr } = await supabase
       .from('staff_leaves')
       .select('profile_id')
-      .eq('id', params.id)
+      .eq('id', id)
       .single()
 
     if (lErr || !leave) {
@@ -33,7 +34,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await deleteCoachLeave(supabase, params.id)
+    await deleteCoachLeave(supabase, id)
     return NextResponse.json({ success: true })
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
@@ -42,9 +43,10 @@ export async function DELETE(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const supabase = await createClient()
     const session = await getSession()
 
@@ -60,7 +62,7 @@ export async function PATCH(
     const { error } = await supabase
       .from('staff_leaves')
       .update({ status })
-      .eq('id', params.id)
+      .eq('id', id)
 
     if (error) throw error
     return NextResponse.json({ success: true })
