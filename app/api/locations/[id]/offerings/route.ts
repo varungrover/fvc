@@ -25,21 +25,58 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   
-  if (session.role !== 'franchisor_admin' && session.role !== 'franchisee_admin') {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  if (session.role !== "franchisor_admin" && session.role !== "franchisee_admin") {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   try {
-    const { id } = await params;
-    
-    const offering = await upsertOffering(supabase, {
-      ...body,
-      locationId: id
-    });
-    return NextResponse.json(offering, { status: 201 });
+    const { id: locationId } = await params;
+    const body = await request.json();
+    const { levelId, variantIds, enabled } = body;
+
+    const supabase = await createClient();
+
+    if (enabled) {
+      // 1. Fetch variants to get their base prices
+      const { data: variants, error: vError } = await supabase
+        .from("product_variants")
+        .select("id, base_price, setup_fee")
+        .in("id", variantIds);
+
+      if (vError) throw vError;
+
+      // 2. Upsert offerings with base prices
+      const { data: updated, error: uError } = await supabase
+        .from("location_course_offerings")
+        .upsert(
+          variants.map(v => ({
+            location_id: locationId,
+            product_variant_id: v.id,
+            price: v.base_price,
+            setup_fee: v.setup_fee,
+            is_active: true
+          })),
+          { onConflict: "location_id, product_variant_id" }
+        )
+        .select();
+
+      if (uError) throw uError;
+      return NextResponse.json(updated);
+    } else {
+      // 3. Delete offerings (or mark inactive)
+      const { error: dError } = await supabase
+        .from("location_course_offerings")
+        .delete()
+        .eq("location_id", locationId)
+        .in("product_variant_id", variantIds);
+
+      if (dError) throw dError;
+      return NextResponse.json([]);
+    }
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

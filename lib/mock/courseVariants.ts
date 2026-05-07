@@ -35,7 +35,6 @@ function variants(
 export const COURSE_VARIANTS: CourseVariant[] = [
   ...variants("lvl_chess_pp", 139),
   ...variants("lvl_chess_rr", 159),
-  ...variants("lvl_chess_open", 179),
   ...variants("lvl_math_g3", 149),
   ...variants("lvl_math_g5", 159),
   ...variants("lvl_math_g7", 169),

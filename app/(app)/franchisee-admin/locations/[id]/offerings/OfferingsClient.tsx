@@ -35,34 +35,47 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
 
   const activePlanet = localCatalog.find(p => p.id === activePlanetId);
 
-  async function handleUpdatePrice(variantId: string, price: number, setupFee: number) {
-    setSaving(variantId);
+  async function handleToggleLevel(levelId: string, enabled: boolean) {
+    setSaving(levelId);
     try {
+      // Find all variants for this level
+      const level = activePlanet?.products.find(l => l.id === levelId);
+      if (!level) return;
+
+      const variantIds = level.product_variants.map(v => v.id);
+
       const res = await fetch(`/api/locations/${locationId}/offerings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          productVariantId: variantId,
-          price,
-          setupFee
+          levelId,
+          variantIds,
+          enabled
         }),
       });
-      if (!res.ok) throw new Error("Failed to save price");
-      const savedOffering = await res.json();
 
-      // Update local state
+      if (!res.ok) throw new Error("Failed to update offerings");
+      const updatedOfferings = await res.json();
+
+      // Update local state: if enabled, we should have offerings; if disabled, they should be removed (or marked inactive)
       setLocalCatalog(prev => prev.map(p => ({
         ...p,
-        products: p.products.map(l => ({
-          ...l,
-          product_variants: l.product_variants.map(v => 
-            v.id === variantId ? { ...v, offering: savedOffering } : v
-          )
-        }))
+        products: p.products.map(l => {
+          if (l.id === levelId) {
+            return {
+              ...l,
+              product_variants: l.product_variants.map(v => {
+                const updated = updatedOfferings.find((uo: any) => uo.product_variant_id === v.id);
+                return { ...v, offering: updated || (enabled ? v.offering : undefined) };
+              })
+            };
+          }
+          return l;
+        })
       })));
     } catch (err) {
       console.error(err);
-      alert("Error saving price override");
+      alert("Error updating offerings");
     } finally {
       setSaving(null);
     }
@@ -72,18 +85,19 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
     <div style={{ padding: 24 }}>
       <PageHeader
         title={`Manage Offerings — ${locationName}`}
-        subtitle="Configure per-location pricing overrides for course levels"
+        subtitle="Select which courses are available at this location. Prices are set globally."
         backHref={backHref}
       />
 
       {/* Planet Tabs */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 20, overflowX: "auto", paddingBottom: 4 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 24, overflowX: "auto", paddingBottom: 4 }}>
         {localCatalog.map(p => (
           <Button
             key={p.id}
             variant={activePlanetId === p.id ? "primary" : "secondary"}
             onClick={() => setActivePlanetId(p.id)}
             size="sm"
+            style={{ borderRadius: 99, padding: "8px 20px" }}
           >
             {planetStyle(p.name).icon} {p.name}
           </Button>
@@ -91,82 +105,68 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
       </div>
 
       {activePlanet && (
-        <div style={{ display: "grid", gap: 16 }}>
-          {activePlanet.products.map(level => (
-            <Card key={level.id} style={{ padding: 24 }}>
-              <div style={{ marginBottom: 20, borderBottom: `1px solid ${TLP.gray100}`, paddingBottom: 12 }}>
-                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: TLP.navy }}>{level.name}</h3>
-                <p style={{ margin: "4px 0 0", fontSize: 12, color: TLP.gray500 }}>Level ID: {level.id.substring(0, 8)}</p>
-              </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
+          {activePlanet.products.map(level => {
+            const isEnabled = level.product_variants.some(v => !!v.offering);
+            const isLoading = saving === level.id;
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 150px 150px 100px", gap: 24, alignItems: "center", marginBottom: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>VARIANT</div>
-                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>BASE PRICE</div>
-                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>YOUR PRICE</div>
-                <div></div>
-              </div>
+            return (
+              <Card 
+                key={level.id} 
+                style={{ 
+                  padding: 20, 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between",
+                  opacity: isLoading ? 0.6 : 1,
+                  transition: "opacity 0.2s"
+                }}
+              >
+                <div>
+                  <div style={{ fontWeight: 800, color: TLP.navy, fontSize: 16 }}>{level.name}</div>
+                  <div style={{ fontSize: 12, color: TLP.gray500, marginTop: 2 }}>
+                    {level.product_variants.length} variants available
+                  </div>
+                </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {level.product_variants.map(v => {
-                  const currentPrice = v.offering?.price ?? v.price;
-                  const currentSetup = v.offering?.setupFee ?? v.setupFee;
-                  const isOverridden = !!v.offering;
-
-                  return (
-                    <div 
-                      key={v.id} 
-                      style={{ 
-                        display: "grid", 
-                        gridTemplateColumns: "1fr 150px 150px 100px", 
-                        gap: 24, 
-                        alignItems: "center",
-                        padding: "16px 0",
-                        borderTop: `1px solid ${TLP.gray50}`
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <div style={{ fontWeight: 700, color: TLP.navy, fontSize: 15 }}>
-                          {v.frequencyPerWeek}x / week
-                        </div>
-                        {isOverridden && (
-                          <Badge label="Overridden" color={TLP.amber} bg={TLP.amberLight} />
-                        )}
-                      </div>
-                      <div style={{ color: TLP.gray600, fontSize: 14, fontWeight: 500 }}>${v.price} <span style={{ fontSize: 11, opacity: 0.7 }}>/ mo</span></div>
-                      <div>
-                        <Input
-                          type="number"
-                          value={currentPrice}
-                          onChange={(e) => {
-                            const val = Number(e.target.value);
-                            setLocalCatalog(prev => prev.map(p => ({
-                              ...p,
-                              products: p.products.map(l => ({
-                                ...l,
-                                product_variants: l.product_variants.map(variant => 
-                                  variant.id === v.id ? { ...variant, offering: { ...(variant.offering || v), price: val } as any } : variant
-                                )
-                              }))
-                            })));
-                          }}
-                          style={{ height: 40, fontWeight: 600 }}
-                        />
-                      </div>
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        onClick={() => handleUpdatePrice(v.id, currentPrice, currentSetup)}
-                        disabled={saving === v.id}
-                        style={{ height: 40, width: "100%" }}
-                      >
-                        {saving === v.id ? "..." : "Save"}
-                      </Button>
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-          ))}
+                <label style={{ 
+                  position: 'relative', 
+                  display: 'inline-block', 
+                  width: 44, 
+                  height: 24,
+                  cursor: isLoading ? 'wait' : 'pointer'
+                }}>
+                  <input 
+                    type="checkbox" 
+                    checked={isEnabled}
+                    disabled={isLoading}
+                    onChange={(e) => handleToggleLevel(level.id, e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <span style={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundColor: isEnabled ? TLP.teal : TLP.gray200,
+                    transition: '.3s',
+                    borderRadius: 24,
+                  }}>
+                    <span style={{
+                      position: 'absolute',
+                      content: '""',
+                      height: 18, width: 18,
+                      left: isEnabled ? 22 : 3,
+                      bottom: 3,
+                      backgroundColor: 'white',
+                      transition: '.3s',
+                      borderRadius: '50%',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                    }} />
+                  </span>
+                </label>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

@@ -4,7 +4,6 @@ export const LEVELS: Level[] = [
   // Chess
   { id: "lvl_chess_pp", planetId: "pl_chess", name: "PP", sortOrder: 1, isActive: true },
   { id: "lvl_chess_rr", planetId: "pl_chess", name: "RR", sortOrder: 2, isActive: true },
-  { id: "lvl_chess_open", planetId: "pl_chess", name: "Open", sortOrder: 3, isActive: true },
 
   // Math
   { id: "lvl_math_g3", planetId: "pl_math", name: "Grade 3", sortOrder: 3, isActive: true },
