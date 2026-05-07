@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { updateCoachAvailabilityAction } from '@/app/actions/coaches'
+import { TLP } from '@/lib/theme/tokens'
 
 interface CoachAvailabilityClientProps {
   initialAvailability: StaffAvailability[]
@@ -82,40 +83,104 @@ export function CoachAvailabilityClient({ initialAvailability, profileId }: Coac
           </Button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {availability.map((slot, index) => (
-            <div key={slot.id} style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '12px', border: '1px solid #eee', borderRadius: '8px' }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>DAY</label>
+            <div 
+              key={slot.id} 
+              style={{ 
+                display: 'flex', 
+                gap: '16px', 
+                alignItems: 'flex-end', // Align all items to the bottom of the row
+                padding: '16px 20px', 
+                background: '#fff',
+                border: `1px solid ${TLP.gray100}`, 
+                borderRadius: '12px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <div style={{ flex: 1.2 }}>
+                <label style={{ display: 'block', fontSize: '10px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>DAY</label>
                 <select 
                   value={slot.day_of_week}
                   onChange={(e) => handleUpdateAvailability(index, { day_of_week: e.target.value })}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
+                  style={{ 
+                    width: '100%', 
+                    padding: '10px 12px', 
+                    borderRadius: '8px', 
+                    border: `1.5px solid ${TLP.gray100}`, 
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: TLP.navy,
+                    outline: 'none',
+                    appearance: 'none',
+                    background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='${encodeURIComponent(TLP.gray400)}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 10px center/14px`,
+                    cursor: 'pointer'
+                  }}
                 >
                   {days.map(d => <option key={d} value={d}>{d}</option>)}
                 </select>
               </div>
               <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>START</label>
-                <input 
-                  type="time" 
-                  value={slot.start_time}
-                  onChange={(e) => handleUpdateAvailability(index, { start_time: e.target.value })}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
-                />
+                <label style={{ display: 'block', fontSize: '10px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>START</label>
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type="time" 
+                    value={slot.start_time}
+                    onChange={(e) => handleUpdateAvailability(index, { start_time: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      padding: '10px 12px', 
+                      borderRadius: '8px', 
+                      border: `1.5px solid ${TLP.gray100}`, 
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: TLP.navy,
+                      outline: 'none'
+                    }}
+                  />
+                </div>
               </div>
               <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#666', marginBottom: '4px' }}>END</label>
-                <input 
-                  type="time" 
-                  value={slot.end_time}
-                  onChange={(e) => handleUpdateAvailability(index, { end_time: e.target.value })}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '14px' }}
-                />
+                <label style={{ display: 'block', fontSize: '10px', fontWeight: 800, color: TLP.gray400, marginBottom: '6px', letterSpacing: '0.05em' }}>END</label>
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type="time" 
+                    value={slot.end_time}
+                    onChange={(e) => handleUpdateAvailability(index, { end_time: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      padding: '10px 12px', 
+                      borderRadius: '8px', 
+                      border: `1.5px solid ${TLP.gray100}`, 
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: TLP.navy,
+                      outline: 'none'
+                    }}
+                  />
+                </div>
               </div>
-              <Button variant="secondary" size="sm" onClick={() => handleRemoveAvailability(index)} style={{ marginTop: '18px', color: '#ef4444' }}>
-                <Trash2 size={16} />
-              </Button>
+              <div style={{ flexShrink: 0, paddingBottom: '2px' }}>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => handleRemoveAvailability(index)} 
+                  style={{ 
+                    color: '#ef4444', 
+                    background: '#fef2f2',
+                    borderRadius: '8px',
+                    height: '42px',
+                    width: '42px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0
+                  }}
+                >
+                  <Trash2 size={18} />
+                </Button>
+              </div>
             </div>
           ))}
           {availability.length === 0 && (
