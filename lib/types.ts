@@ -330,11 +330,44 @@ export interface RosterAssignment {
   notes?: string;
 }
 
-export interface EnrollmentDiscount {
+export type AttendanceStatus = "present" | "absent" | "excused" | "makeup" | "trial";
+
+export interface Attendance {
   id: ID;
-  enrollmentId: ID;
-  planetsCount: number;
-  discountPct: number;
+  rosterAssignmentId: ID;
+  memberId: ID;
+  status: AttendanceStatus;
+  markedBy: ID;
+  markedAt: ISODateTime;
+}
+
+export interface SessionNote {
+  id: ID;
+  rosterAssignmentId: ID;
+  authorId: ID;
+  content: string;
+  isPrivate: boolean;
+  createdAt: ISODateTime;
+}
+
+export type TrialStatus = "booked" | "attended" | "cancelled" | "no_show";
+
+export interface Trial {
+  id: ID;
+  memberId: ID;
+  rosterAssignmentId: ID;
+  status: TrialStatus;
+  bookedAt: ISODateTime;
+}
+
+export interface TrialAssessment {
+  id: ID;
+  trialId: ID;
+  assessedBy: ID;
+  recommendedLevelId: ID;
+  performanceNotes: string;
+  isEnrollmentRecommended: boolean;
+  assessedAt: ISODateTime;
 }
 
 // ============================================================
