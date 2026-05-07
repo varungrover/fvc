@@ -93,69 +93,78 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
       {activePlanet && (
         <div style={{ display: "grid", gap: 16 }}>
           {activePlanet.products.map(level => (
-            <Card key={level.id} title={level.name}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 150px 150px 100px", gap: 16, alignItems: "end" }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500 }}>VARIANT</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500 }}>BASE PRICE</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500 }}>YOUR PRICE</div>
+            <Card key={level.id} style={{ padding: 24 }}>
+              <div style={{ marginBottom: 20, borderBottom: `1px solid ${TLP.gray100}`, paddingBottom: 12 }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: TLP.navy }}>{level.name}</h3>
+                <p style={{ margin: "4px 0 0", fontSize: 12, color: TLP.gray500 }}>Level ID: {level.id.substring(0, 8)}</p>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 150px 150px 100px", gap: 24, alignItems: "center", marginBottom: 12 }}>
+                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>VARIANT</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>BASE PRICE</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: TLP.gray400, letterSpacing: "0.5px" }}>YOUR PRICE</div>
                 <div></div>
               </div>
 
-              {level.product_variants.map(v => {
-                const currentPrice = v.offering?.price ?? v.price;
-                const currentSetup = v.offering?.setupFee ?? v.setupFee;
-                const isOverridden = !!v.offering;
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {level.product_variants.map(v => {
+                  const currentPrice = v.offering?.price ?? v.price;
+                  const currentSetup = v.offering?.setupFee ?? v.setupFee;
+                  const isOverridden = !!v.offering;
 
-                return (
-                  <div 
-                    key={v.id} 
-                    style={{ 
-                      display: "grid", 
-                      gridTemplateColumns: "1fr 150px 150px 100px", 
-                      gap: 16, 
-                      alignItems: "center",
-                      padding: "12px 0",
-                      borderBottom: `1px solid ${TLP.gray100}`
-                    }}
-                  >
-                    <div style={{ fontWeight: 600, color: TLP.navy }}>
-                      {v.frequencyPerWeek}x / week
-                      {isOverridden && (
-                        <Badge label="Overridden" color={TLP.amber} bg={TLP.amberLight} style={{ marginLeft: 8 }} />
-                      )}
-                    </div>
-                    <div style={{ color: TLP.gray500 }}>${v.price} / mo</div>
-                    <div>
-                      <Input
-                        type="number"
-                        value={currentPrice}
-                        onChange={(e) => {
-                          const val = Number(e.target.value);
-                          // Local update only for UI snappiness
-                          setLocalCatalog(prev => prev.map(p => ({
-                            ...p,
-                            products: p.products.map(l => ({
-                              ...l,
-                              product_variants: l.product_variants.map(variant => 
-                                variant.id === v.id ? { ...variant, offering: { ...(variant.offering || v), price: val } as any } : variant
-                              )
-                            }))
-                          })));
-                        }}
-                        style={{ height: 36 }}
-                      />
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      onClick={() => handleUpdatePrice(v.id, currentPrice, currentSetup)}
-                      disabled={saving === v.id}
+                  return (
+                    <div 
+                      key={v.id} 
+                      style={{ 
+                        display: "grid", 
+                        gridTemplateColumns: "1fr 150px 150px 100px", 
+                        gap: 24, 
+                        alignItems: "center",
+                        padding: "16px 0",
+                        borderTop: `1px solid ${TLP.gray50}`
+                      }}
                     >
-                      {saving === v.id ? "..." : "Save"}
-                    </Button>
-                  </div>
-                );
-              })}
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <div style={{ fontWeight: 700, color: TLP.navy, fontSize: 15 }}>
+                          {v.frequencyPerWeek}x / week
+                        </div>
+                        {isOverridden && (
+                          <Badge label="Overridden" color={TLP.amber} bg={TLP.amberLight} />
+                        )}
+                      </div>
+                      <div style={{ color: TLP.gray600, fontSize: 14, fontWeight: 500 }}>${v.price} <span style={{ fontSize: 11, opacity: 0.7 }}>/ mo</span></div>
+                      <div>
+                        <Input
+                          type="number"
+                          value={currentPrice}
+                          onChange={(e) => {
+                            const val = Number(e.target.value);
+                            setLocalCatalog(prev => prev.map(p => ({
+                              ...p,
+                              products: p.products.map(l => ({
+                                ...l,
+                                product_variants: l.product_variants.map(variant => 
+                                  variant.id === v.id ? { ...variant, offering: { ...(variant.offering || v), price: val } as any } : variant
+                                )
+                              }))
+                            })));
+                          }}
+                          style={{ height: 40, fontWeight: 600 }}
+                        />
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="primary"
+                        onClick={() => handleUpdatePrice(v.id, currentPrice, currentSetup)}
+                        disabled={saving === v.id}
+                        style={{ height: 40, width: "100%" }}
+                      >
+                        {saving === v.id ? "..." : "Save"}
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
             </Card>
           ))}
         </div>
