@@ -56,6 +56,7 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
 
       if (!res.ok) {
         const errorData = await res.json();
+        console.error("DEBUG: Toggle error", errorData);
         throw new Error(errorData.error || "Failed to update offerings");
       }
       const updatedOfferings = await res.json();
@@ -76,9 +77,9 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
           return l;
         })
       })));
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Error updating offerings");
+      alert(err.message || "Error updating offerings");
     } finally {
       setSaving(null);
     }

@@ -43,13 +43,16 @@ export async function POST(
         return NextResponse.json({ error: "No variants provided" }, { status: 400 });
       }
 
-      // 1. Fetch variants to get their prices
+      // 1. Fetch variants to get their prices (using 'price' column)
       const { data: variants, error: vError } = await supabase
         .from("product_variants")
         .select("id, price, setup_fee")
         .in("id", variantIds);
 
-      if (vError) throw vError;
+      if (vError) {
+        console.error("V_ERROR:", vError);
+        throw vError;
+      }
       if (!variants || variants.length === 0) {
         return NextResponse.json({ error: "No matching variants found" }, { status: 404 });
       }
