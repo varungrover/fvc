@@ -81,8 +81,8 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
           left: 0,
           right: 0,
           bottom: 0,
-          background: "rgba(255, 255, 255, 0.7)", // Semi-transparent
-          backdropFilter: "blur(12px)", // Premium blur
+          background: "rgba(255, 255, 255, 0.88)", // Higher opacity for more visibility
+          backdropFilter: "blur(14px)", // Increased blur
           WebkitBackdropFilter: "blur(12px)",
           display: "flex",
           flexDirection: "column",
