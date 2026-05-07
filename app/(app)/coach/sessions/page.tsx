@@ -8,12 +8,19 @@ export default async function CoachSessionsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  const today = new Date().toISOString().split('T')[0];
+
   // Get active assignments for today
-  const { data: assignments } = await supabase
+  const { data: assignments, error } = await supabase
     .from("roster_assignments")
     .select("*, batches(*), rosters!inner(*)")
     .eq("coach_id", user?.id)
+    .eq("session_date", today)
     .eq("rosters.status", "published");
+
+  if (error) {
+    console.error("Error fetching sessions:", error);
+  }
 
   return (
     <div style={{ padding: 24 }}>

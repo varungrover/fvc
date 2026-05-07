@@ -5,12 +5,12 @@ create table public.rosters (
     id uuid primary key default gen_random_uuid(),
     location_id uuid not null references public.locations(id) on delete cascade,
     ownership_id uuid not null references public.ownerships(id),
-    week_start_date date not null,
+    week_starting date not null,
     status varchar(20) not null default 'draft' check (status in ('draft', 'published')),
     published_at timestamptz,
-    created_by uuid not null references public.profiles(id),
+    created_by uuid references public.profiles(id),
     created_at timestamptz not null default now(),
-    unique (location_id, week_start_date)
+    unique (location_id, week_starting)
 );
 
 -- Roster Assignments (Coach assignment to slot)
