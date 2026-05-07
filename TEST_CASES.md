@@ -225,13 +225,13 @@ This document defines the exhaustive test suite for the Mentora LMS. It is organ
 
 | Test ID | Scenario | Steps | API / Logic | Expected Result |
 | :--- | :--- | :--- | :--- | :--- |
-| M19-01| Tenant URL | Navigate to `/t/maple-academy`. | URL Parsing | Shows Maple Academy logo, colors, and specific location list. |
-| M19-02| Catalog Sync | FA adds a Planet in Admin. | Realtime/SSR | Instantly appears in the storefront catalog. |
+| M19-01| Branding Consistency | Navigate to `/`. | `TLP_TENANT` Theme | Page logo, primary purple, and amber accents match TLP branding. |
+| M19-02| Catalog Sync | FA adds a Planet in Admin. | Realtime/SSR | Instantly appears in the main storefront catalog. |
 | M19-03| Course Search | Search for "Chess" in storefront. | Search Filter | Correct levels shown; metadata (Price/Age) matches Admin. |
-| M19-04| SEO Metadata | View Page Source on a Level page. | Meta Tag Logic | Correct Title and OG tags for social sharing. |
-| M19-05| Mobile Nav | Open menu on a phone. | Hamburger UI | Smooth transition; all links (Planets/Contact) accessible. |
+| M19-04| SEO Metadata | View Page Source on home page. | Meta Tag Logic | Correct Title "The Learning Planet" and OG tags for social sharing. |
+| M19-05| Mobile Nav | Open menu on a phone. | Hamburger UI | Smooth transition; all links (Programs/Locations) accessible. |
 | M19-06| Contact Form | Submit "Request Info" form. | Ticket Creation | Support ticket created in Module 17; confirmation shown. |
-| M19-07| Hero CTA | Click "Get Started" on Homepage. | Deep Link | Landed directly on the Location/Planet selection wizard. |
+| M19-07| Hero CTA | Click "Explore Programs" on Home. | Anchor Link | Smooth scroll to the `#programs` section. |
 | M19-08| Footer Links | Click "Terms of Service". | Static Rendering | Displays latest version of global TOS. |
-| M19-09| 404 Handling | Navigate to `/t/non-existent-slug`. | Error Handling | Shows generic "Academy Not Found" with link to main site. |
-| M19-10| Performance | Check PageSpeed for Storefront home. | Optimization | Score > 90 due to Next.js image optimization and SSR. |
+| M19-09| Trial CTA | Click "Book a free trial". | `?next=/customer/enroll...` | Redirects to login, then directly to trial booking wizard. |
+| M19-10| Performance | Check PageSpeed for homepage. | Optimization | Score > 90 due to Next.js image optimization and SSR. |
