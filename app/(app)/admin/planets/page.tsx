@@ -41,6 +41,11 @@ export default async function PlanetsPage() {
     return <div>Error loading catalog. Please try again.</div>;
   }
 
+  console.log("Fetched Planets Count:", planets?.length);
+  if (planets && planets.length > 0) {
+    console.log("First Planet Products:", planets[0].products?.length);
+  }
+
   // Map snake_case to camelCase for the UI
   const mappedPlanets = (planets || []).map((p: any) => ({
     id: p.id,
@@ -65,6 +70,21 @@ export default async function PlanetsPage() {
       })),
     })),
   }));
+
+  if (!mappedPlanets || mappedPlanets.length === 0) {
+    return (
+      <div style={{ padding: 40, textAlign: 'center' }}>
+        <h2 style={{ color: '#0d1b3e' }}>No Planets Found</h2>
+        <p style={{ color: '#6b7280' }}>
+          The database returned {planets?.length ?? 0} planets. 
+          If this is 0, please check your seed data or RLS policies.
+        </p>
+        <pre style={{ textAlign: 'left', background: '#f3f4f6', padding: 10, marginTop: 20 }}>
+          {JSON.stringify(planets, null, 2)}
+        </pre>
+      </div>
+    );
+  }
 
   return <PlanetsClient initialPlanets={mappedPlanets as any} />;
 }

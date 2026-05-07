@@ -14,10 +14,15 @@ export const metadata: Metadata = {
   description: "The LMS platform for learning academies",
 };
 
+import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={nunitoSans.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster position="top-right" />
+      </body>
     </html>
   );
 }

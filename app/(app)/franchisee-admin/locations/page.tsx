@@ -18,10 +18,16 @@ export default async function FranchiseeLocationsPage() {
     .eq('id', session.ownershipId ?? '')
     .single()
 
+  const { data: planets } = await supabase
+    .from('planets')
+    .select('*, products(*)')
+    .order('name');
+
   return (
     <LocationsClient
       locations={locations}
       ownershipName={ownership?.full_name ?? 'My Franchise'}
+      planets={planets || []}
     />
   )
 }

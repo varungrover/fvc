@@ -24,6 +24,10 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
   const [showAddPlanet, setShowAddPlanet] = useState(false);
   const [addPlanetForm, setAddPlanetForm] = useState({ name: "", description: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAddLevel, setShowAddLevel] = useState<string | null>(null); // planetId
+  const [addLevelForm, setAddLevelForm] = useState({ name: "", sortOrder: 0 });
+  const [showAddVariant, setShowAddVariant] = useState<string | null>(null); // levelId
+  const [addVariantForm, setAddVariantForm] = useState({ name: "", frequencyPerWeek: 1, price: 0, setupFee: 0 });
 
   async function handleAddPlanet() {
     if (!addPlanetForm.name) return;
@@ -42,6 +46,80 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
     } catch (err) {
       console.error(err);
       alert("Error adding planet");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  async function handleAddLevel() {
+    if (!addLevelForm.name || !showAddLevel) return;
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/levels", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...addLevelForm,
+          planetId: showAddLevel,
+          productClassId: "8d9ae3b4-0f9c-448c-8837-64fdaf1a8cba" // UUID for 'Course'
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to add level");
+      const newLevel = await res.json();
+      
+      setPlanets(prev => prev.map(p => 
+        p.id === showAddLevel 
+          ? { ...p, products: [...(p.products || []), { ...newLevel, product_variants: [] }] }
+          : p
+      ));
+      setShowAddLevel(null);
+      setAddLevelForm({ name: "", sortOrder: 0 });
+    } catch (err) {
+      console.error(err);
+      alert("Error adding level");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  async function handleAddVariant() {
+    if (!showAddVariant) return;
+
+    // Client-side check for duplicate frequency
+    const currentPlanet = planets.find(p => p.products.some(l => l.id === showAddVariant));
+    const currentLevel = currentPlanet?.products.find(l => l.id === showAddVariant);
+    if (currentLevel?.product_variants.some(v => v.frequencyPerWeek === addVariantForm.frequencyPerWeek)) {
+      alert(`A variant with ${addVariantForm.frequencyPerWeek}x per week already exists for this level.`);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/course-variants", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...addVariantForm,
+          levelId: showAddVariant
+        }),
+      });
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to add variant");
+
+      setPlanets(prev => prev.map(p => ({
+        ...p,
+        products: p.products.map(l => 
+          l.id === showAddVariant 
+            ? { ...l, product_variants: [...(l.product_variants || []), data] }
+            : l
+        )
+      })));
+      setShowAddVariant(null);
+      setAddVariantForm({ name: "", frequencyPerWeek: 1, price: 0, setupFee: 0 });
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "Error adding variant");
     } finally {
       setIsSubmitting(false);
     }
@@ -133,11 +211,19 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
               {/* Expanded levels */}
               {isExpanded && (
                 <div style={{ borderTop: `1px solid ${TLP.gray100}`, background: TLP.gray50, padding: "16px 20px" }}>
-                  <div style={{ marginBottom: 12 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500, textTransform: "uppercase", letterSpacing: "0.4px" }}>
-                      Levels & Pricing
-                    </span>
-                  </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500, textTransform: "uppercase", letterSpacing: "0.4px" }}>
+                        Levels & Pricing
+                      </span>
+                      <Button 
+                        size="sm" 
+                        variant="secondary" 
+                        icon="➕"
+                        onClick={() => setShowAddLevel(planet.id)}
+                      >
+                        Add Level
+                      </Button>
+                    </div>
 
                   {levels.length === 0 ? (
                     <p style={{ margin: 0, fontSize: 13, color: TLP.gray400 }}>No levels yet.</p>
@@ -210,17 +296,41 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
                                     <span key={v.id}>${v.price}/mo</span>
                                   ))}
                                 </div>
-                                <div
-                                  style={{
-                                    padding: "4px 14px 8px",
-                                    fontSize: 11,
-                                    color: TLP.gray500,
-                                  }}
-                                >
-                                  Setup fee: ${variants[0]?.setupFee ?? 0} (one-time)
+                                  <div
+                                    style={{
+                                      padding: "4px 14px 8px",
+                                      fontSize: 11,
+                                      color: TLP.gray500,
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center"
+                                    }}
+                                  >
+                                    <span>Setup fee: ${variants[0]?.setupFee ?? 0} (one-time)</span>
+                                    <Button 
+                                      size="sm" 
+                                      variant="secondary" 
+                                      icon="➕"
+                                      onClick={() => setShowAddVariant(level.id)}
+                                    >
+                                      Variant
+                                    </Button>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              )}
+                              
+                              {variants.length === 0 && (
+                                <div style={{ padding: "12px 14px", textAlign: "center" }}>
+                                  <Button 
+                                    size="sm" 
+                                    variant="secondary" 
+                                    icon="➕"
+                                    onClick={() => setShowAddVariant(level.id)}
+                                  >
+                                    Add First Variant
+                                  </Button>
+                                </div>
+                              )}
                           </div>
                         );
                       })}
@@ -260,6 +370,82 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
             value={addPlanetForm.description}
             onChange={(e) => setAddPlanetForm((f) => ({ ...f, description: e.target.value }))}
             placeholder="Brief description of this learning area"
+          />
+        </div>
+      </Modal>
+
+      {/* Add Level Modal */}
+      <Modal
+        open={!!showAddLevel}
+        onClose={() => setShowAddLevel(null)}
+        title="Add Level"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowAddLevel(null)}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddLevel} disabled={!addLevelForm.name || isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Level"}
+            </Button>
+          </>
+        }
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <Input
+            label="Level Name"
+            value={addLevelForm.name}
+            onChange={(e) => setAddLevelForm((f) => ({ ...f, name: e.target.value }))}
+            required
+            placeholder="e.g. Level 1"
+          />
+          <Input
+            label="Sort Order"
+            type="number"
+            value={addLevelForm.sortOrder}
+            onChange={(e) => setAddLevelForm((f) => ({ ...f, sortOrder: Number(e.target.value) }))}
+          />
+        </div>
+      </Modal>
+
+      {/* Add Variant Modal */}
+      <Modal
+        open={!!showAddVariant}
+        onClose={() => setShowAddVariant(null)}
+        title="Add Course Variant"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowAddVariant(null)}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddVariant} disabled={isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Variant"}
+            </Button>
+          </>
+        }
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <Input
+            label="Variant Name"
+            value={addVariantForm.name}
+            onChange={(e) => setAddVariantForm((f) => ({ ...f, name: e.target.value }))}
+            required
+            placeholder="e.g. Standard, Premium, etc."
+          />
+          <Input
+            label="Frequency (days per week)"
+            type="number"
+            value={addVariantForm.frequencyPerWeek}
+            onChange={(e) => setAddVariantForm((f) => ({ ...f, frequencyPerWeek: Number(e.target.value) }))}
+            required
+          />
+          <Input
+            label="Base Price (per month)"
+            type="number"
+            value={addVariantForm.price}
+            onChange={(e) => setAddVariantForm((f) => ({ ...f, price: Number(e.target.value) }))}
+            required
+          />
+          <Input
+            label="Setup Fee (one-time)"
+            type="number"
+            value={addVariantForm.setupFee}
+            onChange={(e) => setAddVariantForm((f) => ({ ...f, setupFee: Number(e.target.value) }))}
           />
         </div>
       </Modal>

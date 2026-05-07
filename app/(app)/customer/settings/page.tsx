@@ -26,7 +26,6 @@ export default function SettingsPage() {
   const [piiRevealed, setPiiRevealed] = useState(false);
   const [notifClass, setNotifClass] = useState(true);
   const [notifPayment, setNotifPayment] = useState(true);
-  const [notifEvent, setNotifEvent] = useState(false);
   const [pwForm, setPwForm] = useState({ current: "", next: "", confirm: "" });
   const [pwSaved, setPwSaved] = useState(false);
 
@@ -281,12 +280,6 @@ export default function SettingsPage() {
             description="Email for upcoming charges and failed payments"
             value={notifPayment}
             onChange={setNotifPayment}
-          />
-          <NotifToggle
-            label="Events & tournaments"
-            description="Email when new events are posted at your location"
-            value={notifEvent}
-            onChange={setNotifEvent}
           />
         </div>
         <p style={{ margin: "14px 0 0", fontSize: 11, color: TLP.gray400 }}>

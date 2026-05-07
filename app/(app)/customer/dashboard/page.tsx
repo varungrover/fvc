@@ -22,11 +22,6 @@ const CUSTOMER_ID = "cust_raj";
 const AVATAR_COLORS = [TLP.teal, TLP.purple, TLP.navy, TLP.blue];
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const UPCOMING_EVENTS = [
-  { id: "ev1", title: "Surrey Chess Tournament", date: "May 17, 2026", location: "Surrey Central", type: "Tournament", fee: 20 },
-  { id: "ev2", title: "Monthly Trivia Night", date: "May 24, 2026", location: "Abbotsford", type: "Event", fee: 0 },
-  { id: "ev3", title: "Math Summer Camp", date: "Jul 7–11, 2026", location: "Surrey Central", type: "Camp", fee: 299 },
-];
 
 function fmtTime(t: string) {
   const [h, m] = t.split(":").map(Number);
@@ -258,61 +253,6 @@ export default function CustomerDashboard() {
 
         {/* Right column */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* Upcoming events */}
-          <Card style={{ padding: "18px 20px" }}>
-            <SectionHeader
-              title="Upcoming Events"
-              action={<Button variant="ghost" size="sm">See all</Button>}
-            />
-            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-              {UPCOMING_EVENTS.map((ev, i) => (
-                <div
-                  key={ev.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    paddingBottom: 12,
-                    paddingTop: i > 0 ? 12 : 0,
-                    borderBottom:
-                      i < UPCOMING_EVENTS.length - 1 ? `1px solid ${TLP.gray100}` : "none",
-                    gap: 8,
-                  }}
-                >
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: TLP.navy }}>
-                      {ev.title}
-                    </div>
-                    <div style={{ fontSize: 11, color: TLP.gray500, marginTop: 2 }}>
-                      {ev.date} · {ev.location}
-                    </div>
-                    <div style={{ marginTop: 5 }}>
-                      <Badge
-                        label={ev.type}
-                        color={
-                          ev.type === "Tournament"
-                            ? TLP.teal
-                            : ev.type === "Camp"
-                              ? TLP.blue
-                              : TLP.purple
-                        }
-                        bg={
-                          ev.type === "Tournament"
-                            ? TLP.tealLight
-                            : ev.type === "Camp"
-                              ? TLP.blueLight
-                              : TLP.purpleLight
-                        }
-                      />
-                    </div>
-                  </div>
-                  <Button variant="secondary" size="sm" style={{ flexShrink: 0 }}>
-                    {ev.fee === 0 ? "Free" : `$${ev.fee}`}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </Card>
 
           {/* Recent payments */}
           <Card style={{ padding: "18px 20px" }}>

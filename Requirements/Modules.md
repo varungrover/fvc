@@ -228,9 +228,10 @@ capacity counts.
 
 ---
 
-## Module 6 — Coach & Staff
+## Module 6 — Coach & Staff [COMPLETE]
 
 **Domain:** Coach profile management, planet assignments, availability schedule, and leaves.
+
 
 ### Database tables
 | Table | Purpose |
@@ -277,7 +278,7 @@ availability and leaves.
 
 ---
 
-## Module 7 — Customer & Member
+## Module 7 — Customer & Member [COMPLETE — Pending 2FA Unmasking]
 
 **Domain:** Customer account registration and management, member profiles under a customer
 account, PII masking, 2FA-gated PII access, loyalty point display.
@@ -691,8 +692,7 @@ XA/XM submit price requests and raise tickets. FA/FM review price requests and a
 
 ## Module 19 — Public Storefront
 
-**Domain:** Unauthenticated brand-specific landing page — course catalog, pricing, upcoming
-events, and trial/enrollment CTAs.
+**Domain:** Unauthenticated brand-specific landing page — course catalog, pricing, and trial/enrollment CTAs.
 
 ### Database tables
 No owned tables — reads from Module 3.
@@ -716,7 +716,7 @@ Fully public — no auth.
 
 ### Notes
 - Per-tenant branding (logo, colors) is configured in deployment env vars or a `brand_config` table; the storefront API returns this alongside catalog data.
-- All CTAs (enroll, book trial, register for event) deep-link to `/login?next=<destination>` — no public checkout.
+- All CTAs (enroll, book trial) deep-link to `/login?next=<destination>` — no public checkout.
 - Path-based routing (`/t/[tenant]`) is used for the prototype. Production will use subdomain or custom CNAME — defer this decision until post-launch.
 
 ---

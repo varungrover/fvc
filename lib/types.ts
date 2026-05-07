@@ -186,23 +186,25 @@ export interface Coach {
   locationId?: ID;
   status: "active" | "on_leave" | "inactive";
   planetIds: ID[]; // planets this coach can teach
+  is_active: boolean; // Field from profiles
 }
 
-export interface CoachAvailability {
+export interface StaffAvailability {
   id: ID;
-  coachId: ID;
-  dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  startTime: string; // HH:MM
-  endTime: string;
-  effectiveFrom: ISODate;
-  effectiveTo?: ISODate;
+  profileId: ID;
+  dayOfWeek: string; // 'Monday', 'Tuesday', etc.
+  startTime: string; // HH:MM:SS
+  endTime: string; // HH:MM:SS
+  isActive: boolean;
 }
 
-export interface CoachLeave {
+export interface StaffLeave {
   id: ID;
-  coachId: ID;
-  leaveDate: ISODate;
+  profileId: ID;
+  startDate: ISODate;
+  endDate: ISODate;
   reason?: string;
+  status: "pending" | "approved" | "rejected";
 }
 
 // ============================================================
@@ -257,14 +259,12 @@ export interface Batch {
   id: ID;
   locationId: ID;
   levelId: ID;
-  courseVariantId: ID;
-  capacity: number;
-  dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  startTime: string; // HH:MM
-  endTime: string;
-  effectiveFrom: ISODate;
+  dayOfWeek: string; // 'Monday' | 'Tuesday' | ...
+  startTime: string; // HH:MM:SS
+  endTime: string; // HH:MM:SS
+  maxCapacity: number;
   isActive: boolean;
-  coachId?: ID;
+  createdAt?: ISODateTime;
 }
 
 export type EnrollmentStatus = "active" | "cancelled" | "suspended";

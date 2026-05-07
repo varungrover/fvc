@@ -25,9 +25,10 @@ interface OfferingsClientProps {
   locationName: string;
   locationId: string;
   catalog: PlanetWithOfferings[];
+  backHref?: string;
 }
 
-export default function OfferingsClient({ locationName, locationId, catalog }: OfferingsClientProps) {
+export default function OfferingsClient({ locationName, locationId, catalog, backHref = "/franchisee-admin/locations" }: OfferingsClientProps) {
   const [activePlanetId, setActivePlanetId] = useState(catalog[0]?.id);
   const [localCatalog, setLocalCatalog] = useState(catalog);
   const [saving, setSaving] = useState<string | null>(null);
@@ -72,7 +73,7 @@ export default function OfferingsClient({ locationName, locationId, catalog }: O
       <PageHeader
         title={`Manage Offerings — ${locationName}`}
         subtitle="Configure per-location pricing overrides for course levels"
-        backHref="/franchisee-admin/locations"
+        backHref={backHref}
       />
 
       {/* Planet Tabs */}

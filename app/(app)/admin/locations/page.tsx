@@ -18,16 +18,21 @@ export default async function AdminLocationsPage() {
     .eq('is_active', true)
     .single()
 
-  // For the admin portal (corporate), show only corporate ownership locations
-  const locations = ownership
-    ? allLocations.filter((l) => l.ownership_id === ownership.id)
-    : allLocations
+  // For the franchisor admin, show all locations across all ownerships
+  // If we wanted to group them by ownership, we could, but for now we show all
+  const locations = allLocations
+
+  const { data: planets } = await supabase
+    .from('planets')
+    .select('*, products(*)')
+    .order('name');
 
   return (
     <LocationsClient
       locations={locations}
       ownershipName={ownership?.full_name ?? 'Corporate'}
       ownershipId={ownership?.id ?? session.ownershipId ?? ''}
+      planets={planets || []}
     />
   )
 }

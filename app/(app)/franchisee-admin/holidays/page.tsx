@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import HolidaysClient from "../../../admin/holidays/HolidaysClient";
+import HolidaysClient from "../../admin/holidays/HolidaysClient";
 
 export default async function FranchiseeHolidaysPage() {
   const supabase = await createClient();
@@ -14,11 +14,11 @@ export default async function FranchiseeHolidaysPage() {
     .select("*")
     .order("holiday_date");
 
-  // 2. Fetch own ownership only
+  // 2. Fetch own ownership + corporate ownership (so we can show TLP names)
   const { data: ownerships } = await supabase
     .from("ownerships")
     .select("id, full_name")
-    .eq("id", ownershipId);
+    .or(`id.eq.${ownershipId},ownership_type.eq.corporate`);
 
   // 3. Fetch own locations only
   const { data: locations } = await supabase
@@ -36,11 +36,21 @@ export default async function FranchiseeHolidaysPage() {
     locationId: h.location_id
   }));
 
+  const mappedOwnerships = (ownerships || []).map((o: any) => ({
+    id: o.id,
+    fullName: o.full_name
+  }));
+
+  const mappedLocations = (locations || []).map((l: any) => ({
+    id: l.id,
+    name: l.name
+  }));
+
   return (
     <HolidaysClient 
       initialHolidays={mappedHolidays as any} 
-      ownerships={ownerships as any || []} 
-      locations={locations as any || []}
+      ownerships={mappedOwnerships as any} 
+      locations={mappedLocations as any}
     />
   );
 }

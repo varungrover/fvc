@@ -6,7 +6,6 @@ const CUSTOMER_NAV: NavItem[] = [
   { kind: 'link', id: 'members', label: 'My Members', href: '/customer/members', icon: '👨‍👧' },
   { kind: 'link', id: 'enroll', label: 'Enroll', href: '/customer/enroll', icon: '📋' },
   { kind: 'link', id: 'lms', label: 'Learning Portal', href: '/customer/lms', icon: '📚' },
-  { kind: 'link', id: 'events', label: 'Events & Camps', href: '/customer/events', icon: '🎉' },
   { kind: 'divider', id: 'd1' },
   { kind: 'link', id: 'payments', label: 'Payments', href: '/customer/payments', icon: '💳' },
   { kind: 'link', id: 'notifications', label: 'Notifications', href: '/customer/notifications', icon: '🔔' },
@@ -21,16 +20,17 @@ const COACH_NAV: NavItem[] = [
   { kind: 'link', id: 'lms', label: 'LMS Authoring', href: '/coach/lms', icon: '✏️' },
   { kind: 'divider', id: 'd1' },
   { kind: 'link', id: 'availability', label: 'Availability', href: '/coach/availability', icon: '🗓️' },
+  { kind: 'link', id: 'leaves', label: 'Leaves', href: '/coach/leaves', icon: '🏖️' },
 ]
 
 const ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'dashboard', label: 'Dashboard', href: '/admin/dashboard', icon: '🏠' },
   { kind: 'link', id: 'locations', label: 'Locations', href: '/admin/locations', icon: '📍' },
+  { kind: 'link', id: 'schedule', label: 'Schedule', href: '/admin/schedule', icon: '📅' },
   { kind: 'link', id: 'coaches', label: 'Coaches', href: '/admin/coaches', icon: '👤' },
   { kind: 'link', id: 'customers', label: 'Customers', href: '/admin/customers', icon: '👥' },
   { kind: 'link', id: 'roster', label: 'Roster', href: '/admin/roster', icon: '📋' },
   { kind: 'divider', id: 'd1' },
-  { kind: 'link', id: 'events', label: 'Events & Camps', href: '/admin/events', icon: '🎉' },
   { kind: 'link', id: 'payments', label: 'Payments', href: '/admin/payments', icon: '💳' },
   { kind: 'link', id: 'discounts', label: 'Discounts', href: '/admin/discounts', icon: '🏷️' },
   { kind: 'link', id: 'holidays', label: 'Holidays', href: '/admin/holidays', icon: '🗓️' },
@@ -41,6 +41,7 @@ const ADMIN_NAV: NavItem[] = [
 const FRANCHISEE_ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'dashboard', label: 'Dashboard', href: '/franchisee-admin/dashboard', icon: '🏠' },
   { kind: 'link', id: 'locations', label: 'Locations', href: '/franchisee-admin/locations', icon: '📍' },
+  { kind: 'link', id: 'schedule', label: 'Schedule', href: '/franchisee-admin/schedule', icon: '📅' },
   { kind: 'link', id: 'coaches', label: 'Coaches', href: '/franchisee-admin/coaches', icon: '👤' },
   { kind: 'link', id: 'customers', label: 'Customers', href: '/franchisee-admin/customers', icon: '👥' },
   { kind: 'link', id: 'roster', label: 'Roster', href: '/franchisee-admin/roster', icon: '📋' },

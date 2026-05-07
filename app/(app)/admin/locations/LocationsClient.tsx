@@ -9,11 +9,13 @@ import { Modal } from '@/components/ui/Modal'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { TLP } from '@/lib/theme/tokens'
 import type { LocationRow } from '@/lib/db/locations'
+import type { Planet, Level } from '@/lib/types'
 
 interface Props {
   locations: LocationRow[]
   ownershipName: string
   ownershipId: string
+  planets: (Planet & { products: Level[] })[]
 }
 
 function Stat({ label, value }: { label: string; value: string | number }) {
@@ -25,7 +27,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   )
 }
 
-export function LocationsClient({ locations, ownershipName, ownershipId }: Props) {
+export function LocationsClient({ locations, ownershipName, ownershipId, planets }: Props) {
   const [search, setSearch] = useState('')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [showAddLocation, setShowAddLocation] = useState(false)
@@ -41,6 +43,13 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
   const [saving, setSaving] = useState(false)
   const [addError, setAddError] = useState<string | null>(null)
   const [localLocations, setLocalLocations] = useState<LocationRow[]>(locations)
+  const [showAddBatch, setShowAddBatch] = useState<{ locationId: string; levelId: string } | null>(null)
+  const [batchForm, setBatchForm] = useState({
+    dayOfWeek: 'Monday',
+    startTime: '16:00:00',
+    endTime: '17:00:00',
+    maxCapacity: 8
+  })
 
   const activeCount = localLocations.filter((l) => l.is_active).length
 
@@ -97,6 +106,35 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
       setSaving(false)
     }
   }
+
+  async function handleAddBatch() {
+    if (!showAddBatch) return;
+    setSaving(true);
+    try {
+      const res = await fetch('/api/batches', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...batchForm,
+          locationId: showAddBatch.locationId,
+          levelId: showAddBatch.levelId,
+        }),
+      });
+      if (res.ok) {
+        setShowAddBatch(null);
+      } else {
+        const err = await res.json();
+        alert(err.error || "Failed to add batch");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const [refreshKey, setRefreshKey] = useState(0);
 
   return (
     <div style={{ padding: 24 }}>
@@ -194,7 +232,6 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
                   </div>
                 </div>
 
-                {/* Expanded section */}
                 {isExpanded && (
                   <div
                     style={{
@@ -203,9 +240,32 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
                       padding: '16px 20px',
                     }}
                   >
-                    <p style={{ margin: 0, fontSize: 13, color: TLP.gray500 }}>
-                      Batch scheduling will be available in the next module.
-                    </p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: 12 }}>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          icon="📅"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = `/admin/schedule?locationId=${loc.id}`;
+                          }}
+                        >
+                          View Schedule
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          icon="💰"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = `/admin/locations/${loc.id}/offerings`;
+                          }}
+                        >
+                          Manage Offerings
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </Card>
@@ -304,6 +364,73 @@ export function LocationsClient({ locations, ownershipName, ownershipId }: Props
               onChange={(e) => setAddForm((f) => ({ ...f, country: e.target.value }))}
             />
           </div>
+        </div>
+      </Modal>
+
+      {/* Add Batch Modal */}
+      <Modal
+        open={!!showAddBatch}
+        onClose={() => setShowAddBatch(null)}
+        title="Add Recurring Slot"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowAddBatch(null)}>Cancel</Button>
+            <Button 
+              variant="primary" 
+              onClick={async () => {
+                await handleAddBatch();
+                setRefreshKey(k => k + 1); // Refresh BatchLists
+              }}
+              disabled={saving}
+            >
+              {saving ? 'Saving...' : 'Add Slot'}
+            </Button>
+          </>
+        }
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, color: TLP.gray600, display: 'block', marginBottom: 6 }}>
+              Day of Week
+            </label>
+            <select 
+              style={{ 
+                width: '100%', 
+                padding: '10px 12px', 
+                borderRadius: 8, 
+                border: `1px solid ${TLP.gray200}`,
+                fontSize: 14
+              }}
+              value={batchForm.dayOfWeek}
+              onChange={e => setBatchForm(f => ({ ...f, dayOfWeek: e.target.value }))}
+            >
+              {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <Input 
+              label="Start Time" 
+              type="time" 
+              value={batchForm.startTime.substring(0, 5)} 
+              onChange={e => setBatchForm(f => ({ ...f, startTime: e.target.value + ':00' }))}
+            />
+            <Input 
+              label="End Time" 
+              type="time" 
+              value={batchForm.endTime.substring(0, 5)} 
+              onChange={e => setBatchForm(f => ({ ...f, endTime: e.target.value + ':00' }))}
+            />
+          </div>
+
+          <Input 
+            label="Max Capacity" 
+            type="number" 
+            value={batchForm.maxCapacity} 
+            onChange={e => setBatchForm(f => ({ ...f, maxCapacity: parseInt(e.target.value) }))}
+          />
         </div>
       </Modal>
     </div>

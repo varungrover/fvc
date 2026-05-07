@@ -67,8 +67,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/change-password', request.url))
   }
 
-  // Wrong role prefix — redirect to correct landing
-  if (role) {
+  // Wrong role prefix — redirect to correct landing (ignore /api routes)
+  if (role && !pathname.startsWith('/api')) {
     const allowed = getAllowedPrefixForRole(role)
     const landing = getLandingForRole(role)
     if (allowed && landing && !pathname.startsWith(allowed) && pathname !== '/change-password') {
