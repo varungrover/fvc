@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { listLocations } from "@/lib/db/locations";
-import { ScheduleClient } from "./ScheduleClient";
+import { BatchesClient } from "./BatchesClient";
 
 export default async function AdminSchedulePage() {
   const session = await getSession();
@@ -18,8 +18,8 @@ export default async function AdminSchedulePage() {
     .order('name');
 
   return (
-    <Suspense fallback={<div>Loading schedule...</div>}>
-      <ScheduleClient 
+    <Suspense fallback={<div>Loading batches...</div>}>
+      <BatchesClient 
         locations={locations} 
         planets={planets || []}
         role={session.role}

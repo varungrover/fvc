@@ -248,10 +248,10 @@ export function LocationsClient({ locations, ownershipName, ownershipId, planets
                           icon="📅"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.location.href = `/admin/schedule?locationId=${loc.id}`;
+                            window.location.href = `/admin/batches?locationId=${loc.id}`;
                           }}
                         >
-                          View Schedule
+                          View Batches
                         </Button>
                         <Button
                           variant="secondary"

@@ -17,8 +17,8 @@ export default async function CoachSchedulePage() {
   return (
     <div style={{ padding: 24 }}>
       <PageHeader 
-        title="My Schedule" 
-        subtitle="Your assigned classes and sessions for this week"
+        title="My Batches" 
+        subtitle="Your assigned batches and sessions for this week"
       />
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", gap: 24 }}>
@@ -79,7 +79,7 @@ export default async function CoachSchedulePage() {
         ))}
         {(!assignments || assignments.length === 0) && (
           <div style={{ gridColumn: "1 / -1", padding: 80, textAlign: "center", background: TLP.gray50, borderRadius: 12 }}>
-            <div style={{ color: TLP.gray400, fontSize: 16 }}>No upcoming sessions assigned to you.</div>
+            <div style={{ color: TLP.gray400, fontSize: 16 }}>No upcoming batches assigned to you.</div>
           </div>
         )}
       </div>

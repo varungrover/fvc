@@ -4,10 +4,10 @@ import { createTrialAssessment, updateTrialStatus } from "@/lib/db/trials";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id: trialId } = params;
+  const { id: trialId } = await params;
   const body = await request.json();
   const { assessedBy, recommendedLevelId, performanceNotes, isEnrollmentRecommended } = body;
 

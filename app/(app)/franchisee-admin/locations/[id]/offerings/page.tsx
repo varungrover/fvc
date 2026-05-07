@@ -2,14 +2,15 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import OfferingsClient from "./OfferingsClient";
 
-export default async function LocationOfferingsPage({ params }: { params: { id: string } }) {
+export default async function LocationOfferingsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   // 1. Fetch location details
   const { data: location } = await supabase
     .from("locations")
     .select("name, id")
-    .eq("id", params.id)
+    .eq("id", id)
     .single();
 
   if (!location) notFound();
@@ -39,7 +40,7 @@ export default async function LocationOfferingsPage({ params }: { params: { id: 
   const { data: offerings } = await supabase
     .from("location_course_offerings")
     .select("*")
-    .eq("location_id", params.id);
+    .eq("location_id", id);
 
   // 4. Map everything together
   const catalogWithOfferings = (planets || []).map((p: any) => ({

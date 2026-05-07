@@ -1,3 +1,4 @@
+
 'use client'
 
 import React, { useState } from 'react'
@@ -17,7 +18,6 @@ import {
   Clock,
   ChevronRight
 } from 'lucide-react'
-import { updateCoachStatusAction } from '@/app/actions/coaches'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 
@@ -39,7 +39,13 @@ export function CoachesClient({ initialCoaches, isAdmin, basePath = '/admin/coac
   const handleToggleStatus = async (coach: CoachRow) => {
     try {
       const newActive = !coach.is_active
-      await updateCoachStatusAction(coach.id, newActive)
+      const res = await fetch(`/api/coaches/${coach.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_active: newActive })
+      })
+
+      if (!res.ok) throw new Error('Failed to update status')
       
       setCoaches(prev => prev.map(c => 
         c.id === coach.id ? { ...c, is_active: newActive, status: newActive ? (c.status === 'inactive' ? 'active' : c.status) : 'inactive' } : c

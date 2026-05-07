@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getCoachDetails } from '@/lib/db/coaches'
 import { CoachDetailClient } from './CoachDetailClient'
 
-export default async function CoachDetailPage({ params }: { params: { id: string } }) {
+export default async function CoachDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await getSession()
   if (!session) redirect('/login')
 

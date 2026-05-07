@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { listLocations } from "@/lib/db/locations";
-import { ScheduleClient } from "../../admin/schedule/ScheduleClient";
+import { BatchesClient } from "../../admin/batches/BatchesClient";
 
 export default async function FranchiseeSchedulePage() {
   const session = await getSession();
@@ -19,8 +19,8 @@ export default async function FranchiseeSchedulePage() {
     .order('name');
 
   return (
-    <Suspense fallback={<div>Loading schedule...</div>}>
-      <ScheduleClient 
+    <Suspense fallback={<div>Loading batches...</div>}>
+      <BatchesClient 
         locations={locations} 
         planets={planets || []}
         role={session.role}

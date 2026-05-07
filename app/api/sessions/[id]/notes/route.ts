@@ -4,10 +4,10 @@ import { listSessionNotes, createSessionNote } from "@/lib/db/attendance";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id: assignmentId } = params;
+  const { id: assignmentId } = await params;
 
   try {
     const notes = await listSessionNotes(supabase, assignmentId);
@@ -19,10 +19,10 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id: assignmentId } = params;
+  const { id: assignmentId } = await params;
   const body = await request.json();
   const { authorId, content, isPrivate } = body;
 

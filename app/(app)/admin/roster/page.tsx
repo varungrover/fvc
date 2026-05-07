@@ -15,7 +15,7 @@ export default async function AdminRosterPage() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32 }}>
         <PageHeader 
           title="Roster Management" 
-          subtitle="Manage weekly coach assignments and schedules"
+          subtitle="Manage weekly coach assignments and batches"
         />
         <Button variant="primary">Create New Roster</Button>
       </div>

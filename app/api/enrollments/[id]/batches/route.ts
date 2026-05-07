@@ -4,10 +4,10 @@ import { listEnrollmentBatches } from "@/lib/db/enrollments";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const batches = await listEnrollmentBatches(supabase, id);

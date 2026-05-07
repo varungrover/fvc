@@ -17,7 +17,7 @@ interface Props {
   role: string;
 }
 
-export function ScheduleClient({ locations, planets, role }: Props) {
+export function BatchesClient({ locations, planets, role }: Props) {
   const searchParams = useSearchParams();
   const initialLocId = searchParams.get("locationId") || locations[0]?.id || "";
   
@@ -115,11 +115,11 @@ export function ScheduleClient({ locations, planets, role }: Props) {
   return (
     <div style={{ padding: 24 }}>
       <PageHeader 
-        title="Schedule Management" 
-        subtitle="Manage recurring class slots across locations and levels"
+        title="Batch Management" 
+        subtitle="Manage recurring class batches across locations and levels"
         actions={
           <Button variant="primary" icon="➕" onClick={() => setShowAddBatch(true)}>
-            Add Recurring Slot
+            Add Recurring Batch
           </Button>
         }
       />

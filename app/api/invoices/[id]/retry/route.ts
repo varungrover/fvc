@@ -5,10 +5,10 @@ import { createPaymentIntent } from "@/lib/stripe/client";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const invoice = await getInvoice(supabase, id);

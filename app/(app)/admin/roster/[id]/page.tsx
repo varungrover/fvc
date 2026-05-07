@@ -2,9 +2,10 @@ import { createClient } from "@/lib/supabase/server";
 import RosterBuilder from "./RosterBuilder";
 import { getRoster } from "@/lib/db/rosters";
 
-export default async function RosterDetailPage({ params }: { params: { id: string } }) {
+export default async function RosterDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
-  const roster = await getRoster(supabase, params.id);
+  const roster = await getRoster(supabase, id);
   
   // Fetch coaches and batches for the builder
   const { data: coaches } = await supabase.from("profiles").select("*").eq("role", "coach");

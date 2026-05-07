@@ -26,7 +26,7 @@ const COACH_NAV: NavItem[] = [
 const ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'dashboard', label: 'Dashboard', href: '/admin/dashboard', icon: '🏠' },
   { kind: 'link', id: 'locations', label: 'Locations', href: '/admin/locations', icon: '📍' },
-  { kind: 'link', id: 'schedule', label: 'Schedule', href: '/admin/schedule', icon: '📅' },
+  { kind: 'link', id: 'schedule', label: 'Batches', href: '/admin/batches', icon: '📅' },
   { kind: 'link', id: 'coaches', label: 'Coaches', href: '/admin/coaches', icon: '👤' },
   { kind: 'link', id: 'customers', label: 'Customers', href: '/admin/customers', icon: '👥' },
   { kind: 'link', id: 'roster', label: 'Roster', href: '/admin/roster', icon: '📋' },
@@ -41,7 +41,7 @@ const ADMIN_NAV: NavItem[] = [
 const FRANCHISEE_ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'dashboard', label: 'Dashboard', href: '/franchisee-admin/dashboard', icon: '🏠' },
   { kind: 'link', id: 'locations', label: 'Locations', href: '/franchisee-admin/locations', icon: '📍' },
-  { kind: 'link', id: 'schedule', label: 'Schedule', href: '/franchisee-admin/schedule', icon: '📅' },
+  { kind: 'link', id: 'schedule', label: 'Batches', href: '/franchisee-admin/batches', icon: '📅' },
   { kind: 'link', id: 'coaches', label: 'Coaches', href: '/franchisee-admin/coaches', icon: '👤' },
   { kind: 'link', id: 'customers', label: 'Customers', href: '/franchisee-admin/customers', icon: '👥' },
   { kind: 'link', id: 'roster', label: 'Roster', href: '/franchisee-admin/roster', icon: '📋' },

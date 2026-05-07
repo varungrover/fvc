@@ -4,10 +4,10 @@ import { getRoster, updateRosterStatus } from "@/lib/db/rosters";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const roster = await getRoster(supabase, id);
@@ -22,10 +22,10 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id } = params;
+  const { id } = await params;
   const body = await request.json();
   const { status } = body;
 

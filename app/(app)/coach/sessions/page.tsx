@@ -13,7 +13,7 @@ export default async function CoachSessionsPage() {
   // Get active assignments for today
   const { data: assignments, error } = await supabase
     .from("roster_assignments")
-    .select("*, batches(*), rosters!inner(*)")
+    .select("*, batches(*), rosters(*)")
     .eq("coach_id", user?.id)
     .eq("session_date", today)
     .eq("rosters.status", "published");

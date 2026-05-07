@@ -132,7 +132,7 @@ export default function CoachDashboard() {
           {/* Today's schedule */}
           <Card style={{ padding: "18px 20px" }}>
             <SectionHeader
-              title="Today's Schedule"
+              title="Today's Batches"
               subtitle={`${TODAY} (Monday)`}
               action={
                 <Button variant="secondary" size="sm" onClick={() => router.push("/coach/sessions")}>
@@ -142,7 +142,7 @@ export default function CoachDashboard() {
             />
             {todaysAssignments.length === 0 ? (
               <div style={{ fontSize: 13, color: TLP.gray400, textAlign: "center", padding: "24px 0" }}>
-                No sessions scheduled for today.
+                No batches today.
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

@@ -247,10 +247,10 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
                           icon="📅"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.location.href = `/franchisee-admin/schedule?locationId=${loc.id}`;
+                            window.location.href = `/franchisee-admin/batches?locationId=${loc.id}`;
                           }}
                         >
-                          View Schedule
+                          View Batches
                         </Button>
                         <Button
                           variant="secondary"
@@ -369,7 +369,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
       <Modal
         open={!!showAddBatch}
         onClose={() => setShowAddBatch(null)}
-        title="Add Recurring Slot"
+        title="Add Recurring Batch"
         footer={
           <>
             <Button variant="secondary" onClick={() => setShowAddBatch(null)}>Cancel</Button>
@@ -381,7 +381,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
               }}
               disabled={saving}
             >
-              {saving ? 'Saving...' : 'Add Slot'}
+              {saving ? 'Saving...' : 'Add Batch'}
             </Button>
           </>
         }

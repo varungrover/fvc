@@ -4,10 +4,10 @@ import { upsertRosterAssignment } from "@/lib/db/rosters";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = await createClient();
-  const { id: rosterId } = params;
+  const { id: rosterId } = await params;
   const body = await request.json();
   const { batchId, coachId, roomId, notes, id } = body;
 
