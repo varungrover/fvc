@@ -74,10 +74,10 @@ export function CoachAvailabilityClient({ initialAvailability, profileId }: Coac
         }
       />
 
-      <Card style={{ marginTop: '24px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <h3 style={{ fontSize: '16px', fontWeight: 600 }}>Weekly Slots</h3>
-          <Button variant="secondary" size="sm" onClick={handleAddAvailability}>
+      <Card style={{ marginTop: '24px', padding: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 800, color: TLP.navy, margin: 0 }}>Weekly Slots</h3>
+          <Button variant="secondary" size="sm" onClick={handleAddAvailability} style={{ padding: '8px 16px' }}>
             <Plus size={16} style={{ marginRight: '8px' }} />
             Add Slot
           </Button>
