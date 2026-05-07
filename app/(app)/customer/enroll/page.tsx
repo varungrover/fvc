@@ -17,22 +17,28 @@ export default async function EnrollPage() {
     return <div>Customer record not found. Please complete your profile.</div>;
   }
 
-  // 2. Parallel fetch for speed using the correct customer.id
+  // 2. Parallel fetch for deep selection
   const [
+    { data: planets },
+    { data: products },
     { data: levels },
     { data: members },
     { data: batches },
     discountTiers
   ] = await Promise.all([
-    supabase.from("product_variants").select("*"),
+    supabase.from("planets").select("*").eq("is_active", true),
+    supabase.from("products").select("*").eq("is_active", true),
+    supabase.from("product_variants").select("*").eq("is_active", true),
     supabase.from("members").select("*").eq("customer_id", customer.id),
-    supabase.from("batches").select("*"),
+    supabase.from("batches").select("*").eq("is_active", true),
     listDiscountTiers(supabase)
   ]);
 
   return (
     <EnrollClient 
       initialData={{ 
+        planets: planets || [],
+        products: products || [],
         levels: levels || [], 
         members: members || [], 
         batches: batches || [], 

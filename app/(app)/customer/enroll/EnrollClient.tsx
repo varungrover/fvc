@@ -26,12 +26,14 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
   const [formData, setFormData] = useState({
     memberId: "",
+    planetId: "",
+    productId: "",
     variantId: "",
     batchIds: [] as string[],
     paymentMethodId: ""
   });
 
-  const { levels, members, batches, discountTiers } = initialData;
+  const { planets, products, levels, members, batches, discountTiers } = initialData;
 
   // Real-time Billing Logic
   const billingSummary = useMemo(() => {
@@ -43,7 +45,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
     const setupFee = selectedLevel.setup_fee || 0;
     
     // Total enrollment count (simulated: current + 1)
-    const activeEnrollments = 1; // In real app, fetch from parent profile
+    const activeEnrollments = 1; 
     const discount = computeMultiPlanetDiscount(proratedAmount, activeEnrollments, discountTiers || []);
     
     return {
@@ -56,7 +58,15 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   }, [formData.variantId, levels, discountTiers]);
 
   const next = () => setStep(s => Math.min(s + 1, STEPS.length));
-  const prev = () => setStep(s => Math.max(s - 1, 1));
+  const prev = () => {
+    // If in Step 2 sub-selection, maybe go back within tiered levels
+    if (step === 2) {
+      if (formData.variantId) { setFormData({ ...formData, variantId: "" }); return; }
+      if (formData.productId) { setFormData({ ...formData, productId: "" }); return; }
+      if (formData.planetId) { setFormData({ ...formData, planetId: "" }); return; }
+    }
+    setStep(s => Math.max(s - 1, 1));
+  };
 
   const handleFinish = async () => {
     setLoading(true);
@@ -145,7 +155,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                     </div>
                     <div>
                       <div style={{ fontWeight: 700, color: TLP.navy }}>{m.full_name}</div>
-                      <div style={{ fontSize: 12, color: TLP.gray500 }}>{m.date_of_birth}</div>
+                      <div style={{ fontSize: 12, color: TLP.gray500 }}>{m.dob}</div>
                     </div>
                   </div>
                 ))}
@@ -163,41 +173,92 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
             </div>
           )}
 
-          {/* STEP 2: LEVEL SELECTION */}
+          {/* STEP 2: TIERED LEVEL SELECTION */}
           {step === 2 && (
             <div>
-              <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Level</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                {levels.map((l: any) => {
-                  const theme = PLANET_THEMES[l.name] || PLANET_THEMES.Earth;
-                  return (
-                    <div 
-                      key={l.id}
-                      onClick={() => setFormData({ ...formData, variantId: l.id })}
-                      style={{ 
-                        padding: 30, 
-                        borderRadius: 20, 
-                        background: theme.gradient,
-                        color: "white",
-                        cursor: "pointer",
-                        transform: formData.variantId === l.id ? "scale(1.02)" : "scale(1)",
-                        boxShadow: formData.variantId === l.id ? `0 10px 30px ${theme.bg}` : "none",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        position: "relative",
-                        overflow: "hidden"
-                      }}
-                    >
-                      <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, background: "rgba(255,255,255,0.1)", borderRadius: 60 }} />
-                      <div style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>{l.name}</div>
-                      <div style={{ fontSize: 14, opacity: 0.9, marginBottom: 24 }}>{l.description || 'Master the fundamentals of the opening.'}</div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                        <div style={{ fontSize: 32, fontWeight: 900 }}>${l.price}<span style={{ fontSize: 14, fontWeight: 500, opacity: 0.8 }}>/mo</span></div>
-                        {formData.variantId === l.id && <div style={{ background: "white", color: TLP.navy, padding: "4px 12px", borderRadius: 20, fontSize: 12, fontWeight: 800 }}>SELECTED</div>}
+              {!formData.planetId && (
+                <>
+                  <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Planet</h2>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                    {planets.map((p: any) => {
+                      const theme = PLANET_THEMES[p.name] || PLANET_THEMES.Earth;
+                      return (
+                        <div 
+                          key={p.id}
+                          onClick={() => setFormData({ ...formData, planetId: p.id })}
+                          style={{ 
+                            padding: 30, 
+                            borderRadius: 20, 
+                            background: theme.gradient,
+                            color: "white",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease",
+                            position: "relative",
+                            overflow: "hidden"
+                          }}
+                        >
+                          <div style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>{p.name}</div>
+                          <div style={{ fontSize: 14, opacity: 0.9 }}>{p.description || "Master new skills."}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {formData.planetId && !formData.productId && (
+                <>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                    <button onClick={() => setFormData({ ...formData, planetId: "" })} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Planet</button>
+                    <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy }}>Choose Program</h2>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                    {products.filter((p: any) => p.planet_id === formData.planetId).map((p: any) => (
+                      <div 
+                        key={p.id}
+                        onClick={() => setFormData({ ...formData, productId: p.id })}
+                        style={{ 
+                          padding: 24, 
+                          borderRadius: 16, 
+                          border: `2px solid ${TLP.gray100}`,
+                          cursor: "pointer",
+                          transition: "all 0.2s ease"
+                        }}
+                      >
+                        <div style={{ fontWeight: 800, color: TLP.navy, fontSize: 18 }}>{p.name}</div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {formData.productId && (
+                <>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                    <button onClick={() => setFormData({ ...formData, productId: "" })} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Program</button>
+                    <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy }}>Select Frequency</h2>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                    {levels.filter((v: any) => v.product_id === formData.productId).map((v: any) => (
+                      <div 
+                        key={v.id}
+                        onClick={() => setFormData({ ...formData, variantId: v.id })}
+                        style={{ 
+                          padding: 24, 
+                          borderRadius: 16, 
+                          border: `2px solid ${formData.variantId === v.id ? TLP.teal : TLP.gray100}`,
+                          background: formData.variantId === v.id ? TLP.teal + "05" : "white",
+                          cursor: "pointer",
+                          transition: "all 0.2s ease"
+                        }}
+                      >
+                        <div style={{ fontWeight: 800, color: TLP.navy }}>{v.name}</div>
+                        <div style={{ fontSize: 24, fontWeight: 900, color: TLP.teal, marginTop: 12 }}>${v.price}<span style={{ fontSize: 12, fontWeight: 500, color: TLP.gray500 }}>/mo</span></div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -206,7 +267,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
             <div>
               <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Pick Schedule</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {batches.filter((b: any) => b.variant_id === formData.variantId).map((b: any) => (
+                {batches.filter((b: any) => b.product_id === formData.productId).map((b: any) => (
                   <div 
                     key={b.id}
                     onClick={() => {
@@ -231,13 +292,18 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                       <div style={{ fontSize: 14, color: TLP.gray500 }}>{b.start_time} - {b.end_time}</div>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: TLP.teal }}>{b.capacity - (b.enrolled_count || 0)} SPOTS LEFT</div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: TLP.teal }}>{b.max_capacity - (b.enrolled_count || 0)} SPOTS LEFT</div>
                       <div style={{ width: 100, height: 4, background: TLP.gray100, borderRadius: 2, marginTop: 8 }}>
-                        <div style={{ width: `${(b.enrolled_count || 0) / b.capacity * 100}%`, height: "100%", background: TLP.teal, borderRadius: 2 }} />
+                        <div style={{ width: `${(b.enrolled_count || 0) / b.max_capacity * 100}%`, height: "100%", background: TLP.teal, borderRadius: 2 }} />
                       </div>
                     </div>
                   </div>
                 ))}
+                {batches.filter((b: any) => b.product_id === formData.productId).length === 0 && (
+                   <div style={{ textAlign: "center", padding: 40, color: TLP.gray400 }}>
+                      No available schedules found for this program.
+                   </div>
+                )}
               </div>
             </div>
           )}
@@ -318,10 +384,22 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
               <div style={{ fontWeight: 700, color: TLP.navy }}>{members.find((m: any) => m.id === formData.memberId)?.full_name}</div>
             </div>
           )}
+          {formData.planetId && (
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 12, color: TLP.gray500 }}>Planet</div>
+              <div style={{ fontWeight: 700, color: TLP.navy }}>{planets.find((p: any) => p.id === formData.planetId)?.name}</div>
+            </div>
+          )}
+          {formData.productId && (
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 12, color: TLP.gray500 }}>Program</div>
+              <div style={{ fontWeight: 700, color: TLP.navy }}>{products.find((p: any) => p.id === formData.productId)?.name}</div>
+            </div>
+          )}
           {formData.variantId && (
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 12, color: TLP.gray500 }}>Level</div>
-              <div style={{ fontWeight: 700, color: TLP.navy }}>{levels.find((l: any) => l.id === formData.variantId)?.name}</div>
+              <div style={{ fontSize: 12, color: TLP.gray500 }}>Frequency</div>
+              <div style={{ fontWeight: 700, color: TLP.navy }}>{levels.find((v: any) => v.id === formData.variantId)?.name}</div>
             </div>
           )}
           {formData.batchIds.length > 0 && (
