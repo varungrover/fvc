@@ -29,7 +29,7 @@ export default async function LocationOfferingsPage({ params }: { params: Promis
           id,
           product_id,
           frequency_per_week,
-          base_price,
+          price,
           setup_fee
         )
       )
@@ -51,7 +51,7 @@ export default async function LocationOfferingsPage({ params }: { params: Promis
         id: v.id,
         levelId: v.product_id,
         frequencyPerWeek: v.frequency_per_week,
-        price: Number(v.base_price),
+        price: Number(v.price),
         setupFee: Number(v.setup_fee),
         offering: (offerings || []).find((o: any) => o.product_variant_id === v.id)
       }))

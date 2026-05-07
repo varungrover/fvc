@@ -43,10 +43,10 @@ export async function POST(
         return NextResponse.json({ error: "No variants provided" }, { status: 400 });
       }
 
-      // 1. Fetch variants to get their base prices
+      // 1. Fetch variants to get their prices
       const { data: variants, error: vError } = await supabase
         .from("product_variants")
-        .select("id, base_price, setup_fee")
+        .select("id, price, setup_fee")
         .in("id", variantIds);
 
       if (vError) throw vError;
@@ -54,14 +54,14 @@ export async function POST(
         return NextResponse.json({ error: "No matching variants found" }, { status: 404 });
       }
 
-      // 2. Upsert offerings with base prices
+      // 2. Upsert offerings with default prices
       const { data: updated, error: uError } = await supabase
         .from("location_course_offerings")
         .upsert(
           variants.map(v => ({
             location_id: locationId,
             product_variant_id: v.id,
-            price: v.base_price,
+            price: v.price,
             setup_fee: v.setup_fee,
             is_active: true
           })),
