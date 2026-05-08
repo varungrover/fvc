@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Plus, MapPin, ChevronUp, ChevronDown, CalendarDays, Tag } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -141,7 +142,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
         title="Locations"
         subtitle={`${ownershipName} — ${activeCount} active location${activeCount === 1 ? '' : 's'}`}
         actions={
-          <Button variant="primary" icon="➕" onClick={() => setShowAddLocation(true)}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => setShowAddLocation(true)}>
             Add Location
           </Button>
         }
@@ -204,7 +205,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
                         flexShrink: 0,
                       }}
                     >
-                      📍
+                      <MapPin size={20} strokeWidth={1.75} />
                     </div>
                     <div>
                       <div style={{ fontWeight: 700, fontSize: 16, color: TLP.navy }}>
@@ -225,8 +226,8 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
                       color={loc.is_active ? TLP.green : TLP.gray500}
                       bg={loc.is_active ? TLP.greenLight : TLP.gray100}
                     />
-                    <span style={{ color: TLP.gray400, fontSize: 18 }}>
-                      {isExpanded ? '▲' : '▼'}
+                    <span style={{ color: TLP.gray400, display: 'flex', alignItems: 'center' }}>
+                      {isExpanded ? <ChevronUp size={18} strokeWidth={2} /> : <ChevronDown size={18} strokeWidth={2} />}
                     </span>
                   </div>
                 </div>
@@ -244,7 +245,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
                         <Button
                           variant="secondary"
                           size="sm"
-                          icon="📅"
+                          icon={<CalendarDays size={14} strokeWidth={2} />}
                           onClick={(e) => {
                             e.stopPropagation();
                             window.location.href = `/franchisee-admin/batches?locationId=${loc.id}`;
@@ -255,6 +256,7 @@ export function LocationsClient({ locations, ownershipName, planets }: Props) {
                         <Button
                           variant="secondary"
                           size="sm"
+                          icon={<Tag size={14} strokeWidth={2} />}
                           onClick={(e) => {
                             e.stopPropagation();
                             window.location.href = `/franchisee-admin/locations/${loc.id}/offerings`;

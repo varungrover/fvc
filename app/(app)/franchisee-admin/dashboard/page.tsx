@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { CircleDollarSign, MapPin, Users, GraduationCap, ClipboardList, Hourglass, Ticket, ChevronRight, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -17,6 +18,19 @@ import { PLANET_BY_ID } from "@/lib/mock/planets";
 import { PRICE_REQUESTS } from "@/lib/mock/priceRequests";
 
 const MLA_TEAL = "#0a9b8a";
+
+function getPlanetIcon(name: string, size = 12) {
+  switch (name) {
+    case "Chess": return <Crown size={size} strokeWidth={2.5} />;
+    case "Math":
+    case "Maths": return <Calculator size={size} strokeWidth={2.5} />;
+    case "English": return <BookOpen size={size} strokeWidth={2.5} />;
+    case "Finance": return <DollarSign size={size} strokeWidth={2.5} />;
+    case "Arts": return <Palette size={size} strokeWidth={2.5} />;
+    case "Business": return <Briefcase size={size} strokeWidth={2.5} />;
+    default: return <Globe size={size} strokeWidth={2.5} />;
+  }
+}
 
 const MLA_LOCATIONS = LOCATIONS_BY_TENANT["ten_mla"] ?? [];
 const MLA_LOC_IDS = new Set(MLA_LOCATIONS.map((l) => l.id));
@@ -80,7 +94,7 @@ export default function FranchiseeAdminDashboard() {
           <Button
             variant="secondary"
             onClick={() => router.push("/franchisee-admin/price-requests")}
-            icon="💰"
+            icon={<CircleDollarSign size={16} />}
             style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.35)", color: "#fff" }}
           >
             Price Requests
@@ -100,7 +114,7 @@ export default function FranchiseeAdminDashboard() {
         <StatTile
           label="Locations"
           value={MLA_LOCATIONS.length}
-          icon="📍"
+          icon={<MapPin size={24} />}
           iconBg={TLP.tealLight}
           iconColor={MLA_TEAL}
           onClick={() => router.push("/franchisee-admin/locations")}
@@ -108,7 +122,7 @@ export default function FranchiseeAdminDashboard() {
         <StatTile
           label="Active Coaches"
           value={MLA_COACHES.filter((c) => c.status === "active").length}
-          icon="🧑‍🏫"
+          icon={<Users size={24} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
           onClick={() => router.push("/franchisee-admin/coaches")}
@@ -116,7 +130,7 @@ export default function FranchiseeAdminDashboard() {
         <StatTile
           label="Active Students"
           value={MLA_ACTIVE_STUDENT_IDS.size === 0 ? CUSTOMERS.length : MLA_ACTIVE_STUDENT_IDS.size}
-          icon="🎓"
+          icon={<GraduationCap size={24} />}
           iconBg={TLP.purpleLight}
           iconColor={TLP.purple}
           onClick={() => router.push("/franchisee-admin/customers")}
@@ -126,7 +140,7 @@ export default function FranchiseeAdminDashboard() {
           value={PENDING_REQUESTS.length}
           delta={PENDING_REQUESTS.length > 0 ? "Needs attention" : "All clear"}
           deltaColor={PENDING_REQUESTS.length > 0 ? TLP.amber : TLP.green}
-          icon="📋"
+          icon={<ClipboardList size={24} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
           onClick={() => router.push("/franchisee-admin/price-requests")}
@@ -147,7 +161,7 @@ export default function FranchiseeAdminDashboard() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 18 }}>⏳</span>
+              <span style={{ display: "flex", color: TLP.amber }}><Hourglass size={18} /></span>
               <span style={{ fontWeight: 700, color: TLP.amber, fontSize: 14 }}>
                 {PENDING_REQUESTS.length} Price Request{PENDING_REQUESTS.length > 1 ? "s" : ""} Awaiting Review
               </span>
@@ -238,14 +252,17 @@ export default function FranchiseeAdminDashboard() {
                     style={{
                       background: pStyle.bg,
                       color: pStyle.color,
-                      padding: "1px 7px",
+                      padding: "2px 8px",
                       borderRadius: 20,
                       fontSize: 11,
                       fontWeight: 700,
                       marginRight: 6,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 4
                     }}
                   >
-                    {pStyle.icon} {planet?.name}
+                    {getPlanetIcon(planet?.name ?? "")} {planet?.name}
                   </span>
                   <span style={{ fontWeight: 600, color: TLP.navy }}>{level?.name}</span>
                 </div>
@@ -266,12 +283,12 @@ export default function FranchiseeAdminDashboard() {
           <SectionHeader title="Quick Actions" />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              { label: "Manage Locations", icon: "📍", path: "/franchisee-admin/locations" },
-              { label: "Manage Coaches", icon: "🧑‍🏫", path: "/franchisee-admin/coaches" },
-              { label: "View Customers", icon: "👨‍👩‍👧", path: "/franchisee-admin/customers" },
-              { label: "View Roster", icon: "📋", path: "/franchisee-admin/roster" },
-              { label: "Price Requests", icon: "💰", path: "/franchisee-admin/price-requests" },
-              { label: "Support Tickets", icon: "🎫", path: "/franchisee-admin/tickets" },
+              { label: "Manage Locations", icon: <MapPin size={18} />, path: "/franchisee-admin/locations" },
+              { label: "Manage Coaches", icon: <Users size={18} />, path: "/franchisee-admin/coaches" },
+              { label: "View Customers", icon: <GraduationCap size={18} />, path: "/franchisee-admin/customers" },
+              { label: "View Roster", icon: <ClipboardList size={18} />, path: "/franchisee-admin/roster" },
+              { label: "Price Requests", icon: <CircleDollarSign size={18} />, path: "/franchisee-admin/price-requests" },
+              { label: "Support Tickets", icon: <Ticket size={18} />, path: "/franchisee-admin/tickets" },
             ].map((action) => (
               <button
                 key={action.path}
@@ -295,9 +312,9 @@ export default function FranchiseeAdminDashboard() {
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = MLA_TEAL)}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = TLP.gray200)}
               >
-                <span style={{ fontSize: 18 }}>{action.icon}</span>
+                <span style={{ display: "flex", color: TLP.gray600 }}>{action.icon}</span>
                 {action.label}
-                <span style={{ marginLeft: "auto", color: TLP.gray400 }}>→</span>
+                <span style={{ marginLeft: "auto", display: "flex", color: TLP.gray400 }}><ChevronRight size={16} /></span>
               </button>
             ))}
           </div>

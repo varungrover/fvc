@@ -1,8 +1,22 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { TLP } from "@/lib/theme/tokens";
+import {
+  Home, Users, ClipboardList, BookOpen, CreditCard, Bell, User,
+  Calendar, Trophy, Edit, CalendarDays, Palmtree, Globe, Library,
+  MapPin, UserCircle, Tag, Ticket, Banknote, TrendingUp, PieChart,
+  LogOut, HelpCircle
+} from "lucide-react";
+
+const IconMap: Record<string, React.FC<any>> = {
+  Home, Users, ClipboardList, BookOpen, CreditCard, Bell, User,
+  Calendar, Trophy, Edit, CalendarDays, Palmtree, Globe, Library,
+  MapPin, UserCircle, Tag, Ticket, Banknote, TrendingUp, PieChart,
+  LogOut, HelpCircle
+};
 
 export type NavItem =
   | { kind: "link"; id: string; label: string; href: string; icon: string; position?: "top" | "bottom" }
@@ -53,6 +67,8 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
       pathname === item.href ||
       (item.href !== "/" && pathname.startsWith(item.href + "/"));
 
+    const IconComponent = item.kind === "link" && item.icon ? IconMap[item.icon] || HelpCircle : HelpCircle;
+
     return (
       <Link
         key={item.id}
@@ -61,24 +77,36 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
           display: "flex",
           alignItems: "center",
           gap: 10,
-          padding: collapsed ? "12px 0" : "10px 16px",
-          background: isActive ? "rgba(10,155,138,0.2)" : "transparent",
-          color: isActive ? TLP.teal : "rgba(255,255,255,0.7)",
+          margin: collapsed ? "4px 8px" : "4px 12px",
+          padding: collapsed ? "10px" : "10px 14px",
+          borderRadius: 8,
+          background: isActive ? "rgba(10,155,138,0.15)" : "transparent",
+          color: isActive ? TLP.teal : "rgba(255,255,255,0.6)",
           fontSize: 13,
           fontWeight: isActive ? 700 : 500,
-          borderLeft: `3px solid ${isActive ? TLP.teal : "transparent"}`,
-          transition: "all 0.15s",
+          transition: "all 0.15s ease",
           justifyContent: collapsed ? "center" : "flex-start",
           textDecoration: "none",
         }}
         onMouseEnter={(e) => {
-          if (!isActive) (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)";
+          if (!isActive) {
+            e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.95)";
+          }
         }}
         onMouseLeave={(e) => {
-          if (!isActive) (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+          if (!isActive) {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+          }
+          e.currentTarget.style.transform = "scale(1)";
         }}
+        onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.97)"}
+        onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
       >
-        <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
+        <span style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          {IconComponent && <IconComponent size={18} strokeWidth={isActive ? 2.5 : 2} />}
+        </span>
         {!collapsed && <span>{item.label}</span>}
       </Link>
     );
@@ -124,7 +152,11 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
               flexShrink: 0,
             }}
           >
-            {brand.productIcon || "🌍"}
+            {brand.productIcon ? (
+              IconMap[brand.productIcon] ? 
+                React.createElement(IconMap[brand.productIcon], { size: 16, strokeWidth: 2.5 }) : 
+                <Globe size={16} strokeWidth={2.5} />
+            ) : <Globe size={16} strokeWidth={2.5} />}
           </div>
           {!collapsed && (
             <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
@@ -163,32 +195,38 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
         <button
           onClick={handleLogout}
           style={{
-            width: "100%",
+            width: collapsed ? "calc(100% - 16px)" : "calc(100% - 24px)",
+            margin: collapsed ? "4px 8px" : "4px 12px",
             display: "flex",
             alignItems: "center",
             gap: 10,
-            padding: collapsed ? "12px 0" : "10px 16px",
+            padding: collapsed ? "10px" : "10px 14px",
+            borderRadius: 8,
             background: "transparent",
-            color: "rgba(255,255,255,0.7)",
+            color: "rgba(255,255,255,0.6)",
             fontSize: 13,
             fontWeight: 500,
             border: "none",
-            borderLeft: "3px solid transparent",
             cursor: "pointer",
-            transition: "all 0.15s",
+            transition: "all 0.15s ease",
             justifyContent: collapsed ? "center" : "flex-start",
             textAlign: "left",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-            (e.currentTarget as HTMLButtonElement).style.color = TLP.red;
+            e.currentTarget.style.background = "rgba(244,63,94,0.1)"; // Soft red
+            e.currentTarget.style.color = TLP.red;
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-            (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+            e.currentTarget.style.transform = "scale(1)";
           }}
+          onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.97)"}
+          onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
         >
-          <span style={{ fontSize: 16, flexShrink: 0 }}>🚪</span>
+          <span style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+            <LogOut size={18} strokeWidth={2} />
+          </span>
           {!collapsed && <span>Logout</span>}
         </button>
       </div>

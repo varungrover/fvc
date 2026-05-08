@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -118,7 +119,7 @@ export function BatchesClient({ locations, planets, role }: Props) {
         title="Batch Management" 
         subtitle="Manage recurring class batches across locations and levels"
         actions={
-          <Button variant="primary" icon="➕" onClick={() => setShowAddBatch(true)}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => setShowAddBatch(true)}>
             Add Recurring Batch
           </Button>
         }

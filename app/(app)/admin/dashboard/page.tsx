@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { GraduationCap, UserRound, MapPin, DollarSign, ClipboardList, CreditCard, TriangleAlert } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -86,7 +87,7 @@ export default function AdminDashboard() {
           </p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <Button variant="amber" onClick={() => router.push("/admin/coaches")} icon="👤">
+          <Button variant="amber" onClick={() => router.push("/admin/coaches")} icon={<UserRound size={15} strokeWidth={2.5} />}>
             Add Coach
           </Button>
           <Button
@@ -104,7 +105,7 @@ export default function AdminDashboard() {
         <StatTile
           label="Total Students"
           value={uniqueStudents}
-          icon="🎓"
+          icon={<GraduationCap size={22} strokeWidth={1.75} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
           onClick={() => router.push("/admin/customers")}
@@ -114,7 +115,7 @@ export default function AdminDashboard() {
           value={tlpCoaches.filter((c) => c.status === "active").length}
           delta={`${tlpCoaches.filter((c) => c.status === "on_leave").length} on leave`}
           deltaColor={TLP.amber}
-          icon="🧑‍🏫"
+          icon={<UserRound size={22} strokeWidth={1.75} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
           onClick={() => router.push("/admin/coaches")}
@@ -122,7 +123,7 @@ export default function AdminDashboard() {
         <StatTile
           label="Locations"
           value={TLP_LOCATIONS.length}
-          icon="📍"
+          icon={<MapPin size={22} strokeWidth={1.75} />}
           iconBg={TLP.purpleLight}
           iconColor={TLP.purple}
           onClick={() => router.push("/admin/locations")}
@@ -132,7 +133,7 @@ export default function AdminDashboard() {
           value={`$${monthlyRevenue.toFixed(0)}`}
           delta="April 2026"
           deltaColor={TLP.gray500}
-          icon="💰"
+          icon={<DollarSign size={22} strokeWidth={1.75} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
           onClick={() => router.push("/admin/payments")}
@@ -153,7 +154,7 @@ export default function AdminDashboard() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 18 }}>⚠️</span>
+              <TriangleAlert size={18} strokeWidth={2} color={TLP.red} />
               <span style={{ fontWeight: 700, color: TLP.red, fontSize: 14 }}>
                 {visibleFailed.length} Missed Payment{visibleFailed.length > 1 ? "s" : ""}
               </span>
@@ -281,14 +282,17 @@ export default function AdminDashboard() {
             {unassignedBatches.length === 0 ? (
               <div
                 style={{
-                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
                   padding: "20px 0",
                   color: TLP.green,
                   fontSize: 13,
                   fontWeight: 600,
                 }}
               >
-                ✓ All batches have coaches assigned
+                <GraduationCap size={16} /> All batches have coaches assigned
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -328,12 +332,12 @@ export default function AdminDashboard() {
           <Card style={{ padding: "18px 20px" }}>
             <SectionHeader title="Quick Actions" />
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { label: "Add Coach", icon: "👤", path: "/admin/coaches" },
-                { label: "Manage Roster", icon: "📋", path: "/admin/roster" },
-                { label: "View Payments", icon: "💳", path: "/admin/payments" },
-                { label: "Manage Locations", icon: "📍", path: "/admin/locations" },
-              ].map((action) => (
+              {([
+                { label: "Add Coach", icon: <UserRound size={18} strokeWidth={1.75} />, path: "/admin/coaches" },
+                { label: "Manage Roster", icon: <ClipboardList size={18} strokeWidth={1.75} />, path: "/admin/roster" },
+                { label: "View Payments", icon: <CreditCard size={18} strokeWidth={1.75} />, path: "/admin/payments" },
+                { label: "Manage Locations", icon: <MapPin size={18} strokeWidth={1.75} />, path: "/admin/locations" },
+              ] as { label: string; icon: React.ReactNode; path: string }[]).map((action) => (
                 <button
                   key={action.path}
                   onClick={() => router.push(action.path)}
@@ -356,7 +360,7 @@ export default function AdminDashboard() {
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = TLP.teal)}
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = TLP.gray200)}
                 >
-                  <span style={{ fontSize: 18 }}>{action.icon}</span>
+                  <span style={{ display: "flex", alignItems: "center", color: TLP.teal }}>{action.icon}</span>
                   {action.label}
                   <span style={{ marginLeft: "auto", color: TLP.gray400 }}>→</span>
                 </button>

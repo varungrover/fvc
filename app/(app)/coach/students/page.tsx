@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge, PlanetBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -21,6 +23,19 @@ import type { Member } from "@/lib/types";
 const COACH_ID = "coach_priya";
 const TODAY = "2026-05-04";
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function getPlanetIcon(name: string, size = 20) {
+  switch (name) {
+    case "Chess": return <Crown size={size} strokeWidth={2} />;
+    case "Math":
+    case "Maths": return <Calculator size={size} strokeWidth={2} />;
+    case "English": return <BookOpen size={size} strokeWidth={2} />;
+    case "Finance": return <DollarSign size={size} strokeWidth={2} />;
+    case "Arts": return <Palette size={size} strokeWidth={2} />;
+    case "Business": return <Briefcase size={size} strokeWidth={2} />;
+    default: return <Globe size={size} strokeWidth={2} />;
+  }
+}
 
 function fmtTime(t: string) {
   const [h, m] = t.split(":").map(Number);
@@ -331,7 +346,6 @@ function StudentDetail({ info }: { info: StudentInfo }) {
               {ps && (
                 <span
                   style={{
-                    fontSize: 18,
                     background: ps.bg,
                     color: ps.color,
                     width: 32,
@@ -342,7 +356,7 @@ function StudentDetail({ info }: { info: StudentInfo }) {
                     justifyContent: "center",
                   }}
                 >
-                  {ps.icon}
+                  {getPlanetIcon(planet?.name ?? "", 16)}
                 </span>
               )}
               <div>

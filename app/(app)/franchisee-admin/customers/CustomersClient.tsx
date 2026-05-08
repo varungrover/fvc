@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, Download, Star } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -92,10 +93,10 @@ export default function CustomersClient({ initialCustomers }: { initialCustomers
         subtitle={`${initialCustomers.length} registered customers`}
         actions={
           <div style={{ display: "flex", gap: 8 }}>
-            <Button variant="secondary" icon="⬇">
+            <Button variant="secondary" icon={<Download size={15} strokeWidth={2.5} />}>
               Export CSV
             </Button>
-            <Button variant="primary" icon="➕" onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
+            <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
               Add Customer
             </Button>
           </div>
@@ -165,7 +166,9 @@ export default function CustomersClient({ initialCustomers }: { initialCustomers
                 <span style={{ color: TLP.gray600, fontSize: 12 }}>{maskEmail(customer.email || "")}</span>
                 <span style={{ fontWeight: 600, color: TLP.navy }}>{customer.member_count}</span>
                 <span style={{ fontWeight: 600, color: TLP.navy }}>0</span>
-                <span style={{ color: TLP.amber, fontWeight: 600 }}>⭐ {customer.loyalty_points || 0}</span>
+                <span style={{ color: TLP.amber, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <Star size={12} fill={TLP.amber} strokeWidth={0} /> {customer.loyalty_points || 0}
+                </span>
                 <span style={{ color: TLP.gray400, fontSize: 12 }}>—</span>
               </div>
 

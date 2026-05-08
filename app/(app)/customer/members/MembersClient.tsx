@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -172,7 +173,7 @@ export default function MembersClient({
         title="Member Profiles"
         subtitle="Manage family members and learners on your account"
         actions={
-          <Button variant="primary" onClick={openAdd} icon="➕">
+          <Button variant="primary" onClick={openAdd} icon={<Plus size={15} strokeWidth={2.5} />}>
             Add Member
           </Button>
         }
@@ -402,7 +403,9 @@ function AddCard({ onClick }: { onClick: () => void }) {
         minHeight: 200,
       }}
     >
-      <span style={{ fontSize: 32 }}>➕</span>
+      <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Plus size={32} strokeWidth={1.5} />
+      </span>
       <span style={{ fontSize: 13, fontWeight: 600 }}>Add Member</span>
     </div>
   );

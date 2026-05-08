@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Avatar } from "@/components/ui/Avatar";
+import { Lock, Star, Check } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -125,7 +126,9 @@ export default function SettingsPage() {
             color: TLP.gray700,
           }}
         >
-          <span>🔒</span>
+          <span style={{ display: "flex", color: TLP.amber }}>
+            <Lock size={16} strokeWidth={2.5} />
+          </span>
           <span style={{ flex: 1 }}>
             Personal information is masked. Reveal requires 2FA verification.
           </span>
@@ -152,7 +155,9 @@ export default function SettingsPage() {
             border: `1px solid #fde68a`,
           }}
         >
-          <span style={{ fontSize: 32 }}>⭐</span>
+          <span style={{ display: "flex", color: TLP.amber }}>
+            <Star size={32} fill={TLP.amber} />
+          </span>
           <div>
             <div style={{ fontSize: 24, fontWeight: 800, color: TLP.navy }}>
               {customer.loyaltyPoints} pts
@@ -181,7 +186,7 @@ export default function SettingsPage() {
               gap: 8,
             }}
           >
-            ✓ Password changed successfully (prototype — no real change persisted)
+            <Check size={16} strokeWidth={3} /> Password changed successfully (prototype — no real change persisted)
           </div>
         )}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Plus, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +10,38 @@ import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP, planetStyle } from "@/lib/theme/tokens";
 import type { Planet } from "@/lib/types";
+import type { ReactNode } from "react";
+
+const PLANET_ICONS: Record<string, ReactNode> = {
+  Chess:    <Crown    size={24} strokeWidth={1.75} />,
+  Math:     <Calculator size={24} strokeWidth={1.75} />,
+  Maths:    <Calculator size={24} strokeWidth={1.75} />,
+  English:  <BookOpen  size={24} strokeWidth={1.75} />,
+  Finance:  <DollarSign size={24} strokeWidth={1.75} />,
+  Arts:     <Palette   size={24} strokeWidth={1.75} />,
+  Business: <Briefcase size={24} strokeWidth={1.75} />,
+};
+
+// Palette of (color, bg) pairs for planets not in the hardcoded PLANETS map
+const PLANET_PALETTE: { color: string; bg: string }[] = [
+  { color: TLP.teal,   bg: TLP.tealLight   },
+  { color: TLP.blue,   bg: TLP.blueLight   },
+  { color: TLP.purple, bg: TLP.purpleLight },
+  { color: TLP.amber,  bg: TLP.amberLight  },
+  { color: TLP.green,  bg: TLP.greenLight  },
+  { color: "#e67e22",  bg: "#fef9f0"       },
+  { color: "#d53f8c",  bg: "#fff0f8"       },
+  { color: "#2b6cb0",  bg: "#ebf4ff"       },
+];
+
+function getPlanetStyle(name: string): { color: string; bg: string } {
+  // Check tokens map first (Chess, Math, English, Finance, Arts, Business)
+  const known = planetStyle(name);
+  if (known.color !== TLP.gray500) return known;
+  // Deterministic hash: sum char codes, pick from palette
+  const idx = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % PLANET_PALETTE.length;
+  return PLANET_PALETTE[idx];
+}
 
 interface PlanetsClientProps {
   initialPlanets: Planet[];
@@ -129,7 +162,7 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
         actions={
           <Button 
             variant="primary" 
-            icon="➕" 
+            icon={<Plus size={15} strokeWidth={2.5} />} 
             onClick={() => setShowAddPlanet(true)}
           >
             Add Planet
@@ -146,7 +179,7 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
         }}
       >
         {planets.map((planet) => {
-          const pStyle = planetStyle(planet.name);
+          const pStyle = getPlanetStyle(planet.name);
           const isActive = planet.isActive;
 
           return (
@@ -168,7 +201,7 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
                       flexShrink: 0,
                     }}
                   >
-                    {pStyle.icon}
+                    {PLANET_ICONS[planet.name] ?? <Globe size={24} strokeWidth={1.75} />}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

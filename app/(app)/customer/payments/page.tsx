@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, CreditCard, AlertTriangle, Lock, Download, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -9,15 +10,16 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP } from "@/lib/theme/tokens";
 import { INVOICES_BY_CUSTOMER, PAYMENT_METHODS, INVOICE_LINE_ITEMS } from "@/lib/mock/invoices";
 import type { Invoice } from "@/lib/types";
+import type { ReactNode } from "react";
 
 const CUSTOMER_ID = "cust_raj";
 
-const CARD_ICONS: Record<string, string> = {
-  visa: "💳",
-  mastercard: "💳",
-  amex: "💳",
-  discover: "💳",
-  other: "💳",
+const CARD_ICONS: Record<string, ReactNode> = {
+  visa: <CreditCard size={22} />,
+  mastercard: <CreditCard size={22} />,
+  amex: <CreditCard size={22} />,
+  discover: <CreditCard size={22} />,
+  other: <CreditCard size={22} />,
 };
 
 function fmtCardBrand(brand: string) {
@@ -55,7 +57,7 @@ export default function PaymentsPage() {
         title="Billing & Payments"
         subtitle="CAD · GST included · Charged on the 1st of each month"
         actions={
-          <Button variant="primary" size="sm" onClick={() => setShowAddCard(true)} icon="➕">
+          <Button variant="primary" size="sm" onClick={() => setShowAddCard(true)} icon={<Plus size={14} strokeWidth={2.5} />}>
             Add Payment Method
           </Button>
         }
@@ -76,7 +78,9 @@ export default function PaymentsPage() {
             fontSize: 13,
           }}
         >
-          <span style={{ fontSize: 18 }}>⚠️</span>
+          <span style={{ display: "flex", color: TLP.red }}>
+            <AlertTriangle size={18} />
+          </span>
           <div style={{ flex: 1 }}>
             <span style={{ fontWeight: 700, color: TLP.red }}>
               {failedCount} failed payment{failedCount > 1 ? "s" : ""}
@@ -119,7 +123,7 @@ export default function PaymentsPage() {
                 background: card.isDefault ? TLP.tealLight : TLP.white,
               }}
             >
-              <span style={{ fontSize: 22 }}>{CARD_ICONS[card.cardBrand]}</span>
+              <span style={{ display: "flex", color: TLP.gray600 }}>{CARD_ICONS[card.cardBrand]}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: TLP.navy }}>
                   {fmtCardBrand(card.cardBrand)} •••• {card.last4}
@@ -157,8 +161,8 @@ export default function PaymentsPage() {
           }}
         >
           <div style={{ fontSize: 14, fontWeight: 700, color: TLP.navy }}>Invoice History</div>
-          <Button variant="ghost" size="sm">
-            Download all ↓
+          <Button variant="ghost" size="sm" icon={<Download size={14} strokeWidth={2.5} />}>
+            Download all
           </Button>
         </div>
 
@@ -204,7 +208,9 @@ export default function PaymentsPage() {
         title="Add Payment Method"
       >
         <div style={{ textAlign: "center", padding: "20px 0" }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>🔒</div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            <Lock size={40} color={TLP.gray300} />
+          </div>
           <p style={{ color: TLP.gray600, fontSize: 14, lineHeight: 1.6 }}>
             You'll be redirected to Stripe's secure payment page to enter your card details.
             Your card information is never stored on our servers.
@@ -214,7 +220,7 @@ export default function PaymentsPage() {
             onClick={() => setShowAddCard(false)}
             style={{ marginTop: 8 }}
           >
-            Continue to Stripe →
+            Continue to Stripe <ArrowRight size={14} style={{ marginLeft: 6 }} />
           </Button>
           <p style={{ margin: "12px 0 0", fontSize: 11, color: TLP.gray400 }}>
             This is a prototype — Stripe is not wired up.
@@ -328,8 +334,8 @@ function InvoiceRow({
             </p>
           )}
           <div style={{ marginTop: 12 }}>
-            <Button variant="secondary" size="sm">
-              Download Receipt ↓
+            <Button variant="secondary" size="sm" icon={<Download size={14} strokeWidth={2.5} />}>
+              Download Receipt
             </Button>
           </div>
         </div>

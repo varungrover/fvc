@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, Info, CalendarClock, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -58,7 +59,7 @@ export default function DiscountsPage() {
         title="Multi-Planet Discounts"
         subtitle="Configure automatic discounts for members enrolled in multiple planets"
         actions={
-          <Button variant="primary" icon="➕" onClick={() => setShowAdd(true)}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => setShowAdd(true)}>
             Add Tier
           </Button>
         }
@@ -67,7 +68,7 @@ export default function DiscountsPage() {
       {/* Explanation card */}
       <Card style={{ padding: "16px 20px", marginBottom: 24, background: TLP.blueLight, border: `1px solid ${TLP.blue}30` }}>
         <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-          <span style={{ fontSize: 22 }}>ℹ️</span>
+          <Info size={20} strokeWidth={1.75} color={TLP.blue} style={{ flexShrink: 0, marginTop: 1 }} />
           <div>
             <div style={{ fontWeight: 700, fontSize: 14, color: TLP.navy, marginBottom: 4 }}>
               How multi-planet discounts work
@@ -190,7 +191,7 @@ export default function DiscountsPage() {
                 onClick={() => handleSave(tier.id)}
                 style={saved ? { color: TLP.green, borderColor: TLP.green } : {}}
               >
-                {saved ? "✓ Saved" : "Save"}
+                {saved ? <><Check size={13} strokeWidth={2.5} style={{ marginRight: 4 }} />Saved</> : "Save"}
               </Button>
             </div>
           );
@@ -211,7 +212,7 @@ export default function DiscountsPage() {
           alignItems: "flex-start",
         }}
       >
-        <span style={{ fontSize: 18, flexShrink: 0 }}>📅</span>
+        <CalendarClock size={18} strokeWidth={1.75} color={TLP.amber} style={{ flexShrink: 0, marginTop: 1 }} />
         <span>
           <strong>Note:</strong> Discounts are applied automatically at the next billing cycle.
           Changes made here take effect from the following month.
