@@ -76,35 +76,53 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 10,
-          margin: collapsed ? "4px 8px" : "4px 12px",
-          padding: collapsed ? "10px" : "10px 14px",
-          borderRadius: 8,
-          background: isActive ? "rgba(10,155,138,0.15)" : "transparent",
-          color: isActive ? TLP.teal : "rgba(255,255,255,0.6)",
+          gap: 12,
+          margin: collapsed ? "2px 10px" : "2px 16px",
+          padding: collapsed ? "12px" : "10px 16px",
+          borderRadius: 10,
+          background: isActive ? "rgba(10,155,138,0.12)" : "transparent",
+          color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
           fontSize: 13,
           fontWeight: isActive ? 700 : 500,
-          transition: "all 0.15s ease",
+          transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           justifyContent: collapsed ? "center" : "flex-start",
           textDecoration: "none",
+          position: 'relative',
+          overflow: 'hidden',
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-            e.currentTarget.style.color = "rgba(255,255,255,0.95)";
+            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.8)";
           }
         }}
         onMouseLeave={(e) => {
           if (!isActive) {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.45)";
           }
           e.currentTarget.style.transform = "scale(1)";
         }}
-        onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.97)"}
+        onMouseDown={(e) => e.currentTarget.style.transform = "scale(0.98)"}
         onMouseUp={(e) => e.currentTarget.style.transform = "scale(1)"}
       >
-        <span style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+        {isActive && !collapsed && (
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            top: '25%',
+            bottom: '25%',
+            width: 3,
+            background: TLP.teal,
+            borderRadius: '0 4px 4px 0'
+          }} />
+        )}
+        <span style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          flexShrink: 0,
+          color: isActive ? TLP.teal : "inherit"
+        }}>
           {IconComponent && <IconComponent size={18} strokeWidth={isActive ? 2.5 : 2} />}
         </span>
         {!collapsed && <span>{item.label}</span>}
@@ -115,28 +133,30 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
   return (
     <nav
       style={{
-        width: collapsed ? 60 : 220,
-        background: TLP.navy,
+        width: collapsed ? 68 : 260,
+        background: `linear-gradient(180deg, ${TLP.navy} 0%, #111827 100%)`,
         display: "flex",
         flexDirection: "column",
         flexShrink: 0,
-        transition: "width 0.2s",
+        transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         height: "100%",
         borderRight: "1px solid rgba(255,255,255,0.05)",
+        boxShadow: "4px 0 24px rgba(0,0,0,0.1)",
+        zIndex: 30,
       }}
     >
       {/* Brand Section */}
       {brand && (
         <div
           style={{
-            height: 56,
+            height: 60,
             display: "flex",
             alignItems: "center",
-            padding: collapsed ? "0" : "0 16px",
+            padding: collapsed ? "0" : "0 20px",
             justifyContent: collapsed ? "center" : "flex-start",
-            gap: 10,
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-            marginBottom: 8,
+            gap: 12,
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            marginBottom: 12,
           }}
         >
           <div
@@ -163,12 +183,13 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
               <span
                 style={{
                   color: "#fff",
-                  fontWeight: 800,
+                  fontWeight: 900,
                   fontSize: 14,
-                  letterSpacing: "-0.3px",
+                  letterSpacing: "-0.2px",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  textTransform: 'uppercase',
                 }}
               >
                 {brand.tenantName || brand.productName}

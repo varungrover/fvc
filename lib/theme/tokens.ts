@@ -5,8 +5,8 @@
  */
 
 export const TLP = {
-  navy: "#0d1b3e",
-  navyLight: "#1a2d5a",
+  navy: "#0f172a",
+  navyLight: "#1e293b",
   teal: "#0a9b8a",
   tealLight: "#e6f7f5",
   amber: "#f5a623",
