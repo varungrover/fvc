@@ -237,6 +237,14 @@ export interface Invoice {
   paidAt?: ISODateTime;
   stripeInvoiceId?: string;
   createdAt: ISODateTime;
+  // Mock data fields:
+  paymentMethodId?: ID;
+  amount?: number;
+  tax?: number;
+  discount?: number;
+  total?: number;
+  stripePiId?: string;
+  issuedAt?: ISODateTime;
 }
 
 export interface Payment {
