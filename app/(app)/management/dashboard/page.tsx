@@ -2,6 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { 
+  BarChart3, 
+  Building2, 
+  MapPin, 
+  UserRound, 
+  Banknote, 
+  ClipboardList, 
+  FileText, 
+  DollarSign, 
+  CheckCircle2 
+} from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -23,10 +34,10 @@ const REVENUE_DATA = [
 ];
 
 const QUICK_ACTIONS = [
-  { label: "Revenue Pivot", icon: "📊", path: "/management/revenue" },
-  { label: "Pricing Requests", icon: "💲", path: "/management/pricing" },
-  { label: "All Locations", icon: "📍", path: "/management/locations" },
-  { label: "Reports", icon: "📄", path: "/management/reports" },
+  { label: "Revenue Pivot", icon: <BarChart3 size={18} />, path: "/management/revenue" },
+  { label: "Pricing Requests", icon: <DollarSign size={18} />, path: "/management/pricing" },
+  { label: "All Locations", icon: <MapPin size={18} />, path: "/management/locations" },
+  { label: "Reports", icon: <FileText size={18} />, path: "/management/reports" },
 ];
 
 export default function ManagementDashboard() {
@@ -97,7 +108,7 @@ export default function ManagementDashboard() {
           </p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <Button variant="amber" onClick={() => router.push("/management/revenue")} icon="📊">
+          <Button variant="amber" onClick={() => router.push("/management/revenue")} icon={<BarChart3 size={16} />}>
             Revenue Pivot
           </Button>
           <Button
@@ -116,7 +127,7 @@ export default function ManagementDashboard() {
           <StatTile
             label="Total Ownerships"
             value={2}
-            icon="🏢"
+            icon={<Building2 size={20} />}
             iconBg={TLP.purpleLight}
             iconColor={TLP.purple}
           />
@@ -126,7 +137,7 @@ export default function ManagementDashboard() {
           value={isFranchisee ? 3 : 6}
           delta={isFranchisee ? "Active in ON" : "3 TLP · 3 MLA"}
           deltaColor={TLP.gray500}
-          icon="📍"
+          icon={<MapPin size={20} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
           onClick={() => router.push("/management/locations")}
@@ -136,7 +147,7 @@ export default function ManagementDashboard() {
           value={isFranchisee ? 1 : 6}
           delta={isFranchisee ? "Staffing OK" : "5 TLP · 1 MLA"}
           deltaColor={TLP.gray500}
-          icon="🧑‍🏫"
+          icon={<UserRound size={20} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
@@ -145,7 +156,7 @@ export default function ManagementDashboard() {
           value={isFranchisee ? "$2,400" : "$3,652"}
           delta="April 2026"
           deltaColor={TLP.green}
-          icon="💰"
+          icon={<Banknote size={20} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
           onClick={() => router.push("/management/revenue")}
@@ -155,7 +166,7 @@ export default function ManagementDashboard() {
           value={myPendingRequests.length}
           delta={myPendingRequests.length > 0 ? (isFranchisee ? "Awaiting review" : "Needs review") : "All clear"}
           deltaColor={myPendingRequests.length > 0 ? TLP.amber : TLP.green}
-          icon="📋"
+          icon={<ClipboardList size={20} />}
           iconBg={myPendingRequests.length > 0 ? TLP.amberLight : TLP.greenLight}
           iconColor={myPendingRequests.length > 0 ? TLP.amber : TLP.green}
           onClick={() => router.push("/management/pricing")}
@@ -291,8 +302,8 @@ export default function ManagementDashboard() {
               />
             </div>
             {myPendingRequests.length === 0 ? (
-              <div style={{ padding: "20px", textAlign: "center", color: TLP.green, fontSize: 13, fontWeight: 600 }}>
-                ✓ No pending requests
+              <div style={{ padding: "20px", textAlign: "center", color: TLP.green, fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <CheckCircle2 size={16} /> No pending requests
               </div>
             ) : (
               <div>
@@ -355,7 +366,7 @@ export default function ManagementDashboard() {
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = TLP.teal)}
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = TLP.gray200)}
                 >
-                  <span style={{ fontSize: 18 }}>{action.icon}</span>
+                  <span style={{ display: 'flex', color: TLP.gray600 }}>{action.icon}</span>
                   {action.label}
                   <span style={{ marginLeft: "auto", color: TLP.gray400 }}>→</span>
                 </button>

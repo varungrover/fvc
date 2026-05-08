@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -8,6 +10,34 @@ import { Input } from "@/components/ui/Input";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP, planetStyle } from "@/lib/theme/tokens";
 import type { Planet, Level, CourseVariant, LocationCourseOffering } from "@/lib/types";
+
+const PLANET_ICONS: Record<string, ReactNode> = {
+  Chess:    <Crown      size={15} strokeWidth={1.75} />,
+  Math:     <Calculator size={15} strokeWidth={1.75} />,
+  Maths:    <Calculator size={15} strokeWidth={1.75} />,
+  English:  <BookOpen   size={15} strokeWidth={1.75} />,
+  Finance:  <DollarSign size={15} strokeWidth={1.75} />,
+  Arts:     <Palette    size={15} strokeWidth={1.75} />,
+  Business: <Briefcase  size={15} strokeWidth={1.75} />,
+};
+
+const PLANET_PALETTE: { color: string; bg: string }[] = [
+  { color: "#0a9b8a", bg: "#e6f7f5" },
+  { color: "#3182ce", bg: "#ebf8ff" },
+  { color: "#805ad5", bg: "#faf5ff" },
+  { color: "#f5a623", bg: "#fef3dc" },
+  { color: "#38a169", bg: "#f0fff4" },
+  { color: "#e67e22", bg: "#fef9f0" },
+  { color: "#d53f8c", bg: "#fff0f8" },
+  { color: "#2b6cb0", bg: "#ebf4ff" },
+];
+
+function getPlanetColors(name: string): { color: string; bg: string } {
+  const known = planetStyle(name);
+  if (known.color !== "#6b7280") return known;
+  const idx = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % PLANET_PALETTE.length;
+  return PLANET_PALETTE[idx];
+}
 
 interface VariantWithOffering extends CourseVariant {
   offering?: LocationCourseOffering;
@@ -94,17 +124,36 @@ export default function OfferingsClient({ locationName, locationId, catalog, bac
 
       {/* Planet Tabs */}
       <div style={{ display: "flex", gap: 8, marginBottom: 24, overflowX: "auto", paddingBottom: 4 }}>
-        {localCatalog.map(p => (
-          <Button
-            key={p.id}
-            variant={activePlanetId === p.id ? "primary" : "secondary"}
-            onClick={() => setActivePlanetId(p.id)}
-            size="sm"
-            style={{ borderRadius: 99, padding: "8px 20px" }}
-          >
-            {planetStyle(p.name).icon} {p.name}
-          </Button>
-        ))}
+      {localCatalog.map(p => {
+          const colors = getPlanetColors(p.name);
+          const isActive = activePlanetId === p.id;
+          return (
+            <button
+              key={p.id}
+              onClick={() => setActivePlanetId(p.id)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 7,
+                padding: "8px 18px",
+                borderRadius: 99,
+                border: `2px solid ${isActive ? colors.color : TLP.gray200}`,
+                background: isActive ? colors.color : TLP.white,
+                color: isActive ? "#fff" : TLP.gray500,
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                transition: "all 0.2s",
+              }}
+            >
+              <span style={{ display: "flex", alignItems: "center" }}>
+                {PLANET_ICONS[p.name] ?? <Globe size={15} strokeWidth={1.75} />}
+              </span>
+              {p.name}
+            </button>
+          );
+        })}
       </div>
 
       {activePlanet && (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown, ChevronRight, PlaySquare, FileText, FileEdit, BookOpen, Check, Crown, Calculator, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -22,6 +23,19 @@ import {
 import type { LmsModule, LmsTopic, LmsContentType } from "@/lib/types";
 
 const COACH_PLANET_IDS = ["pl_chess", "pl_math"];
+
+function getPlanetIcon(name: string, size = 20) {
+  switch (name) {
+    case "Chess": return <Crown size={size} strokeWidth={2} />;
+    case "Math":
+    case "Maths": return <Calculator size={size} strokeWidth={2} />;
+    case "English": return <BookOpen size={size} strokeWidth={2} />;
+    case "Finance": return <DollarSign size={size} strokeWidth={2} />;
+    case "Arts": return <Palette size={size} strokeWidth={2} />;
+    case "Business": return <Briefcase size={size} strokeWidth={2} />;
+    default: return <Globe size={size} strokeWidth={2} />;
+  }
+}
 
 type TopicStatus = "published" | "draft";
 
@@ -199,7 +213,7 @@ export default function LmsPage() {
                     borderBottom: `1px solid ${TLP.gray100}`,
                   }}
                 >
-                  <span style={{ fontSize: 16 }}>{ps.icon}</span>
+                  <span style={{ display: "flex" }}>{getPlanetIcon(planet.name, 18)}</span>
                   <span style={{ fontSize: 13, fontWeight: 700, color: ps.color }}>
                     {planet.name}
                   </span>
@@ -281,8 +295,8 @@ export default function LmsPage() {
                                 setSelectedTopicId(null);
                               }}
                             >
-                              <span style={{ fontSize: 10, color: TLP.gray400 }}>
-                                {isExpanded ? "▼" : "▶"}
+                              <span style={{ display: "flex", color: TLP.gray400 }}>
+                                {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                               </span>
                               <span
                                 style={{
@@ -320,12 +334,12 @@ export default function LmsPage() {
                                       selectTopic(topic);
                                     }}
                                   >
-                                    <span style={{ fontSize: 11, color: TLP.gray400 }}>
+                                    <span style={{ display: "flex", color: TLP.gray400 }}>
                                       {topic.contentType === "youtube"
-                                        ? "▶"
+                                        ? <PlaySquare size={14} />
                                         : topic.contentType === "pdf"
-                                          ? "📄"
-                                          : "📝"}
+                                          ? <FileText size={14} />
+                                          : <FileEdit size={14} />}
                                     </span>
                                     <span
                                       style={{
@@ -384,7 +398,9 @@ export default function LmsPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {!selectedTopicId && !selectedModuleId ? (
             <Card style={{ padding: 40, textAlign: "center" }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>📚</div>
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: 12, color: TLP.gray400 }}>
+                <BookOpen size={48} strokeWidth={1.5} />
+              </div>
               <div style={{ fontSize: 16, fontWeight: 700, color: TLP.navy, marginBottom: 8 }}>
                 Select a topic to edit
               </div>
@@ -505,7 +521,9 @@ export default function LmsPage() {
                     color: TLP.gray500,
                   }}
                 >
-                  <div style={{ fontSize: 28, marginBottom: 8 }}>📄</div>
+                  <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
+                    <FileText size={32} strokeWidth={1.5} />
+                  </div>
                   <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>Upload PDF</div>
                   <div style={{ fontSize: 12 }}>PDF upload is not wired in this prototype.</div>
                   <Button variant="secondary" size="sm" style={{ marginTop: 12 }}>
@@ -515,8 +533,8 @@ export default function LmsPage() {
               )}
 
               <div style={{ marginTop: 16, display: "flex", gap: 10, alignItems: "center" }}>
-                <Button variant="primary" onClick={handlePublish}>
-                  {justSaved ? "Saved ✓" : "Publish Changes"}
+                <Button variant="primary" onClick={handlePublish} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  {justSaved ? <><Check size={16} /> Saved</> : "Publish Changes"}
                 </Button>
                 <Button variant="secondary">Preview</Button>
                 {justSaved && (

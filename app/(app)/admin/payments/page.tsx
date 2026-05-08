@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Download, CircleCheck, TriangleAlert, Clock, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -57,7 +58,7 @@ export default function PaymentsPage() {
         title="Payments"
         subtitle="All invoices across The Learning Planet"
         actions={
-          <Button variant="secondary" icon="⬇">
+          <Button variant="secondary" icon={<Download size={15} strokeWidth={2} />}>
             Export CSV
           </Button>
         }
@@ -75,28 +76,28 @@ export default function PaymentsPage() {
         <StatTile
           label="Collected (April)"
           value={`$${totalCollected.toFixed(0)}`}
-          icon="✅"
+          icon={<CircleCheck size={22} strokeWidth={1.75} />}
           iconBg={TLP.greenLight}
           iconColor={TLP.green}
         />
         <StatTile
           label="Missed Payments"
           value={totalFailed}
-          icon="⚠️"
+          icon={<TriangleAlert size={22} strokeWidth={1.75} />}
           iconBg={TLP.redLight}
           iconColor={TLP.red}
         />
         <StatTile
           label="Pending"
           value={totalPending}
-          icon="🕐"
+          icon={<Clock size={22} strokeWidth={1.75} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
         />
         <StatTile
           label="Total Invoices"
           value={INVOICES.length}
-          icon="📄"
+          icon={<FileText size={22} strokeWidth={1.75} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
         />
@@ -115,7 +116,7 @@ export default function PaymentsPage() {
               gap: 8,
             }}
           >
-            <span style={{ fontSize: 18 }}>⚠️</span>
+            <TriangleAlert size={18} strokeWidth={2} color={TLP.red} />
             <span style={{ fontWeight: 700, color: TLP.red, fontSize: 14 }}>
               Missed Payments — Immediate Attention Required
             </span>

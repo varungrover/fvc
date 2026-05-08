@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -99,7 +100,7 @@ export default function CoachAchievementsPage() {
         title="Student Achievements"
         subtitle={`${myAchievements.length} badges awarded by you`}
         actions={
-          <Button variant="primary" icon="🏆" onClick={() => { setForm(BLANK_FORM); setShowAward(true); }}>
+          <Button variant="primary" icon={<Trophy size={16} strokeWidth={2.5} />} onClick={() => { setForm(BLANK_FORM); setShowAward(true); }}>
             Award Badge
           </Button>
         }
@@ -140,14 +141,14 @@ export default function CoachAchievementsPage() {
                             height: 44,
                             borderRadius: 10,
                             background: TLP.amberLight,
+                            color: TLP.amber,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            fontSize: 22,
                             flexShrink: 0,
                           }}
                         >
-                          🏆
+                          <Trophy size={22} />
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -255,8 +256,9 @@ export default function CoachAchievementsPage() {
             />
           </div>
 
-          <div style={{ background: TLP.purpleLight, borderRadius: 8, padding: "10px 14px", fontSize: 12, color: TLP.purple }}>
-            🏆 The parent will receive a notification when this badge is awarded.
+          <div style={{ display: "flex", alignItems: "center", gap: 8, background: TLP.purpleLight, borderRadius: 8, padding: "10px 14px", fontSize: 12, color: TLP.purple }}>
+            <Trophy size={16} />
+            The parent will receive a notification when this badge is awarded.
           </div>
         </div>
       </Modal>

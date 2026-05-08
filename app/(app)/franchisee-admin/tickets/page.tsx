@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, MapPin, ChevronUp, ChevronDown, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -120,7 +121,7 @@ export default function TicketsPage() {
         title="Support Tickets"
         subtitle={`Maple Leaf Academy — ${openCount} open`}
         actions={
-          <Button variant="primary" icon="➕" onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
             New Ticket
           </Button>
         }
@@ -196,8 +197,10 @@ export default function TicketsPage() {
                     <div style={{ fontWeight: 500, color: TLP.navy, lineHeight: 1.4 }}>
                       {ticket.shortDescription}
                     </div>
-                    <span style={{ color: TLP.gray600, fontSize: 12 }}>
-                      {location ? `📍 ${location.name}` : "—"}
+                    <span style={{ color: TLP.gray600, fontSize: 12, display: "flex", alignItems: "center", gap: 4 }}>
+                      {location
+                        ? <><MapPin size={12} strokeWidth={2} color={TLP.red} />{location.name}</>
+                        : "—"}
                     </span>
                     <span style={{ color: TLP.gray500 }}>{fmtDate(ticket.createdAt)}</span>
                     <div style={{ display: "flex", gap: 6 }}>
@@ -205,9 +208,9 @@ export default function TicketsPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => setExpandedId(isExpanded ? null : ticket.id)}
-                        style={{ color: TLP.teal, fontSize: 12 }}
+                        style={{ color: TLP.teal, display: "flex", alignItems: "center" }}
                       >
-                        {isExpanded ? "▲" : "▼"}
+                        {isExpanded ? <ChevronUp size={16} strokeWidth={2} /> : <ChevronDown size={16} strokeWidth={2} />}
                       </Button>
                     </div>
                   </div>
@@ -317,8 +320,9 @@ export default function TicketsPage() {
               }}
             />
           </div>
-          <div style={{ background: TLP.amberLight, borderRadius: 8, padding: "10px 14px", fontSize: 12, color: TLP.amber }}>
-            ⚡ IT tickets are typically responded to within 24 hours. Non-IT requests within 48 hours.
+          <div style={{ background: TLP.amberLight, borderRadius: 8, padding: "10px 14px", fontSize: 12, color: TLP.amber, display: "flex", alignItems: "center", gap: 6 }}>
+            <Zap size={13} strokeWidth={2} />
+            IT tickets are typically responded to within 24 hours. Non-IT requests within 48 hours.
           </div>
         </div>
       </Modal>

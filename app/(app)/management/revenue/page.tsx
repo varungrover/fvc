@@ -6,6 +6,22 @@ import { Select } from "@/components/ui/Select";
 import { StatTile } from "@/components/ui/StatTile";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP, planetStyle } from "@/lib/theme/tokens";
+import { Banknote, GraduationCap, Building2, Map, ChevronRight, ChevronDown, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
+import type { ReactNode } from "react";
+
+const PLANET_ICONS: Record<string, ReactNode> = {
+  Chess:    <Crown      size={14} strokeWidth={2} />,
+  Math:     <Calculator size={14} strokeWidth={2} />,
+  Maths:    <Calculator size={14} strokeWidth={2} />,
+  English:  <BookOpen   size={14} strokeWidth={2} />,
+  Finance:  <DollarSign size={14} strokeWidth={2} />,
+  Arts:     <Palette    size={14} strokeWidth={2} />,
+  Business: <Briefcase  size={14} strokeWidth={2} />,
+};
+
+function getPlanetIcon(name: string) {
+  return PLANET_ICONS[name] || <Globe size={14} strokeWidth={2} />;
+}
 
 type PivotRow = {
   locationId: string;
@@ -160,14 +176,14 @@ export default function RevenuePivotPage() {
         <StatTile
           label="Network Revenue"
           value={fmt(networkTotal)}
-          icon="💰"
+          icon={<Banknote size={22} strokeWidth={1.75} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
         />
         <StatTile
           label="Total Enrollments"
           value={networkEnrollments}
-          icon="🎓"
+          icon={<GraduationCap size={22} strokeWidth={1.75} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
@@ -176,7 +192,7 @@ export default function RevenuePivotPage() {
           value={fmt(tlpTotal)}
           delta={pct(tlpTotal, networkTotal) + " of network"}
           deltaColor={TLP.gray500}
-          icon="🏢"
+          icon={<Building2 size={22} strokeWidth={1.75} />}
           iconBg={TLP.purpleLight}
           iconColor={TLP.purple}
         />
@@ -185,7 +201,7 @@ export default function RevenuePivotPage() {
           value={fmt(mlaTotal)}
           delta={pct(mlaTotal, networkTotal) + " of network"}
           deltaColor={TLP.gray500}
-          icon="🍁"
+          icon={<Map size={22} strokeWidth={1.75} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
@@ -284,8 +300,8 @@ export default function RevenuePivotPage() {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 12, color: accentColor, opacity: 0.7, width: 12 }}>
-                    {isCollapsed ? "▶" : "▼"}
+                  <span style={{ fontSize: 12, color: accentColor, opacity: 0.7, width: 12, display: "flex", alignItems: "center" }}>
+                    {isCollapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
                   </span>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 13, color: accentColor }}>
@@ -339,7 +355,7 @@ export default function RevenuePivotPage() {
                             flexShrink: 0,
                           }}
                         >
-                          {ps.icon}
+                          {getPlanetIcon(row.planet)}
                         </span>
                         <span style={{ fontSize: 13, color: TLP.gray700, fontWeight: 500 }}>{row.planet}</span>
                       </div>

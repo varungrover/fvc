@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import type { ReactNode } from "react";
+import { AlertTriangle, XCircle, PartyPopper, CheckCircle, Trophy, Calendar, Bell } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -8,13 +10,13 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP } from "@/lib/theme/tokens";
 import { NOTIFICATIONS } from "@/lib/mock/notifications";
 
-const TYPE_ICON: Record<string, string> = {
-  missed_class: "⚠️",
-  payment_failed: "❌",
-  new_event: "🎉",
-  enrollment_confirmed: "✅",
-  achievement: "🏆",
-  upcoming_class: "📅",
+const TYPE_ICON: Record<string, ReactNode> = {
+  missed_class: <AlertTriangle size={20} strokeWidth={2} />,
+  payment_failed: <XCircle size={20} strokeWidth={2} />,
+  new_event: <PartyPopper size={20} strokeWidth={2} />,
+  enrollment_confirmed: <CheckCircle size={20} strokeWidth={2} />,
+  achievement: <Trophy size={20} strokeWidth={2} />,
+  upcoming_class: <Calendar size={20} strokeWidth={2} />,
 };
 
 const TYPE_COLOR: Record<string, { color: string; bg: string; label: string }> = {
@@ -95,7 +97,7 @@ export default function NotificationsPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {displayed.map((n) => {
             const typeInfo = TYPE_COLOR[n.type] ?? { color: TLP.gray500, bg: TLP.gray100, label: n.type };
-            const icon = TYPE_ICON[n.type] ?? "🔔";
+            const icon = TYPE_ICON[n.type] ?? <Bell size={20} strokeWidth={2} />;
 
             return (
               <Card
@@ -117,10 +119,10 @@ export default function NotificationsPage() {
                       height: 40,
                       borderRadius: 10,
                       background: typeInfo.bg,
+                      color: typeInfo.color,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: 18,
                       flexShrink: 0,
                     }}
                   >

@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { Sidebar, type NavItem } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { TLP } from "@/lib/theme/tokens";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
   navItems: NavItem[];
@@ -65,7 +66,7 @@ export function AppShell({ navItems, topBar, children }: Props) {
           onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.2)")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
         >
-          {collapsed ? "→" : "←"}
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
 

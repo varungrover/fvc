@@ -1,6 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { 
+  Banknote, 
+  TrendingUp, 
+  UserRound, 
+  CheckCircle2, 
+  DollarSign, 
+  GraduationCap, 
+  Crown, 
+  Download,
+  Search,
+  FileText
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Modal } from "@/components/ui/Modal";
@@ -15,7 +27,7 @@ type Report = {
   title: string;
   description: string;
   lastGenerated: string;
-  icon: string;
+  icon: React.ReactNode;
   iconBg: string;
   iconColor: string;
 };
@@ -26,7 +38,7 @@ const REPORTS: Report[] = [
     title: "Revenue Summary",
     description: "Monthly revenue breakdown by ownership, location, and planet. Includes paid/failed invoice analysis.",
     lastGenerated: "May 1, 2026",
-    icon: "💰",
+    icon: <Banknote size={22} />,
     iconBg: TLP.amberLight,
     iconColor: TLP.amber,
   },
@@ -35,7 +47,7 @@ const REPORTS: Report[] = [
     title: "Enrollment Trends",
     description: "Student enrollment trends by planet over the past 6 months. Identifies growth and churn patterns.",
     lastGenerated: "May 1, 2026",
-    icon: "📈",
+    icon: <TrendingUp size={22} />,
     iconBg: TLP.tealLight,
     iconColor: TLP.teal,
   },
@@ -44,7 +56,7 @@ const REPORTS: Report[] = [
     title: "Coach Utilization",
     description: "Coach capacity vs actual hours taught per location. Highlights under- and over-utilization.",
     lastGenerated: "Apr 28, 2026",
-    icon: "🧑‍🏫",
+    icon: <UserRound size={22} />,
     iconBg: TLP.blueLight,
     iconColor: TLP.blue,
   },
@@ -53,7 +65,7 @@ const REPORTS: Report[] = [
     title: "Attendance Rate",
     description: "Network-wide attendance statistics by location and planet. Tracks present, absent, and makeup sessions.",
     lastGenerated: "May 1, 2026",
-    icon: "✅",
+    icon: <CheckCircle2 size={22} />,
     iconBg: TLP.greenLight,
     iconColor: TLP.green,
   },
@@ -62,7 +74,7 @@ const REPORTS: Report[] = [
     title: "Price Change History",
     description: "Full audit log of all pricing requests: submitted, reviewed, approved, and rejected, with timestamps.",
     lastGenerated: "Apr 29, 2026",
-    icon: "💲",
+    icon: <DollarSign size={22} />,
     iconBg: TLP.purpleLight,
     iconColor: TLP.purple,
   },
@@ -96,7 +108,7 @@ export default function ReportsPage() {
           value={52}
           delta="Network-wide"
           deltaColor={TLP.gray500}
-          icon="🎓"
+          icon={<GraduationCap size={20} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
@@ -105,7 +117,7 @@ export default function ReportsPage() {
           value="92%"
           delta="↑ 3% vs last month"
           deltaColor={TLP.green}
-          icon="✅"
+          icon={<CheckCircle2 size={20} />}
           iconBg={TLP.greenLight}
           iconColor={TLP.green}
         />
@@ -114,7 +126,7 @@ export default function ReportsPage() {
           value="Chess"
           delta="38% of enrollments"
           deltaColor={TLP.gray500}
-          icon="♟"
+          icon={<Crown size={20} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
@@ -123,7 +135,7 @@ export default function ReportsPage() {
           value="$3,652"
           delta="April 2026"
           deltaColor={TLP.green}
-          icon="💰"
+          icon={<Banknote size={20} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
         />
@@ -204,13 +216,14 @@ export default function ReportsPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => setPreviewReport(report)}
+                      icon={<Search size={14} />}
                     >
                       Preview
                     </Button>
                     <Button
                       variant="primary"
                       size="sm"
-                      icon="⬇"
+                      icon={<Download size={14} />}
                     >
                       Download
                     </Button>
@@ -235,7 +248,7 @@ export default function ReportsPage() {
             <Button variant="ghost" onClick={() => setPreviewReport(null)}>
               Close
             </Button>
-            <Button variant="primary" icon="⬇">
+            <Button variant="primary" icon={<Download size={16} />}>
               Download CSV
             </Button>
           </>
@@ -254,7 +267,7 @@ export default function ReportsPage() {
                 border: `1px solid ${TLP.green}30`,
               }}
             >
-              <span style={{ fontSize: 22 }}>{previewReport.icon}</span>
+              <span style={{ color: TLP.green }}>{previewReport.icon}</span>
               <div>
                 <div style={{ fontWeight: 700, color: TLP.green, fontSize: 14 }}>Report Generated Successfully</div>
                 <div style={{ fontSize: 12, color: TLP.gray600 }}>

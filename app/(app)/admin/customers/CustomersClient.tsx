@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -95,7 +96,7 @@ export default function CustomersClient({ initialCustomers }: { initialCustomers
             <Button variant="secondary" icon="⬇">
               Export CSV
             </Button>
-            <Button variant="primary" icon="➕" onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
+            <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
               Add Customer
             </Button>
           </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Avatar } from "@/components/ui/Avatar";
+import { BookOpen, Lock, CheckCircle, ChevronRight, Play, FileText, Pencil, PartyPopper, Frown, Crown, Calculator, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -22,6 +23,21 @@ import {
   MODULES_BY_LEVEL,
 } from "@/lib/mock/lmsContent";
 import type { Member, Level, LmsModule, LmsTopic, LmsQuiz } from "@/lib/types";
+import type { ReactNode } from "react";
+
+const PLANET_ICONS: Record<string, ReactNode> = {
+  Chess:    <Crown    size={14} strokeWidth={2} />,
+  Math:     <Calculator size={14} strokeWidth={2} />,
+  Maths:    <Calculator size={14} strokeWidth={2} />,
+  English:  <BookOpen  size={14} strokeWidth={2} />,
+  Finance:  <DollarSign size={14} strokeWidth={2} />,
+  Arts:     <Palette   size={14} strokeWidth={2} />,
+  Business: <Briefcase size={14} strokeWidth={2} />,
+};
+
+function getPlanetIcon(name: string) {
+  return PLANET_ICONS[name] || <Globe size={14} strokeWidth={2} />;
+}
 
 const CUSTOMER_ID = "cust_raj";
 const AVATAR_COLORS = [TLP.teal, TLP.purple, TLP.navy, TLP.blue];
@@ -177,8 +193,8 @@ export default function LmsPage() {
       </div>
 
       {levels.length === 0 ? (
-        <Card style={{ padding: 40, textAlign: "center" }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>📚</div>
+        <Card style={{ padding: 40, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <BookOpen size={40} color={TLP.gray300} style={{ marginBottom: 12 }} />
           <h3 style={{ margin: "0 0 8px", color: TLP.navy }}>No enrolled courses</h3>
           <p style={{ margin: 0, color: TLP.gray500, fontSize: 14 }}>
             {selectedMember?.fullName} isn't enrolled in any courses yet.
@@ -196,6 +212,9 @@ export default function LmsPage() {
                   key={level.id}
                   onClick={() => handleLevelChange(level.id)}
                   style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
                     padding: "7px 16px",
                     borderRadius: 8,
                     border: `2px solid ${isActive ? ps.color : TLP.gray200}`,
@@ -207,7 +226,7 @@ export default function LmsPage() {
                     fontFamily: "inherit",
                   }}
                 >
-                  {ps.icon} {planetName} · {level.name}
+                  {getPlanetIcon(planetName)} {planetName} · {level.name}
                 </button>
               );
             })}
@@ -259,8 +278,8 @@ export default function LmsPage() {
                           transition: "all 0.15s",
                         }}
                       >
-                        <span style={{ fontSize: 16, flexShrink: 0 }}>
-                          {locked ? "🔒" : passed ? "✅" : "📖"}
+                        <span style={{ fontSize: 16, flexShrink: 0, display: "flex" }}>
+                          {locked ? <Lock size={16} /> : passed ? <CheckCircle size={16} color={TLP.green} /> : <BookOpen size={16} />}
                         </span>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div
@@ -290,7 +309,7 @@ export default function LmsPage() {
                               flexShrink: 0,
                             }}
                           >
-                            ▶
+                            <ChevronRight size={14} />
                           </span>
                         )}
                       </button>
@@ -330,12 +349,12 @@ export default function LmsPage() {
                                   width: "100%",
                                 }}
                               >
-                                <span style={{ flexShrink: 0 }}>
+                                <span style={{ flexShrink: 0, display: "flex" }}>
                                   {topic.contentType === "youtube"
-                                    ? "▶"
+                                    ? <Play size={12} />
                                     : topic.contentType === "pdf"
-                                      ? "📄"
-                                      : "📝"}
+                                      ? <FileText size={12} />
+                                      : <Pencil size={12} />}
                                 </span>
                                 <span style={{ flex: 1 }}>{topic.title}</span>
                               </button>
@@ -364,7 +383,7 @@ export default function LmsPage() {
                                 width: "100%",
                               }}
                             >
-                              <span>📝</span>
+                              <Pencil size={14} />
                               <span>Take Module Quiz</span>
                             </button>
                           )}
@@ -381,7 +400,7 @@ export default function LmsPage() {
                                 marginTop: 4,
                               }}
                             >
-                              ✅ Quiz passed
+                              <CheckCircle size={14} /> Quiz passed
                             </div>
                           )}
                         </div>
@@ -396,7 +415,9 @@ export default function LmsPage() {
             <div>
               {!selectedTopic ? (
                 <Card style={{ padding: 40, textAlign: "center" }}>
-                  <div style={{ fontSize: 40, marginBottom: 12 }}>📖</div>
+                  <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+                    <BookOpen size={40} color={TLP.gray300} />
+                  </div>
                   <h3 style={{ margin: "0 0 8px", color: TLP.navy }}>
                     {activeLevelInfo
                       ? `${activeLevelInfo.planetName} · ${activeLevelInfo.level.name}`
@@ -434,8 +455,8 @@ function TopicViewer({ topic }: { topic: LmsTopic }) {
   return (
     <Card style={{ padding: "24px 28px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-        <span style={{ fontSize: 20 }}>
-          {topic.contentType === "youtube" ? "▶" : topic.contentType === "pdf" ? "📄" : "📝"}
+        <span style={{ display: "flex", color: TLP.gray600 }}>
+          {topic.contentType === "youtube" ? <Play size={20} /> : topic.contentType === "pdf" ? <FileText size={20} /> : <Pencil size={20} />}
         </span>
         <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: TLP.navy }}>
           {topic.title}
@@ -504,15 +525,18 @@ function TopicViewer({ topic }: { topic: LmsTopic }) {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 40, marginBottom: 12 }}>📄</div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            <FileText size={40} color={TLP.gray300} />
+          </div>
           <p style={{ margin: "0 0 16px", color: TLP.gray600, fontSize: 14 }}>
             PDF attachment
           </p>
           <Button
             variant="primary"
             onClick={() => window.open(topic.contentUrl, "_blank")}
+            icon={<Globe size={14} />}
           >
-            Open PDF ↗
+            Open PDF
           </Button>
         </div>
       )}
@@ -581,7 +605,9 @@ function QuizModal({
     >
       {quizState.submitted ? (
         <div style={{ textAlign: "center", padding: "16px 0" }}>
-          <div style={{ fontSize: 48, marginBottom: 12 }}>{passed ? "🎉" : "😕"}</div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            {passed ? <PartyPopper size={48} color={TLP.green} /> : <Frown size={48} color={TLP.amber} />}
+          </div>
           <h3 style={{ margin: "0 0 8px", color: passed ? TLP.green : TLP.red, fontSize: 20 }}>
             {passed ? "Passed!" : "Not quite"}
           </h3>

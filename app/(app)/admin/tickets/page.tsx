@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { MapPin, ChevronUp, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -206,17 +207,17 @@ export default function AdminTicketsPage() {
                     <span style={{ fontSize: 12, color: TLP.gray600 }}>
                       {ownershipLabel(ticket.ownershipId)}
                     </span>
-                    <span style={{ color: TLP.gray500, fontSize: 12 }}>
-                      {ticket.locationId ? "📍 Location" : "—"}
+                    <span style={{ color: TLP.gray500, fontSize: 12, display: "flex", alignItems: "center", gap: 4 }}>
+                      {ticket.locationId ? <><MapPin size={12} strokeWidth={2} color={TLP.red} />Location</> : "—"}
                     </span>
                     <span style={{ color: TLP.gray500 }}>{fmtDate(ticket.createdAt)}</span>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setExpandedId(isExpanded ? null : ticket.id)}
-                      style={{ color: TLP.teal, fontSize: 12 }}
+                      style={{ color: TLP.teal, display: "flex", alignItems: "center" }}
                     >
-                      {isExpanded ? "▲" : "▼"}
+                      {isExpanded ? <ChevronUp size={16} strokeWidth={2} /> : <ChevronDown size={16} strokeWidth={2} />}
                     </Button>
                   </div>
 

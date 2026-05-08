@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Plus, Sun, BookOpen, CreditCard, Star, Users } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -41,7 +42,7 @@ export default function CustomerDashboardClient({
         }}
       >
         <div>
-          <div style={{ fontSize: 13, opacity: 0.7, marginBottom: 4 }}>Good morning 👋</div>
+          <div style={{ fontSize: 13, opacity: 0.7, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>Good morning <Sun size={14} /></div>
           <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, letterSpacing: "-0.3px" }}>
             Welcome back, {userName.split(" ")[0]}!
           </h1>
@@ -53,7 +54,7 @@ export default function CustomerDashboardClient({
         <Button
           variant="amber"
           onClick={() => router.push("/customer/enroll")}
-          icon="➕"
+          icon={<Plus size={15} strokeWidth={2.5} />}
           style={{ whiteSpace: "nowrap", flexShrink: 0 }}
         >
           Enroll in Course
@@ -71,7 +72,7 @@ export default function CustomerDashboardClient({
         <StatTile
           label="Active Enrollments"
           value={activeEnrollments.length}
-          icon="📚"
+          icon={<BookOpen size={20} strokeWidth={1.5} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
           onClick={() => router.push("/customer/enroll")}
@@ -81,7 +82,7 @@ export default function CustomerDashboardClient({
           value={`$${monthlyTotal}`}
           delta="+5% GST"
           deltaColor={TLP.gray500}
-          icon="💳"
+          icon={<CreditCard size={20} strokeWidth={1.5} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
           onClick={() => router.push("/customer/payments")}
@@ -91,14 +92,14 @@ export default function CustomerDashboardClient({
           value={`${customer.loyalty_points || 0} pts`}
           delta="Earn 1 pt per $1"
           deltaColor={TLP.gray500}
-          icon="⭐"
+          icon={<Star size={20} strokeWidth={1.5} />}
           iconBg="#fff8e1"
           iconColor="#d4a017"
         />
         <StatTile
           label="Members"
           value={members.length}
-          icon="👨‍👩‍👧"
+          icon={<Users size={20} strokeWidth={1.5} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
           onClick={() => router.push("/customer/members")}

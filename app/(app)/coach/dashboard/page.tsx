@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { CalendarDays, Users, Pencil, Building, CheckCircle, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge, PlanetBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -20,6 +22,19 @@ import { LOCATION_BY_ID } from "@/lib/mock/locations";
 const COACH_ID = "coach_priya";
 const TODAY = "2026-05-04";
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function getPlanetIcon(name: string, size = 20) {
+  switch (name) {
+    case "Chess": return <Crown size={size} strokeWidth={2} />;
+    case "Math":
+    case "Maths": return <Calculator size={size} strokeWidth={2} />;
+    case "English": return <BookOpen size={size} strokeWidth={2} />;
+    case "Finance": return <DollarSign size={size} strokeWidth={2} />;
+    case "Arts": return <Palette size={size} strokeWidth={2} />;
+    case "Business": return <Briefcase size={size} strokeWidth={2} />;
+    default: return <Globe size={size} strokeWidth={2} />;
+  }
+}
 
 function fmtTime(t: string) {
   const [h, m] = t.split(":").map(Number);
@@ -76,7 +91,7 @@ export default function CoachDashboard() {
         <Button
           variant="amber"
           onClick={() => router.push("/coach/sessions")}
-          icon="📅"
+          icon={<CalendarDays size={16} strokeWidth={2.5} />}
           style={{ whiteSpace: "nowrap", flexShrink: 0 }}
         >
           Mark Attendance
@@ -94,7 +109,7 @@ export default function CoachDashboard() {
         <StatTile
           label="Today's Sessions"
           value={todaysAssignments.length}
-          icon="📅"
+          icon={<CalendarDays size={20} />}
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
           onClick={() => router.push("/coach/sessions")}
@@ -102,7 +117,7 @@ export default function CoachDashboard() {
         <StatTile
           label="Total Students"
           value={allStudentIds.size}
-          icon="👥"
+          icon={<Users size={20} />}
           iconBg={TLP.blueLight}
           iconColor={TLP.blue}
           onClick={() => router.push("/coach/students")}
@@ -112,14 +127,14 @@ export default function CoachDashboard() {
           value={todaysAssignments.length}
           delta="From today's sessions"
           deltaColor={TLP.gray500}
-          icon="📝"
+          icon={<Pencil size={20} />}
           iconBg={TLP.amberLight}
           iconColor={TLP.amber}
         />
         <StatTile
           label="Batches Taught"
           value={myBatches.length}
-          icon="🏫"
+          icon={<Building size={20} />}
           iconBg={TLP.purpleLight}
           iconColor={TLP.purple}
         />
@@ -180,11 +195,10 @@ export default function CoachDashboard() {
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              fontSize: 20,
                               flexShrink: 0,
                             }}
                           >
-                            {ps.icon}
+                            {getPlanetIcon(planet?.name ?? "", 20)}
                           </div>
                         )}
                         <div>
@@ -299,11 +313,10 @@ export default function CoachDashboard() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            fontSize: 16,
                             flexShrink: 0,
                           }}
                         >
-                          {ps.icon}
+                          {getPlanetIcon(planet?.name ?? "", 16)}
                         </div>
                       )}
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -340,10 +353,10 @@ export default function CoachDashboard() {
             <SectionHeader title="Quick Links" />
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {[
-                { label: "Mark Attendance", href: "/coach/sessions", icon: "✅" },
-                { label: "View Students", href: "/coach/students", icon: "👥" },
-                { label: "LMS Authoring", href: "/coach/lms", icon: "✏️" },
-                { label: "Set Availability", href: "/coach/availability", icon: "🗓️" },
+                { label: "Mark Attendance", href: "/coach/sessions", icon: <CheckCircle size={18} color={TLP.teal} /> },
+                { label: "View Students", href: "/coach/students", icon: <Users size={18} color={TLP.blue} /> },
+                { label: "LMS Authoring", href: "/coach/lms", icon: <Pencil size={18} color={TLP.purple} /> },
+                { label: "Set Availability", href: "/coach/availability", icon: <CalendarDays size={18} color={TLP.amber} /> },
               ].map((link) => (
                 <button
                   key={link.href}
@@ -364,7 +377,7 @@ export default function CoachDashboard() {
                     fontFamily: "inherit",
                   }}
                 >
-                  <span style={{ fontSize: 18 }}>{link.icon}</span>
+                  <span style={{ display: "flex", color: TLP.gray600 }}>{link.icon}</span>
                   {link.label}
                 </button>
               ))}

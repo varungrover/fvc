@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -156,7 +157,7 @@ export default function HolidaysClient({ initialHolidays, ownerships, locations 
         title="Holiday Calendar"
         subtitle="Manage system-wide and location-specific holidays"
         actions={
-          <Button variant="primary" icon="➕" onClick={() => setShowAdd(true)}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => setShowAdd(true)}>
             Add Holiday
           </Button>
         }

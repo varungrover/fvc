@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -11,6 +12,19 @@ import { LEVEL_BY_ID } from "@/lib/mock/levels";
 import { PLANET_BY_ID } from "@/lib/mock/planets";
 import { LOCATION_BY_ID } from "@/lib/mock/locations";
 import { COACHES } from "@/lib/mock/coaches";
+
+function getPlanetIcon(name: string, size = 20) {
+  switch (name) {
+    case "Chess": return <Crown size={size} strokeWidth={2} />;
+    case "Math":
+    case "Maths": return <Calculator size={size} strokeWidth={2} />;
+    case "English": return <BookOpen size={size} strokeWidth={2} />;
+    case "Finance": return <DollarSign size={size} strokeWidth={2} />;
+    case "Arts": return <Palette size={size} strokeWidth={2} />;
+    case "Business": return <Briefcase size={size} strokeWidth={2} />;
+    default: return <Globe size={size} strokeWidth={2} />;
+  }
+}
 
 const MLA_TEAL = "#0a9b8a";
 
@@ -88,7 +102,7 @@ export default function FranchiseeRosterPage() {
             boxShadow: "0 4px 16px rgba(0,0,0,0.18)",
           }}
         >
-          ✓ Roster published successfully
+          <Check size={16} /> Roster published successfully
         </div>
       )}
 
@@ -208,7 +222,9 @@ export default function FranchiseeRosterPage() {
                         marginRight: 5,
                       }}
                     >
-                      {pStyle.icon} {planet?.name}
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                        {getPlanetIcon(planet?.name ?? "", 14)} {planet?.name}
+                      </span>
                     </span>
                     <span style={{ fontWeight: 600, color: TLP.navy }}>{level?.name}</span>
                   </div>
@@ -288,8 +304,8 @@ export default function FranchiseeRosterPage() {
                               padding: "6px 8px",
                             }}
                           >
-                            <div style={{ fontSize: 11, fontWeight: 700, color: pStyle.color }}>
-                              {pStyle.icon} {planet?.name}
+                            <div style={{ fontSize: 11, fontWeight: 700, color: pStyle.color, display: 'flex', alignItems: 'center', gap: 4 }}>
+                              {getPlanetIcon(planet?.name ?? "", 12)} {planet?.name}
                             </div>
                             <div style={{ fontSize: 10, color: TLP.navy, fontWeight: 600 }}>{level?.name}</div>
                             <div style={{ fontSize: 10, color: TLP.gray600, marginTop: 1 }}>{fmtTime(batch.startTime)}</div>

@@ -4,20 +4,11 @@ import { useState, useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { TLP } from "@/lib/theme/tokens";
+import { TLP, PLANETS, PlanetName } from "@/lib/theme/tokens";
 import { useRouter } from "next/navigation";
 import { computeFirstMonthAmount, computeMultiPlanetDiscount } from "@/lib/billing/invoice";
 
 const STEPS = ["Student", "Level", "Schedule", "Billing", "Payment"];
-
-const PLANET_THEMES: Record<string, { bg: string, text: string, gradient: string }> = {
-  Mercury: { bg: "#E5E7EB", text: "#374151", gradient: "linear-gradient(135deg, #9CA3AF, #4B5563)" },
-  Venus: { bg: "#FEF3C7", text: "#92400E", gradient: "linear-gradient(135deg, #FBBF24, #D97706)" },
-  Earth: { bg: "#DBEAFE", text: "#1E40AF", gradient: "linear-gradient(135deg, #3B82F6, #1D4ED8)" },
-  Mars: { bg: "#FEE2E2", text: "#991B1B", gradient: "linear-gradient(135deg, #EF4444, #B91C1C)" },
-  Jupiter: { bg: "#F3E8FF", text: "#6B21A8", gradient: "linear-gradient(135deg, #A855F7, #7E22CE)" },
-  Saturn: { bg: "#FFEDD5", text: "#9A3412", gradient: "linear-gradient(135deg, #F97316, #C2410C)" },
-};
 
 export default function EnrollClient({ initialData }: { initialData: any }) {
   const [step, setStep] = useState(1);
@@ -183,7 +174,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                   <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Planet</h2>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     {planets.map((p: any) => {
-                      const theme = PLANET_THEMES[p.name] || PLANET_THEMES.Earth;
+                      const theme = PLANETS[p.name as PlanetName] || PLANETS.Chess;
                       return (
                         <div 
                           key={p.id}
@@ -191,16 +182,18 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                           style={{ 
                             padding: 30, 
                             borderRadius: 20, 
-                            background: theme.gradient,
-                            color: "white",
+                            background: theme.bg,
+                            border: `2px solid ${theme.color}20`,
+                            color: TLP.navy,
                             cursor: "pointer",
                             transition: "all 0.3s ease",
                             position: "relative",
                             overflow: "hidden"
                           }}
                         >
-                          <div style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>{p.name}</div>
-                          <div style={{ fontSize: 14, opacity: 0.9 }}>{p.description || "Master new skills."}</div>
+                          <div style={{ fontSize: 32, marginBottom: 12 }}>{theme.icon}</div>
+                          <div style={{ fontSize: 24, fontWeight: 900, marginBottom: 8, color: theme.color }}>{p.name}</div>
+                          <div style={{ fontSize: 14, opacity: 0.8, color: TLP.gray600 }}>{p.description || "Master new skills."}</div>
                         </div>
                       );
                     })}

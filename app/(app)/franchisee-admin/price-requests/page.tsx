@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, Info } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -90,7 +91,7 @@ export default function PriceRequestsPage() {
         title="Price Requests"
         subtitle={`Maple Leaf Academy — ${pendingCount} pending`}
         actions={
-          <Button variant="primary" icon="➕" onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
+          <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => { setForm(BLANK_FORM); setShowAdd(true); }}>
             Submit Request
           </Button>
         }
@@ -251,9 +252,12 @@ export default function PriceRequestsPage() {
               padding: "10px 14px",
               fontSize: 12,
               color: TLP.blue,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
             }}
           >
-            ℹ️ Requests are reviewed by The Learning Planet management team. You will be notified once a decision is made.
+            <Info size={14} /> Requests are reviewed by The Learning Planet management team. You will be notified once a decision is made.
           </div>
         </div>
       </Modal>

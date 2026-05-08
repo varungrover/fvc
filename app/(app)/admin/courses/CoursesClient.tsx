@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, Crown, Calculator, BookOpen, DollarSign, Palette, Briefcase, Globe, Pencil } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +11,34 @@ import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP, planetStyle } from "@/lib/theme/tokens";
 import type { Planet, Level, CourseVariant } from "@/lib/types";
+
+const PLANET_ICONS: Record<string, ReactNode> = {
+  Chess:    <Crown      size={18} strokeWidth={1.75} />,
+  Math:     <Calculator size={18} strokeWidth={1.75} />,
+  Maths:    <Calculator size={18} strokeWidth={1.75} />,
+  English:  <BookOpen   size={18} strokeWidth={1.75} />,
+  Finance:  <DollarSign size={18} strokeWidth={1.75} />,
+  Arts:     <Palette    size={18} strokeWidth={1.75} />,
+  Business: <Briefcase  size={18} strokeWidth={1.75} />,
+};
+
+const PLANET_PALETTE: { color: string; bg: string }[] = [
+  { color: "#0a9b8a", bg: "#e6f7f5" },
+  { color: "#3182ce", bg: "#ebf8ff" },
+  { color: "#805ad5", bg: "#faf5ff" },
+  { color: "#f5a623", bg: "#fef3dc" },
+  { color: "#38a169", bg: "#f0fff4" },
+  { color: "#e67e22", bg: "#fef9f0" },
+  { color: "#d53f8c", bg: "#fff0f8" },
+  { color: "#2b6cb0", bg: "#ebf4ff" },
+];
+
+function getPlanetStyle(name: string, tlpPlanetStyle: (n: string) => { color: string; bg: string; icon: string }) {
+  const known = tlpPlanetStyle(name);
+  if (known.color !== "#6b7280") return known; // not gray fallback
+  const idx = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % PLANET_PALETTE.length;
+  return { ...PLANET_PALETTE[idx], icon: "" };
+}
 
 interface PlanetWithDetails extends Planet {
   products: (Level & { product_variants: CourseVariant[] })[];
@@ -36,7 +66,7 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
   const [editVariantForm, setEditVariantForm] = useState({ name: "", frequencyPerWeek: 1, price: 0, setupFee: 0, isActive: true });
 
   const selectedPlanet = planets.find(p => p.id === selectedPlanetId);
-  const pStyle = selectedPlanet ? planetStyle(selectedPlanet.name) : { icon: "🪐", bg: TLP.gray100, color: TLP.navy };
+  const pStyle = selectedPlanet ? getPlanetStyle(selectedPlanet.name, planetStyle) : { bg: "#f3f4f6", color: "#0d1b3e" };
   const levels = selectedPlanet?.products || [];
 
   async function handleAddLevel() {
@@ -193,7 +223,7 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
         actions={
           <Button 
             variant="primary" 
-            icon="➕" 
+            icon={<Plus size={15} strokeWidth={2.5} />} 
             onClick={() => setShowAddLevel(true)}
             disabled={!selectedPlanetId}
           >
@@ -211,9 +241,9 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
             style={{
               padding: "10px 20px",
               borderRadius: 12,
-              border: `2px solid ${selectedPlanetId === p.id ? planetStyle(p.name).color : TLP.gray200}`,
-              background: selectedPlanetId === p.id ? planetStyle(p.name).bg : TLP.white,
-              color: selectedPlanetId === p.id ? planetStyle(p.name).color : TLP.gray500,
+              border: `2px solid ${selectedPlanetId === p.id ? getPlanetStyle(p.name, planetStyle).color : TLP.gray200}`,
+              background: selectedPlanetId === p.id ? getPlanetStyle(p.name, planetStyle).bg : TLP.white,
+              color: selectedPlanetId === p.id ? getPlanetStyle(p.name, planetStyle).color : TLP.gray500,
               fontWeight: 800,
               fontSize: 14,
               cursor: "pointer",
@@ -224,7 +254,9 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
               gap: 8
             }}
           >
-            <span style={{ fontSize: 18 }}>{planetStyle(p.name).icon}</span>
+            <span style={{ display: "flex", alignItems: "center" }}>
+              {PLANET_ICONS[p.name] ?? <Globe size={18} strokeWidth={1.75} />}
+            </span>
             {p.name}
           </button>
         ))}
@@ -246,12 +278,15 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 20 }}>{pStyle.icon}</span>
+                    <span style={{ display: "flex", alignItems: "center", color: pStyle.color }}>
+                      {PLANET_ICONS[selectedPlanet?.name ?? ""] ?? <Globe size={20} strokeWidth={1.75} />}
+                    </span>
                     <span 
-                      style={{ fontWeight: 800, fontSize: 16, color: pStyle.color, cursor: "pointer" }}
+                      style={{ fontWeight: 800, fontSize: 16, color: pStyle.color, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
                       onClick={() => startEditingLevel(level)}
                     >
-                      {level.name} ✏️
+                      {level.name}
+                      <Pencil size={13} strokeWidth={2} style={{ opacity: 0.6 }} />
                     </span>
                   </div>
                   <Badge
@@ -269,7 +304,7 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
                     <Button 
                       size="sm" 
                       variant="secondary" 
-                      icon="➕"
+                      icon={<Plus size={13} strokeWidth={2.5} />}
                       onClick={() => setShowAddVariant(level.id)}
                     >
                       Add Variant
@@ -325,7 +360,7 @@ export default function CoursesClient({ initialPlanets }: CoursesClientProps) {
             <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "60px 0", background: TLP.white, borderRadius: 14, border: `2px dashed ${TLP.gray200}` }}>
               <h3 style={{ color: TLP.navy }}>No levels for {selectedPlanet.name}</h3>
               <p style={{ color: TLP.gray500 }}>Create levels to organize courses for this planet.</p>
-              <Button variant="primary" icon="➕" onClick={() => setShowAddLevel(true)}>Create First Level</Button>
+              <Button variant="primary" icon={<Plus size={15} strokeWidth={2.5} />} onClick={() => setShowAddLevel(true)}>Create First Level</Button>
             </div>
           )}
         </div>
