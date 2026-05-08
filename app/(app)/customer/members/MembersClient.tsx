@@ -11,7 +11,6 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Select } from "@/components/ui/Select";
 import { TLP } from "@/lib/theme/tokens";
 import type { MemberRow } from "@/lib/db/members";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 const AVATAR_COLORS = [TLP.teal, TLP.purple, TLP.navy, TLP.blue, TLP.green];
@@ -52,12 +51,13 @@ export default function MembersClient({
   customerId: string;
 }) {
   const router = useRouter();
-  const supabase = createClient();
   const [members, setMembers] = useState<MemberRow[]>(initialMembers);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState<MemberRow | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<MemberRow | null>(null);
   const [form, setForm] = useState<FormState>(BLANK_FORM);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   function openAdd() {
     setForm(BLANK_FORM);
@@ -83,7 +83,6 @@ export default function MembersClient({
     
     try {
       const payload = {
-        id: form.id,
         customer_id: customerId,
         full_name: form.fullName,
         dob: form.dob,
@@ -94,13 +93,30 @@ export default function MembersClient({
         is_active: true
       };
 
-      const { data, error } = await supabase
-        .from('members')
-        .upsert(payload)
-        .select()
-        .single();
-
-      if (error) throw error;
+      let data;
+      if (form.id) {
+        const res = await fetch(`/api/members/${form.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to update member');
+        }
+        data = await res.json();
+      } else {
+        const res = await fetch('/api/members', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to create member');
+        }
+        data = await res.json();
+      }
 
       setMembers(prev => {
         if (form.id) {
@@ -117,6 +133,31 @@ export default function MembersClient({
       alert("Failed to save member. Please try again.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleDeleteMember() {
+    if (!showDeleteConfirm) return;
+    setDeleting(true);
+    
+    try {
+      const res = await fetch(`/api/members/${showDeleteConfirm.id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to delete member');
+      }
+
+      setMembers(prev => prev.filter(m => m.id !== showDeleteConfirm.id));
+      setShowDeleteConfirm(null);
+      router.refresh();
+    } catch (err) {
+      console.error("Failed to delete member:", err);
+      alert("Failed to delete member. Please try again.");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -176,6 +217,15 @@ export default function MembersClient({
                 >
                   Edit Profile
                 </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  style={{ color: TLP.red, padding: '5px 8px' }}
+                  onClick={() => setShowDeleteConfirm(m)}
+                  title="Delete Profile"
+                >
+                  🗑️
+                </Button>
               </div>
             </Card>
           );
@@ -214,33 +264,52 @@ export default function MembersClient({
         onClose={() => setShowEdit(null)}
         title={`Edit — ${showEdit?.full_name}`}
         footer={
+          <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+            <Button 
+              variant="ghost" 
+              style={{ color: TLP.red, padding: 0 }} 
+              onClick={() => {
+                const member = showEdit;
+                setShowEdit(null);
+                setShowDeleteConfirm(member);
+              }}
+              disabled={saving}
+            >
+              Delete Profile
+            </Button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <Button variant="secondary" onClick={() => setShowEdit(null)} disabled={saving}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleSaveMember} disabled={saving}>
+                {saving ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
+          </div>
+        }
+      >
+        <MemberForm form={form} set={set} />
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        open={!!showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(null)}
+        title="Delete Member Profile"
+        footer={
           <>
-            <Button variant="secondary" onClick={() => setShowEdit(null)} disabled={saving}>
+            <Button variant="secondary" onClick={() => setShowDeleteConfirm(null)} disabled={deleting}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleSaveMember} disabled={saving}>
-              {saving ? "Saving..." : "Save Changes"}
+            <Button variant="danger" onClick={handleDeleteMember} disabled={deleting}>
+              {deleting ? "Deleting..." : "Delete Profile"}
             </Button>
           </>
         }
       >
-        <MemberForm form={form} set={set} />
-        <div
-          style={{
-            marginTop: 14,
-            padding: "10px 14px",
-            background: TLP.amberLight,
-            borderRadius: 8,
-            fontSize: 12,
-            color: TLP.gray700,
-            display: "flex",
-            gap: 8,
-          }}
-        >
-          <span>🔒</span>
-          <span>
-            To edit personal information securely, 2FA verification is required in production.
-          </span>
+        <div style={{ color: TLP.gray600, fontSize: 14, lineHeight: 1.5 }}>
+          Are you sure you want to delete <strong>{showDeleteConfirm?.full_name}</strong>? 
+          This action cannot be undone and will remove all profile details.
         </div>
       </Modal>
     </div>

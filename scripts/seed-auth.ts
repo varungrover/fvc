@@ -49,31 +49,31 @@ const SEED_USERS = [
     email: 'coach@demo.com',
     full_name: 'Priya Patel',
     role: 'coach',
-    ownership_id: 'ten_tlp',
+    ownership_id: null,
   },
   {
     email: 'franchisor.admin@demo.com',
     full_name: 'Mira Sandhu',
     role: 'franchisor_admin',
-    ownership_id: 'ten_tlp',
+    ownership_id: null,
   },
   {
     email: 'franchisee.admin@demo.com',
     full_name: 'Jordan Bell',
     role: 'franchisee_admin',
-    ownership_id: 'ten_mla',
+    ownership_id: null,
   },
   {
     email: 'franchisor.mgmt@demo.com',
     full_name: 'Anika Iyer',
     role: 'franchisor_mgmt',
-    ownership_id: 'ten_tlp',
+    ownership_id: null,
   },
   {
     email: 'franchisee.mgmt@demo.com',
     full_name: 'David Chen',
     role: 'franchisee_mgmt',
-    ownership_id: 'ten_mla',
+    ownership_id: null,
   },
 ] as const
 
@@ -100,6 +100,12 @@ async function seed() {
         full_name: user.full_name,
         must_change_password: false,
       },
+      user_metadata: {
+        role: user.role,
+        ownership_id: user.ownership_id,
+        full_name: user.full_name,
+        must_change_password: false,
+      },
     })
 
     if (error) {
@@ -112,10 +118,10 @@ async function seed() {
   // Verify profiles rows exist (created automatically by DB trigger on_auth_user_created)
   const { data: profiles } = await admin
     .from('profiles')
-    .select('id, role, ownership_id, full_name')
+    .select('id, role_id, ownership_id, full_name')
   console.log('\nProfiles in DB:', profiles?.length ?? 0)
   profiles?.forEach((p) =>
-    console.log(`  ${p.full_name} (${p.role}) - ${p.ownership_id ?? 'no ownership'}`)
+    console.log(`  ${p.full_name} (role_id: ${p.role_id}) - ${p.ownership_id ?? 'no ownership'}`)
   )
 
   console.log('\nDone.')
