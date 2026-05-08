@@ -308,6 +308,9 @@ export interface Enrollment {
   enrolledAt: ISODateTime;
   cancelledAt?: ISODateTime;
   cancellationReason?: string;
+  batchId?: ID; // Used in mock data
+  invoiceId?: ID; // Used in mock data
+  setupFeePaid?: boolean; // Used in mock data
 }
 
 export type RosterStatus = "draft" | "published" | "archived";
