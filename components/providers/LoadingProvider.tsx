@@ -23,18 +23,24 @@ const LoadingContext = createContext({ setLoading: (val: boolean) => {} });
 
 export const useLoading = () => useContext(LoadingContext);
 
-export default function LoadingProvider({ children }: { children: React.ReactNode }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState(CHESS_WORDS[0]);
+import { Suspense } from "react";
+
+function RouteChangeListener({ setIsLoading, textInterval }: { setIsLoading: any, textInterval: any }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const textInterval = useRef<NodeJS.Timeout | null>(null);
 
-  // Reset loading state when the route change completes
   useEffect(() => {
     setIsLoading(false);
     if (textInterval.current) clearInterval(textInterval.current);
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, setIsLoading, textInterval]);
+
+  return null;
+}
+
+export default function LoadingProvider({ children }: { children: React.ReactNode }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState(CHESS_WORDS[0]);
+  const textInterval = useRef<NodeJS.Timeout | null>(null);
 
   // Cycle through chess words when loading
   useEffect(() => {
@@ -77,6 +83,9 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
 
   return (
     <LoadingContext.Provider value={{ setLoading: setIsLoading }}>
+      <Suspense fallback={null}>
+        <RouteChangeListener setIsLoading={setIsLoading} textInterval={textInterval} />
+      </Suspense>
       {isLoading && (
         <div style={{
           position: "fixed",
