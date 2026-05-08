@@ -204,7 +204,7 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
                     {PLANET_ICONS[planet.name] ?? <Globe size={24} strokeWidth={1.75} />}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                       <span style={{ fontWeight: 800, fontSize: 17, color: isActive ? TLP.navy : TLP.gray500 }}>
                         {planet.name}
                       </span>

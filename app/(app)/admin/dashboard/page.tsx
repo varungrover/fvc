@@ -67,14 +67,15 @@ export default function AdminDashboard() {
       {/* Welcome banner */}
       <div
         style={{
-          background: `linear-gradient(135deg, ${TLP.navy} 0%, ${TLP.navyLight} 100%)`,
-          borderRadius: 14,
-          padding: "22px 28px",
+          background: `linear-gradient(135deg, ${TLP.teal} 0%, #077d6e 100%)`,
+          borderRadius: 16,
+          padding: "24px 32px",
           color: "#fff",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           gap: 16,
+          boxShadow: "0 4px 20px rgba(10,155,138,0.15)",
         }}
       >
         <div>
