@@ -25,6 +25,8 @@ const COACH_NAV: NavItem[] = [
 
 const ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'dashboard', label: 'Dashboard', href: '/admin/dashboard', icon: '🏠' },
+  { kind: 'link', id: 'planets', label: 'Planets', href: '/admin/planets', icon: '🪐' },
+  { kind: 'link', id: 'courses', label: 'Courses', href: '/admin/courses', icon: '📚' },
   { kind: 'link', id: 'locations', label: 'Locations', href: '/admin/locations', icon: '📍' },
   { kind: 'link', id: 'schedule', label: 'Batches', href: '/admin/batches', icon: '📅' },
   { kind: 'link', id: 'coaches', label: 'Coaches', href: '/admin/coaches', icon: '👤' },
@@ -35,7 +37,6 @@ const ADMIN_NAV: NavItem[] = [
   { kind: 'link', id: 'discounts', label: 'Discounts', href: '/admin/discounts', icon: '🏷️' },
   { kind: 'link', id: 'holidays', label: 'Holidays', href: '/admin/holidays', icon: '🗓️' },
   { kind: 'link', id: 'tickets', label: 'Tickets', href: '/admin/tickets', icon: '🎫' },
-  { kind: 'link', id: 'planets', label: 'Planets', href: '/admin/planets', icon: '🪐' },
 ]
 
 const FRANCHISEE_ADMIN_NAV: NavItem[] = [

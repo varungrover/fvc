@@ -1,0 +1,129 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "👨‍👧 My Members" [ref=e90] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e91]: 👨‍👧
+            - generic [ref=e92]: My Members
+          - link "📋 Enroll" [ref=e93] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e94]: 📋
+            - generic [ref=e95]: Enroll
+          - link "📚 Learning Portal" [ref=e96] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e97]: 📚
+            - generic [ref=e98]: Learning Portal
+          - link "💳 Payments" [ref=e100] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e101]: 💳
+            - generic [ref=e102]: Payments
+          - link "🔔 Notifications" [active] [ref=e103] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e104]: 🔔
+            - generic [ref=e105]: Notifications
+          - link "⚙️ Settings" [ref=e106] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e107]: ⚙️
+            - generic [ref=e108]: Settings
+        - generic [ref=e109]:
+          - link "👤 Profile" [ref=e111] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e112]: 👤
+            - generic [ref=e113]: Profile
+          - button "🚪 Logout" [ref=e114] [cursor=pointer]:
+            - generic [ref=e115]: 🚪
+            - generic [ref=e116]: Logout
+      - button "Collapse sidebar" [ref=e117] [cursor=pointer]: ←
+    - generic [ref=e118]:
+      - generic [ref=e120]:
+        - generic [ref=e121]:
+          - generic [ref=e122]: ROLE
+          - generic [ref=e123]: Customer
+        - generic [ref=e124]:
+          - generic "Avatar for Raj Sharma" [ref=e125]: RS
+          - generic [ref=e126]: Raj Sharma
+        - button "Log out" [ref=e128] [cursor=pointer]
+      - main [ref=e129]:
+        - generic [ref=e437]:
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - heading "Notifications" [level=1] [ref=e440]
+              - paragraph [ref=e441]: 2 unread
+            - button "Mark all read" [ref=e443] [cursor=pointer]
+          - generic [ref=e444]:
+            - button "All (6)" [ref=e445] [cursor=pointer]
+            - button "Unread (2)" [ref=e446] [cursor=pointer]
+          - generic [ref=e447]:
+            - generic [ref=e449]:
+              - generic [ref=e450]: 📅
+              - generic [ref=e451]:
+                - generic [ref=e452]:
+                  - generic [ref=e453]:
+                    - generic [ref=e454]: Classes resume after Victoria Day
+                    - generic [ref=e455]: Class Info
+                  - generic [ref=e456]: "-11 days ago"
+                - generic [ref=e457]: A reminder that classes will resume on Tuesday, May 19 following the Victoria Day holiday.
+            - generic [ref=e459] [cursor=pointer]:
+              - generic [ref=e460]: ❌
+              - generic [ref=e461]:
+                - generic [ref=e462]:
+                  - generic [ref=e463]:
+                    - generic [ref=e464]: Payment failed for May invoice
+                    - generic [ref=e465]: Payment
+                  - generic [ref=e467]: 3 days ago
+                - generic [ref=e468]: Your payment of $180.00 due on May 1 could not be processed. Please update your payment method.
+                - button "Mark as read" [ref=e470]
+            - generic [ref=e472] [cursor=pointer]:
+              - generic [ref=e473]: ⚠️
+              - generic [ref=e474]:
+                - generic [ref=e475]:
+                  - generic [ref=e476]:
+                    - generic [ref=e477]: Aarav missed Chess class
+                    - generic [ref=e478]: Missed Class
+                  - generic [ref=e480]: 5 days ago
+                - generic [ref=e481]: Aarav Sharma was marked absent for Chess PP on Monday, Apr 28 at Surrey Central.
+                - button "Mark as read" [ref=e483]
+            - generic [ref=e485]:
+              - generic [ref=e486]: 🎉
+              - generic [ref=e487]:
+                - generic [ref=e488]:
+                  - generic [ref=e489]:
+                    - generic [ref=e490]: "New event: Spring Chess Open 2026"
+                    - generic [ref=e491]: Event
+                  - generic [ref=e492]: Apr 20, 2026
+                - generic [ref=e493]: Register your members for the Spring Chess Open on Jun 7 at Surrey Central. Only 48 spots available!
+            - generic [ref=e495]:
+              - generic [ref=e496]: 🏆
+              - generic [ref=e497]:
+                - generic [ref=e498]:
+                  - generic [ref=e499]:
+                    - generic [ref=e500]: Aarav earned a badge! 🏆
+                    - generic [ref=e501]: Achievement
+                  - generic [ref=e502]: Apr 15, 2026
+                - generic [ref=e503]: Coach Priya awarded Aarav the "Knight's Gambit" badge for exceptional chess problem solving.
+            - generic [ref=e505]:
+              - generic [ref=e506]: ✅
+              - generic [ref=e507]:
+                - generic [ref=e508]:
+                  - generic [ref=e509]:
+                    - generic [ref=e510]: Anaya enrolled in Math Grade 7
+                    - generic [ref=e511]: Enrollment
+                  - generic [ref=e512]: Apr 10, 2026
+                - generic [ref=e513]: Anaya Sharma has been successfully enrolled in Math Grade 7 (2x/week) at Surrey Central.
+        - generic [ref=e186]:
+          - generic [ref=e187]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e188]:
+            - generic [ref=e189]: Powered by
+            - generic [ref=e190]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]: Mentora

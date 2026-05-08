@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e405]:
+    - generic [ref=e406]:
+      - link "🌍 Mentora" [ref=e407] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e408]: 🌍
+        - generic [ref=e409]: Mentora
+      - heading "Welcome back" [level=1] [ref=e410]
+      - paragraph [ref=e411]: Sign in to your Mentora account.
+      - generic [ref=e412]:
+        - generic [ref=e413]:
+          - generic [ref=e414]: Email *
+          - textbox "you@example.com" [ref=e415]
+        - generic [ref=e416]:
+          - generic [ref=e417]: Password *
+          - textbox "Any password works" [ref=e418]
+          - generic [ref=e419]: "Password: \"demo1234!\""
+        - button "Sign in" [ref=e420] [cursor=pointer]
+      - paragraph [ref=e421]: This is a read-only prototype. No data is persisted; refresh returns you here. Pick any demo account on the right →
+    - generic [ref=e422]:
+      - generic [ref=e423]:
+        - heading "Demo accounts" [level=2] [ref=e424]
+        - generic [ref=e425]: click to fill
+      - paragraph [ref=e426]:
+        - text: Password is
+        - code [ref=e427]: demo1234!
+        - text: for all accounts.
+      - generic [ref=e428]:
+        - button "Customer parent@demo.com Parent of two — manages members, enrolls in courses, pays bills." [ref=e429] [cursor=pointer]:
+          - generic [ref=e431]:
+            - generic [ref=e432]:
+              - generic [ref=e433]: Customer
+              - generic [ref=e434]: parent@demo.com
+            - paragraph [ref=e435]: Parent of two — manages members, enrolls in courses, pays bills.
+        - button "Coach coach@demo.com Teaches Chess + Math at TLP Surrey — marks attendance and writes notes." [ref=e436] [cursor=pointer]:
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: Coach
+              - generic [ref=e441]: coach@demo.com
+            - paragraph [ref=e442]: Teaches Chess + Math at TLP Surrey — marks attendance and writes notes.
+        - button "Franchisor Admin franchisor.admin@demo.com Runs The Learning Planet — manages locations, coaches, planets, roster." [ref=e443] [cursor=pointer]:
+          - generic [ref=e445]:
+            - generic [ref=e446]:
+              - generic [ref=e447]: Franchisor Admin
+              - generic [ref=e448]: franchisor.admin@demo.com
+            - paragraph [ref=e449]: Runs The Learning Planet — manages locations, coaches, planets, roster.
+        - button "Franchisee Admin franchisee.admin@demo.com Runs Maple Leaf Academy — same surface, scoped to one ownership." [ref=e450] [cursor=pointer]:
+          - generic [ref=e452]:
+            - generic [ref=e453]:
+              - generic [ref=e454]: Franchisee Admin
+              - generic [ref=e455]: franchisee.admin@demo.com
+            - paragraph [ref=e456]: Runs Maple Leaf Academy — same surface, scoped to one ownership.
+        - button "Franchisor Management franchisor.mgmt@demo.com Network-wide revenue, pricing approvals, rollups across all ownerships." [ref=e457] [cursor=pointer]:
+          - generic [ref=e459]:
+            - generic [ref=e460]:
+              - generic [ref=e461]: Franchisor Management
+              - generic [ref=e462]: franchisor.mgmt@demo.com
+            - paragraph [ref=e463]: Network-wide revenue, pricing approvals, rollups across all ownerships.
+        - button "Franchisee Management franchisee.mgmt@demo.com Single-ownership revenue + price-change requests upstream." [ref=e464] [cursor=pointer]:
+          - generic [ref=e466]:
+            - generic [ref=e467]:
+              - generic [ref=e468]: Franchisee Management
+              - generic [ref=e469]: franchisee.mgmt@demo.com
+            - paragraph [ref=e470]: Single-ownership revenue + price-change requests upstream.
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

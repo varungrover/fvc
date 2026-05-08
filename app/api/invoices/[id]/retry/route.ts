@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { getInvoice, updateInvoiceStatus } from "@/lib/db/invoices";
-import { createPaymentIntent } from "@/lib/stripe/client";
+import { createPaymentIntent } from "@/lib/stripe";
 
 export async function POST(
   request: Request,

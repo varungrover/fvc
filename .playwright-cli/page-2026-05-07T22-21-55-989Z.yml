@@ -1,0 +1,108 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - navigation [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌍
+          - generic [ref=e8]: The Learning Planet
+        - generic [ref=e9]:
+          - link "🏠 Dashboard" [ref=e10] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e11]: 🏠
+            - generic [ref=e12]: Dashboard
+          - link "👨‍👧 My Members" [ref=e13] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e14]: 👨‍👧
+            - generic [ref=e15]: My Members
+          - link "📋 Enroll" [ref=e16] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e17]: 📋
+            - generic [ref=e18]: Enroll
+          - link "📚 Learning Portal" [ref=e19] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e20]: 📚
+            - generic [ref=e21]: Learning Portal
+          - link "💳 Payments" [ref=e23] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e24]: 💳
+            - generic [ref=e25]: Payments
+          - link "🔔 Notifications" [ref=e26] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e27]: 🔔
+            - generic [ref=e28]: Notifications
+          - link "⚙️ Settings" [ref=e29] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e30]: ⚙️
+            - generic [ref=e31]: Settings
+        - generic [ref=e32]:
+          - link "👤 Profile" [ref=e34] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e35]: 👤
+            - generic [ref=e36]: Profile
+          - button "🚪 Logout" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: 🚪
+            - generic [ref=e39]: Logout
+      - button "Collapse sidebar" [ref=e40] [cursor=pointer]: ←
+    - generic [ref=e41]:
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - generic [ref=e45]: ROLE
+          - generic [ref=e46]: Customer
+        - generic [ref=e47]:
+          - generic "Avatar for Raj Sharma" [ref=e48]: RS
+          - generic [ref=e49]: Raj Sharma
+        - button "Log out" [ref=e51] [cursor=pointer]
+      - main [ref=e52]:
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - generic [ref=e57]: Good morning 👋
+              - heading "Welcome back, Raj!" [level=1] [ref=e58]
+              - paragraph [ref=e59]: 1 members · 0 active enrollments · CAD $0.00/mo
+            - button "➕ Enroll in Course" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: ➕
+              - text: Enroll in Course
+          - generic [ref=e62]:
+            - generic [ref=e64] [cursor=pointer]:
+              - generic [ref=e65]:
+                - generic [ref=e66]: Active Enrollments
+                - generic [ref=e67]: "0"
+              - generic [ref=e68]: 📚
+            - generic [ref=e70] [cursor=pointer]:
+              - generic [ref=e71]:
+                - generic [ref=e72]: Monthly Total
+                - generic [ref=e73]: $0
+                - generic [ref=e74]: +5% GST
+              - generic [ref=e75]: 💳
+            - generic [ref=e77]:
+              - generic [ref=e78]:
+                - generic [ref=e79]: Loyalty Points
+                - generic [ref=e80]: 0 pts
+                - generic [ref=e81]: Earn 1 pt per $1
+              - generic [ref=e82]: ⭐
+            - generic [ref=e84] [cursor=pointer]:
+              - generic [ref=e85]:
+                - generic [ref=e86]: Members
+                - generic [ref=e87]: "1"
+              - generic [ref=e88]: 👨‍👩‍👧
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]:
+                - heading "My Members" [level=2] [ref=e93]
+                - button "Manage Members" [ref=e94] [cursor=pointer]
+              - generic [ref=e96]:
+                - generic "Avatar for Aiden Sharma" [ref=e97]: AS
+                - generic [ref=e98]:
+                  - generic [ref=e99]: Aiden Sharma
+                  - generic [ref=e100]: "DOB: 1985-04-22"
+                - generic [ref=e101]: 0 ENROLLMENTS
+            - generic [ref=e103]:
+              - heading "Recent Payments" [level=2] [ref=e106]
+              - generic [ref=e108]: No payment history.
+        - generic [ref=e109]:
+          - generic [ref=e110]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e111]:
+            - generic [ref=e112]: Powered by
+            - generic [ref=e113]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e119] [cursor=pointer]:
+    - img [ref=e120]

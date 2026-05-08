@@ -12,7 +12,7 @@ function variants(
   imageUrl?: string,
 ): CourseVariant[] {
   return [
-    { id: `${levelId}_1x`, levelId, frequencyPerWeek: 1, price: base, setupFee: SETUP_FEE, imageUrl },
+    { id: `${levelId}_1x`, levelId, frequencyPerWeek: 1, price: base, setupFee: SETUP_FEE, imageUrl, isActive: true },
     {
       id: `${levelId}_2x`,
       levelId,
@@ -20,6 +20,7 @@ function variants(
       price: Math.round(base * 1.26),
       setupFee: SETUP_FEE,
       imageUrl,
+      isActive: true,
     },
     {
       id: `${levelId}_3x`,
@@ -28,6 +29,7 @@ function variants(
       price: Math.round(base * 1.44),
       setupFee: SETUP_FEE,
       imageUrl,
+      isActive: true,
     },
   ];
 }

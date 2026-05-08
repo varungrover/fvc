@@ -1,0 +1,165 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /management/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "📈 Revenue" [ref=e90] [cursor=pointer]:
+            - /url: /management/revenue
+            - generic [ref=e91]: 📈
+            - generic [ref=e92]: Revenue
+          - link "💸 Pricing" [ref=e93] [cursor=pointer]:
+            - /url: /management/pricing
+            - generic [ref=e94]: 💸
+            - generic [ref=e95]: Pricing
+          - link "📍 Locations" [ref=e96] [cursor=pointer]:
+            - /url: /management/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📊 Reports" [ref=e99] [cursor=pointer]:
+            - /url: /management/reports
+            - generic [ref=e100]: 📊
+            - generic [ref=e101]: Reports
+        - generic [ref=e102]:
+          - link "👤 Profile" [ref=e104] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e105]: 👤
+            - generic [ref=e106]: Profile
+          - button "🚪 Logout" [ref=e107] [cursor=pointer]:
+            - generic [ref=e108]: 🚪
+            - generic [ref=e109]: Logout
+      - button "Collapse sidebar" [ref=e110] [cursor=pointer]: ←
+    - generic [ref=e111]:
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]: ROLE
+          - generic [ref=e116]: Management
+        - generic [ref=e117]:
+          - generic "Avatar for Anika Iyer" [ref=e118]: AI
+          - generic [ref=e119]: Anika Iyer
+        - button "Log out" [ref=e121] [cursor=pointer]
+      - main [ref=e122]:
+        - generic [ref=e124]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]: Franchisor Management
+              - heading "Welcome back, Anika!" [level=1] [ref=e128]
+              - paragraph [ref=e129]: Network-wide overview · 2 ownerships · 6 locations · 6 coaches
+            - generic [ref=e130]:
+              - button "📊 Revenue Pivot" [ref=e131] [cursor=pointer]:
+                - generic [ref=e132]: 📊
+                - text: Revenue Pivot
+              - button "Pricing Requests" [ref=e133] [cursor=pointer]
+          - generic [ref=e134]:
+            - generic [ref=e136]:
+              - generic [ref=e137]:
+                - generic [ref=e138]: Total Ownerships
+                - generic [ref=e139]: "2"
+              - generic [ref=e140]: 🏢
+            - generic [ref=e142] [cursor=pointer]:
+              - generic [ref=e143]:
+                - generic [ref=e144]: Total Locations
+                - generic [ref=e145]: "6"
+                - generic [ref=e146]: 3 TLP · 3 MLA
+              - generic [ref=e147]: 📍
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]: Total Coaches
+                - generic [ref=e152]: "6"
+                - generic [ref=e153]: 5 TLP · 1 MLA
+              - generic [ref=e154]: 🧑‍🏫
+            - generic [ref=e156] [cursor=pointer]:
+              - generic [ref=e157]:
+                - generic [ref=e158]: Network Revenue
+                - generic [ref=e159]: $3,652
+                - generic [ref=e160]: April 2026
+              - generic [ref=e161]: 💰
+            - generic [ref=e163] [cursor=pointer]:
+              - generic [ref=e164]:
+                - generic [ref=e165]: Pending Requests
+                - generic [ref=e166]: "2"
+                - generic [ref=e167]: Needs review
+              - generic [ref=e168]: 📋
+          - generic [ref=e169]:
+            - generic [ref=e170]:
+              - generic [ref=e172]:
+                - heading "Revenue by Ownership — Last 3 Months" [level=2] [ref=e174]
+                - button "Full pivot →" [ref=e175] [cursor=pointer]
+              - generic [ref=e176]:
+                - generic [ref=e177]: Month
+                - generic [ref=e178]: TLP (BC)
+                - generic [ref=e179]: MLA (ON)
+                - generic [ref=e180]: Network Total
+              - generic [ref=e181]:
+                - generic [ref=e182]: February 2026
+                - generic [ref=e183]: $1,251
+                - generic [ref=e185]: $2,100
+                - generic [ref=e187]: $3,351
+              - generic [ref=e188]:
+                - generic [ref=e189]: March 2026
+                - generic [ref=e190]: $1,251
+                - generic [ref=e192]: $2,250
+                - generic [ref=e194]: $3,501
+              - generic [ref=e195]:
+                - generic [ref=e196]: April 2026
+                - generic [ref=e197]: $1,252
+                - generic [ref=e199]: $2,400
+                - generic [ref=e201]: $3,652
+              - generic [ref=e202]:
+                - generic [ref=e203]: Q1 Total
+                - generic [ref=e204]: $3,754
+                - generic [ref=e205]: $6,750
+                - generic [ref=e206]: $10,504
+            - generic [ref=e207]:
+              - generic [ref=e208]:
+                - generic [ref=e210]:
+                  - heading "Pending Pricing Requests" [level=2] [ref=e212]
+                  - button "Review →" [ref=e213] [cursor=pointer]
+                - generic [ref=e214]:
+                  - generic [ref=e215]:
+                    - generic [ref=e216]:
+                      - generic [ref=e217]: Maple Leaf Academy
+                      - generic [ref=e218]:
+                        - text: $139 → $149
+                        - generic [ref=e219]: +$10
+                    - generic [ref=e220]: Pending
+                  - generic [ref=e221]:
+                    - generic [ref=e222]:
+                      - generic [ref=e223]: Maple Leaf Academy
+                      - generic [ref=e224]:
+                        - text: $169 → $179
+                        - generic [ref=e225]: +$10
+                    - generic [ref=e226]: Pending
+              - generic [ref=e227]:
+                - heading "Quick Actions" [level=2] [ref=e230]
+                - generic [ref=e231]:
+                  - button "📊 Revenue Pivot →" [ref=e232] [cursor=pointer]:
+                    - generic [ref=e233]: 📊
+                    - text: Revenue Pivot
+                    - generic [ref=e234]: →
+                  - button "💲 Pricing Requests →" [ref=e235] [cursor=pointer]:
+                    - generic [ref=e236]: 💲
+                    - text: Pricing Requests
+                    - generic [ref=e237]: →
+                  - button "📍 All Locations →" [ref=e238] [cursor=pointer]:
+                    - generic [ref=e239]: 📍
+                    - text: All Locations
+                    - generic [ref=e240]: →
+                  - button "📄 Reports →" [ref=e241] [cursor=pointer]:
+                    - generic [ref=e242]: 📄
+                    - text: Reports
+                    - generic [ref=e243]: →
+        - generic [ref=e244]:
+          - generic [ref=e245]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e246]:
+            - generic [ref=e247]: Powered by
+            - generic [ref=e248]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

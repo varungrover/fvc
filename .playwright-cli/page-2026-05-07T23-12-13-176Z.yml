@@ -1,0 +1,110 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - navigation [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌍
+          - generic [ref=e8]: The Learning Planet
+        - generic [ref=e9]:
+          - link "🏠 Dashboard" [ref=e10] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e11]: 🏠
+            - generic [ref=e12]: Dashboard
+          - link "🪐 Planets" [ref=e13] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e14]: 🪐
+            - generic [ref=e15]: Planets
+          - link "📚 Courses" [ref=e16] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e17]: 📚
+            - generic [ref=e18]: Courses
+          - link "📍 Locations" [ref=e19] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e20]: 📍
+            - generic [ref=e21]: Locations
+          - link "📅 Batches" [ref=e22] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e23]: 📅
+            - generic [ref=e24]: Batches
+          - link "👤 Coaches" [ref=e25] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e26]: 👤
+            - generic [ref=e27]: Coaches
+          - link "👥 Customers" [ref=e28] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e29]: 👥
+            - generic [ref=e30]: Customers
+          - link "📋 Roster" [ref=e31] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e32]: 📋
+            - generic [ref=e33]: Roster
+          - link "💳 Payments" [ref=e35] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e36]: 💳
+            - generic [ref=e37]: Payments
+          - link "🏷️ Discounts" [ref=e38] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e39]: 🏷️
+            - generic [ref=e40]: Discounts
+          - link "🗓️ Holidays" [ref=e41] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e42]: 🗓️
+            - generic [ref=e43]: Holidays
+          - link "🎫 Tickets" [ref=e44] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e45]: 🎫
+            - generic [ref=e46]: Tickets
+        - button "🚪 Logout" [ref=e49] [cursor=pointer]:
+          - generic [ref=e50]: 🚪
+          - generic [ref=e51]: Logout
+      - button "Collapse sidebar" [ref=e52] [cursor=pointer]: ←
+    - generic [ref=e53]:
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]: ROLE
+          - generic [ref=e58]: Franchisor Admin
+        - generic [ref=e59]:
+          - generic "Avatar for Mira Sandhu" [ref=e60]: MS
+          - generic [ref=e61]: Mira Sandhu
+        - button "Log out" [ref=e63] [cursor=pointer]
+      - main [ref=e64]:
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - heading "Customers" [level=1] [ref=e69]
+              - paragraph [ref=e70]: 1 registered customers
+            - generic [ref=e72]:
+              - button "⬇ Export CSV" [ref=e73] [cursor=pointer]:
+                - generic [ref=e74]: ⬇
+                - text: Export CSV
+              - button "➕ Add Customer" [ref=e75] [cursor=pointer]:
+                - generic [ref=e76]: ➕
+                - text: Add Customer
+          - textbox "Search by name, email or phone…" [ref=e79]
+          - generic [ref=e80]:
+            - generic [ref=e81]:
+              - generic [ref=e82]: Customer
+              - generic [ref=e83]: Email
+              - generic [ref=e84]: Members
+              - generic [ref=e85]: Enrollments
+              - generic [ref=e86]: Loyalty
+              - generic [ref=e87]: Last Invoice
+            - generic [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]:
+                - generic "Avatar for Raj Sharma" [ref=e91]: RS
+                - generic [ref=e92]:
+                  - generic [ref=e93]: Raj Sharma
+                  - generic [ref=e94]: —
+              - generic [ref=e95]: pa•••@demo.com
+              - generic [ref=e96]: "2"
+              - generic [ref=e97]: "0"
+              - generic [ref=e98]: ⭐ 0
+              - generic [ref=e99]: —
+        - generic [ref=e100]:
+          - generic [ref=e101]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e102]:
+            - generic [ref=e103]: Powered by
+            - generic [ref=e104]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e110] [cursor=pointer]:
+    - img [ref=e111]
+  - alert [ref=e114]

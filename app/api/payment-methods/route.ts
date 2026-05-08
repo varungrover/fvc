@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { listPaymentMethods, addPaymentMethod } from "@/lib/db/paymentMethods";
-import { attachPaymentMethod } from "@/lib/stripe/client";
+import { attachPaymentMethod } from "@/lib/stripe";
 
 export async function GET(request: Request) {
   const supabase = await createClient();

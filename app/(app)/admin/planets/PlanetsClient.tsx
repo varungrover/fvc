@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -8,26 +8,24 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TLP, planetStyle } from "@/lib/theme/tokens";
-import type { Planet, Level, CourseVariant } from "@/lib/types";
-
-interface PlanetWithDetails extends Planet {
-  products: (Level & { product_variants: CourseVariant[] })[];
-}
+import type { Planet } from "@/lib/types";
 
 interface PlanetsClientProps {
-  initialPlanets: PlanetWithDetails[];
+  initialPlanets: Planet[];
 }
 
 export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
-  const [planets, setPlanets] = useState<PlanetWithDetails[]>(initialPlanets);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [planets, setPlanets] = useState<Planet[]>(initialPlanets);
   const [showAddPlanet, setShowAddPlanet] = useState(false);
   const [addPlanetForm, setAddPlanetForm] = useState({ name: "", description: "" });
+  const [editingPlanet, setEditingPlanet] = useState<Planet | null>(null);
+  const [editPlanetForm, setEditPlanetForm] = useState({ name: "", description: "", isActive: true });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showAddLevel, setShowAddLevel] = useState<string | null>(null); // planetId
-  const [addLevelForm, setAddLevelForm] = useState({ name: "", sortOrder: 0 });
-  const [showAddVariant, setShowAddVariant] = useState<string | null>(null); // levelId
-  const [addVariantForm, setAddVariantForm] = useState({ name: "", frequencyPerWeek: 1, price: 0, setupFee: 0 });
+
+  // Debug: Log planets on change
+  useEffect(() => {
+    console.log("Current Planets in State:", planets);
+  }, [planets]);
 
   async function handleAddPlanet() {
     if (!addPlanetForm.name) return;
@@ -38,98 +36,96 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(addPlanetForm),
       });
-      if (!res.ok) throw new Error("Failed to add planet");
-      const newPlanet = await res.json();
-      setPlanets((prev) => [...prev, { ...newPlanet, products: [] }]);
+      
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to add planet");
+      }
+
+      // Ensure the new planet has an ID and correctly mapped isActive
+      const newPlanet: Planet = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        isActive: data.isActive ?? data.is_active ?? true
+      };
+      
+      setPlanets((prev) => [...prev, newPlanet]);
       setShowAddPlanet(false);
       setAddPlanetForm({ name: "", description: "" });
-    } catch (err) {
-      console.error(err);
-      alert("Error adding planet");
+    } catch (err: any) {
+      console.error("Add Planet Error:", err);
+      alert(err.message || "Error adding planet");
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleAddLevel() {
-    if (!addLevelForm.name || !showAddLevel) return;
-    setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/levels", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...addLevelForm,
-          planetId: showAddLevel,
-          productClassId: "8d9ae3b4-0f9c-448c-8837-64fdaf1a8cba" // UUID for 'Course'
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to add level");
-      const newLevel = await res.json();
-      
-      setPlanets(prev => prev.map(p => 
-        p.id === showAddLevel 
-          ? { ...p, products: [...(p.products || []), { ...newLevel, product_variants: [] }] }
-          : p
-      ));
-      setShowAddLevel(null);
-      setAddLevelForm({ name: "", sortOrder: 0 });
-    } catch (err) {
-      console.error(err);
-      alert("Error adding level");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  async function handleAddVariant() {
-    if (!showAddVariant) return;
-
-    // Client-side check for duplicate frequency
-    const currentPlanet = planets.find(p => p.products.some(l => l.id === showAddVariant));
-    const currentLevel = currentPlanet?.products.find(l => l.id === showAddVariant);
-    if (currentLevel?.product_variants.some(v => v.frequencyPerWeek === addVariantForm.frequencyPerWeek)) {
-      alert(`A variant with ${addVariantForm.frequencyPerWeek}x per week already exists for this level.`);
+  async function handleEditPlanet() {
+    if (!editingPlanet?.id) {
+      console.error("Attempted to edit planet without ID:", editingPlanet);
+      alert("Error: Missing Planet ID. Please refresh the page.");
       return;
     }
 
+    if (!editPlanetForm.name) return;
+    
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/course-variants", {
-        method: "POST",
+      const res = await fetch(`/api/planets/${editingPlanet.id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...addVariantForm,
-          levelId: showAddVariant
+          name: editPlanetForm.name,
+          description: editPlanetForm.description,
+          isActive: editPlanetForm.isActive,
         }),
       });
       
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to add variant");
-
-      setPlanets(prev => prev.map(p => ({
-        ...p,
-        products: p.products.map(l => 
-          l.id === showAddVariant 
-            ? { ...l, product_variants: [...(l.product_variants || []), data] }
-            : l
-        )
-      })));
-      setShowAddVariant(null);
-      setAddVariantForm({ name: "", frequencyPerWeek: 1, price: 0, setupFee: 0 });
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to update planet");
+      }
+      
+      // Update the planet in the list, ensuring ID is preserved and fields are updated
+      setPlanets((prev) => prev.map(p => {
+        if (p.id === editingPlanet.id) {
+          return {
+            ...p,
+            name: data.name,
+            description: data.description,
+            isActive: data.isActive ?? data.is_active ?? p.isActive
+          };
+        }
+        return p;
+      }));
+      
+      setEditingPlanet(null);
     } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Error adding variant");
+      console.error("Edit Planet Error:", err);
+      alert(err.message || "Error updating planet");
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function startEditing(planet: Planet) {
+    if (!planet.id) {
+      console.warn("Planet object missing ID:", planet);
+    }
+    setEditingPlanet(planet);
+    setEditPlanetForm({
+      name: planet.name,
+      description: planet.description || "",
+      isActive: planet.isActive,
+    });
   }
 
   return (
     <div style={{ padding: 24 }}>
       <PageHeader
-        title="Planets & Levels"
-        subtitle="Manage learning planets, levels, and course pricing"
+        title="Planets"
+        subtitle="Manage learning planets and subject areas"
         actions={
           <Button 
             variant="primary" 
@@ -151,13 +147,10 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
       >
         {planets.map((planet) => {
           const pStyle = planetStyle(planet.name);
-          const levels = planet.products || [];
           const isActive = planet.isActive;
-          const isExpanded = expandedId === planet.id;
 
           return (
-            <Card key={planet.id} style={{ padding: 0, overflow: "hidden" }}>
-              {/* Planet header */}
+            <Card key={planet.id || Math.random().toString()} style={{ padding: 0, overflow: "hidden" }}>
               <div style={{ padding: "18px 20px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 12 }}>
                   <div
@@ -194,150 +187,12 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <div style={{ fontSize: 12, color: TLP.gray500, flex: 1 }}>
-                    <span style={{ fontWeight: 700, color: TLP.navy }}>{levels.length}</span> level{levels.length !== 1 ? "s" : ""}
-                  </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setExpandedId(isExpanded ? null : planet.id)}
-                  >
-                    {isExpanded ? "▲ Collapse" : "▼ Levels"}
+                <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+                  <Button variant="secondary" size="sm" onClick={() => startEditing(planet)}>
+                    Edit
                   </Button>
                 </div>
               </div>
-
-              {/* Expanded levels */}
-              {isExpanded && (
-                <div style={{ borderTop: `1px solid ${TLP.gray100}`, background: TLP.gray50, padding: "16px 20px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: TLP.gray500, textTransform: "uppercase", letterSpacing: "0.4px" }}>
-                        Levels & Pricing
-                      </span>
-                      <Button 
-                        size="sm" 
-                        variant="secondary" 
-                        icon="➕"
-                        onClick={() => setShowAddLevel(planet.id)}
-                      >
-                        Add Level
-                      </Button>
-                    </div>
-
-                  {levels.length === 0 ? (
-                    <p style={{ margin: 0, fontSize: 13, color: TLP.gray400 }}>No levels yet.</p>
-                  ) : (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      {levels.map((level) => {
-                        const variants = level.product_variants || [];
-
-                        return (
-                          <div
-                            key={level.id}
-                            style={{
-                              background: TLP.white,
-                              borderRadius: 10,
-                              border: `1px solid ${TLP.gray200}`,
-                              overflow: "hidden",
-                            }}
-                          >
-                            <div
-                              style={{
-                                padding: "10px 14px",
-                                background: pStyle.bg,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                              }}
-                            >
-                              <span style={{ fontWeight: 700, fontSize: 14, color: pStyle.color }}>
-                                {pStyle.icon} {level.name}
-                              </span>
-                              <Badge
-                                label={level.isActive ? "Active" : "Inactive"}
-                                color={level.isActive ? TLP.green : TLP.gray500}
-                                bg={level.isActive ? TLP.greenLight : TLP.gray100}
-                              />
-                            </div>
-
-                            {/* Pricing table */}
-                            {variants.length > 0 && (
-                              <div>
-                                <div
-                                  style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(3, 1fr)",
-                                    padding: "6px 14px",
-                                    background: TLP.gray50,
-                                    fontSize: 10,
-                                    fontWeight: 700,
-                                    color: TLP.gray500,
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.3px",
-                                    borderBottom: `1px solid ${TLP.gray100}`,
-                                  }}
-                                >
-                                  {variants.map(v => (
-                                    <span key={v.id}>{v.frequencyPerWeek}x / week</span>
-                                  ))}
-                                </div>
-                                <div
-                                  style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(3, 1fr)",
-                                    padding: "8px 14px",
-                                    fontSize: 14,
-                                    fontWeight: 700,
-                                    color: TLP.navy,
-                                  }}
-                                >
-                                  {variants.map((v) => (
-                                    <span key={v.id}>${v.price}/mo</span>
-                                  ))}
-                                </div>
-                                  <div
-                                    style={{
-                                      padding: "4px 14px 8px",
-                                      fontSize: 11,
-                                      color: TLP.gray500,
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      alignItems: "center"
-                                    }}
-                                  >
-                                    <span>Setup fee: ${variants[0]?.setupFee ?? 0} (one-time)</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="secondary" 
-                                      icon="➕"
-                                      onClick={() => setShowAddVariant(level.id)}
-                                    >
-                                      Variant
-                                    </Button>
-                                  </div>
-                                </div>
-                              )}
-                              
-                              {variants.length === 0 && (
-                                <div style={{ padding: "12px 14px", textAlign: "center" }}>
-                                  <Button 
-                                    size="sm" 
-                                    variant="secondary" 
-                                    icon="➕"
-                                    onClick={() => setShowAddVariant(level.id)}
-                                  >
-                                    Add First Variant
-                                  </Button>
-                                </div>
-                              )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
             </Card>
           );
         })}
@@ -374,79 +229,44 @@ export default function PlanetsClient({ initialPlanets }: PlanetsClientProps) {
         </div>
       </Modal>
 
-      {/* Add Level Modal */}
+      {/* Edit Planet Modal */}
       <Modal
-        open={!!showAddLevel}
-        onClose={() => setShowAddLevel(null)}
-        title="Add Level"
+        open={!!editingPlanet}
+        onClose={() => setEditingPlanet(null)}
+        title="Edit Planet"
         footer={
           <>
-            <Button variant="secondary" onClick={() => setShowAddLevel(null)}>Cancel</Button>
-            <Button variant="primary" onClick={handleAddLevel} disabled={!addLevelForm.name || isSubmitting}>
-              {isSubmitting ? "Adding..." : "Add Level"}
+            <Button variant="secondary" onClick={() => setEditingPlanet(null)}>Cancel</Button>
+            <Button variant="primary" onClick={handleEditPlanet} disabled={!editPlanetForm.name || isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>
           </>
         }
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <Input
-            label="Level Name"
-            value={addLevelForm.name}
-            onChange={(e) => setAddLevelForm((f) => ({ ...f, name: e.target.value }))}
-            required
-            placeholder="e.g. Level 1"
-          />
-          <Input
-            label="Sort Order"
-            type="number"
-            value={addLevelForm.sortOrder}
-            onChange={(e) => setAddLevelForm((f) => ({ ...f, sortOrder: Number(e.target.value) }))}
-          />
-        </div>
-      </Modal>
-
-      {/* Add Variant Modal */}
-      <Modal
-        open={!!showAddVariant}
-        onClose={() => setShowAddVariant(null)}
-        title="Add Course Variant"
-        footer={
-          <>
-            <Button variant="secondary" onClick={() => setShowAddVariant(null)}>Cancel</Button>
-            <Button variant="primary" onClick={handleAddVariant} disabled={isSubmitting}>
-              {isSubmitting ? "Adding..." : "Add Variant"}
-            </Button>
-          </>
-        }
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          <Input
-            label="Variant Name"
-            value={addVariantForm.name}
-            onChange={(e) => setAddVariantForm((f) => ({ ...f, name: e.target.value }))}
-            required
-            placeholder="e.g. Standard, Premium, etc."
-          />
-          <Input
-            label="Frequency (days per week)"
-            type="number"
-            value={addVariantForm.frequencyPerWeek}
-            onChange={(e) => setAddVariantForm((f) => ({ ...f, frequencyPerWeek: Number(e.target.value) }))}
+            label="Planet Name"
+            value={editPlanetForm.name}
+            onChange={(e) => setEditPlanetForm((f) => ({ ...f, name: e.target.value }))}
             required
           />
           <Input
-            label="Base Price (per month)"
-            type="number"
-            value={addVariantForm.price}
-            onChange={(e) => setAddVariantForm((f) => ({ ...f, price: Number(e.target.value) }))}
-            required
+            label="Description"
+            value={editPlanetForm.description}
+            onChange={(e) => setEditPlanetForm((f) => ({ ...f, description: e.target.value }))}
+            placeholder="Brief description of this learning area"
           />
-          <Input
-            label="Setup Fee (one-time)"
-            type="number"
-            value={addVariantForm.setupFee}
-            onChange={(e) => setAddVariantForm((f) => ({ ...f, setupFee: Number(e.target.value) }))}
-          />
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+            <input
+              type="checkbox"
+              id="planet-active"
+              checked={editPlanetForm.isActive}
+              onChange={(e) => setEditPlanetForm((f) => ({ ...f, isActive: e.target.checked }))}
+            />
+            <label htmlFor="planet-active" style={{ fontSize: 14, fontWeight: 600, color: TLP.navy }}>
+              Active
+            </label>
+          </div>
         </div>
       </Modal>
     </div>

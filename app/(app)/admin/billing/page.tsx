@@ -22,7 +22,7 @@ export default async function AdminBillingPage() {
         </Card>
         <Card style={{ padding: 20 }}>
           <div style={{ color: TLP.gray500, fontSize: 14 }}>Pending Invoices</div>
-          <div style={{ fontSize: 24, fontWeight: 700, color: TLP.orange }}>24</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: TLP.amber }}>24</div>
         </Card>
         <Card style={{ padding: 20 }}>
           <div style={{ color: TLP.gray500, fontSize: 14 }}>Failed Payments</div>
@@ -56,8 +56,8 @@ export default async function AdminBillingPage() {
                     borderRadius: 4, 
                     fontSize: 12, 
                     fontWeight: 600,
-                    background: inv.status === 'paid' ? TLP.teal + '20' : TLP.orange + '20',
-                    color: inv.status === 'paid' ? TLP.teal : TLP.orange
+                    background: inv.status === 'paid' ? TLP.teal + '20' : TLP.amber + '20',
+                    color: inv.status === 'paid' ? TLP.teal : TLP.amber
                   }}>
                     {inv.status.toUpperCase()}
                   </span>

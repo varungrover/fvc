@@ -12,7 +12,8 @@ import {
   Trash2, 
   Check, 
   X,
-  ArrowLeft
+  ArrowLeft,
+  Plus
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
@@ -128,7 +129,7 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
   return (
     <div style={{ padding: '24px', maxWidth: '1000px', margin: '0 auto' }}>
       <div style={{ marginBottom: '20px' }}>
-        <Link href={backPath} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: TLP.indigo600, fontSize: '14px', textDecoration: 'none', fontWeight: 600 }}>
+        <Link href={backPath} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: TLP.blue, fontSize: '14px', textDecoration: 'none', fontWeight: 600 }}>
           <ArrowLeft size={16} />
           Back to Coaches
         </Link>
@@ -139,9 +140,11 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
         subtitle={coach.email}
         action={
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Badge variant={coach.status === 'active' ? 'success' : coach.status === 'on_leave' ? 'warning' : 'error'}>
-              {coach.status?.toUpperCase()}
-            </Badge>
+            <Badge 
+              label={coach.status?.toUpperCase() || 'UNKNOWN'}
+              color={coach.status === 'active' ? TLP.teal : coach.status === 'on_leave' ? TLP.amber : TLP.red}
+              bg={coach.status === 'active' ? TLP.tealLight : coach.status === 'on_leave' ? TLP.amberLight : TLP.redLight}
+            />
             {isAdmin && (
               <>
                 <Button variant="secondary" onClick={() => setIsPlanetModalOpen(true)}>
@@ -238,9 +241,11 @@ export function CoachDetailClient({ coach, initialAvailability, initialLeaves, a
                     <div style={{ fontSize: '13px', color: TLP.gray500, marginTop: '4px' }}>{leave.reason || 'No reason provided'}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <Badge variant={leave.status === 'approved' ? 'success' : leave.status === 'rejected' ? 'error' : 'secondary'}>
-                      {leave.status.toUpperCase()}
-                    </Badge>
+                    <Badge 
+                      label={leave.status.toUpperCase()}
+                      color={leave.status === 'approved' ? TLP.teal : leave.status === 'rejected' ? TLP.red : TLP.gray500}
+                      bg={leave.status === 'approved' ? TLP.tealLight : leave.status === 'rejected' ? TLP.redLight : TLP.gray100}
+                    />
                     {isAdmin && leave.status === 'pending' && (
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <Button variant="secondary" size="sm" onClick={() => handleApproveLeave(leave)} style={{ color: '#10b981', border: '1px solid #10b981' }}>

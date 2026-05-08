@@ -13,9 +13,6 @@ interface Props {
 }
 
 export function TopBar({
-  productName,
-  productIcon = "🌍",
-  tenantName,
   roleLabel,
   userName,
 }: Props) {
@@ -30,46 +27,9 @@ export function TopBar({
         gap: 12,
         borderBottom: "1px solid rgba(255,255,255,0.1)",
         flexShrink: 0,
-        justifyContent: "space-between",
+        justifyContent: "flex-end", // Push everything to the right
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              background: TLP.teal,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 14,
-            }}
-          >
-            {productIcon}
-          </div>
-          <span
-            style={{
-              color: "#fff",
-              fontWeight: 800,
-              fontSize: 15,
-              letterSpacing: "-0.3px",
-            }}
-          >
-            {productName}
-          </span>
-        </div>
-        {tenantName ? (
-          <>
-            <span style={{ color: "rgba(255,255,255,0.3)" }}>/</span>
-            <span style={{ color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600 }}>
-              {tenantName}
-            </span>
-          </>
-        ) : null}
-      </div>
-
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <div
           style={{

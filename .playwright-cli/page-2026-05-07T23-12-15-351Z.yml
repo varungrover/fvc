@@ -1,0 +1,159 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - navigation [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌍
+          - generic [ref=e8]: The Learning Planet
+        - generic [ref=e9]:
+          - link "🏠 Dashboard" [ref=e10] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e11]: 🏠
+            - generic [ref=e12]: Dashboard
+          - link "🪐 Planets" [ref=e13] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e14]: 🪐
+            - generic [ref=e15]: Planets
+          - link "📚 Courses" [ref=e16] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e17]: 📚
+            - generic [ref=e18]: Courses
+          - link "📍 Locations" [ref=e19] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e20]: 📍
+            - generic [ref=e21]: Locations
+          - link "📅 Batches" [ref=e22] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e23]: 📅
+            - generic [ref=e24]: Batches
+          - link "👤 Coaches" [ref=e25] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e26]: 👤
+            - generic [ref=e27]: Coaches
+          - link "👥 Customers" [ref=e28] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e29]: 👥
+            - generic [ref=e30]: Customers
+          - link "📋 Roster" [ref=e31] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e32]: 📋
+            - generic [ref=e33]: Roster
+          - link "💳 Payments" [ref=e35] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e36]: 💳
+            - generic [ref=e37]: Payments
+          - link "🏷️ Discounts" [ref=e38] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e39]: 🏷️
+            - generic [ref=e40]: Discounts
+          - link "🗓️ Holidays" [ref=e41] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e42]: 🗓️
+            - generic [ref=e43]: Holidays
+          - link "🎫 Tickets" [ref=e44] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e45]: 🎫
+            - generic [ref=e46]: Tickets
+        - button "🚪 Logout" [ref=e49] [cursor=pointer]:
+          - generic [ref=e50]: 🚪
+          - generic [ref=e51]: Logout
+      - button "Collapse sidebar" [ref=e52] [cursor=pointer]: ←
+    - generic [ref=e53]:
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]: ROLE
+          - generic [ref=e58]: Franchisor Admin
+        - generic [ref=e59]:
+          - generic "Avatar for Mira Sandhu" [ref=e60]: MS
+          - generic [ref=e61]: Mira Sandhu
+        - button "Log out" [ref=e63] [cursor=pointer]
+      - main [ref=e64]:
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - heading "Courses" [level=1] [ref=e118]
+              - paragraph [ref=e119]: Manage course levels and pricing variants for each planet
+            - button "➕ Add Level" [ref=e121] [cursor=pointer]:
+              - generic [ref=e122]: ➕
+              - text: Add Level
+          - generic [ref=e123]:
+            - button "🎨 Arts" [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]: 🎨
+              - text: Arts
+            - button "♟ Chess" [ref=e126] [cursor=pointer]:
+              - generic [ref=e127]: ♟
+              - text: Chess
+            - button "Aa English" [ref=e128] [cursor=pointer]:
+              - generic [ref=e129]: Aa
+              - text: English
+            - button "$ Finance" [ref=e130] [cursor=pointer]:
+              - generic [ref=e131]: $
+              - text: Finance
+            - button "∑ Math" [ref=e132] [cursor=pointer]:
+              - generic [ref=e133]: ∑
+              - text: Math
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - generic [ref=e136]:
+                - generic [ref=e137]:
+                  - generic [ref=e138]: 🎨
+                  - generic [ref=e139] [cursor=pointer]: Beginner ✏️
+                - generic [ref=e140]: Active
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - generic [ref=e143]: Pricing Variants
+                  - button "➕ Add Variant" [ref=e144] [cursor=pointer]:
+                    - generic [ref=e145]: ➕
+                    - text: Add Variant
+                - generic [ref=e146]:
+                  - generic [ref=e147] [cursor=pointer]:
+                    - generic [ref=e148]:
+                      - generic [ref=e149]: 1x per week
+                      - generic [ref=e150]: "Beginner 1x/week · Setup: $25"
+                    - generic [ref=e152]: $119/mo
+                  - generic [ref=e153] [cursor=pointer]:
+                    - generic [ref=e154]:
+                      - generic [ref=e155]: 2x per week
+                      - generic [ref=e156]: "Beginner 2x/week · Setup: $25"
+                    - generic [ref=e158]: $150/mo
+                  - generic [ref=e159] [cursor=pointer]:
+                    - generic [ref=e160]:
+                      - generic [ref=e161]: 3x per week
+                      - generic [ref=e162]: "Beginner 3x/week · Setup: $25"
+                    - generic [ref=e164]: $171/mo
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]: 🎨
+                  - generic [ref=e169] [cursor=pointer]: Intermediate ✏️
+                - generic [ref=e170]: Active
+              - generic [ref=e171]:
+                - generic [ref=e172]:
+                  - generic [ref=e173]: Pricing Variants
+                  - button "➕ Add Variant" [ref=e174] [cursor=pointer]:
+                    - generic [ref=e175]: ➕
+                    - text: Add Variant
+                - generic [ref=e176]:
+                  - generic [ref=e177] [cursor=pointer]:
+                    - generic [ref=e178]:
+                      - generic [ref=e179]: 1x per week
+                      - generic [ref=e180]: "Intermediate 1x/week · Setup: $25"
+                    - generic [ref=e182]: $149/mo
+                  - generic [ref=e183] [cursor=pointer]:
+                    - generic [ref=e184]:
+                      - generic [ref=e185]: 2x per week
+                      - generic [ref=e186]: "Intermediate 2x/week · Setup: $25"
+                    - generic [ref=e188]: $188/mo
+                  - generic [ref=e189] [cursor=pointer]:
+                    - generic [ref=e190]:
+                      - generic [ref=e191]: 3x per week
+                      - generic [ref=e192]: "Intermediate 3x/week · Setup: $25"
+                    - generic [ref=e194]: $215/mo
+        - generic [ref=e100]:
+          - generic [ref=e101]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e102]:
+            - generic [ref=e103]: Powered by
+            - generic [ref=e104]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e110] [cursor=pointer]:
+    - img [ref=e111]
+  - alert [ref=e114]: Courses | Mentora Admin

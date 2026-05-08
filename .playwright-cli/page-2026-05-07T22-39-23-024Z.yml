@@ -1,0 +1,339 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - banner [ref=e6]:
+      - generic [ref=e8]:
+        - link "Back to Pravig Digital sandbox" [ref=e9] [cursor=pointer]:
+          - /url: http://localhost:3000/customer/enroll
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e14]: Back
+            - generic [ref=e16]:
+              - img [ref=e18]
+              - heading "Pravig Digital sandbox" [level=1] [ref=e20]
+        - generic [ref=e21]: Sandbox
+    - generic [ref=e24]:
+      - 'heading "Subscribe to Math: Grade 7 (Grade 7 3x/week)" [level=2] [ref=e25]'
+      - generic [ref=e31]:
+        - generic [ref=e32]: US$220.97
+        - generic [ref=e35]:
+          - text: per
+          - text: month
+  - generic [ref=e36]:
+    - main [ref=e37]:
+      - generic [ref=e40]:
+        - generic [ref=e210]:
+          - iframe [ref=e46]:
+            - button "Pay with Link" [ref=f4e8] [cursor=pointer]:
+              - generic [ref=f4e9]:
+                - generic [ref=f4e10]:
+                  - text: Pay with
+                  - img [ref=f4e11]
+                - generic [ref=f4e14]:
+                  - img [ref=f4e15]
+                  - generic [ref=f4e22]: "0000"
+          - generic [ref=e47]:
+            - separator [ref=e48]
+            - paragraph [ref=e49]: Or
+        - heading "Contact information" [level=2] [ref=e50]
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e62]:
+            - generic [ref=e63]: Email
+            - generic [ref=e66]: parent@demo.com
+          - heading "Payment method" [level=2] [ref=e68]
+        - generic [ref=e69]:
+          - list [ref=e70]:
+            - listitem [ref=e75]:
+              - generic [ref=e76]:
+                - generic [ref=e90]: Card
+                - generic [ref=e96]:
+                  - generic [ref=e98]:
+                    - generic [ref=e99]:
+                      - generic [ref=e100]: Card information
+                      - alert [ref=e216]: Required
+                    - group [ref=e101]:
+                      - generic [ref=e102]:
+                        - textbox "Card number" [active] [ref=e107]:
+                          - /placeholder: 1234 1234 1234 1234
+                        - textbox "Expiration" [ref=e112]:
+                          - /placeholder: MM / YY
+                        - textbox "CVC" [ref=e117]
+                  - group "Billing address" [ref=e123]:
+                    - generic [ref=e124]:
+                      - generic [ref=e126]:
+                        - generic [ref=e127]:
+                          - generic [ref=e128]: Cardholder name
+                          - alert [ref=e219]: Required
+                        - textbox "Cardholder name" [ref=e135]:
+                          - /placeholder: Full name on card
+                      - generic [ref=e137]:
+                        - generic [ref=e139]: Country or region
+                        - group [ref=e140]:
+                          - generic [ref=e141]:
+                            - generic [ref=e145]:
+                              - combobox "Country or region" [ref=e146]:
+                                - option "Afghanistan"
+                                - option "Åland Islands"
+                                - option "Albania"
+                                - option "Algeria"
+                                - option "Andorra"
+                                - option "Angola"
+                                - option "Anguilla"
+                                - option "Antarctica"
+                                - option "Antigua & Barbuda"
+                                - option "Argentina"
+                                - option "Armenia"
+                                - option "Aruba"
+                                - option "Ascension Island"
+                                - option "Australia"
+                                - option "Austria"
+                                - option "Azerbaijan"
+                                - option "Bahamas"
+                                - option "Bahrain"
+                                - option "Bangladesh"
+                                - option "Barbados"
+                                - option "Belarus"
+                                - option "Belgium"
+                                - option "Belize"
+                                - option "Benin"
+                                - option "Bermuda"
+                                - option "Bhutan"
+                                - option "Bolivia"
+                                - option "Bosnia & Herzegovina"
+                                - option "Botswana"
+                                - option "Bouvet Island"
+                                - option "Brazil"
+                                - option "British Indian Ocean Territory"
+                                - option "British Virgin Islands"
+                                - option "Brunei"
+                                - option "Bulgaria"
+                                - option "Burkina Faso"
+                                - option "Burundi"
+                                - option "Cambodia"
+                                - option "Cameroon"
+                                - option "Canada" [selected]
+                                - option "Cape Verde"
+                                - option "Caribbean Netherlands"
+                                - option "Cayman Islands"
+                                - option "Central African Republic"
+                                - option "Chad"
+                                - option "Chile"
+                                - option "China"
+                                - option "Colombia"
+                                - option "Comoros"
+                                - option "Congo - Brazzaville"
+                                - option "Congo - Kinshasa"
+                                - option "Cook Islands"
+                                - option "Costa Rica"
+                                - option "Côte d’Ivoire"
+                                - option "Croatia"
+                                - option "Curaçao"
+                                - option "Cyprus"
+                                - option "Czechia"
+                                - option "Denmark"
+                                - option "Djibouti"
+                                - option "Dominica"
+                                - option "Dominican Republic"
+                                - option "Ecuador"
+                                - option "Egypt"
+                                - option "El Salvador"
+                                - option "Equatorial Guinea"
+                                - option "Eritrea"
+                                - option "Estonia"
+                                - option "Eswatini"
+                                - option "Ethiopia"
+                                - option "Falkland Islands"
+                                - option "Faroe Islands"
+                                - option "Fiji"
+                                - option "Finland"
+                                - option "France"
+                                - option "French Guiana"
+                                - option "French Polynesia"
+                                - option "French Southern Territories"
+                                - option "Gabon"
+                                - option "Gambia"
+                                - option "Georgia"
+                                - option "Germany"
+                                - option "Ghana"
+                                - option "Gibraltar"
+                                - option "Greece"
+                                - option "Greenland"
+                                - option "Grenada"
+                                - option "Guadeloupe"
+                                - option "Guam"
+                                - option "Guatemala"
+                                - option "Guernsey"
+                                - option "Guinea"
+                                - option "Guinea-Bissau"
+                                - option "Guyana"
+                                - option "Haiti"
+                                - option "Honduras"
+                                - option "Hong Kong SAR China"
+                                - option "Hungary"
+                                - option "Iceland"
+                                - option "India"
+                                - option "Indonesia"
+                                - option "Iraq"
+                                - option "Ireland"
+                                - option "Isle of Man"
+                                - option "Israel"
+                                - option "Italy"
+                                - option "Jamaica"
+                                - option "Japan"
+                                - option "Jersey"
+                                - option "Jordan"
+                                - option "Kazakhstan"
+                                - option "Kenya"
+                                - option "Kiribati"
+                                - option "Kosovo"
+                                - option "Kuwait"
+                                - option "Kyrgyzstan"
+                                - option "Laos"
+                                - option "Latvia"
+                                - option "Lebanon"
+                                - option "Lesotho"
+                                - option "Liberia"
+                                - option "Libya"
+                                - option "Liechtenstein"
+                                - option "Lithuania"
+                                - option "Luxembourg"
+                                - option "Macao SAR China"
+                                - option "Madagascar"
+                                - option "Malawi"
+                                - option "Malaysia"
+                                - option "Maldives"
+                                - option "Mali"
+                                - option "Malta"
+                                - option "Martinique"
+                                - option "Mauritania"
+                                - option "Mauritius"
+                                - option "Mayotte"
+                                - option "Mexico"
+                                - option "Moldova"
+                                - option "Monaco"
+                                - option "Mongolia"
+                                - option "Montenegro"
+                                - option "Montserrat"
+                                - option "Morocco"
+                                - option "Mozambique"
+                                - option "Myanmar (Burma)"
+                                - option "Namibia"
+                                - option "Nauru"
+                                - option "Nepal"
+                                - option "Netherlands"
+                                - option "New Caledonia"
+                                - option "New Zealand"
+                                - option "Nicaragua"
+                                - option "Niger"
+                                - option "Nigeria"
+                                - option "Niue"
+                                - option "North Macedonia"
+                                - option "Norway"
+                                - option "Oman"
+                                - option "Pakistan"
+                                - option "Palestinian Territories"
+                                - option "Panama"
+                                - option "Papua New Guinea"
+                                - option "Paraguay"
+                                - option "Peru"
+                                - option "Philippines"
+                                - option "Pitcairn Islands"
+                                - option "Poland"
+                                - option "Portugal"
+                                - option "Puerto Rico"
+                                - option "Qatar"
+                                - option "Réunion"
+                                - option "Romania"
+                                - option "Russia"
+                                - option "Rwanda"
+                                - option "Samoa"
+                                - option "San Marino"
+                                - option "São Tomé & Príncipe"
+                                - option "Saudi Arabia"
+                                - option "Senegal"
+                                - option "Serbia"
+                                - option "Seychelles"
+                                - option "Sierra Leone"
+                                - option "Singapore"
+                                - option "Sint Maarten"
+                                - option "Slovakia"
+                                - option "Slovenia"
+                                - option "Solomon Islands"
+                                - option "Somalia"
+                                - option "South Africa"
+                                - option "South Georgia & South Sandwich Islands"
+                                - option "South Korea"
+                                - option "South Sudan"
+                                - option "Spain"
+                                - option "Sri Lanka"
+                                - option "St Barthélemy"
+                                - option "St Helena"
+                                - option "St Kitts & Nevis"
+                                - option "St Lucia"
+                                - option "St Martin"
+                                - option "St Pierre & Miquelon"
+                                - option "St Vincent & Grenadines"
+                                - option "Sudan"
+                                - option "Suriname"
+                                - option "Svalbard & Jan Mayen"
+                                - option "Sweden"
+                                - option "Switzerland"
+                                - option "Taiwan"
+                                - option "Tajikistan"
+                                - option "Tanzania"
+                                - option "Thailand"
+                                - option "Timor-Leste"
+                                - option "Togo"
+                                - option "Tokelau"
+                                - option "Tonga"
+                                - option "Trinidad & Tobago"
+                                - option "Tristan da Cunha"
+                                - option "Tunisia"
+                                - option "Turkey"
+                                - option "Turkmenistan"
+                                - option "Turks & Caicos Islands"
+                                - option "Tuvalu"
+                                - option "Uganda"
+                                - option "Ukraine"
+                                - option "United Arab Emirates"
+                                - option "United Kingdom"
+                                - option "United States"
+                                - option "Uruguay"
+                                - option "Uzbekistan"
+                                - option "Vanuatu"
+                                - option "Vatican City"
+                                - option "Venezuela"
+                                - option "Vietnam"
+                                - option "Wallis & Futuna"
+                                - option "Western Sahara"
+                                - option "Yemen"
+                                - option "Zambia"
+                                - option "Zimbabwe"
+                              - img
+                            - textbox "Postal code" [ref=e151]: V1M 2C3
+          - generic [ref=e164]:
+            - checkbox "Save my information for faster checkout" [ref=e166] [cursor=pointer]
+            - generic [ref=e167]:
+              - generic [ref=e170] [cursor=pointer]: Save my information for faster checkout
+              - generic [ref=e172]: Pay securely at Pravig Digital sandbox and everywhere Link is accepted.
+        - generic [ref=e174]:
+          - button "Subscribe" [ref=e177] [cursor=pointer]:
+            - generic:
+              - generic [ref=e179]: Subscribe
+              - generic [ref=e180]: Processing
+            - img [ref=e185]
+            - img [ref=e190]
+          - generic [ref=e196]: By subscribing, you authorise Pravig Digital sandbox to charge you according to the terms until you cancel.
+      - generic [ref=e197]:
+        - checkbox "I am an AI agent acting on behalf of someone else" [ref=e198]
+        - text: I am an AI agent acting on behalf of someone else
+    - contentinfo [ref=e200]:
+      - link "Powered by Stripe" [ref=e202] [cursor=pointer]:
+        - /url: https://stripe.com
+        - generic [ref=e203]:
+          - text: Powered by
+          - img "Stripe" [ref=e220]
+      - link "Terms" [ref=e208] [cursor=pointer]:
+        - /url: https://stripe.com/legal/end-users
+      - link "Privacy" [ref=e209] [cursor=pointer]:
+        - /url: https://stripe.com/privacy

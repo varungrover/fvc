@@ -7,6 +7,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { TLP } from '@/lib/theme/tokens'
 import { Input } from '@/components/ui/Input'
 import { 
   Search, 
@@ -70,7 +71,7 @@ export function CoachesClient({ initialCoaches, isAdmin, basePath = '/admin/coac
     <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
       <SectionHeader 
         title="Coach & Staff Management" 
-        description="Manage coach qualifications, availability, and leaves across all locations."
+        subtitle="Manage coach qualifications, availability, and leaves across all locations."
         action={
           <div style={{ display: 'flex', gap: '12px' }}>
             <Button variant="secondary" onClick={() => toast.success('Filter coming soon!')}>
@@ -138,14 +139,16 @@ export function CoachesClient({ initialCoaches, isAdmin, basePath = '/admin/coac
                     </div>
                   </td>
                   <td style={{ padding: '16px' }}>
-                    <Badge variant={getStatusColor(coach.status)}>
-                      {coach.status?.replace('_', ' ').toUpperCase() || 'UNKNOWN'}
-                    </Badge>
+                    <Badge 
+                      label={coach.status?.replace('_', ' ').toUpperCase() || 'UNKNOWN'}
+                      color={coach.status === 'active' ? TLP.teal : coach.status === 'on_leave' ? TLP.amber : TLP.red}
+                      bg={coach.status === 'active' ? TLP.tealLight : coach.status === 'on_leave' ? TLP.amberLight : TLP.redLight}
+                    />
                   </td>
                   <td style={{ padding: '16px' }}>
                     <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                       {coach.qualifications?.length ? coach.qualifications.map(q => (
-                        <Badge key={q} variant="secondary" style={{ fontSize: '10px' }}>{q}</Badge>
+                        <Badge key={q} label={q} color={TLP.gray600} bg={TLP.gray100} />
                       )) : (
                         <span style={{ fontSize: '12px', color: '#999', fontStyle: 'italic' }}>No qualifications</span>
                       )}

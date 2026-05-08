@@ -1,0 +1,201 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "🪐 Planets" [ref=e90] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e91]: 🪐
+            - generic [ref=e92]: Planets
+          - link "📚 Courses" [ref=e93] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e94]: 📚
+            - generic [ref=e95]: Courses
+          - link "📍 Locations" [ref=e96] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📅 Batches" [ref=e99] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e100]: 📅
+            - generic [ref=e101]: Batches
+          - link "👤 Coaches" [ref=e102] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e103]: 👤
+            - generic [ref=e104]: Coaches
+          - link "👥 Customers" [ref=e105] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e106]: 👥
+            - generic [ref=e107]: Customers
+          - link "📋 Roster" [ref=e108] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e109]: 📋
+            - generic [ref=e110]: Roster
+          - link "💳 Payments" [ref=e112] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e113]: 💳
+            - generic [ref=e114]: Payments
+          - link "🏷️ Discounts" [ref=e115] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e116]: 🏷️
+            - generic [ref=e117]: Discounts
+          - link "🗓️ Holidays" [ref=e118] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e119]: 🗓️
+            - generic [ref=e120]: Holidays
+          - link "🎫 Tickets" [ref=e121] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e122]: 🎫
+            - generic [ref=e123]: Tickets
+        - generic [ref=e124]:
+          - link "👤 Profile" [ref=e126] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e127]: 👤
+            - generic [ref=e128]: Profile
+          - button "🚪 Logout" [ref=e129] [cursor=pointer]:
+            - generic [ref=e130]: 🚪
+            - generic [ref=e131]: Logout
+      - button "Collapse sidebar" [ref=e132] [cursor=pointer]: ←
+    - generic [ref=e133]:
+      - generic [ref=e135]:
+        - generic [ref=e136]:
+          - generic [ref=e137]: ROLE
+          - generic [ref=e138]: Franchisor Admin
+        - generic [ref=e139]:
+          - generic "Avatar for Mira Sandhu" [ref=e140]: MS
+          - generic [ref=e141]: Mira Sandhu
+        - button "Log out" [ref=e143] [cursor=pointer]
+      - main [ref=e144]:
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]: Franchisor Admin
+              - heading "Welcome back, Mira!" [level=1] [ref=e150]
+              - paragraph [ref=e151]: The Learning Planet · 3 locations · 4 active coaches
+            - generic [ref=e152]:
+              - button "👤 Add Coach" [ref=e153] [cursor=pointer]:
+                - generic [ref=e154]: 👤
+                - text: Add Coach
+              - button "Manage Roster" [ref=e155] [cursor=pointer]
+          - generic [ref=e156]:
+            - generic [ref=e158] [cursor=pointer]:
+              - generic [ref=e159]:
+                - generic [ref=e160]: Total Students
+                - generic [ref=e161]: "8"
+              - generic [ref=e162]: 🎓
+            - generic [ref=e164] [cursor=pointer]:
+              - generic [ref=e165]:
+                - generic [ref=e166]: Active Coaches
+                - generic [ref=e167]: "4"
+                - generic [ref=e168]: 1 on leave
+              - generic [ref=e169]: 🧑‍🏫
+            - generic [ref=e171] [cursor=pointer]:
+              - generic [ref=e172]:
+                - generic [ref=e173]: Locations
+                - generic [ref=e174]: "3"
+              - generic [ref=e175]: 📍
+            - generic [ref=e177] [cursor=pointer]:
+              - generic [ref=e178]:
+                - generic [ref=e179]: Monthly Revenue
+                - generic [ref=e180]: $1252
+                - generic [ref=e181]: April 2026
+              - generic [ref=e182]: 💰
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - generic [ref=e186]: ⚠️
+                - generic [ref=e187]: 2 Missed Payments
+              - button "View all →" [ref=e188] [cursor=pointer]
+            - generic [ref=e189]:
+              - generic [ref=e190]:
+                - generic [ref=e191]: Raj Sharma
+                - generic [ref=e192]: $625.80 · May 2026
+              - generic [ref=e193]:
+                - button "Retry" [ref=e194] [cursor=pointer]
+                - button "Dismiss" [ref=e195] [cursor=pointer]
+            - generic [ref=e196]:
+              - generic [ref=e197]:
+                - generic [ref=e198]: Niamh O'Connor
+                - generic [ref=e199]: $145.95 · April 2026
+              - generic [ref=e200]:
+                - button "Retry" [ref=e201] [cursor=pointer]
+                - button "Dismiss" [ref=e202] [cursor=pointer]
+          - generic [ref=e203]:
+            - generic [ref=e205]:
+              - generic [ref=e207]:
+                - heading "Recent Enrollments" [level=2] [ref=e209]
+                - button "View all →" [ref=e210] [cursor=pointer]
+              - generic [ref=e211]:
+                - generic [ref=e212]: Member
+                - generic [ref=e213]: Batch
+                - generic [ref=e214]: Enrolled
+                - generic [ref=e215]: Status
+              - generic [ref=e216]:
+                - generic [ref=e217]: Liam O'Connor
+                - generic [ref=e218]: Chess · PP · Mons 4pm
+                - generic [ref=e219]: Apr 1, 2026
+                - generic [ref=e220]: Active
+              - generic [ref=e221]:
+                - generic [ref=e222]: Raj Sharma
+                - generic [ref=e223]: Finance · Money Basics · Sats 1pm
+                - generic [ref=e224]: Mar 12, 2026
+                - generic [ref=e225]: Active
+              - generic [ref=e226]:
+                - generic [ref=e227]: Arjun Kumar
+                - generic [ref=e228]: Chess · PP · Mons 4pm
+                - generic [ref=e229]: Feb 15, 2026
+                - generic [ref=e230]: Active
+              - generic [ref=e231]:
+                - generic [ref=e232]: Arjun Kumar
+                - generic [ref=e233]: Math · Grade 5 · Weds 4:30pm
+                - generic [ref=e234]: Feb 15, 2026
+                - generic [ref=e235]: Active
+              - generic [ref=e236]:
+                - generic [ref=e237]: Chiamaka Okafor
+                - generic [ref=e238]: Chess · PP · Mons 4pm
+                - generic [ref=e239]: Feb 10, 2026
+                - generic [ref=e240]: Active
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - generic [ref=e243]:
+                  - heading "Staff Coverage Gaps" [level=2] [ref=e245]
+                  - button "Fix →" [ref=e246] [cursor=pointer]
+                - generic [ref=e248]:
+                  - generic [ref=e249]:
+                    - generic [ref=e250]: Chess · PP
+                    - generic [ref=e251]: Sats 9:30am
+                  - generic [ref=e252]: Unassigned
+              - generic [ref=e253]:
+                - heading "Quick Actions" [level=2] [ref=e256]
+                - generic [ref=e257]:
+                  - button "👤 Add Coach →" [ref=e258] [cursor=pointer]:
+                    - generic [ref=e259]: 👤
+                    - text: Add Coach
+                    - generic [ref=e260]: →
+                  - button "📋 Manage Roster →" [ref=e261] [cursor=pointer]:
+                    - generic [ref=e262]: 📋
+                    - text: Manage Roster
+                    - generic [ref=e263]: →
+                  - button "💳 View Payments →" [ref=e264] [cursor=pointer]:
+                    - generic [ref=e265]: 💳
+                    - text: View Payments
+                    - generic [ref=e266]: →
+                  - button "📍 Manage Locations →" [ref=e267] [cursor=pointer]:
+                    - generic [ref=e268]: 📍
+                    - text: Manage Locations
+                    - generic [ref=e269]: →
+        - generic [ref=e270]:
+          - generic [ref=e271]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e272]:
+            - generic [ref=e273]: Powered by
+            - generic [ref=e274]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

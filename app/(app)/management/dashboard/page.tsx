@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -9,6 +10,9 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { TLP } from "@/lib/theme/tokens";
 import { PRICE_REQUESTS } from "@/lib/mock/priceRequests";
 import { TENANT_BY_ID } from "@/lib/mock/tenants";
+import { createClient } from "@/lib/supabase/client";
+import { DEMO_ACCOUNTS } from "@/lib/mock/auth";
+import type { Role } from "@/lib/types";
 
 const pendingRequests = PRICE_REQUESTS.filter((r) => r.status === "pending");
 
@@ -27,7 +31,43 @@ const QUICK_ACTIONS = [
 
 export default function ManagementDashboard() {
   const router = useRouter();
+  const [session, setSession] = useState<{ role: Role; ownershipId: string | null; fullName: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function fetchSession() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        // Find the demo account info to match the role-based logic in the prototype
+        const demoAcc = DEMO_ACCOUNTS.find(a => a.email.toLowerCase() === user.email?.toLowerCase());
+        setSession({
+          role: (user.app_metadata?.role as Role) || demoAcc?.role || "customer",
+          ownershipId: (user.app_metadata?.ownership_id as string) || demoAcc?.ownershipId || null,
+          fullName: user.user_metadata?.full_name || demoAcc?.fullName || "Management User"
+        });
+      }
+      setLoading(false);
+    }
+    fetchSession();
+  }, []);
+
+  if (loading) {
+    return <div style={{ padding: 24, color: TLP.gray500 }}>Loading dashboard...</div>;
+  }
+
+  const isFranchisee = session?.role === "franchisee_mgmt";
+  const myOwnershipId = session?.ownershipId;
+
+  // Filter pending requests: 
+  // Franchisor sees all pending to approve. 
+  // Franchisee sees only theirs sent to franchisor.
+  const myPendingRequests = PRICE_REQUESTS.filter((r) => {
+    if (r.status !== "pending") return false;
+    if (isFranchisee) return r.requestingOwnershipId === myOwnershipId;
+    return true;
+  });
   return (
     <div style={{ padding: 24, display: "flex", flexDirection: "column", gap: 24 }}>
       {/* Welcome banner */}
@@ -44,12 +84,16 @@ export default function ManagementDashboard() {
         }}
       >
         <div>
-          <div style={{ fontSize: 13, opacity: 0.7, marginBottom: 4 }}>Franchisor Management</div>
+          <div style={{ fontSize: 13, opacity: 0.7, marginBottom: 4 }}>
+            {isFranchisee ? "Franchisee Management" : "Franchisor Management"}
+          </div>
           <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, letterSpacing: "-0.3px" }}>
-            Welcome back, Anika!
+            Welcome back, {session?.fullName.split(" ")[0]}!
           </h1>
           <p style={{ margin: "6px 0 0", fontSize: 13, opacity: 0.75 }}>
-            Network-wide overview · 2 ownerships · 6 locations · 6 coaches
+            {isFranchisee 
+              ? `${TENANT_BY_ID[myOwnershipId || ""]?.fullName || "Your Academy"} overview · 3 locations · 1 coach`
+              : "Network-wide overview · 2 ownerships · 6 locations · 6 coaches"}
           </p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -61,24 +105,26 @@ export default function ManagementDashboard() {
             onClick={() => router.push("/management/pricing")}
             style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff" }}
           >
-            Pricing Requests
+            {isFranchisee ? "Price Requests" : "Approval Queue"}
           </Button>
         </div>
       </div>
 
       {/* Stats row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14 }}>
-        <StatTile
-          label="Total Ownerships"
-          value={2}
-          icon="🏢"
-          iconBg={TLP.purpleLight}
-          iconColor={TLP.purple}
-        />
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${isFranchisee ? 4 : 5}, 1fr)`, gap: 14 }}>
+        {!isFranchisee && (
+          <StatTile
+            label="Total Ownerships"
+            value={2}
+            icon="🏢"
+            iconBg={TLP.purpleLight}
+            iconColor={TLP.purple}
+          />
+        )}
         <StatTile
           label="Total Locations"
-          value={6}
-          delta="3 TLP · 3 MLA"
+          value={isFranchisee ? 3 : 6}
+          delta={isFranchisee ? "Active in ON" : "3 TLP · 3 MLA"}
           deltaColor={TLP.gray500}
           icon="📍"
           iconBg={TLP.blueLight}
@@ -87,16 +133,16 @@ export default function ManagementDashboard() {
         />
         <StatTile
           label="Total Coaches"
-          value={6}
-          delta="5 TLP · 1 MLA"
+          value={isFranchisee ? 1 : 6}
+          delta={isFranchisee ? "Staffing OK" : "5 TLP · 1 MLA"}
           deltaColor={TLP.gray500}
           icon="🧑‍🏫"
           iconBg={TLP.tealLight}
           iconColor={TLP.teal}
         />
         <StatTile
-          label="Network Revenue"
-          value="$3,652"
+          label={isFranchisee ? "My Revenue" : "Network Revenue"}
+          value={isFranchisee ? "$2,400" : "$3,652"}
           delta="April 2026"
           deltaColor={TLP.green}
           icon="💰"
@@ -106,12 +152,12 @@ export default function ManagementDashboard() {
         />
         <StatTile
           label="Pending Requests"
-          value={pendingRequests.length}
-          delta={pendingRequests.length > 0 ? "Needs review" : "All clear"}
-          deltaColor={pendingRequests.length > 0 ? TLP.amber : TLP.green}
+          value={myPendingRequests.length}
+          delta={myPendingRequests.length > 0 ? (isFranchisee ? "Awaiting review" : "Needs review") : "All clear"}
+          deltaColor={myPendingRequests.length > 0 ? TLP.amber : TLP.green}
           icon="📋"
-          iconBg={pendingRequests.length > 0 ? TLP.amberLight : TLP.greenLight}
-          iconColor={pendingRequests.length > 0 ? TLP.amber : TLP.green}
+          iconBg={myPendingRequests.length > 0 ? TLP.amberLight : TLP.greenLight}
+          iconColor={myPendingRequests.length > 0 ? TLP.amber : TLP.green}
           onClick={() => router.push("/management/pricing")}
         />
       </div>
@@ -121,7 +167,7 @@ export default function ManagementDashboard() {
         <Card style={{ padding: 0, overflow: "hidden" }}>
           <div style={{ padding: "16px 20px", borderBottom: `1px solid ${TLP.gray100}` }}>
             <SectionHeader
-              title="Revenue by Ownership — Last 3 Months"
+              title={isFranchisee ? "Monthly Revenue Performance" : "Revenue by Ownership — Last 3 Months"}
               action={
                 <Button variant="ghost" size="sm" onClick={() => router.push("/management/revenue")}>
                   Full pivot →
@@ -132,7 +178,7 @@ export default function ManagementDashboard() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gridTemplateColumns: isFranchisee ? "1.5fr 1fr" : "1fr 1fr 1fr 1fr",
               padding: "8px 20px",
               background: TLP.gray50,
               fontSize: 11,
@@ -144,16 +190,16 @@ export default function ManagementDashboard() {
             }}
           >
             <span>Month</span>
-            <span>TLP (BC)</span>
-            <span>MLA (ON)</span>
-            <span>Network Total</span>
+            {!isFranchisee && <span>TLP (BC)</span>}
+            {!isFranchisee && <span>MLA (ON)</span>}
+            <span>{isFranchisee ? "Total Revenue" : "Network Total"}</span>
           </div>
           {REVENUE_DATA.map((row, i) => (
             <div
               key={row.month}
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr 1fr",
+                gridTemplateColumns: isFranchisee ? "1.5fr 1fr" : "1fr 1fr 1fr 1fr",
                 padding: "14px 20px",
                 fontSize: 13,
                 gap: 8,
@@ -162,45 +208,49 @@ export default function ManagementDashboard() {
               }}
             >
               <span style={{ fontWeight: 600, color: TLP.navy }}>{row.month}</span>
-              <span style={{ color: TLP.navy, fontWeight: 600 }}>
-                ${row.tlp.toLocaleString()}
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: 6,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 2,
-                    background: TLP.navy,
-                    verticalAlign: "middle",
-                    opacity: 0.4,
-                  }}
-                />
-              </span>
-              <span style={{ color: TLP.teal, fontWeight: 600 }}>
-                ${row.mla.toLocaleString()}
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: 6,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 2,
-                    background: TLP.teal,
-                    verticalAlign: "middle",
-                    opacity: 0.4,
-                  }}
-                />
-              </span>
+              {!isFranchisee && (
+                <span style={{ color: TLP.navy, fontWeight: 600 }}>
+                  ${row.tlp.toLocaleString()}
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginLeft: 6,
+                      width: 8,
+                      height: 8,
+                      borderRadius: 2,
+                      background: TLP.navy,
+                      verticalAlign: "middle",
+                      opacity: 0.4,
+                    }}
+                  />
+                </span>
+              )}
+              {!isFranchisee && (
+                <span style={{ color: TLP.teal, fontWeight: 600 }}>
+                  ${row.mla.toLocaleString()}
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginLeft: 6,
+                      width: 8,
+                      height: 8,
+                      borderRadius: 2,
+                      background: TLP.teal,
+                      verticalAlign: "middle",
+                      opacity: 0.4,
+                    }}
+                  />
+                </span>
+              )}
               <span style={{ fontWeight: 700, color: TLP.gray800 }}>
-                ${(row.tlp + row.mla).toLocaleString()}
+                ${(isFranchisee ? row.mla : (row.tlp + row.mla)).toLocaleString()}
               </span>
             </div>
           ))}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gridTemplateColumns: isFranchisee ? "1.5fr 1fr" : "1fr 1fr 1fr 1fr",
               padding: "12px 20px",
               fontSize: 13,
               gap: 8,
@@ -210,14 +260,18 @@ export default function ManagementDashboard() {
             }}
           >
             <span style={{ fontWeight: 700, color: TLP.gray700 }}>Q1 Total</span>
-            <span style={{ fontWeight: 700, color: TLP.navy }}>
-              ${REVENUE_DATA.reduce((s, r) => s + r.tlp, 0).toLocaleString()}
-            </span>
-            <span style={{ fontWeight: 700, color: TLP.teal }}>
-              ${REVENUE_DATA.reduce((s, r) => s + r.mla, 0).toLocaleString()}
-            </span>
+            {!isFranchisee && (
+              <span style={{ fontWeight: 700, color: TLP.navy }}>
+                ${REVENUE_DATA.reduce((s, r) => s + r.tlp, 0).toLocaleString()}
+              </span>
+            )}
+            {!isFranchisee && (
+              <span style={{ fontWeight: 700, color: TLP.teal }}>
+                ${REVENUE_DATA.reduce((s, r) => s + r.mla, 0).toLocaleString()}
+              </span>
+            )}
             <span style={{ fontWeight: 700, color: TLP.gray800 }}>
-              ${REVENUE_DATA.reduce((s, r) => s + r.tlp + r.mla, 0).toLocaleString()}
+              ${REVENUE_DATA.reduce((s, r) => s + (isFranchisee ? r.mla : (r.tlp + r.mla)), 0).toLocaleString()}
             </span>
           </div>
         </Card>
@@ -228,21 +282,21 @@ export default function ManagementDashboard() {
           <Card style={{ padding: 0, overflow: "hidden" }}>
             <div style={{ padding: "16px 20px", borderBottom: `1px solid ${TLP.gray100}` }}>
               <SectionHeader
-                title="Pending Pricing Requests"
+                title={isFranchisee ? "My Active Requests" : "Pending Approval Queue"}
                 action={
                   <Button variant="ghost" size="sm" onClick={() => router.push("/management/pricing")}>
-                    Review →
+                    {isFranchisee ? "View all →" : "Review all →"}
                   </Button>
                 }
               />
             </div>
-            {pendingRequests.length === 0 ? (
+            {myPendingRequests.length === 0 ? (
               <div style={{ padding: "20px", textAlign: "center", color: TLP.green, fontSize: 13, fontWeight: 600 }}>
                 ✓ No pending requests
               </div>
             ) : (
               <div>
-                {pendingRequests.map((req, i) => {
+                {myPendingRequests.map((req, i) => {
                   const ownership = TENANT_BY_ID[req.requestingOwnershipId];
                   const delta = req.requestedPrice - req.currentPrice;
                   return (
@@ -250,7 +304,7 @@ export default function ManagementDashboard() {
                       key={req.id}
                       style={{
                         padding: "12px 20px",
-                        borderBottom: i < pendingRequests.length - 1 ? `1px solid ${TLP.gray100}` : "none",
+                        borderBottom: i < myPendingRequests.length - 1 ? `1px solid ${TLP.gray100}` : "none",
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
@@ -259,7 +313,7 @@ export default function ManagementDashboard() {
                     >
                       <div>
                         <div style={{ fontSize: 13, fontWeight: 600, color: TLP.navy }}>
-                          {ownership?.fullName ?? req.requestingOwnershipId}
+                          {isFranchisee ? `Request #${req.id.split("_")[1]}` : (ownership?.fullName ?? req.requestingOwnershipId)}
                         </div>
                         <div style={{ fontSize: 11, color: TLP.gray500, marginTop: 2 }}>
                           ${req.currentPrice} → ${req.requestedPrice}

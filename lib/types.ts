@@ -87,6 +87,7 @@ export interface CourseVariant {
   price: number;
   setupFee: number;
   imageUrl?: string;
+  isActive: boolean;
 }
 
 export interface MultiPlanetDiscount {

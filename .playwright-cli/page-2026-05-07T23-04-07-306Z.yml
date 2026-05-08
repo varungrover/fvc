@@ -1,0 +1,166 @@
+- generic [ref=e1]:
+  - generic [ref=e595]:
+    - generic [ref=e596]:
+      - navigation [ref=e597]:
+        - generic [ref=e598]:
+          - generic [ref=e599]: 🌍
+          - generic [ref=e601]: The Learning Planet
+        - generic [ref=e602]:
+          - link "🏠 Dashboard" [ref=e603] [cursor=pointer]:
+            - /url: /franchisee-admin/dashboard
+            - generic [ref=e604]: 🏠
+            - generic [ref=e605]: Dashboard
+          - link "📍 Locations" [ref=e606] [cursor=pointer]:
+            - /url: /franchisee-admin/locations
+            - generic [ref=e607]: 📍
+            - generic [ref=e608]: Locations
+          - link "📅 Batches" [ref=e609] [cursor=pointer]:
+            - /url: /franchisee-admin/batches
+            - generic [ref=e610]: 📅
+            - generic [ref=e611]: Batches
+          - link "👤 Coaches" [active] [ref=e612] [cursor=pointer]:
+            - /url: /franchisee-admin/coaches
+            - generic [ref=e613]: 👤
+            - generic [ref=e614]: Coaches
+          - link "👥 Customers" [ref=e615] [cursor=pointer]:
+            - /url: /franchisee-admin/customers
+            - generic [ref=e616]: 👥
+            - generic [ref=e617]: Customers
+          - link "📋 Roster" [ref=e618] [cursor=pointer]:
+            - /url: /franchisee-admin/roster
+            - generic [ref=e619]: 📋
+            - generic [ref=e620]: Roster
+          - link "🗓️ Holidays" [ref=e622] [cursor=pointer]:
+            - /url: /franchisee-admin/holidays
+            - generic [ref=e623]: 🗓️
+            - generic [ref=e624]: Holidays
+          - link "💸 Price Requests" [ref=e625] [cursor=pointer]:
+            - /url: /franchisee-admin/price-requests
+            - generic [ref=e626]: 💸
+            - generic [ref=e627]: Price Requests
+          - link "🎫 Tickets" [ref=e628] [cursor=pointer]:
+            - /url: /franchisee-admin/tickets
+            - generic [ref=e629]: 🎫
+            - generic [ref=e630]: Tickets
+        - button "🚪 Logout" [ref=e633] [cursor=pointer]:
+          - generic [ref=e634]: 🚪
+          - generic [ref=e635]: Logout
+      - button "Collapse sidebar" [ref=e636] [cursor=pointer]: ←
+    - generic [ref=e637]:
+      - generic [ref=e639]:
+        - generic [ref=e640]:
+          - generic [ref=e641]: ROLE
+          - generic [ref=e642]: Franchisee Admin
+        - generic [ref=e643]:
+          - generic "Avatar for Jordan Bell" [ref=e644]: JB
+          - generic [ref=e645]: Jordan Bell
+        - button "Log out" [ref=e647] [cursor=pointer]
+      - main [ref=e648]:
+        - generic [ref=e754]:
+          - generic [ref=e755]:
+            - heading "Coach & Staff Management" [level=2] [ref=e757]
+            - generic [ref=e758]:
+              - button "Filter" [ref=e759] [cursor=pointer]:
+                - img [ref=e760]
+                - text: Filter
+              - button "Add Coach" [ref=e762] [cursor=pointer]
+          - generic [ref=e763]:
+            - generic [ref=e765]:
+              - img [ref=e766]
+              - textbox "Search coaches by name or email..." [ref=e770]
+            - table [ref=e772]:
+              - rowgroup [ref=e773]:
+                - row "Coach Status Qualifications Actions" [ref=e774]:
+                  - columnheader "Coach" [ref=e775]
+                  - columnheader "Status" [ref=e776]
+                  - columnheader "Qualifications" [ref=e777]
+                  - columnheader "Actions" [ref=e778]
+              - rowgroup [ref=e779]:
+                - row "AG Anish Giri fran_coach_6@chess.com Manage" [ref=e780]:
+                  - cell "AG Anish Giri fran_coach_6@chess.com" [ref=e781]:
+                    - generic [ref=e782]:
+                      - generic [ref=e783]: AG
+                      - generic [ref=e784]:
+                        - generic [ref=e785]: Anish Giri
+                        - generic [ref=e786]: fran_coach_6@chess.com
+                  - cell [ref=e787]
+                  - cell [ref=e789]
+                  - cell "Manage" [ref=e793]:
+                    - generic [ref=e794]:
+                      - link "Manage" [ref=e795] [cursor=pointer]:
+                        - /url: /franchisee-admin/coaches/79b6f944-20ea-4664-a23d-dbab51df7653
+                        - button "Manage" [ref=e796]
+                      - button [ref=e797] [cursor=pointer]:
+                        - img [ref=e798]
+                - row "GD Gukesh D fran_coach_10@chess.com Manage" [ref=e801]:
+                  - cell "GD Gukesh D fran_coach_10@chess.com" [ref=e802]:
+                    - generic [ref=e803]:
+                      - generic [ref=e804]: GD
+                      - generic [ref=e805]:
+                        - generic [ref=e806]: Gukesh D
+                        - generic [ref=e807]: fran_coach_10@chess.com
+                  - cell [ref=e808]
+                  - cell [ref=e810]
+                  - cell "Manage" [ref=e814]:
+                    - generic [ref=e815]:
+                      - link "Manage" [ref=e816] [cursor=pointer]:
+                        - /url: /franchisee-admin/coaches/c9d31084-09dc-4765-a610-1ef7a9bc55e5
+                        - button "Manage" [ref=e817]
+                      - button [ref=e818] [cursor=pointer]:
+                        - img [ref=e819]
+                - row "LA Levon Aronian fran_coach_8@chess.com Manage" [ref=e822]:
+                  - cell "LA Levon Aronian fran_coach_8@chess.com" [ref=e823]:
+                    - generic [ref=e824]:
+                      - generic [ref=e825]: LA
+                      - generic [ref=e826]:
+                        - generic [ref=e827]: Levon Aronian
+                        - generic [ref=e828]: fran_coach_8@chess.com
+                  - cell [ref=e829]
+                  - cell [ref=e831]
+                  - cell "Manage" [ref=e835]:
+                    - generic [ref=e836]:
+                      - link "Manage" [ref=e837] [cursor=pointer]:
+                        - /url: /franchisee-admin/coaches/eee0e9b3-f59e-45fe-ade9-f243a5be4ec7
+                        - button "Manage" [ref=e838]
+                      - button [ref=e839] [cursor=pointer]:
+                        - img [ref=e840]
+                - row "VG Vidit Gujrathi fran_coach_9@chess.com Manage" [ref=e843]:
+                  - cell "VG Vidit Gujrathi fran_coach_9@chess.com" [ref=e844]:
+                    - generic [ref=e845]:
+                      - generic [ref=e846]: VG
+                      - generic [ref=e847]:
+                        - generic [ref=e848]: Vidit Gujrathi
+                        - generic [ref=e849]: fran_coach_9@chess.com
+                  - cell [ref=e850]
+                  - cell [ref=e852]
+                  - cell "Manage" [ref=e856]:
+                    - generic [ref=e857]:
+                      - link "Manage" [ref=e858] [cursor=pointer]:
+                        - /url: /franchisee-admin/coaches/32a965f7-2a8c-46de-994a-848b1e6a5cbd
+                        - button "Manage" [ref=e859]
+                      - button [ref=e860] [cursor=pointer]:
+                        - img [ref=e861]
+                - row "WS Wesley So fran_coach_7@chess.com Manage" [ref=e864]:
+                  - cell "WS Wesley So fran_coach_7@chess.com" [ref=e865]:
+                    - generic [ref=e866]:
+                      - generic [ref=e867]: WS
+                      - generic [ref=e868]:
+                        - generic [ref=e869]: Wesley So
+                        - generic [ref=e870]: fran_coach_7@chess.com
+                  - cell [ref=e871]
+                  - cell [ref=e873]
+                  - cell "Manage" [ref=e877]:
+                    - generic [ref=e878]:
+                      - link "Manage" [ref=e879] [cursor=pointer]:
+                        - /url: /franchisee-admin/coaches/dad1a051-c9c7-406e-8d12-87ef10fc5359
+                        - button "Manage" [ref=e880]
+                      - button [ref=e881] [cursor=pointer]:
+                        - img [ref=e882]
+        - generic [ref=e749]:
+          - generic [ref=e750]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e751]:
+            - generic [ref=e752]: Powered by
+            - generic [ref=e753]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

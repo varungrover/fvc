@@ -42,7 +42,7 @@ export default async function CustomerBillingPage() {
                       <span style={{ 
                         fontSize: 11, 
                         fontWeight: 700, 
-                        color: inv.status === 'paid' ? TLP.teal : TLP.orange 
+                        color: inv.status === 'paid' ? TLP.teal : TLP.amber 
                       }}>
                         {inv.status.toUpperCase()}
                       </span>

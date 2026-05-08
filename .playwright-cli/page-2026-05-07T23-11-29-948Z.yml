@@ -1,0 +1,287 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "🪐 Planets" [ref=e90] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e91]: 🪐
+            - generic [ref=e92]: Planets
+          - link "📚 Courses" [ref=e93] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e94]: 📚
+            - generic [ref=e95]: Courses
+          - link "📍 Locations" [ref=e96] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📅 Batches" [active] [ref=e99] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e100]: 📅
+            - generic [ref=e101]: Batches
+          - link "👤 Coaches" [ref=e102] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e103]: 👤
+            - generic [ref=e104]: Coaches
+          - link "👥 Customers" [ref=e105] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e106]: 👥
+            - generic [ref=e107]: Customers
+          - link "📋 Roster" [ref=e108] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e109]: 📋
+            - generic [ref=e110]: Roster
+          - link "💳 Payments" [ref=e112] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e113]: 💳
+            - generic [ref=e114]: Payments
+          - link "🏷️ Discounts" [ref=e115] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e116]: 🏷️
+            - generic [ref=e117]: Discounts
+          - link "🗓️ Holidays" [ref=e118] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e119]: 🗓️
+            - generic [ref=e120]: Holidays
+          - link "🎫 Tickets" [ref=e121] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e122]: 🎫
+            - generic [ref=e123]: Tickets
+        - button "🚪 Logout" [ref=e126] [cursor=pointer]:
+          - generic [ref=e127]: 🚪
+          - generic [ref=e128]: Logout
+      - button "Collapse sidebar" [ref=e129] [cursor=pointer]: ←
+    - generic [ref=e130]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: ROLE
+          - generic [ref=e135]: Franchisor Admin
+        - generic [ref=e136]:
+          - generic "Avatar for Mira Sandhu" [ref=e137]: MS
+          - generic [ref=e138]: Mira Sandhu
+        - button "Log out" [ref=e140] [cursor=pointer]
+      - main [ref=e141]:
+        - generic [ref=e528]:
+          - generic [ref=e529]:
+            - generic [ref=e530]:
+              - heading "Batch Management" [level=1] [ref=e531]
+              - paragraph [ref=e532]: Manage recurring class batches across locations and levels
+            - button "➕ Add Recurring Batch" [ref=e534] [cursor=pointer]:
+              - generic [ref=e535]: ➕
+              - text: Add Recurring Batch
+          - generic [ref=e536]:
+            - generic [ref=e537]:
+              - generic [ref=e538]: Location
+              - combobox [ref=e539]:
+                - option "Abbotsford" [selected]
+                - option "Brampton"
+                - option "Langley"
+                - option "Mississauga"
+                - option "Surrey Central"
+                - option "Test Location 1"
+                - option "Toronto Downtown"
+            - generic [ref=e540]:
+              - generic [ref=e541]: Planet
+              - combobox [ref=e542]:
+                - option "All Planets" [selected]
+                - option "Arts"
+                - option "Chess"
+                - option "English"
+                - option "Finance"
+                - option "Math"
+            - generic [ref=e543]:
+              - generic [ref=e544]: Level
+              - combobox [ref=e545]:
+                - option "All Levels" [selected]
+                - option "Beginner"
+                - option "Intermediate"
+                - option "AB"
+                - option "DC"
+                - option "PP"
+                - option "RR"
+                - option "Grade 3"
+                - option "Grade 5"
+                - option "Grade 8"
+                - option "Intro to Investing"
+                - option "Money Basics"
+                - option "Grade 3"
+                - option "Grade 5"
+                - option "Grade 7"
+                - option "Grade 9"
+          - generic [ref=e546]:
+            - generic [ref=e547]:
+              - heading "Monday 3 slots" [level=3] [ref=e548]:
+                - text: Monday
+                - generic [ref=e549]: 3 slots
+              - generic [ref=e550]:
+                - generic [ref=e551]:
+                  - generic [ref=e552]:
+                    - generic [ref=e553]:
+                      - generic [ref=e554]: 16:00 - 17:00
+                      - generic [ref=e555]: •
+                      - generic [ref=e556]: Math
+                    - generic [ref=e557]: Grade 9
+                    - generic [ref=e558]: "Capacity: 8 students"
+                  - button "✕" [ref=e559] [cursor=pointer]
+                - generic [ref=e560]:
+                  - generic [ref=e561]:
+                    - generic [ref=e562]:
+                      - generic [ref=e563]: 16:00 - 17:00
+                      - generic [ref=e564]: •
+                      - generic [ref=e565]: Chess
+                    - generic [ref=e566]: RR
+                    - generic [ref=e567]: "Capacity: 8 students"
+                  - button "✕" [ref=e568] [cursor=pointer]
+                - generic [ref=e569]:
+                  - generic [ref=e570]:
+                    - generic [ref=e571]:
+                      - generic [ref=e572]: 16:00 - 17:00
+                      - generic [ref=e573]: •
+                      - generic [ref=e574]: Chess
+                    - generic [ref=e575]: DC
+                    - generic [ref=e576]: "Capacity: 8 students"
+                  - button "✕" [ref=e577] [cursor=pointer]
+            - generic [ref=e578]:
+              - heading "Tuesday 4 slots" [level=3] [ref=e579]:
+                - text: Tuesday
+                - generic [ref=e580]: 4 slots
+              - generic [ref=e581]:
+                - generic [ref=e582]:
+                  - generic [ref=e583]:
+                    - generic [ref=e584]:
+                      - generic [ref=e585]: 16:00 - 17:00
+                      - generic [ref=e586]: •
+                      - generic [ref=e587]: English
+                    - generic [ref=e588]: Grade 5
+                    - generic [ref=e589]: "Capacity: 8 students"
+                  - button "✕" [ref=e590] [cursor=pointer]
+                - generic [ref=e591]:
+                  - generic [ref=e592]:
+                    - generic [ref=e593]:
+                      - generic [ref=e594]: 16:00 - 17:00
+                      - generic [ref=e595]: •
+                      - generic [ref=e596]: Chess
+                    - generic [ref=e597]: PP
+                    - generic [ref=e598]: "Capacity: 8 students"
+                  - button "✕" [ref=e599] [cursor=pointer]
+                - generic [ref=e600]:
+                  - generic [ref=e601]:
+                    - generic [ref=e602]:
+                      - generic [ref=e603]: 16:00 - 17:00
+                      - generic [ref=e604]: •
+                      - generic [ref=e605]: English
+                    - generic [ref=e606]: Grade 8
+                    - generic [ref=e607]: "Capacity: 8 students"
+                  - button "✕" [ref=e608] [cursor=pointer]
+                - generic [ref=e609]:
+                  - generic [ref=e610]:
+                    - generic [ref=e611]:
+                      - generic [ref=e612]: 16:00 - 17:00
+                      - generic [ref=e613]: •
+                      - generic [ref=e614]: Finance
+                    - generic [ref=e615]: Money Basics
+                    - generic [ref=e616]: "Capacity: 8 students"
+                  - button "✕" [ref=e617] [cursor=pointer]
+            - generic [ref=e618]:
+              - heading "Wednesday 2 slots" [level=3] [ref=e619]:
+                - text: Wednesday
+                - generic [ref=e620]: 2 slots
+              - generic [ref=e621]:
+                - generic [ref=e622]:
+                  - generic [ref=e623]:
+                    - generic [ref=e624]:
+                      - generic [ref=e625]: 16:00 - 17:00
+                      - generic [ref=e626]: •
+                      - generic [ref=e627]: Finance
+                    - generic [ref=e628]: Intro to Investing
+                    - generic [ref=e629]: "Capacity: 8 students"
+                  - button "✕" [ref=e630] [cursor=pointer]
+                - generic [ref=e631]:
+                  - generic [ref=e632]:
+                    - generic [ref=e633]:
+                      - generic [ref=e634]: 16:00 - 17:00
+                      - generic [ref=e635]: •
+                      - generic [ref=e636]: Math
+                    - generic [ref=e637]: Grade 5
+                    - generic [ref=e638]: "Capacity: 8 students"
+                  - button "✕" [ref=e639] [cursor=pointer]
+            - generic [ref=e640]:
+              - heading "Thursday 3 slots" [level=3] [ref=e641]:
+                - text: Thursday
+                - generic [ref=e642]: 3 slots
+              - generic [ref=e643]:
+                - generic [ref=e644]:
+                  - generic [ref=e645]:
+                    - generic [ref=e646]:
+                      - generic [ref=e647]: 16:00 - 17:00
+                      - generic [ref=e648]: •
+                      - generic [ref=e649]: Math
+                    - generic [ref=e650]: Grade 7
+                    - generic [ref=e651]: "Capacity: 8 students"
+                  - button "✕" [ref=e652] [cursor=pointer]
+                - generic [ref=e653]:
+                  - generic [ref=e654]:
+                    - generic [ref=e655]:
+                      - generic [ref=e656]: 16:00 - 17:00
+                      - generic [ref=e657]: •
+                      - generic [ref=e658]: Arts
+                    - generic [ref=e659]: Intermediate
+                    - generic [ref=e660]: "Capacity: 8 students"
+                  - button "✕" [ref=e661] [cursor=pointer]
+                - generic [ref=e662]:
+                  - generic [ref=e663]:
+                    - generic [ref=e664]:
+                      - generic [ref=e665]: 16:00 - 17:00
+                      - generic [ref=e666]: •
+                      - generic [ref=e667]: Math
+                    - generic [ref=e668]: Grade 3
+                    - generic [ref=e669]: "Capacity: 8 students"
+                  - button "✕" [ref=e670] [cursor=pointer]
+            - generic [ref=e671]:
+              - heading "Friday 0 slots" [level=3] [ref=e672]:
+                - text: Friday
+                - generic [ref=e673]: 0 slots
+              - generic [ref=e675]: No slots scheduled for Friday
+            - generic [ref=e676]:
+              - heading "Saturday 2 slots" [level=3] [ref=e677]:
+                - text: Saturday
+                - generic [ref=e678]: 2 slots
+              - generic [ref=e679]:
+                - generic [ref=e680]:
+                  - generic [ref=e681]:
+                    - generic [ref=e682]:
+                      - generic [ref=e683]: 16:00 - 17:00
+                      - generic [ref=e684]: •
+                      - generic [ref=e685]: English
+                    - generic [ref=e686]: Grade 3
+                    - generic [ref=e687]: "Capacity: 8 students"
+                  - button "✕" [ref=e688] [cursor=pointer]
+                - generic [ref=e689]:
+                  - generic [ref=e690]:
+                    - generic [ref=e691]:
+                      - generic [ref=e692]: 16:00 - 17:00
+                      - generic [ref=e693]: •
+                      - generic [ref=e694]: Arts
+                    - generic [ref=e695]: Beginner
+                    - generic [ref=e696]: "Capacity: 8 students"
+                  - button "✕" [ref=e697] [cursor=pointer]
+            - generic [ref=e698]:
+              - heading "Sunday 0 slots" [level=3] [ref=e699]:
+                - text: Sunday
+                - generic [ref=e700]: 0 slots
+              - generic [ref=e702]: No slots scheduled for Sunday
+        - generic [ref=e267]:
+          - generic [ref=e268]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e269]:
+            - generic [ref=e270]: Powered by
+            - generic [ref=e271]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

@@ -1,0 +1,136 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /management/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "📈 Revenue" [ref=e90] [cursor=pointer]:
+            - /url: /management/revenue
+            - generic [ref=e91]: 📈
+            - generic [ref=e92]: Revenue
+          - link "💸 Pricing" [ref=e93] [cursor=pointer]:
+            - /url: /management/pricing
+            - generic [ref=e94]: 💸
+            - generic [ref=e95]: Pricing
+          - link "📍 Locations" [ref=e96] [cursor=pointer]:
+            - /url: /management/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📊 Reports" [ref=e99] [cursor=pointer]:
+            - /url: /management/reports
+            - generic [ref=e100]: 📊
+            - generic [ref=e101]: Reports
+        - generic [ref=e102]:
+          - link "👤 Profile" [ref=e104] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e105]: 👤
+            - generic [ref=e106]: Profile
+          - button "🚪 Logout" [ref=e107] [cursor=pointer]:
+            - generic [ref=e108]: 🚪
+            - generic [ref=e109]: Logout
+      - button "Collapse sidebar" [ref=e110] [cursor=pointer]: ←
+    - generic [ref=e111]:
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]: ROLE
+          - generic [ref=e116]: Management
+        - generic [ref=e117]:
+          - generic "Avatar for David Chen" [ref=e118]: DC
+          - generic [ref=e119]: David Chen
+        - button "Log out" [ref=e121] [cursor=pointer]
+      - main [ref=e122]:
+        - generic [ref=e124]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]: Franchisee Management
+              - heading "Welcome back, David!" [level=1] [ref=e128]
+              - paragraph [ref=e129]: Your Academy overview · 3 locations · 1 coach
+            - generic [ref=e130]:
+              - button "📊 Revenue Pivot" [ref=e131] [cursor=pointer]:
+                - generic [ref=e132]: 📊
+                - text: Revenue Pivot
+              - button "Price Requests" [ref=e133] [cursor=pointer]
+          - generic [ref=e134]:
+            - generic [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]:
+                - generic [ref=e138]: Total Locations
+                - generic [ref=e139]: "3"
+                - generic [ref=e140]: Active in ON
+              - generic [ref=e141]: 📍
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - generic [ref=e145]: Total Coaches
+                - generic [ref=e146]: "1"
+                - generic [ref=e147]: Staffing OK
+              - generic [ref=e148]: 🧑‍🏫
+            - generic [ref=e150] [cursor=pointer]:
+              - generic [ref=e151]:
+                - generic [ref=e152]: My Revenue
+                - generic [ref=e153]: $2,400
+                - generic [ref=e154]: April 2026
+              - generic [ref=e155]: 💰
+            - generic [ref=e157] [cursor=pointer]:
+              - generic [ref=e158]:
+                - generic [ref=e159]: Pending Requests
+                - generic [ref=e160]: "0"
+                - generic [ref=e161]: All clear
+              - generic [ref=e162]: 📋
+          - generic [ref=e163]:
+            - generic [ref=e164]:
+              - generic [ref=e166]:
+                - heading "Monthly Revenue Performance" [level=2] [ref=e168]
+                - button "Full pivot →" [ref=e169] [cursor=pointer]
+              - generic [ref=e170]:
+                - generic [ref=e171]: Month
+                - generic [ref=e172]: Total Revenue
+              - generic [ref=e173]:
+                - generic [ref=e174]: February 2026
+                - generic [ref=e175]: $2,100
+              - generic [ref=e176]:
+                - generic [ref=e177]: March 2026
+                - generic [ref=e178]: $2,250
+              - generic [ref=e179]:
+                - generic [ref=e180]: April 2026
+                - generic [ref=e181]: $2,400
+              - generic [ref=e182]:
+                - generic [ref=e183]: Q1 Total
+                - generic [ref=e184]: $6,750
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - generic [ref=e188]:
+                  - heading "My Active Requests" [level=2] [ref=e190]
+                  - button "View all →" [ref=e191] [cursor=pointer]
+                - generic [ref=e192]: ✓ No pending requests
+              - generic [ref=e193]:
+                - heading "Quick Actions" [level=2] [ref=e196]
+                - generic [ref=e197]:
+                  - button "📊 Revenue Pivot →" [ref=e198] [cursor=pointer]:
+                    - generic [ref=e199]: 📊
+                    - text: Revenue Pivot
+                    - generic [ref=e200]: →
+                  - button "💲 Pricing Requests →" [ref=e201] [cursor=pointer]:
+                    - generic [ref=e202]: 💲
+                    - text: Pricing Requests
+                    - generic [ref=e203]: →
+                  - button "📍 All Locations →" [ref=e204] [cursor=pointer]:
+                    - generic [ref=e205]: 📍
+                    - text: All Locations
+                    - generic [ref=e206]: →
+                  - button "📄 Reports →" [ref=e207] [cursor=pointer]:
+                    - generic [ref=e208]: 📄
+                    - text: Reports
+                    - generic [ref=e209]: →
+        - generic [ref=e210]:
+          - generic [ref=e211]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e212]:
+            - generic [ref=e213]: Powered by
+            - generic [ref=e214]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

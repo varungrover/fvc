@@ -1,0 +1,98 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "👨‍👧 My Members" [ref=e90] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e91]: 👨‍👧
+            - generic [ref=e92]: My Members
+          - link "📋 Enroll" [ref=e93] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e94]: 📋
+            - generic [ref=e95]: Enroll
+          - link "📚 Learning Portal" [ref=e96] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e97]: 📚
+            - generic [ref=e98]: Learning Portal
+          - link "💳 Payments" [ref=e100] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e101]: 💳
+            - generic [ref=e102]: Payments
+          - link "🔔 Notifications" [ref=e103] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e104]: 🔔
+            - generic [ref=e105]: Notifications
+          - link "⚙️ Settings" [ref=e106] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e107]: ⚙️
+            - generic [ref=e108]: Settings
+        - button "🚪 Logout" [ref=e111] [cursor=pointer]:
+          - generic [ref=e112]: 🚪
+          - generic [ref=e113]: Logout
+      - button "Collapse sidebar" [ref=e114] [cursor=pointer]: ←
+    - generic [ref=e115]:
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - generic [ref=e119]: ROLE
+          - generic [ref=e120]: Customer
+        - generic [ref=e121]:
+          - generic "Avatar for Raj Sharma" [ref=e122]: RS
+          - generic [ref=e123]: Raj Sharma
+        - button "Log out" [ref=e125] [cursor=pointer]
+      - main [ref=e126]:
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - generic [ref=e131]:
+              - heading "Academy Enrollment" [level=1] [ref=e132]
+              - paragraph [ref=e133]: Complete the steps to launch your child's chess journey
+            - generic [ref=e134]:
+              - generic [ref=e135]:
+                - generic [ref=e136]: "1"
+                - generic [ref=e137]: Student
+              - generic [ref=e138]:
+                - generic [ref=e139]: "2"
+                - generic [ref=e140]: Level
+              - generic [ref=e141]:
+                - generic [ref=e142]: "3"
+                - generic [ref=e143]: Schedule
+              - generic [ref=e144]:
+                - generic [ref=e145]: "4"
+                - generic [ref=e146]: Billing
+              - generic [ref=e147]:
+                - generic [ref=e148]: "5"
+                - generic [ref=e149]: Payment
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - heading "Select Student" [level=2] [ref=e153]
+                - generic [ref=e154]:
+                  - generic [ref=e155] [cursor=pointer]:
+                    - generic [ref=e156]: A
+                    - generic [ref=e157]:
+                      - generic [ref=e158]: Aiden Sharma
+                      - generic [ref=e159]: 1985-04-22
+                  - generic [ref=e160] [cursor=pointer]:
+                    - generic [ref=e161]: A
+                    - generic [ref=e162]:
+                      - generic [ref=e163]: Aarav Sharma
+                      - generic [ref=e164]: 2015-05-20
+              - generic [ref=e165]:
+                - button "Back" [disabled] [ref=e166]
+                - button "Continue" [disabled] [ref=e167]
+            - heading "Selection Summary" [level=3] [ref=e169]
+        - generic [ref=e170]:
+          - generic [ref=e171]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e172]:
+            - generic [ref=e173]: Powered by
+            - generic [ref=e174]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

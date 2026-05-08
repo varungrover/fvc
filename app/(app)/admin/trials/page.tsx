@@ -42,8 +42,8 @@ export default async function AdminTrialsPage() {
                     borderRadius: 4, 
                     fontSize: 11, 
                     fontWeight: 700,
-                    background: trial.status === 'booked' ? TLP.orange + '10' : TLP.teal + '10',
-                    color: trial.status === 'booked' ? TLP.orange : TLP.teal
+                    background: trial.status === 'booked' ? TLP.amber + '10' : TLP.teal + '10',
+                    color: trial.status === 'booked' ? TLP.amber : TLP.teal
                   }}>
                     {trial.status.toUpperCase()}
                   </span>

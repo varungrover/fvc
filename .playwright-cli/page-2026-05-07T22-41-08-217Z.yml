@@ -1,0 +1,109 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - navigation [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: 🌍
+          - generic [ref=e8]: The Learning Planet
+        - generic [ref=e9]:
+          - link "🏠 Dashboard" [ref=e10] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e11]: 🏠
+            - generic [ref=e12]: Dashboard
+          - link "👨‍👧 My Members" [ref=e13] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e14]: 👨‍👧
+            - generic [ref=e15]: My Members
+          - link "📋 Enroll" [ref=e16] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e17]: 📋
+            - generic [ref=e18]: Enroll
+          - link "📚 Learning Portal" [ref=e19] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e20]: 📚
+            - generic [ref=e21]: Learning Portal
+          - link "💳 Payments" [ref=e23] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e24]: 💳
+            - generic [ref=e25]: Payments
+          - link "🔔 Notifications" [ref=e26] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e27]: 🔔
+            - generic [ref=e28]: Notifications
+          - link "⚙️ Settings" [ref=e29] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e30]: ⚙️
+            - generic [ref=e31]: Settings
+        - button "🚪 Logout" [ref=e34] [cursor=pointer]:
+          - generic [ref=e35]: 🚪
+          - generic [ref=e36]: Logout
+      - button "Collapse sidebar" [ref=e37] [cursor=pointer]: ←
+    - generic [ref=e38]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: ROLE
+          - generic [ref=e43]: Customer
+        - generic [ref=e44]:
+          - generic "Avatar for Raj Sharma" [ref=e45]: RS
+          - generic [ref=e46]: Raj Sharma
+        - button "Log out" [ref=e48] [cursor=pointer]
+      - main [ref=e49]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - generic [ref=e74]:
+              - heading "Academy Enrollment" [level=1] [ref=e75]
+              - paragraph [ref=e76]: Complete the steps to launch your child's chess journey
+            - generic [ref=e77]:
+              - generic [ref=e78]:
+                - generic [ref=e79]: ✓
+                - generic [ref=e80]: Student
+              - generic [ref=e81]:
+                - generic [ref=e82]: ✓
+                - generic [ref=e83]: Level
+              - generic [ref=e84]:
+                - generic [ref=e85]: ✓
+                - generic [ref=e86]: Schedule
+              - generic [ref=e87]:
+                - generic [ref=e88]: ✓
+                - generic [ref=e89]: Billing
+              - generic [ref=e90]:
+                - generic [ref=e91]: "5"
+                - generic [ref=e92]: Payment
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - generic [ref=e244]:
+                - heading "Secure Checkout" [level=2] [ref=e245]
+                - generic [ref=e246]:
+                  - generic [ref=e247]: 💳
+                  - generic [ref=e248]: Ready for Payment
+                  - generic [ref=e249]: Your transaction will be processed via Stripe.
+                  - button "Pay $161.29" [ref=e250] [cursor=pointer]
+              - button "Back" [ref=e109] [cursor=pointer]
+            - generic [ref=e111]:
+              - heading "Selection Summary" [level=3] [ref=e112]
+              - generic [ref=e113]:
+                - generic [ref=e114]: Student
+                - generic [ref=e115]: Aarav Sharma
+              - generic [ref=e146]:
+                - generic [ref=e147]: Planet
+                - generic [ref=e148]: Math
+              - generic [ref=e162]:
+                - generic [ref=e163]: Program
+                - generic [ref=e164]: Grade 7
+              - generic [ref=e165]:
+                - generic [ref=e166]: Frequency
+                - generic [ref=e167]: Grade 7 1x/week
+              - generic [ref=e225]:
+                - generic [ref=e226]: Schedule
+                - generic [ref=e227]: Friday 16:00:00
+              - generic [ref=e168]:
+                - generic [ref=e169]: DUE TODAY
+                - generic [ref=e170]: $161.29
+        - generic [ref=e56]:
+          - generic [ref=e57]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e58]:
+            - generic [ref=e59]: Powered by
+            - generic [ref=e60]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e66] [cursor=pointer]:
+    - img [ref=e67]
+  - alert [ref=e70]

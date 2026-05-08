@@ -1,0 +1,146 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "👨‍👧 My Members" [ref=e90] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e91]: 👨‍👧
+            - generic [ref=e92]: My Members
+          - link "📋 Enroll" [ref=e93] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e94]: 📋
+            - generic [ref=e95]: Enroll
+          - link "📚 Learning Portal" [ref=e96] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e97]: 📚
+            - generic [ref=e98]: Learning Portal
+          - link "💳 Payments" [ref=e100] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e101]: 💳
+            - generic [ref=e102]: Payments
+          - link "🔔 Notifications" [ref=e103] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e104]: 🔔
+            - generic [ref=e105]: Notifications
+          - link "⚙️ Settings" [active] [ref=e106] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e107]: ⚙️
+            - generic [ref=e108]: Settings
+        - button "🚪 Logout" [ref=e111] [cursor=pointer]:
+          - generic [ref=e112]: 🚪
+          - generic [ref=e113]: Logout
+      - button "Collapse sidebar" [ref=e114] [cursor=pointer]: ←
+    - generic [ref=e115]:
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - generic [ref=e119]: ROLE
+          - generic [ref=e120]: Customer
+        - generic [ref=e121]:
+          - generic "Avatar for Raj Sharma" [ref=e122]: RS
+          - generic [ref=e123]: Raj Sharma
+        - button "Log out" [ref=e125] [cursor=pointer]
+      - main [ref=e126]:
+        - generic [ref=e259]:
+          - generic [ref=e261]:
+            - heading "Account Settings" [level=1] [ref=e262]
+            - paragraph [ref=e263]: Manage your profile and preferences
+          - generic [ref=e264]:
+            - heading "Profile" [level=3] [ref=e265]
+            - generic [ref=e266]:
+              - generic "Avatar for Raj Sharma" [ref=e267]: RS
+              - generic [ref=e268]:
+                - generic [ref=e269]: Raj Sharma
+                - generic [ref=e270]: parent@demo.com
+                - generic [ref=e271]:
+                  - generic [ref=e272]: Customer
+                  - generic [ref=e273]: "CFC: CFC-2025-0042"
+              - button "Change Photo" [ref=e274] [cursor=pointer]
+            - generic [ref=e275]:
+              - generic [ref=e276]:
+                - generic [ref=e277]: Full Name
+                - generic [ref=e278]: Raj Sharma
+              - generic [ref=e279]:
+                - generic [ref=e280]: Email
+                - generic [ref=e281]: ••••••••
+              - generic [ref=e282]:
+                - generic [ref=e283]: Date of Birth
+                - generic [ref=e284]: ••••••••
+              - generic [ref=e285]:
+                - generic [ref=e286]: Phone
+                - generic [ref=e287]: ••••••••
+              - generic [ref=e288]:
+                - generic [ref=e289]: Gender
+                - generic [ref=e290]: ••••••••
+              - generic [ref=e291]:
+                - generic [ref=e292]: Emergency Contact
+                - generic [ref=e293]: ••••••••
+            - generic [ref=e294]:
+              - generic [ref=e295]: 🔒
+              - generic [ref=e296]: Personal information is masked. Reveal requires 2FA verification.
+              - button "Reveal (2FA)" [ref=e297] [cursor=pointer]
+          - generic [ref=e298]:
+            - heading "Loyalty Points" [level=3] [ref=e299]
+            - generic [ref=e300]:
+              - generic [ref=e301]: ⭐
+              - generic [ref=e302]:
+                - generic [ref=e303]: 412 pts
+                - generic [ref=e304]: Earn 1 point per $1 spent · Redemption coming in a future phase
+          - generic [ref=e305]:
+            - heading "Password & Security" [level=3] [ref=e306]
+            - generic [ref=e307]:
+              - generic [ref=e308]:
+                - generic [ref=e309]: Current Password
+                - textbox "Enter current password" [ref=e310]
+              - generic [ref=e311]:
+                - generic [ref=e312]:
+                  - generic [ref=e313]: New Password
+                  - textbox "At least 8 characters" [ref=e314]
+                - generic [ref=e315]:
+                  - generic [ref=e316]: Confirm New Password
+                  - textbox "Repeat new password" [ref=e317]
+              - button "Change Password" [disabled] [ref=e319]
+            - generic [ref=e320]:
+              - generic [ref=e321]: Two-Factor Authentication
+              - generic [ref=e322]:
+                - generic [ref=e323]:
+                  - generic [ref=e324]: SMS / Authenticator App
+                  - generic [ref=e325]: Required for all logins and PII access
+                - generic [ref=e326]: Not set up
+              - button "Set up 2FA" [ref=e327] [cursor=pointer]
+          - generic [ref=e328]:
+            - heading "Notifications" [level=3] [ref=e329]
+            - generic [ref=e330]:
+              - generic [ref=e331]:
+                - generic [ref=e332]:
+                  - generic [ref=e333]: Missed class alerts
+                  - generic [ref=e334]: Email when a member misses a scheduled class
+                - switch [checked] [ref=e335] [cursor=pointer]
+              - generic [ref=e337]:
+                - generic [ref=e338]:
+                  - generic [ref=e339]: Payment reminders & failures
+                  - generic [ref=e340]: Email for upcoming charges and failed payments
+                - switch [checked] [ref=e341] [cursor=pointer]
+            - paragraph [ref=e343]: SMS notifications are available in a future phase. All notifications are email only at launch.
+          - generic [ref=e344]:
+            - heading "Danger Zone" [level=3] [ref=e345]
+            - generic [ref=e346]:
+              - generic [ref=e347]:
+                - generic [ref=e348]: Delete Account
+                - generic [ref=e349]: Permanently removes your account and all member profiles. Cannot be undone.
+              - button "Delete Account" [ref=e350] [cursor=pointer]
+        - generic [ref=e190]:
+          - generic [ref=e191]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e192]:
+            - generic [ref=e193]: Powered by
+            - generic [ref=e194]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

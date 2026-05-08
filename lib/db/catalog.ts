@@ -45,6 +45,27 @@ export async function createPlanet(supabase: SupabaseClient, planet: Omit<Planet
   };
 }
 
+export async function updatePlanet(supabase: SupabaseClient, id: string, patch: Partial<Planet>): Promise<Planet> {
+  const { data, error } = await supabase
+    .from('planets')
+    .update({
+      name: patch.name,
+      description: patch.description,
+      is_active: patch.isActive
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return {
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    isActive: data.is_active
+  };
+}
+
 // --- Levels (Products) ---
 
 export async function listLevels(supabase: SupabaseClient, planetId: string): Promise<Level[]> {

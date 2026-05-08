@@ -56,7 +56,7 @@ export default async function CoachSessionsPage() {
                 <span style={{ fontSize: 11, padding: "4px 8px", background: TLP.gray50, borderRadius: 4, color: TLP.gray600, fontWeight: 600 }}>
                   12 STUDENTS ENROLLED
                 </span>
-                <span style={{ fontSize: 11, padding: "4px 8px", background: TLP.orange + '10', borderRadius: 4, color: TLP.orange, fontWeight: 600 }}>
+                <span style={{ fontSize: 11, padding: "4px 8px", background: TLP.amber + '10', borderRadius: 4, color: TLP.amber, fontWeight: 600 }}>
                   2 TRIALS BOOKED
                 </span>
               </div>

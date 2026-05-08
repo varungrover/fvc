@@ -1,0 +1,275 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "🪐 Planets" [ref=e90] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e91]: 🪐
+            - generic [ref=e92]: Planets
+          - link "📚 Courses" [ref=e93] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e94]: 📚
+            - generic [ref=e95]: Courses
+          - link "📍 Locations" [ref=e96] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📅 Batches" [ref=e99] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e100]: 📅
+            - generic [ref=e101]: Batches
+          - link "👤 Coaches" [ref=e102] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e103]: 👤
+            - generic [ref=e104]: Coaches
+          - link "👥 Customers" [ref=e105] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e106]: 👥
+            - generic [ref=e107]: Customers
+          - link "📋 Roster" [ref=e108] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e109]: 📋
+            - generic [ref=e110]: Roster
+          - link "💳 Payments" [ref=e112] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e113]: 💳
+            - generic [ref=e114]: Payments
+          - link "🏷️ Discounts" [ref=e115] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e116]: 🏷️
+            - generic [ref=e117]: Discounts
+          - link "🗓️ Holidays" [ref=e118] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e119]: 🗓️
+            - generic [ref=e120]: Holidays
+          - link "🎫 Tickets" [ref=e121] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e122]: 🎫
+            - generic [ref=e123]: Tickets
+        - button "🚪 Logout" [ref=e126] [cursor=pointer]:
+          - generic [ref=e127]: 🚪
+          - generic [ref=e128]: Logout
+      - button "Collapse sidebar" [ref=e129] [cursor=pointer]: ←
+    - generic [ref=e130]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: ROLE
+          - generic [ref=e135]: Franchisor Admin
+        - generic [ref=e136]:
+          - generic "Avatar for Mira Sandhu" [ref=e137]: MS
+          - generic [ref=e138]: Mira Sandhu
+        - button "Log out" [ref=e140] [cursor=pointer]
+      - main [ref=e141]:
+        - generic [ref=e143]:
+          - generic [ref=e144]:
+            - heading "Coach & Staff Management" [level=2] [ref=e146]
+            - generic [ref=e147]:
+              - button "Filter" [ref=e148] [cursor=pointer]:
+                - img [ref=e149]
+                - text: Filter
+              - button "Add Coach" [ref=e151] [cursor=pointer]
+          - generic [ref=e152]:
+            - generic [ref=e154]:
+              - img [ref=e155]
+              - textbox "Search coaches by name or email..." [ref=e159]
+            - table [ref=e161]:
+              - rowgroup [ref=e162]:
+                - row "Coach Status Qualifications Actions" [ref=e163]:
+                  - columnheader "Coach" [ref=e164]
+                  - columnheader "Status" [ref=e165]
+                  - columnheader "Qualifications" [ref=e166]
+                  - columnheader "Actions" [ref=e167]
+              - rowgroup [ref=e168]:
+                - row "AG Anish Giri fran_coach_6@chess.com Manage" [ref=e169]:
+                  - cell "AG Anish Giri fran_coach_6@chess.com" [ref=e170]:
+                    - generic [ref=e171]:
+                      - generic [ref=e172]: AG
+                      - generic [ref=e173]:
+                        - generic [ref=e174]: Anish Giri
+                        - generic [ref=e175]: fran_coach_6@chess.com
+                  - cell [ref=e176]
+                  - cell [ref=e178]
+                  - cell "Manage" [ref=e182]:
+                    - generic [ref=e183]:
+                      - link "Manage" [ref=e184] [cursor=pointer]:
+                        - /url: /admin/coaches/79b6f944-20ea-4664-a23d-dbab51df7653
+                        - button "Manage" [ref=e185]
+                      - button [ref=e186] [cursor=pointer]:
+                        - img [ref=e187]
+                - row "FC Fabiano Caruana corp_coach_5@chess.com Manage" [ref=e190]:
+                  - cell "FC Fabiano Caruana corp_coach_5@chess.com" [ref=e191]:
+                    - generic [ref=e192]:
+                      - generic [ref=e193]: FC
+                      - generic [ref=e194]:
+                        - generic [ref=e195]: Fabiano Caruana
+                        - generic [ref=e196]: corp_coach_5@chess.com
+                  - cell [ref=e197]
+                  - cell [ref=e199]
+                  - cell "Manage" [ref=e203]:
+                    - generic [ref=e204]:
+                      - link "Manage" [ref=e205] [cursor=pointer]:
+                        - /url: /admin/coaches/ea5299f9-a299-4c2f-924d-f64e1355c80b
+                        - button "Manage" [ref=e206]
+                      - button [ref=e207] [cursor=pointer]:
+                        - img [ref=e208]
+                - row "GD Gukesh D fran_coach_10@chess.com Manage" [ref=e211]:
+                  - cell "GD Gukesh D fran_coach_10@chess.com" [ref=e212]:
+                    - generic [ref=e213]:
+                      - generic [ref=e214]: GD
+                      - generic [ref=e215]:
+                        - generic [ref=e216]: Gukesh D
+                        - generic [ref=e217]: fran_coach_10@chess.com
+                  - cell [ref=e218]
+                  - cell [ref=e220]
+                  - cell "Manage" [ref=e224]:
+                    - generic [ref=e225]:
+                      - link "Manage" [ref=e226] [cursor=pointer]:
+                        - /url: /admin/coaches/c9d31084-09dc-4765-a610-1ef7a9bc55e5
+                        - button "Manage" [ref=e227]
+                      - button [ref=e228] [cursor=pointer]:
+                        - img [ref=e229]
+                - row "HN Hikaru Nakamura corp_coach_4@chess.com Manage" [ref=e232]:
+                  - cell "HN Hikaru Nakamura corp_coach_4@chess.com" [ref=e233]:
+                    - generic [ref=e234]:
+                      - generic [ref=e235]: HN
+                      - generic [ref=e236]:
+                        - generic [ref=e237]: Hikaru Nakamura
+                        - generic [ref=e238]: corp_coach_4@chess.com
+                  - cell [ref=e239]
+                  - cell [ref=e241]
+                  - cell "Manage" [ref=e245]:
+                    - generic [ref=e246]:
+                      - link "Manage" [ref=e247] [cursor=pointer]:
+                        - /url: /admin/coaches/35f708a1-b324-425a-8a98-a8bd11f59921
+                        - button "Manage" [ref=e248]
+                      - button [ref=e249] [cursor=pointer]:
+                        - img [ref=e250]
+                - row "JP Judit Polgar corp_coach_2@chess.com Manage" [ref=e253]:
+                  - cell "JP Judit Polgar corp_coach_2@chess.com" [ref=e254]:
+                    - generic [ref=e255]:
+                      - generic [ref=e256]: JP
+                      - generic [ref=e257]:
+                        - generic [ref=e258]: Judit Polgar
+                        - generic [ref=e259]: corp_coach_2@chess.com
+                  - cell [ref=e260]
+                  - cell [ref=e262]
+                  - cell "Manage" [ref=e266]:
+                    - generic [ref=e267]:
+                      - link "Manage" [ref=e268] [cursor=pointer]:
+                        - /url: /admin/coaches/54a356ac-350c-44b3-9e7e-6c75d691b625
+                        - button "Manage" [ref=e269]
+                      - button [ref=e270] [cursor=pointer]:
+                        - img [ref=e271]
+                - row "LA Levon Aronian fran_coach_8@chess.com Manage" [ref=e274]:
+                  - cell "LA Levon Aronian fran_coach_8@chess.com" [ref=e275]:
+                    - generic [ref=e276]:
+                      - generic [ref=e277]: LA
+                      - generic [ref=e278]:
+                        - generic [ref=e279]: Levon Aronian
+                        - generic [ref=e280]: fran_coach_8@chess.com
+                  - cell [ref=e281]
+                  - cell [ref=e283]
+                  - cell "Manage" [ref=e287]:
+                    - generic [ref=e288]:
+                      - link "Manage" [ref=e289] [cursor=pointer]:
+                        - /url: /admin/coaches/eee0e9b3-f59e-45fe-ade9-f243a5be4ec7
+                        - button "Manage" [ref=e290]
+                      - button [ref=e291] [cursor=pointer]:
+                        - img [ref=e292]
+                - row "MC Magnus Carlsen corp_coach_3@chess.com Manage" [ref=e295]:
+                  - cell "MC Magnus Carlsen corp_coach_3@chess.com" [ref=e296]:
+                    - generic [ref=e297]:
+                      - generic [ref=e298]: MC
+                      - generic [ref=e299]:
+                        - generic [ref=e300]: Magnus Carlsen
+                        - generic [ref=e301]: corp_coach_3@chess.com
+                  - cell [ref=e302]
+                  - cell [ref=e304]
+                  - cell "Manage" [ref=e308]:
+                    - generic [ref=e309]:
+                      - link "Manage" [ref=e310] [cursor=pointer]:
+                        - /url: /admin/coaches/8eda0cf2-3e6c-4642-bfc3-7171e648bdce
+                        - button "Manage" [ref=e311]
+                      - button [ref=e312] [cursor=pointer]:
+                        - img [ref=e313]
+                - row "MA Marcus Aurelius corp_coach_1@chess.com Manage" [ref=e316]:
+                  - cell "MA Marcus Aurelius corp_coach_1@chess.com" [ref=e317]:
+                    - generic [ref=e318]:
+                      - generic [ref=e319]: MA
+                      - generic [ref=e320]:
+                        - generic [ref=e321]: Marcus Aurelius
+                        - generic [ref=e322]: corp_coach_1@chess.com
+                  - cell [ref=e323]
+                  - cell [ref=e325]
+                  - cell "Manage" [ref=e329]:
+                    - generic [ref=e330]:
+                      - link "Manage" [ref=e331] [cursor=pointer]:
+                        - /url: /admin/coaches/dff0984b-1737-4581-9697-e9e12acc9ec0
+                        - button "Manage" [ref=e332]
+                      - button [ref=e333] [cursor=pointer]:
+                        - img [ref=e334]
+                - row "PP Priya Patel coach@demo.com No qualifications Manage" [ref=e337]:
+                  - cell "PP Priya Patel coach@demo.com" [ref=e338]:
+                    - generic [ref=e339]:
+                      - generic [ref=e340]: PP
+                      - generic [ref=e341]:
+                        - generic [ref=e342]: Priya Patel
+                        - generic [ref=e343]: coach@demo.com
+                  - cell [ref=e344]
+                  - cell "No qualifications" [ref=e346]:
+                    - generic [ref=e348]: No qualifications
+                  - cell "Manage" [ref=e349]:
+                    - generic [ref=e350]:
+                      - link "Manage" [ref=e351] [cursor=pointer]:
+                        - /url: /admin/coaches/c622faf7-8436-4975-8622-4e7100291410
+                        - button "Manage" [ref=e352]
+                      - button [ref=e353] [cursor=pointer]:
+                        - img [ref=e354]
+                - row "VG Vidit Gujrathi fran_coach_9@chess.com Manage" [ref=e357]:
+                  - cell "VG Vidit Gujrathi fran_coach_9@chess.com" [ref=e358]:
+                    - generic [ref=e359]:
+                      - generic [ref=e360]: VG
+                      - generic [ref=e361]:
+                        - generic [ref=e362]: Vidit Gujrathi
+                        - generic [ref=e363]: fran_coach_9@chess.com
+                  - cell [ref=e364]
+                  - cell [ref=e366]
+                  - cell "Manage" [ref=e370]:
+                    - generic [ref=e371]:
+                      - link "Manage" [ref=e372] [cursor=pointer]:
+                        - /url: /admin/coaches/32a965f7-2a8c-46de-994a-848b1e6a5cbd
+                        - button "Manage" [ref=e373]
+                      - button [ref=e374] [cursor=pointer]:
+                        - img [ref=e375]
+                - row "WS Wesley So fran_coach_7@chess.com Manage" [ref=e378]:
+                  - cell "WS Wesley So fran_coach_7@chess.com" [ref=e379]:
+                    - generic [ref=e380]:
+                      - generic [ref=e381]: WS
+                      - generic [ref=e382]:
+                        - generic [ref=e383]: Wesley So
+                        - generic [ref=e384]: fran_coach_7@chess.com
+                  - cell [ref=e385]
+                  - cell [ref=e387]
+                  - cell "Manage" [ref=e391]:
+                    - generic [ref=e392]:
+                      - link "Manage" [ref=e393] [cursor=pointer]:
+                        - /url: /admin/coaches/dad1a051-c9c7-406e-8d12-87ef10fc5359
+                        - button "Manage" [ref=e394]
+                      - button [ref=e395] [cursor=pointer]:
+                        - img [ref=e396]
+        - generic [ref=e399]:
+          - generic [ref=e400]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e401]:
+            - generic [ref=e402]: Powered by
+            - generic [ref=e403]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

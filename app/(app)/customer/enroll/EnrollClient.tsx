@@ -71,25 +71,27 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   const handleFinish = async () => {
     setLoading(true);
     try {
-      const selectedLevel = levels.find((l: any) => l.id === formData.variantId);
-      const res = await fetch("/api/enrollments", {
+      const res = await fetch("/api/enrollments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           memberId: formData.memberId,
-          customerId: initialData.customerId,
           productVariantId: formData.variantId,
-          locationId: selectedLevel.location_id,
-          ownershipId: selectedLevel.ownership_id,
-          offeringPrice: selectedLevel.price,
           batchIds: formData.batchIds,
-          description: `${selectedLevel.name} Enrollment`,
-          setupFee: selectedLevel.setup_fee,
         })
       });
-      if (res.ok) {
-        router.push("/customer/billing?success=true");
+      
+      if (!res.ok) {
+        throw new Error("Failed to create checkout session");
       }
+
+      const { url } = await res.json();
+      if (url) {
+        window.location.href = url; // Redirect to Stripe
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error initiating checkout. Please try again.");
     } finally {
       setLoading(false);
     }

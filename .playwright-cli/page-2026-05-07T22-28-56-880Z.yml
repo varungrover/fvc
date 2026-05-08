@@ -1,0 +1,118 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /customer/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "👨‍👧 My Members" [ref=e90] [cursor=pointer]:
+            - /url: /customer/members
+            - generic [ref=e91]: 👨‍👧
+            - generic [ref=e92]: My Members
+          - link "📋 Enroll" [ref=e93] [cursor=pointer]:
+            - /url: /customer/enroll
+            - generic [ref=e94]: 📋
+            - generic [ref=e95]: Enroll
+          - link "📚 Learning Portal" [active] [ref=e96] [cursor=pointer]:
+            - /url: /customer/lms
+            - generic [ref=e97]: 📚
+            - generic [ref=e98]: Learning Portal
+          - link "💳 Payments" [ref=e100] [cursor=pointer]:
+            - /url: /customer/payments
+            - generic [ref=e101]: 💳
+            - generic [ref=e102]: Payments
+          - link "🔔 Notifications" [ref=e103] [cursor=pointer]:
+            - /url: /customer/notifications
+            - generic [ref=e104]: 🔔
+            - generic [ref=e105]: Notifications
+          - link "⚙️ Settings" [ref=e106] [cursor=pointer]:
+            - /url: /customer/settings
+            - generic [ref=e107]: ⚙️
+            - generic [ref=e108]: Settings
+        - generic [ref=e109]:
+          - link "👤 Profile" [ref=e111] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e112]: 👤
+            - generic [ref=e113]: Profile
+          - button "🚪 Logout" [ref=e114] [cursor=pointer]:
+            - generic [ref=e115]: 🚪
+            - generic [ref=e116]: Logout
+      - button "Collapse sidebar" [ref=e117] [cursor=pointer]: ←
+    - generic [ref=e118]:
+      - generic [ref=e120]:
+        - generic [ref=e121]:
+          - generic [ref=e122]: ROLE
+          - generic [ref=e123]: Customer
+        - generic [ref=e124]:
+          - generic "Avatar for Raj Sharma" [ref=e125]: RS
+          - generic [ref=e126]: Raj Sharma
+        - button "Log out" [ref=e128] [cursor=pointer]
+      - main [ref=e129]:
+        - generic [ref=e261]:
+          - generic [ref=e262]:
+            - heading "Learning Portal" [level=1] [ref=e263]
+            - generic [ref=e264]:
+              - button "Avatar for Aarav Sharma Aarav" [ref=e265] [cursor=pointer]:
+                - generic "Avatar for Aarav Sharma" [ref=e266]: AS
+                - text: Aarav
+              - button "Avatar for Anaya Sharma Anaya" [ref=e267] [cursor=pointer]:
+                - generic "Avatar for Anaya Sharma" [ref=e268]: AS
+                - text: Anaya
+              - button "Avatar for Raj Sharma Raj" [ref=e269] [cursor=pointer]:
+                - generic "Avatar for Raj Sharma" [ref=e270]: RS
+                - text: Raj
+          - button "♟ Chess · PP" [ref=e272] [cursor=pointer]
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - button "✅ 1. Board & Pieces 3 topics · Quiz passed ▶" [ref=e276] [cursor=pointer]:
+                  - generic [ref=e277]: ✅
+                  - generic [ref=e278]:
+                    - generic [ref=e279]: 1. Board & Pieces
+                    - generic [ref=e280]: 3 topics · Quiz passed
+                  - generic [ref=e281]: ▶
+                - generic [ref=e282]:
+                  - button "📝 How the Pieces Move" [ref=e283] [cursor=pointer]:
+                    - generic [ref=e284]: 📝
+                    - generic [ref=e285]: How the Pieces Move
+                  - button "📝 Setting Up the Board" [ref=e286] [cursor=pointer]:
+                    - generic [ref=e287]: 📝
+                    - generic [ref=e288]: Setting Up the Board
+                  - 'button "▶ Watch: Beginner Setup Walkthrough" [ref=e289] [cursor=pointer]':
+                    - generic [ref=e290]: ▶
+                    - generic [ref=e291]: "Watch: Beginner Setup Walkthrough"
+                  - generic [ref=e292]: ✅ Quiz passed
+              - button "📖 2. Opening Principles 2 topics ▶" [ref=e294] [cursor=pointer]:
+                - generic [ref=e295]: 📖
+                - generic [ref=e296]:
+                  - generic [ref=e297]: 2. Opening Principles
+                  - generic [ref=e298]: 2 topics
+                - generic [ref=e299]: ▶
+              - 'button "📖 3. Tactics: Forks & Pins 2 topics · Quiz ▶" [ref=e301] [cursor=pointer]':
+                - generic [ref=e302]: 📖
+                - generic [ref=e303]:
+                  - generic [ref=e304]: "3. Tactics: Forks & Pins"
+                  - generic [ref=e305]: 2 topics · Quiz
+                - generic [ref=e306]: ▶
+              - button "🔒 4. Endgame Basics 1 topic" [ref=e308]:
+                - generic [ref=e309]: 🔒
+                - generic [ref=e310]:
+                  - generic [ref=e311]: 4. Endgame Basics
+                  - generic [ref=e312]: 1 topic
+            - generic [ref=e314]:
+              - generic [ref=e315]: 📖
+              - heading "Chess · PP" [level=3] [ref=e316]
+              - paragraph [ref=e317]: Select a module on the left to get started.
+        - generic [ref=e186]:
+          - generic [ref=e187]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e188]:
+            - generic [ref=e189]: Powered by
+            - generic [ref=e190]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]: Mentora

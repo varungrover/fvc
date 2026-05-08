@@ -1,0 +1,91 @@
+[      84ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/login:0
+[     237ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[     302ms] Error: ./app/(app)/management/dashboard/page.tsx:1:10
+You're importing a module that depends on `useEffect` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useEffect, useState } from "react";
+    |          ^^^^^^^^^
+  2 | import { useRouter } from "next/navigation";
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+
+Ecmascript file had an error
+
+
+    at <unknown> (Error: ./app/(app)/management/dashboard/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/varun/projects/LMS/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/varun/projects/LMS/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/varun/projects/LMS/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/varun/projects/LMS/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/varun/projects/LMS/node_modules/next/dist/server/base-server.js:1745:26)
+[     278ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[     282ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:1:10
+You're importing a module that depends on `useEffect` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useEffect, useState } from "react";
+    |          ^^^^^^^^^
+  2 | import { useRouter } from "next/navigation";
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     282ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:2:10
+You're importing a module that depends on `useRouter` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+  1 | import { useEffect, useState } from "react";
+> 2 | import { useRouter } from "next/navigation";
+    |          ^^^^^^^^^
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+  5 | import { Button } from "@/components/ui/Button";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     282ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:1:21
+You're importing a module that depends on `useState` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useEffect, useState } from "react";
+    |                     ^^^^^^^^
+  2 | import { useRouter } from "next/navigation";
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     353ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/favicon.ico:0
+[     372ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:1:10
+You're importing a module that depends on `useEffect` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useEffect, useState } from "react";
+    |          ^^^^^^^^^
+  2 | import { useRouter } from "next/navigation";
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     372ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:2:10
+You're importing a module that depends on `useRouter` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+  1 | import { useEffect, useState } from "react";
+> 2 | import { useRouter } from "next/navigation";
+    |          ^^^^^^^^^
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+  5 | import { Button } from "@/components/ui/Button";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     372ms] [ERROR] ./app/(app)/management/dashboard/page.tsx:1:21
+You're importing a module that depends on `useState` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useEffect, useState } from "react";
+    |                     ^^^^^^^^
+  2 | import { useRouter } from "next/navigation";
+  3 | import { Card } from "@/components/ui/Card";
+  4 | import { Badge } from "@/components/ui/Badge";
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[     407ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[    9634ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[   10827ms] [LOG] [Fast Refresh] done in 1003ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[   11270ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[   11284ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[   11501ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   11554ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431

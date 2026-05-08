@@ -1,0 +1,214 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [ref=e87] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "🪐 Planets" [ref=e90] [cursor=pointer]:
+            - /url: /admin/planets
+            - generic [ref=e91]: 🪐
+            - generic [ref=e92]: Planets
+          - link "📚 Courses" [ref=e93] [cursor=pointer]:
+            - /url: /admin/courses
+            - generic [ref=e94]: 📚
+            - generic [ref=e95]: Courses
+          - link "📍 Locations" [active] [ref=e96] [cursor=pointer]:
+            - /url: /admin/locations
+            - generic [ref=e97]: 📍
+            - generic [ref=e98]: Locations
+          - link "📅 Batches" [ref=e99] [cursor=pointer]:
+            - /url: /admin/batches
+            - generic [ref=e100]: 📅
+            - generic [ref=e101]: Batches
+          - link "👤 Coaches" [ref=e102] [cursor=pointer]:
+            - /url: /admin/coaches
+            - generic [ref=e103]: 👤
+            - generic [ref=e104]: Coaches
+          - link "👥 Customers" [ref=e105] [cursor=pointer]:
+            - /url: /admin/customers
+            - generic [ref=e106]: 👥
+            - generic [ref=e107]: Customers
+          - link "📋 Roster" [ref=e108] [cursor=pointer]:
+            - /url: /admin/roster
+            - generic [ref=e109]: 📋
+            - generic [ref=e110]: Roster
+          - link "💳 Payments" [ref=e112] [cursor=pointer]:
+            - /url: /admin/payments
+            - generic [ref=e113]: 💳
+            - generic [ref=e114]: Payments
+          - link "🏷️ Discounts" [ref=e115] [cursor=pointer]:
+            - /url: /admin/discounts
+            - generic [ref=e116]: 🏷️
+            - generic [ref=e117]: Discounts
+          - link "🗓️ Holidays" [ref=e118] [cursor=pointer]:
+            - /url: /admin/holidays
+            - generic [ref=e119]: 🗓️
+            - generic [ref=e120]: Holidays
+          - link "🎫 Tickets" [ref=e121] [cursor=pointer]:
+            - /url: /admin/tickets
+            - generic [ref=e122]: 🎫
+            - generic [ref=e123]: Tickets
+        - button "🚪 Logout" [ref=e126] [cursor=pointer]:
+          - generic [ref=e127]: 🚪
+          - generic [ref=e128]: Logout
+      - button "Collapse sidebar" [ref=e129] [cursor=pointer]: ←
+    - generic [ref=e130]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: ROLE
+          - generic [ref=e135]: Franchisor Admin
+        - generic [ref=e136]:
+          - generic "Avatar for Mira Sandhu" [ref=e137]: MS
+          - generic [ref=e138]: Mira Sandhu
+        - button "Log out" [ref=e140] [cursor=pointer]
+      - main [ref=e141]:
+        - generic [ref=e352]:
+          - generic [ref=e353]:
+            - generic [ref=e354]:
+              - heading "Locations" [level=1] [ref=e355]
+              - paragraph [ref=e356]: The Learning Planet — 7 active locations
+            - button "➕ Add Location" [ref=e358] [cursor=pointer]:
+              - generic [ref=e359]: ➕
+              - text: Add Location
+          - textbox "Search locations…" [ref=e362]
+          - generic [ref=e363]:
+            - generic [ref=e365] [cursor=pointer]:
+              - generic [ref=e366]:
+                - generic [ref=e367]: 📍
+                - generic [ref=e368]:
+                  - generic [ref=e369]: Abbotsford
+                  - generic [ref=e370]: 32700 South Fraser Way, Abbotsford, BC V2S 2A8
+              - generic [ref=e371]:
+                - generic [ref=e372]:
+                  - generic [ref=e373]: —
+                  - generic [ref=e374]: Batches
+                - generic [ref=e375]:
+                  - generic [ref=e376]: —
+                  - generic [ref=e377]: Students
+                - generic [ref=e378]:
+                  - generic [ref=e379]: —
+                  - generic [ref=e380]: Coaches
+                - generic [ref=e381]: Active
+                - generic [ref=e382]: ▼
+            - generic [ref=e384] [cursor=pointer]:
+              - generic [ref=e385]:
+                - generic [ref=e386]: 📍
+                - generic [ref=e387]:
+                  - generic [ref=e388]: Brampton
+                  - generic [ref=e389]: 25 Peel Centre Dr, Brampton, ON L6T 3R5
+              - generic [ref=e390]:
+                - generic [ref=e391]:
+                  - generic [ref=e392]: —
+                  - generic [ref=e393]: Batches
+                - generic [ref=e394]:
+                  - generic [ref=e395]: —
+                  - generic [ref=e396]: Students
+                - generic [ref=e397]:
+                  - generic [ref=e398]: —
+                  - generic [ref=e399]: Coaches
+                - generic [ref=e400]: Active
+                - generic [ref=e401]: ▼
+            - generic [ref=e403] [cursor=pointer]:
+              - generic [ref=e404]:
+                - generic [ref=e405]: 📍
+                - generic [ref=e406]:
+                  - generic [ref=e407]: Langley
+                  - generic [ref=e408]: 20151 Fraser Hwy, Langley, BC V3A 4E4
+              - generic [ref=e409]:
+                - generic [ref=e410]:
+                  - generic [ref=e411]: —
+                  - generic [ref=e412]: Batches
+                - generic [ref=e413]:
+                  - generic [ref=e414]: —
+                  - generic [ref=e415]: Students
+                - generic [ref=e416]:
+                  - generic [ref=e417]: —
+                  - generic [ref=e418]: Coaches
+                - generic [ref=e419]: Active
+                - generic [ref=e420]: ▼
+            - generic [ref=e422] [cursor=pointer]:
+              - generic [ref=e423]:
+                - generic [ref=e424]: 📍
+                - generic [ref=e425]:
+                  - generic [ref=e426]: Mississauga
+                  - generic [ref=e427]: 100 City Centre Dr, Mississauga, ON L5B 2C9
+              - generic [ref=e428]:
+                - generic [ref=e429]:
+                  - generic [ref=e430]: —
+                  - generic [ref=e431]: Batches
+                - generic [ref=e432]:
+                  - generic [ref=e433]: —
+                  - generic [ref=e434]: Students
+                - generic [ref=e435]:
+                  - generic [ref=e436]: —
+                  - generic [ref=e437]: Coaches
+                - generic [ref=e438]: Active
+                - generic [ref=e439]: ▼
+            - generic [ref=e441] [cursor=pointer]:
+              - generic [ref=e442]:
+                - generic [ref=e443]: 📍
+                - generic [ref=e444]:
+                  - generic [ref=e445]: Surrey Central
+                  - generic [ref=e446]: 10153 King George Blvd, Surrey, BC V3T 2W1
+              - generic [ref=e447]:
+                - generic [ref=e448]:
+                  - generic [ref=e449]: —
+                  - generic [ref=e450]: Batches
+                - generic [ref=e451]:
+                  - generic [ref=e452]: —
+                  - generic [ref=e453]: Students
+                - generic [ref=e454]:
+                  - generic [ref=e455]: —
+                  - generic [ref=e456]: Coaches
+                - generic [ref=e457]: Active
+                - generic [ref=e458]: ▼
+            - generic [ref=e460] [cursor=pointer]:
+              - generic [ref=e461]:
+                - generic [ref=e462]: 📍
+                - generic [ref=e463]:
+                  - generic [ref=e464]: Test Location 1
+                  - generic [ref=e465]: Address, Langley, BC
+              - generic [ref=e466]:
+                - generic [ref=e467]:
+                  - generic [ref=e468]: —
+                  - generic [ref=e469]: Batches
+                - generic [ref=e470]:
+                  - generic [ref=e471]: —
+                  - generic [ref=e472]: Students
+                - generic [ref=e473]:
+                  - generic [ref=e474]: —
+                  - generic [ref=e475]: Coaches
+                - generic [ref=e476]: Active
+                - generic [ref=e477]: ▼
+            - generic [ref=e479] [cursor=pointer]:
+              - generic [ref=e480]:
+                - generic [ref=e481]: 📍
+                - generic [ref=e482]:
+                  - generic [ref=e483]: Toronto Downtown
+                  - generic [ref=e484]: 365 Bloor St E, Toronto, ON M4W 3L4
+              - generic [ref=e485]:
+                - generic [ref=e486]:
+                  - generic [ref=e487]: —
+                  - generic [ref=e488]: Batches
+                - generic [ref=e489]:
+                  - generic [ref=e490]: —
+                  - generic [ref=e491]: Students
+                - generic [ref=e492]:
+                  - generic [ref=e493]: —
+                  - generic [ref=e494]: Coaches
+                - generic [ref=e495]: Active
+                - generic [ref=e496]: ▼
+        - generic [ref=e267]:
+          - generic [ref=e268]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e269]:
+            - generic [ref=e270]: Powered by
+            - generic [ref=e271]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]: Mentora

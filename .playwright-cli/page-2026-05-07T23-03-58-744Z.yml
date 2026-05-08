@@ -1,0 +1,166 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e595]:
+    - generic [ref=e596]:
+      - navigation [ref=e597]:
+        - generic [ref=e598]:
+          - generic [ref=e599]: 🌍
+          - generic [ref=e601]: The Learning Planet
+        - generic [ref=e602]:
+          - link "🏠 Dashboard" [ref=e603] [cursor=pointer]:
+            - /url: /franchisee-admin/dashboard
+            - generic [ref=e604]: 🏠
+            - generic [ref=e605]: Dashboard
+          - link "📍 Locations" [ref=e606] [cursor=pointer]:
+            - /url: /franchisee-admin/locations
+            - generic [ref=e607]: 📍
+            - generic [ref=e608]: Locations
+          - link "📅 Batches" [ref=e609] [cursor=pointer]:
+            - /url: /franchisee-admin/batches
+            - generic [ref=e610]: 📅
+            - generic [ref=e611]: Batches
+          - link "👤 Coaches" [ref=e612] [cursor=pointer]:
+            - /url: /franchisee-admin/coaches
+            - generic [ref=e613]: 👤
+            - generic [ref=e614]: Coaches
+          - link "👥 Customers" [ref=e615] [cursor=pointer]:
+            - /url: /franchisee-admin/customers
+            - generic [ref=e616]: 👥
+            - generic [ref=e617]: Customers
+          - link "📋 Roster" [ref=e618] [cursor=pointer]:
+            - /url: /franchisee-admin/roster
+            - generic [ref=e619]: 📋
+            - generic [ref=e620]: Roster
+          - link "🗓️ Holidays" [ref=e622] [cursor=pointer]:
+            - /url: /franchisee-admin/holidays
+            - generic [ref=e623]: 🗓️
+            - generic [ref=e624]: Holidays
+          - link "💸 Price Requests" [ref=e625] [cursor=pointer]:
+            - /url: /franchisee-admin/price-requests
+            - generic [ref=e626]: 💸
+            - generic [ref=e627]: Price Requests
+          - link "🎫 Tickets" [ref=e628] [cursor=pointer]:
+            - /url: /franchisee-admin/tickets
+            - generic [ref=e629]: 🎫
+            - generic [ref=e630]: Tickets
+        - button "🚪 Logout" [ref=e633] [cursor=pointer]:
+          - generic [ref=e634]: 🚪
+          - generic [ref=e635]: Logout
+      - button "Collapse sidebar" [ref=e636] [cursor=pointer]: ←
+    - generic [ref=e637]:
+      - generic [ref=e639]:
+        - generic [ref=e640]:
+          - generic [ref=e641]: ROLE
+          - generic [ref=e642]: Franchisee Admin
+        - generic [ref=e643]:
+          - generic "Avatar for Jordan Bell" [ref=e644]: JB
+          - generic [ref=e645]: Jordan Bell
+        - button "Log out" [ref=e647] [cursor=pointer]
+      - main [ref=e648]:
+        - generic [ref=e650]:
+          - generic [ref=e651]:
+            - generic [ref=e652]:
+              - generic [ref=e653]: Franchisee Admin · Maple Leaf Academy
+              - heading "Welcome back, Jordan!" [level=1] [ref=e654]
+              - paragraph [ref=e655]: Canadian academies for tomorrow's leaders · 3 locations · Ontario, Canada
+            - generic [ref=e656]:
+              - button "💰 Price Requests" [ref=e657] [cursor=pointer]:
+                - generic [ref=e658]: 💰
+                - text: Price Requests
+              - button "Manage Roster" [ref=e659] [cursor=pointer]
+          - generic [ref=e660]:
+            - generic [ref=e662] [cursor=pointer]:
+              - generic [ref=e663]:
+                - generic [ref=e664]: Locations
+                - generic [ref=e665]: "3"
+              - generic [ref=e666]: 📍
+            - generic [ref=e668] [cursor=pointer]:
+              - generic [ref=e669]:
+                - generic [ref=e670]: Active Coaches
+                - generic [ref=e671]: "1"
+              - generic [ref=e672]: 🧑‍🏫
+            - generic [ref=e674] [cursor=pointer]:
+              - generic [ref=e675]:
+                - generic [ref=e676]: Active Students
+                - generic [ref=e677]: "5"
+              - generic [ref=e678]: 🎓
+            - generic [ref=e680] [cursor=pointer]:
+              - generic [ref=e681]:
+                - generic [ref=e682]: Pending Requests
+                - generic [ref=e683]: "2"
+                - generic [ref=e684]: Needs attention
+              - generic [ref=e685]: 📋
+          - generic [ref=e686]:
+            - generic [ref=e687]:
+              - generic [ref=e688]:
+                - generic [ref=e689]: ⏳
+                - generic [ref=e690]: 2 Price Requests Awaiting Review
+              - button "View all →" [ref=e691] [cursor=pointer]
+            - generic [ref=e692]:
+              - generic [ref=e693]:
+                - generic [ref=e694]: Chess PP · 1x/week
+                - generic [ref=e695]: $139 → $149 · Submitted Apr 15, 2026
+              - generic [ref=e696]: Pending
+            - generic [ref=e697]:
+              - generic [ref=e698]:
+                - generic [ref=e699]: Finance Investment · 1x/week
+                - generic [ref=e700]: $169 → $179 · Submitted Apr 28, 2026
+              - generic [ref=e701]: Pending
+          - generic [ref=e702]:
+            - generic [ref=e703]:
+              - generic [ref=e705]:
+                - heading "Active Batches" [level=2] [ref=e707]
+                - button "View Roster →" [ref=e708] [cursor=pointer]
+              - generic [ref=e709]:
+                - generic [ref=e710]: Batch
+                - generic [ref=e711]: Location
+                - generic [ref=e712]: Schedule
+                - generic [ref=e713]: Coach
+              - generic [ref=e714]:
+                - generic [ref=e715]:
+                  - generic [ref=e716]: ♟ Chess
+                  - text: PP
+                - generic [ref=e717]: Toronto
+                - generic [ref=e718]: Mons 5pm
+                - generic [ref=e719]: Lisa
+              - generic [ref=e720]:
+                - generic [ref=e721]:
+                  - generic [ref=e722]: $ Finance
+                  - text: Intro to Investing
+                - generic [ref=e723]: Toronto
+                - generic [ref=e724]: Thus 6pm
+                - generic [ref=e725]: Lisa
+            - generic [ref=e726]:
+              - heading "Quick Actions" [level=2] [ref=e729]
+              - generic [ref=e730]:
+                - button "📍 Manage Locations →" [ref=e731] [cursor=pointer]:
+                  - generic [ref=e732]: 📍
+                  - text: Manage Locations
+                  - generic [ref=e733]: →
+                - button "🧑‍🏫 Manage Coaches →" [ref=e734] [cursor=pointer]:
+                  - generic [ref=e735]: 🧑‍🏫
+                  - text: Manage Coaches
+                  - generic [ref=e736]: →
+                - button "👨‍👩‍👧 View Customers →" [ref=e737] [cursor=pointer]:
+                  - generic [ref=e738]: 👨‍👩‍👧
+                  - text: View Customers
+                  - generic [ref=e739]: →
+                - button "📋 View Roster →" [ref=e740] [cursor=pointer]:
+                  - generic [ref=e741]: 📋
+                  - text: View Roster
+                  - generic [ref=e742]: →
+                - button "💰 Price Requests →" [ref=e743] [cursor=pointer]:
+                  - generic [ref=e744]: 💰
+                  - text: Price Requests
+                  - generic [ref=e745]: →
+                - button "🎫 Support Tickets →" [ref=e746] [cursor=pointer]:
+                  - generic [ref=e747]: 🎫
+                  - text: Support Tickets
+                  - generic [ref=e748]: →
+        - generic [ref=e749]:
+          - generic [ref=e750]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e751]:
+            - generic [ref=e752]: Powered by
+            - generic [ref=e753]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]

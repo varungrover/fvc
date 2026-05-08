@@ -1,0 +1,174 @@
+- generic [ref=e1]:
+  - generic [ref=e79]:
+    - generic [ref=e80]:
+      - navigation [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: 🌍
+          - generic [ref=e85]: The Learning Planet
+        - generic [ref=e86]:
+          - link "🏠 Dashboard" [active] [ref=e87] [cursor=pointer]:
+            - /url: /coach/dashboard
+            - generic [ref=e88]: 🏠
+            - generic [ref=e89]: Dashboard
+          - link "📅 Sessions" [ref=e90] [cursor=pointer]:
+            - /url: /coach/sessions
+            - generic [ref=e91]: 📅
+            - generic [ref=e92]: Sessions
+          - link "👥 Students" [ref=e93] [cursor=pointer]:
+            - /url: /coach/students
+            - generic [ref=e94]: 👥
+            - generic [ref=e95]: Students
+          - link "🏆 Achievements" [ref=e96] [cursor=pointer]:
+            - /url: /coach/achievements
+            - generic [ref=e97]: 🏆
+            - generic [ref=e98]: Achievements
+          - link "✏️ LMS Authoring" [ref=e99] [cursor=pointer]:
+            - /url: /coach/lms
+            - generic [ref=e100]: ✏️
+            - generic [ref=e101]: LMS Authoring
+          - link "🗓️ Availability" [ref=e103] [cursor=pointer]:
+            - /url: /coach/availability
+            - generic [ref=e104]: 🗓️
+            - generic [ref=e105]: Availability
+          - link "🏖️ Leaves" [ref=e106] [cursor=pointer]:
+            - /url: /coach/leaves
+            - generic [ref=e107]: 🏖️
+            - generic [ref=e108]: Leaves
+        - button "🚪 Logout" [ref=e111] [cursor=pointer]:
+          - generic [ref=e112]: 🚪
+          - generic [ref=e113]: Logout
+      - button "Collapse sidebar" [ref=e114] [cursor=pointer]: ←
+    - generic [ref=e115]:
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - generic [ref=e119]: ROLE
+          - generic [ref=e120]: Coach
+        - generic [ref=e121]:
+          - generic "Avatar for Priya Patel" [ref=e122]: PP
+          - generic [ref=e123]: Priya Patel
+        - button "Log out" [ref=e125] [cursor=pointer]
+      - main [ref=e126]:
+        - generic [ref=e358]:
+          - generic [ref=e359]:
+            - generic [ref=e360]:
+              - generic [ref=e361]: Good morning
+              - heading "Welcome back, Priya!" [level=1] [ref=e362]
+              - paragraph [ref=e363]: 1 sessiontoday · 4 batches · 5 students
+            - button "📅 Mark Attendance" [ref=e364] [cursor=pointer]:
+              - generic [ref=e365]: 📅
+              - text: Mark Attendance
+          - generic [ref=e366]:
+            - generic [ref=e368] [cursor=pointer]:
+              - generic [ref=e369]:
+                - generic [ref=e370]: Today's Sessions
+                - generic [ref=e371]: "1"
+              - generic [ref=e372]: 📅
+            - generic [ref=e374] [cursor=pointer]:
+              - generic [ref=e375]:
+                - generic [ref=e376]: Total Students
+                - generic [ref=e377]: "5"
+              - generic [ref=e378]: 👥
+            - generic [ref=e380]:
+              - generic [ref=e381]:
+                - generic [ref=e382]: Pending Notes
+                - generic [ref=e383]: "1"
+                - generic [ref=e384]: From today's sessions
+              - generic [ref=e385]: 📝
+            - generic [ref=e387]:
+              - generic [ref=e388]:
+                - generic [ref=e389]: Batches Taught
+                - generic [ref=e390]: "4"
+              - generic [ref=e391]: 🏫
+          - generic [ref=e392]:
+            - generic [ref=e393]:
+              - generic [ref=e394]:
+                - generic [ref=e395]:
+                  - generic [ref=e396]:
+                    - heading "Today's Batches" [level=2] [ref=e397]
+                    - paragraph [ref=e398]: 2026-05-04 (Monday)
+                  - button "All sessions" [ref=e399] [cursor=pointer]
+                - generic [ref=e401]:
+                  - generic [ref=e402]:
+                    - generic [ref=e403]: ♟
+                    - generic [ref=e404]:
+                      - generic [ref=e405]: Chess · PP
+                      - generic [ref=e406]: Surrey Central · 4pm–5pm
+                  - generic [ref=e407]:
+                    - generic [ref=e408]: 5/12
+                    - generic [ref=e409]: enrolled
+              - generic [ref=e410]:
+                - generic [ref=e411]:
+                  - heading "Recent Session Notes" [level=2] [ref=e413]
+                  - button "View all" [ref=e414] [cursor=pointer]
+                - generic [ref=e415]:
+                  - generic [ref=e416]:
+                    - generic [ref=e417]:
+                      - generic [ref=e418]: Math · Grade 5
+                      - generic [ref=e419]: 2026-04-29
+                    - generic [ref=e420]: Fractions — common denominators and addition.
+                    - generic [ref=e421]: "HW: Practice problems sent home."
+                  - generic [ref=e422]:
+                    - generic [ref=e423]:
+                      - generic [ref=e424]: Chess · PP
+                      - generic [ref=e425]: 2026-04-27
+                    - generic [ref=e426]: Pawn structure basics — opposition + key squares.
+                    - generic [ref=e427]: "HW: Practice problems sent home."
+                  - generic [ref=e428]:
+                    - generic [ref=e429]:
+                      - generic [ref=e430]: Math · Grade 5
+                      - generic [ref=e431]: 2026-04-22
+                    - generic [ref=e432]: Fractions — common denominators and addition.
+                    - generic [ref=e433]: "HW: Practice problems sent home."
+            - generic [ref=e434]:
+              - generic [ref=e435]:
+                - generic [ref=e436]:
+                  - heading "My Batches" [level=2] [ref=e438]
+                  - button "Students" [ref=e439] [cursor=pointer]
+                - generic [ref=e440]:
+                  - generic [ref=e442]:
+                    - generic [ref=e443]: ♟
+                    - generic [ref=e444]:
+                      - generic [ref=e445]: Chess · PP
+                      - generic [ref=e446]: Mons 4pm–5pm
+                    - generic [ref=e447]: 5/12
+                  - generic [ref=e452]:
+                    - generic [ref=e453]: ♟
+                    - generic [ref=e454]:
+                      - generic [ref=e455]: Chess · PP
+                      - generic [ref=e456]: Thus 4pm–5pm
+                    - generic [ref=e457]: 0/12
+                  - generic [ref=e461]:
+                    - generic [ref=e462]: ♟
+                    - generic [ref=e463]:
+                      - generic [ref=e464]: Chess · RR
+                      - generic [ref=e465]: Sats 10am–11am
+                    - generic [ref=e466]: 0/10
+                  - generic [ref=e470]:
+                    - generic [ref=e471]: ∑
+                    - generic [ref=e472]:
+                      - generic [ref=e473]: Math · Grade 5
+                      - generic [ref=e474]: Weds 4:30pm–5:30pm
+                    - generic [ref=e475]: 1/12
+              - generic [ref=e478]:
+                - heading "Quick Links" [level=2] [ref=e481]
+                - generic [ref=e482]:
+                  - button "✅ Mark Attendance" [ref=e483] [cursor=pointer]:
+                    - generic [ref=e484]: ✅
+                    - text: Mark Attendance
+                  - button "👥 View Students" [ref=e485] [cursor=pointer]:
+                    - generic [ref=e486]: 👥
+                    - text: View Students
+                  - button "✏️ LMS Authoring" [ref=e487] [cursor=pointer]:
+                    - generic [ref=e488]: ✏️
+                    - text: LMS Authoring
+                  - button "🗓️ Set Availability" [ref=e489] [cursor=pointer]:
+                    - generic [ref=e490]: 🗓️
+                    - text: Set Availability
+        - generic [ref=e261]:
+          - generic [ref=e262]: © 2026 The Learning Planet. All rights reserved.
+          - generic [ref=e263]:
+            - generic [ref=e264]: Powered by
+            - generic [ref=e265]: StarLearning
+  - button "Open Next.js Dev Tools" [ref=e74] [cursor=pointer]:
+    - img [ref=e75]
+  - alert [ref=e78]
