@@ -5,8 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { TLP } from "@/lib/theme/tokens";
 
 export type NavItem =
-  | { kind: "link"; id: string; label: string; href: string; icon: string }
-  | { kind: "divider"; id: string };
+  | { kind: "link"; id: string; label: string; href: string; icon: string; position?: "top" | "bottom" }
+  | { kind: "divider"; id: string; position?: "top" | "bottom" };
 
 interface Props {
   items: NavItem[];
@@ -147,11 +147,12 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
       )}
 
       <div style={{ flex: 1, overflowY: "auto", paddingTop: brand ? 0 : 16 }}>
-        {items.map(renderItem)}
+        {items.filter(i => i.position !== "bottom").map(renderItem)}
       </div>
 
       {/* Bottom Actions */}
       <div style={{ paddingBottom: 60 }}>
+        {items.filter(i => i.position === "bottom").map(renderItem)}
         <div
           style={{
             height: 1,

@@ -9,7 +9,7 @@ const CUSTOMER_NAV: NavItem[] = [
   { kind: 'divider', id: 'd1' },
   { kind: 'link', id: 'payments', label: 'Payments', href: '/customer/payments', icon: '💳' },
   { kind: 'link', id: 'notifications', label: 'Notifications', href: '/customer/notifications', icon: '🔔' },
-  { kind: 'link', id: 'settings', label: 'Settings', href: '/customer/settings', icon: '⚙️' },
+  { kind: 'link', id: 'profile', label: 'Profile', href: '/customer/settings', icon: '👤', position: 'bottom' },
 ]
 
 const COACH_NAV: NavItem[] = [
