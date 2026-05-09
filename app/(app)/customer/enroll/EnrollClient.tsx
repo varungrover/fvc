@@ -12,6 +12,7 @@ const STEPS = ["Student", "Level", "Schedule", "Billing", "Payment"];
 
 export default function EnrollClient({ initialData }: { initialData: any }) {
   const [step, setStep] = useState(1);
+  const [subStep, setSubStep] = useState(0); // 0: Planet, 1: Product, 2: Level
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -48,15 +49,29 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
     };
   }, [formData.variantId, levels, discountTiers]);
 
-  const next = () => setStep(s => Math.min(s + 1, STEPS.length));
-  const prev = () => {
-    // If in Step 2 sub-selection, maybe go back within tiered levels
+  const handleNext = () => {
     if (step === 2) {
-      if (formData.variantId) { setFormData({ ...formData, variantId: "" }); return; }
-      if (formData.productId) { setFormData({ ...formData, productId: "" }); return; }
-      if (formData.planetId) { setFormData({ ...formData, planetId: "" }); return; }
+      if (subStep < 2) {
+        setSubStep(s => s + 1);
+        return;
+      }
     }
-    setStep(s => Math.max(s - 1, 1));
+    setStep(s => Math.min(s + 1, STEPS.length));
+    setSubStep(0);
+  };
+
+  const handlePrev = () => {
+    if (step === 2) {
+      if (subStep > 0) {
+        setSubStep(s => s - 1);
+        return;
+      }
+    }
+    setStep(s => {
+      const nextStep = Math.max(s - 1, 1);
+      if (nextStep === 2) setSubStep(2); // Go to level selection if returning to step 2
+      return nextStep;
+    });
   };
 
   const handleFinish = async () => {
@@ -169,26 +184,29 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
           {/* STEP 2: TIERED LEVEL SELECTION */}
           {step === 2 && (
             <div>
-              {!formData.planetId && (
+              {subStep === 0 && (
                 <>
                   <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Planet</h2>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     {planets.map((p: any) => {
                       const theme = PLANETS[p.name as PlanetName] || PLANETS.Chess;
+                      const isSelected = formData.planetId === p.id;
                       return (
                         <div 
                           key={p.id}
-                          onClick={() => setFormData({ ...formData, planetId: p.id })}
+                          onClick={() => setFormData({ ...formData, planetId: p.id, productId: "", variantId: "", batchIds: [] })}
                           style={{ 
                             padding: 30, 
                             borderRadius: 20, 
                             background: theme.bg,
-                            border: `2px solid ${theme.color}20`,
+                            border: `3px solid ${isSelected ? theme.color : theme.color + "20"}`,
                             color: TLP.navy,
                             cursor: "pointer",
-                            transition: "all 0.3s ease",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             position: "relative",
-                            overflow: "hidden"
+                            overflow: "hidden",
+                            transform: isSelected ? "scale(1.02)" : "scale(1)",
+                            boxShadow: isSelected ? `0 10px 30px ${theme.color}30` : "none"
                           }}
                         >
                           <div style={{ fontSize: 32, marginBottom: 12 }}>{theme.icon}</div>
@@ -201,21 +219,22 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                 </>
               )}
 
-              {formData.planetId && !formData.productId && (
+              {subStep === 1 && (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                    <button onClick={() => setFormData({ ...formData, planetId: "" })} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Planet</button>
+                    <button onClick={() => setSubStep(0)} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Planet</button>
                     <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy }}>Choose Program</h2>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     {products.filter((p: any) => p.planet_id === formData.planetId).map((p: any) => (
                       <div 
                         key={p.id}
-                        onClick={() => setFormData({ ...formData, productId: p.id })}
+                        onClick={() => setFormData({ ...formData, productId: p.id, variantId: "", batchIds: [] })}
                         style={{ 
                           padding: 24, 
                           borderRadius: 16, 
-                          border: `2px solid ${TLP.gray100}`,
+                          border: `2px solid ${formData.productId === p.id ? TLP.teal : TLP.gray100}`,
+                          background: formData.productId === p.id ? TLP.teal + "05" : "white",
                           cursor: "pointer",
                           transition: "all 0.2s ease"
                         }}
@@ -227,17 +246,17 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                 </>
               )}
 
-              {formData.productId && (
+              {subStep === 2 && (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                    <button onClick={() => setFormData({ ...formData, productId: "" })} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Program</button>
+                    <button onClick={() => setSubStep(1)} style={{ background: "none", border: "none", color: TLP.teal, fontWeight: 700, cursor: "pointer" }}>← Change Program</button>
                     <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy }}>Select Frequency</h2>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     {levels.filter((v: any) => v.product_id === formData.productId).map((v: any) => (
                       <div 
                         key={v.id}
-                        onClick={() => setFormData({ ...formData, variantId: v.id })}
+                        onClick={() => setFormData({ ...formData, variantId: v.id, batchIds: [] })}
                         style={{ 
                           padding: 24, 
                           borderRadius: 16, 
@@ -375,14 +394,20 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
           )}
 
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: 60 }}>
-            <Button variant="secondary" onClick={prev} disabled={step === 1 || loading} style={{ borderRadius: 12, padding: "12px 24px" }}>
+            <Button variant="secondary" onClick={handlePrev} disabled={(step === 1 && subStep === 0) || loading} style={{ borderRadius: 12, padding: "12px 24px" }}>
               Back
             </Button>
             {step < STEPS.length && (
               <Button 
                 variant="primary" 
-                onClick={next} 
-                disabled={ (step === 1 && !formData.memberId) || (step === 2 && !formData.variantId) || (step === 3 && formData.batchIds.length === 0) }
+                onClick={handleNext} 
+                disabled={ 
+                  (step === 1 && !formData.memberId) || 
+                  (step === 2 && subStep === 0 && !formData.planetId) || 
+                  (step === 2 && subStep === 1 && !formData.productId) || 
+                  (step === 2 && subStep === 2 && !formData.variantId) || 
+                  (step === 3 && formData.batchIds.length === 0) 
+                }
                 style={{ borderRadius: 12, padding: "12px 32px" }}
               >
                 Continue
