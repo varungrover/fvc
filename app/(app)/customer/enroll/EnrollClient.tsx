@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -14,7 +14,13 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   const [step, setStep] = useState(1);
   const [subStep, setSubStep] = useState(0); // 0: Planet, 1: Product, 2: Level
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  // Ensure hydration stability
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [formData, setFormData] = useState({
     memberId: "",
@@ -29,6 +35,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
   // Real-time Billing Logic
   const billingSummary = useMemo(() => {
+    if (!mounted) return null;
     const selectedLevel = levels.find((l: any) => l.id === formData.variantId);
     if (!selectedLevel) return null;
 
@@ -47,7 +54,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
       discount,
       total: Math.max(0, proratedAmount + setupFee - discount)
     };
-  }, [formData.variantId, levels, discountTiers]);
+  }, [formData.variantId, levels, discountTiers, mounted]);
 
   const handleNext = () => {
     if (step === 2) {
@@ -103,6 +110,8 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
     }
   };
 
+  if (!mounted) return null; // Avoid hydration mismatch for the entire form
+
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 40 }}>
@@ -139,7 +148,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
           
           {/* STEP 1: MEMBER SELECTION */}
           {step === 1 && (
-            <div>
+            <div key="step-1">
               <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Select Student</h2>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                 {members.map((m: any) => (
@@ -183,7 +192,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
           {/* STEP 2: TIERED LEVEL SELECTION */}
           {step === 2 && (
-            <div>
+            <div key={`step-2-sub-${subStep}`}>
               {subStep === 0 && (
                 <>
                   <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Planet</h2>
@@ -278,7 +287,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
           {/* STEP 3: SCHEDULE */}
           {step === 3 && (
-            <div>
+            <div key="step-3">
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
                 <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, margin: 0 }}>Pick Schedule</h2>
                 <div style={{ 
@@ -345,7 +354,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
           {/* STEP 4: BILLING PREVIEW */}
           {step === 4 && billingSummary && (
-            <div>
+            <div key="step-4">
               <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Review Billing</h2>
               <div style={{ padding: 30, background: TLP.gray50, borderRadius: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
@@ -380,7 +389,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
 
           {/* STEP 5: PAYMENT */}
           {step === 5 && (
-             <div>
+             <div key="step-5">
               <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Secure Checkout</h2>
               <div style={{ padding: 40, border: `2px solid ${TLP.teal}`, borderRadius: 20, textAlign: "center", background: TLP.teal + "05" }}>
                 <div style={{ fontSize: 40, marginBottom: 20 }}>💳</div>
@@ -420,31 +429,31 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
         <div style={{ position: "sticky", top: 24 }}>
           <h3 style={{ fontSize: 14, fontWeight: 800, color: TLP.gray400, textTransform: "uppercase", marginBottom: 20, letterSpacing: "0.1em" }}>Selection Summary</h3>
           {formData.memberId && (
-            <div style={{ marginBottom: 20 }}>
+            <div key="summary-member" style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: TLP.gray500 }}>Student</div>
               <div style={{ fontWeight: 700, color: TLP.navy }}>{members.find((m: any) => m.id === formData.memberId)?.full_name}</div>
             </div>
           )}
           {formData.planetId && (
-            <div style={{ marginBottom: 20 }}>
+            <div key="summary-planet" style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: TLP.gray500 }}>Planet</div>
               <div style={{ fontWeight: 700, color: TLP.navy }}>{planets.find((p: any) => p.id === formData.planetId)?.name}</div>
             </div>
           )}
           {formData.productId && (
-            <div style={{ marginBottom: 20 }}>
+            <div key="summary-product" style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: TLP.gray500 }}>Program</div>
               <div style={{ fontWeight: 700, color: TLP.navy }}>{products.find((p: any) => p.id === formData.productId)?.name}</div>
             </div>
           )}
           {formData.variantId && (
-            <div style={{ marginBottom: 20 }}>
+            <div key="summary-variant" style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: TLP.gray500 }}>Frequency</div>
               <div style={{ fontWeight: 700, color: TLP.navy }}>{levels.find((v: any) => v.id === formData.variantId)?.name}</div>
             </div>
           )}
           {formData.batchIds.length > 0 && (
-            <div style={{ marginBottom: 20 }}>
+            <div key="summary-schedule" style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: TLP.gray500 }}>Schedule</div>
               {formData.batchIds.map(bid => {
                 const b = batches.find((x: any) => x.id === bid);
@@ -454,7 +463,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
           )}
           
           {billingSummary && (
-             <div style={{ marginTop: 40, padding: 24, background: TLP.navy, color: "white", borderRadius: 20 }}>
+             <div key="summary-billing" style={{ marginTop: 40, padding: 24, background: TLP.navy, color: "white", borderRadius: 20 }}>
                 <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 4 }}>DUE TODAY</div>
                 <div style={{ fontSize: 32, fontWeight: 900 }}>${billingSummary.total}</div>
              </div>
