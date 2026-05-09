@@ -33,8 +33,13 @@ interface Props {
 }
 
 export function Sidebar({ items, collapsed = false, brand }: Props) {
+  const [mounted, setMounted] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function handleLogout() {
     try {
@@ -130,10 +135,13 @@ export function Sidebar({ items, collapsed = false, brand }: Props) {
     );
   };
 
+  // Prevent hydration mismatch by using a stable width on server, or avoiding render until mounted
+  const sidebarWidth = !mounted ? 260 : (collapsed ? 68 : 260);
+
   return (
     <nav
       style={{
-        width: collapsed ? 68 : 260,
+        width: sidebarWidth,
         background: `linear-gradient(180deg, ${TLP.navy} 0%, #111827 100%)`,
         display: "flex",
         flexDirection: "column",

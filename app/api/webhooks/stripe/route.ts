@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
 
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Handle the event
   switch (event.type) {
@@ -33,27 +33,51 @@ export async function POST(request: Request) {
 
       console.log(`[STRIPE WEBHOOK] Checkout completed for user ${userId}, member ${memberId}`);
 
-      // 1. Fetch variant details to get location_id and ownership_id
-      const { data: variant } = await supabase
-        .from("product_variants")
-        .select("location_id, ownership_id, price, setup_fee")
-        .eq("id", productVariantId)
+      // 1. Fetch variant and related IDs (location and ownership)
+      // In this schema, variant -> location_course_offerings -> locations -> ownerships
+      const { data: variantOffering, error: variantError } = await supabase
+        .from("location_course_offerings")
+        .select(`
+          location_id,
+          price,
+          setup_fee,
+          locations!inner (
+            ownership_id
+          )
+        `)
+        .eq("product_variant_id", productVariantId)
         .single();
 
-      if (!variant) {
-        console.error("Variant not found for enrollment creation");
+      if (variantError || !variantOffering) {
+        console.error("Variant offering not found for enrollment creation:", variantError);
         break;
       }
+
+      const { data: memberData } = await supabase
+        .from("members")
+        .select("customer_id")
+        .eq("id", memberId)
+        .single();
+
+      // In this schema, enrollment.customer_id points to profiles.id
+      // But member.customer_id points to customers.id (which has a profile_id)
+      const { data: customerData } = await supabase
+        .from("customers")
+        .select("profile_id")
+        .eq("id", memberData?.customer_id)
+        .single();
 
       // 2. Create the Enrollment
       const { data: enrollment, error: enrollError } = await supabase
         .from("enrollments")
         .insert({
           member_id: memberId,
+          customer_id: customerData?.profile_id,
           product_variant_id: productVariantId,
-          location_id: variant.location_id,
-          ownership_id: variant.ownership_id,
+          location_id: variantOffering.location_id,
+          ownership_id: (variantOffering.locations as any).ownership_id,
           status: "active",
+          offering_price: variantOffering.price,
           stripe_subscription_id: session.subscription,
           stripe_customer_id: session.customer,
         })
