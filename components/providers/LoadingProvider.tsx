@@ -73,6 +73,14 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
         anchor.getAttribute("download") === null &&
         anchor.href !== window.location.href
       ) {
+        // Don't show loading for hash links on the same page
+        const url = new URL(anchor.href);
+        const currentUrl = new URL(window.location.href);
+        
+        if (url.pathname === currentUrl.pathname && url.hash !== currentUrl.hash) {
+          return;
+        }
+
         setIsLoading(true);
       }
     };

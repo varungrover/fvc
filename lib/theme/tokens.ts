@@ -32,20 +32,23 @@ export const TLP = {
   gray800: "#1f2937",
 } as const;
 
-export type PlanetName = "Chess" | "Math" | "English" | "Finance" | "Arts" | "Business";
+export type PlanetName = "Chess" | "Math" | "Maths" | "English" | "Finance" | "Arts" | "Business" | "Science";
 
-export const PLANETS: Record<PlanetName, { color: string; bg: string; icon: string }> = {
+export const PLANETS: Record<string, { color: string; bg: string; icon: string }> = {
   Chess: { color: TLP.teal, bg: TLP.tealLight, icon: "♟" },
   Math: { color: TLP.blue, bg: TLP.blueLight, icon: "∑" },
+  Maths: { color: TLP.blue, bg: TLP.blueLight, icon: "∑" },
   English: { color: TLP.green, bg: TLP.greenLight, icon: "Aa" },
   Finance: { color: TLP.amber, bg: TLP.amberLight, icon: "$" },
   Arts: { color: TLP.purple, bg: TLP.purpleLight, icon: "🎨" },
   Business: { color: "#e67e22", bg: "#fef9f0", icon: "💼" },
+  Science: { color: "#e53e3e", bg: "#fff5f5", icon: "🔬" },
 };
 
 export function planetStyle(name: string): { color: string; bg: string; icon: string } {
+  const trimmedName = name.trim();
   return (
-    PLANETS[name as PlanetName] ?? {
+    PLANETS[trimmedName] ?? {
       color: TLP.gray500,
       bg: TLP.gray100,
       icon: "•",

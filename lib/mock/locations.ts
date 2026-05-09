@@ -12,6 +12,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "V3T 2W1",
     isActive: true,
+    latitude: 49.1913,
+    longitude: -122.8490,
   },
   {
     id: "loc_tlp_abbotsford",
@@ -23,6 +25,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "V2S 2A8",
     isActive: true,
+    latitude: 49.0504,
+    longitude: -122.3045,
   },
   {
     id: "loc_tlp_langley",
@@ -34,6 +38,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "V3A 4E4",
     isActive: true,
+    latitude: 49.1042,
+    longitude: -122.6576,
   },
   // Maple Leaf Academy (franchisee, ON)
   {
@@ -46,6 +52,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "M4W 3L4",
     isActive: true,
+    latitude: 43.6532,
+    longitude: -79.3832,
   },
   {
     id: "loc_mla_mississauga",
@@ -57,6 +65,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "L5B 2C9",
     isActive: true,
+    latitude: 43.5890,
+    longitude: -79.6441,
   },
   {
     id: "loc_mla_brampton",
@@ -68,6 +78,8 @@ export const LOCATIONS: Location[] = [
     country: "Canada",
     postalCode: "L6T 3R5",
     isActive: true,
+    latitude: 43.7315,
+    longitude: -79.7624,
   },
 ];
 
