@@ -249,26 +249,33 @@ export default function ProductDetailsPage({
 
               {/* Big Enroll Button */}
               <div style={{ marginTop: 32, padding: "24px 0 0", borderTop: `1px dashed ${TLP.gray100}`, display: "flex", justifyContent: "flex-start" }}>
-                <Link 
-                  href={isComplete ? `/login?locationId=${location.id}&productId=${product.id}&variantId=${selectedVariantId}&batchIds=${selectedBatchIds.join(",")}` : "#"}
-                  onClick={e => { if (!isComplete) e.preventDefault(); }}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    background: isComplete ? ps.color : TLP.gray100,
-                    color: isComplete ? "#fff" : TLP.gray400,
-                    padding: "14px 32px", borderRadius: 14,
-                    fontSize: 16, fontWeight: 800, textDecoration: "none",
-                    transition: "all 0.2s",
-                    cursor: isComplete ? "pointer" : "not-allowed",
-                    boxShadow: isComplete ? `0 6px 18px ${ps.color}33` : "none",
-                  }}
-                >
-                  {isComplete ? (
-                    <>Enroll Now <span style={{ fontSize: 18 }}>→</span></>
-                  ) : (
-                    `Select ${requiredSlots - selectedBatchIds.length} more slot${(requiredSlots - selectedBatchIds.length) > 1 ? "s" : ""}`
-                  )}
-                </Link>
+                {(() => {
+                  const enrollPath = `/customer/enroll?productId=${product.id}&variantId=${selectedVariantId}&batchIds=${selectedBatchIds.join(",")}`;
+                  const loginPath = `/login?next=${encodeURIComponent(enrollPath)}`;
+                  
+                  return (
+                    <Link 
+                      href={isComplete ? loginPath : "#"}
+                      onClick={e => { if (!isComplete) e.preventDefault(); }}
+                      style={{
+                        display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        background: isComplete ? ps.color : TLP.gray100,
+                        color: isComplete ? "#fff" : TLP.gray400,
+                        padding: "14px 32px", borderRadius: 14,
+                        fontSize: 16, fontWeight: 800, textDecoration: "none",
+                        transition: "all 0.2s",
+                        cursor: isComplete ? "pointer" : "not-allowed",
+                        boxShadow: isComplete ? `0 6px 18px ${ps.color}33` : "none",
+                      }}
+                    >
+                      {isComplete ? (
+                        <>Enroll Now <span style={{ fontSize: 18 }}>→</span></>
+                      ) : (
+                        `Select ${requiredSlots - selectedBatchIds.length} more slot${(requiredSlots - selectedBatchIds.length) > 1 ? "s" : ""}`
+                      )}
+                    </Link>
+                  );
+                })()}
               </div>
             </div>
           </div>

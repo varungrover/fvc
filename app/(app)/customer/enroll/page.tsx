@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import EnrollClient from "./EnrollClient";
 import { listDiscountTiers } from "@/lib/db/discounts";
@@ -35,16 +36,18 @@ export default async function EnrollPage() {
   ]);
 
   return (
-    <EnrollClient 
-      initialData={{ 
-        planets: planets || [],
-        products: products || [],
-        levels: levels || [], 
-        members: members || [], 
-        batches: batches || [], 
-        discountTiers,
-        customerId: customer.id 
-      }} 
-    />
+    <Suspense fallback={<div>Loading Enrollment...</div>}>
+      <EnrollClient 
+        initialData={{ 
+          planets: planets || [],
+          products: products || [],
+          levels: levels || [], 
+          members: members || [], 
+          batches: batches || [], 
+          discountTiers,
+          customerId: customer.id 
+        }} 
+      />
+    </Suspense>
   );
 }

@@ -146,7 +146,17 @@ function LoginForm() {
           </Button>
         </form>
 
-        <p style={{ marginTop: 20, fontSize: 12, color: TLP.gray500, lineHeight: 1.6 }}>
+        <p style={{ marginTop: 24, fontSize: 14, color: TLP.gray500, textAlign: "center" }}>
+          Don't have an account?{" "}
+          <Link 
+            href={`/signup${next ? `?next=${encodeURIComponent(next)}` : ""}`} 
+            style={{ color: TLP.teal, fontWeight: 700, textDecoration: "none" }}
+          >
+            Sign up now
+          </Link>
+        </p>
+
+        <p style={{ marginTop: 32, fontSize: 12, color: TLP.gray500, lineHeight: 1.6 }}>
           This is a read-only prototype. No data is persisted; refresh returns
           you here. Pick any demo account on the right →
         </p>

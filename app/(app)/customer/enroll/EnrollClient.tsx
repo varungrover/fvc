@@ -5,22 +5,18 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TLP, PLANETS, PlanetName } from "@/lib/theme/tokens";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { computeFirstMonthAmount, computeMultiPlanetDiscount } from "@/lib/billing/invoice";
 
-const STEPS = ["Student", "Level", "Schedule", "Billing", "Payment"];
+const STEPS = ["Level", "Schedule", "Student", "Billing", "Payment"];
 
 export default function EnrollClient({ initialData }: { initialData: any }) {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [subStep, setSubStep] = useState(0); // 0: Planet, 1: Product, 2: Level
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-
-  // Ensure hydration stability
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const [formData, setFormData] = useState({
     memberId: "",
@@ -32,6 +28,35 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   });
 
   const { planets, products, levels, members, batches, discountTiers } = initialData;
+
+  // Ensure hydration stability and handle initial state from URL
+  useEffect(() => {
+    setMounted(true);
+
+    const pId = searchParams.get("productId");
+    const vId = searchParams.get("variantId");
+    const bIds = searchParams.get("batchIds");
+    const mId = searchParams.get("memberId");
+    const autoStep = searchParams.get("autoStep");
+
+    if (pId && vId && bIds) {
+      const product = products.find((p: any) => p.id === pId);
+      setFormData(prev => ({
+        ...prev,
+        productId: pId,
+        variantId: vId,
+        batchIds: bIds.split(","),
+        planetId: product?.planet_id || "",
+        memberId: mId || prev.memberId
+      }));
+      
+      if (autoStep) {
+        setStep(parseInt(autoStep));
+      } else {
+        setStep(3); // Default for storefront redirect
+      }
+    }
+  }, [searchParams, products]);
 
   // Real-time Billing Logic
   const billingSummary = useMemo(() => {
@@ -57,7 +82,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   }, [formData.variantId, levels, discountTiers, mounted]);
 
   const handleNext = () => {
-    if (step === 2) {
+    if (step === 1) {
       if (subStep < 2) {
         setSubStep(s => s + 1);
         return;
@@ -68,7 +93,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
   };
 
   const handlePrev = () => {
-    if (step === 2) {
+    if (step === 1) {
       if (subStep > 0) {
         setSubStep(s => s - 1);
         return;
@@ -76,7 +101,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
     }
     setStep(s => {
       const nextStep = Math.max(s - 1, 1);
-      if (nextStep === 2) setSubStep(2); // Go to level selection if returning to step 2
+      if (nextStep === 1) setSubStep(2); // Go to level selection if returning to step 1
       return nextStep;
     });
   };
@@ -106,7 +131,7 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
       console.error(err);
       alert("Error initiating checkout. Please try again.");
     } finally {
-      setLoading(false);
+      loading && setLoading(false);
     }
   };
 
@@ -146,53 +171,9 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 40, alignItems: "start" }}>
         <Card style={{ padding: 40, borderRadius: 24, boxShadow: "0 20px 50px rgba(0,0,0,0.05)" }}>
           
-          {/* STEP 1: MEMBER SELECTION */}
+          {/* STEP 1: TIERED LEVEL SELECTION */}
           {step === 1 && (
-            <div key="step-1">
-              <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Select Student</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                {members.map((m: any) => (
-                  <div 
-                    key={m.id}
-                    onClick={() => setFormData({ ...formData, memberId: m.id })}
-                    style={{ 
-                      padding: 24, 
-                      borderRadius: 16, 
-                      border: `2px solid ${formData.memberId === m.id ? TLP.teal : TLP.gray100}`,
-                      background: formData.memberId === m.id ? TLP.teal + "05" : "white",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 16
-                    }}
-                  >
-                    <div style={{ width: 48, height: 48, borderRadius: 24, background: TLP.gray100, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
-                      {m.full_name.charAt(0)}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, color: TLP.navy }}>{m.full_name}</div>
-                      <div style={{ fontSize: 12, color: TLP.gray500 }}>{m.dob}</div>
-                    </div>
-                  </div>
-                ))}
-                {members.length === 0 && (
-                  <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px 0", border: `2px dashed ${TLP.gray100}`, borderRadius: 16 }}>
-                    <div style={{ fontSize: 40, marginBottom: 16 }}>🐣</div>
-                    <div style={{ fontWeight: 700, color: TLP.navy, marginBottom: 8 }}>No Students Found</div>
-                    <p style={{ color: TLP.gray500, fontSize: 14, marginBottom: 24 }}>You need to add a student to your profile before enrolling.</p>
-                    <Button variant="primary" onClick={() => router.push("/customer/members/new")}>
-                      + Add New Student
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 2: TIERED LEVEL SELECTION */}
-          {step === 2 && (
-            <div key={`step-2-sub-${subStep}`}>
+            <div key={`step-1-sub-${subStep}`}>
               {subStep === 0 && (
                 <>
                   <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Choose Planet</h2>
@@ -285,9 +266,9 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
             </div>
           )}
 
-          {/* STEP 3: SCHEDULE */}
-          {step === 3 && (
-            <div key="step-3">
+          {/* STEP 2: SCHEDULE */}
+          {step === 2 && (
+            <div key="step-2">
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
                 <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, margin: 0 }}>Pick Schedule</h2>
                 <div style={{ 
@@ -352,6 +333,50 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
             </div>
           )}
 
+          {/* STEP 3: MEMBER SELECTION */}
+          {step === 3 && (
+            <div key="step-3">
+              <h2 style={{ fontSize: 24, fontWeight: 800, color: TLP.navy, marginBottom: 24 }}>Select Student</h2>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                {members.map((m: any) => (
+                  <div 
+                    key={m.id}
+                    onClick={() => setFormData({ ...formData, memberId: m.id })}
+                    style={{ 
+                      padding: 24, 
+                      borderRadius: 16, 
+                      border: `2px solid ${formData.memberId === m.id ? TLP.teal : TLP.gray100}`,
+                      background: formData.memberId === m.id ? TLP.teal + "05" : "white",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 16
+                    }}
+                  >
+                    <div style={{ width: 48, height: 48, borderRadius: 24, background: TLP.gray100, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
+                      {m.full_name.charAt(0)}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: TLP.navy }}>{m.full_name}</div>
+                      <div style={{ fontSize: 12, color: TLP.gray500 }}>{m.dob}</div>
+                    </div>
+                  </div>
+                ))}
+                {members.length === 0 && (
+                  <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px 0", border: `2px dashed ${TLP.gray100}`, borderRadius: 16 }}>
+                    <div style={{ fontSize: 40, marginBottom: 16 }}>🐣</div>
+                    <div style={{ fontWeight: 700, color: TLP.navy, marginBottom: 8 }}>No Students Found</div>
+                    <p style={{ color: TLP.gray500, fontSize: 14, marginBottom: 24 }}>You need to add a student to your profile before enrolling.</p>
+                    <Button variant="primary" onClick={() => router.push("/customer/members/new")}>
+                      + Add New Student
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* STEP 4: BILLING PREVIEW */}
           {step === 4 && billingSummary && (
             <div key="step-4">
@@ -411,11 +436,11 @@ export default function EnrollClient({ initialData }: { initialData: any }) {
                 variant="primary" 
                 onClick={handleNext} 
                 disabled={ 
-                  (step === 1 && !formData.memberId) || 
-                  (step === 2 && subStep === 0 && !formData.planetId) || 
-                  (step === 2 && subStep === 1 && !formData.productId) || 
-                  (step === 2 && subStep === 2 && !formData.variantId) || 
-                  (step === 3 && formData.batchIds.length === 0) 
+                  (step === 1 && subStep === 0 && !formData.planetId) || 
+                  (step === 1 && subStep === 1 && !formData.productId) || 
+                  (step === 1 && subStep === 2 && !formData.variantId) || 
+                  (step === 2 && formData.batchIds.length < (levels.find((v: any) => v.id === formData.variantId)?.frequency_per_week || 1)) || 
+                  (step === 3 && !formData.memberId)
                 }
                 style={{ borderRadius: 12, padding: "12px 32px" }}
               >
