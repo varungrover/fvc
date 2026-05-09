@@ -31,6 +31,7 @@ export default function LandingPage({
   const [selectedPlanetId, setSelectedPlanetId] = useState<string | null>(null);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [locationSearch, setLocationSearch] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
 
   useEffect(() => { setMounted(true); }, []);
@@ -248,8 +249,8 @@ export default function LandingPage({
 
           <p style={{ margin: "20px auto 0", maxWidth: 520, fontSize: 18, lineHeight: 1.55, color: "rgba(255,255,255,0.9)", fontWeight: 400 }}>
             {selectedLocation
-              ? `Explore programs available at our ${selectedLocation.name} center. Select a subject below to get started.`
-              : "Select your nearest center above, then choose a subject to explore available programs."}
+              ? `Explore programs available at our ${selectedLocation.name} center. Select your planet below to get started.`
+              : "Select your nearest center above, then choose your planet to explore available programs."}
           </p>
         </div>
       </section>
@@ -258,7 +259,7 @@ export default function LandingPage({
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "60px 28px 0" }}>
         <div style={{ marginBottom: 32 }}>
           <h2 style={{ margin: 0, fontSize: 28, fontWeight: 900, color: TLP.navy, letterSpacing: "-0.5px" }}>
-            Choose a Subject
+            Choose your Planet
           </h2>
           <p style={{ margin: "8px 0 0", color: TLP.gray500, fontSize: 15 }}>
             {selectedLocation
@@ -267,7 +268,12 @@ export default function LandingPage({
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", 
+          gap: 24,
+          width: "100%"
+        }}>
           {(selectedLocationId ? availablePlanets : initialPlanets).map(planet => {
             const ps = planetStyle(planet.name);
             const isSelected = selectedPlanetId === planet.id;
@@ -713,11 +719,18 @@ export default function LandingPage({
                           <button
                             key={loc.id}
                             onClick={() => {
+                              if (loc.id === selectedLocationId) {
+                                setShowLocationModal(false);
+                                return;
+                              }
+                              
+                              setIsNavigating(true);
                               if (loc.slug) {
                                 router.push(`/${loc.slug}`);
                               } else {
                                 setSelectedLocationId(loc.id);
                                 setSelectedPlanetId(null);
+                                setIsNavigating(false);
                               }
                               setShowLocationModal(false);
                               setLocationSearch("");
@@ -787,9 +800,71 @@ export default function LandingPage({
         </div>
       )}
 
+      {/* ── Global Navigation Spinner ────────────────────── */}
+      {isNavigating && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 9999,
+          background: "rgba(255,255,255,0.9)",
+          backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexDirection: "column",
+          animation: "fadeIn 0.2s ease-out",
+        }}>
+          <div style={{
+            position: "relative",
+            width: 80,
+            height: 80,
+          }}>
+            {/* Main outer ring */}
+            <div style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              border: `6px solid ${TLP.gray100}`,
+              borderRadius: "50%",
+            }} />
+            {/* Animated spinner ring */}
+            <div style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              border: `6px solid transparent`,
+              borderTop: `6px solid ${primary}`,
+              borderRadius: "50%",
+              animation: "spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite"
+            }} />
+          </div>
+
+          <div style={{
+            marginTop: 32,
+            fontSize: 16,
+            fontWeight: 800,
+            color: TLP.navy,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            animation: "pulse 1.5s ease-in-out infinite",
+            textAlign: "center"
+          }}>
+            Traveling to new Planet...
+            <div style={{ 
+              fontSize: 12, 
+              color: TLP.gray400, 
+              fontWeight: 600, 
+              textTransform: "none", 
+              letterSpacing: "normal",
+              marginTop: 4 
+            }}>
+              Preparing your discovery center
+            </div>
+          </div>
+        </div>
+      )}
+
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.98); } }
       `}} />
     </div>
   );
